@@ -75,7 +75,7 @@
         </b-col>
       </b-row>
     </b-container>
-    <b-row
+    <b-row class="m-0"
       ><b-col cols="12"
         ><b-card class="mt-3" header="Form Data Result">
           datas:
@@ -151,6 +151,6 @@ export default {
 
 <style lang="scss">
 .full-block {
-  height: 96vh;
+  height: auto;
 }
 </style>

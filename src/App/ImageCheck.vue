@@ -33,7 +33,7 @@ export default {
       type: String,
       //required: true,
       default:
-        "https://prod-taro-front.lamaisonsaintgobain.fr/bb68b9e967198ccdb2b293acb4db5f3e.svg",
+        "https://prod-taro-front.lamaisonsaintgobain.fr/4112083127a78b74b5de5b32859a5d3a.svg 172w",
     },
   },
   data: () => {
@@ -53,11 +53,19 @@ $border_color: #49a0a2;
 
   &__img {
     width: 100%;
-    height: 170px;
+    height: 150px;
     margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img {
+      width: 100%;
+      height: 100%;
+      border-radius: 22px;
+    }
 
     &--normal {
-      //background: rgb(49, 208, 208);
       transition: ease-in-out 0.2s;
       &:hover {
         background: rgba(174, 172, 169, 0.659);
@@ -71,8 +79,9 @@ $border_color: #49a0a2;
       &::after {
         content: "";
         position: absolute;
-        top: 157px;
+        top: 133px;
         left: 63px;
+        color: white;
         height: 27px;
         width: 27px;
         border-radius: 50%;
@@ -80,7 +89,7 @@ $border_color: #49a0a2;
         background-repeat: no-repeat;
         background-size: 12px;
         background-color: #49a0a2;
-        //background-image: url(4d2d279….svg);
+        background-image: url("../../public/check-solid.svg");
       }
     }
   }

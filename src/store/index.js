@@ -18,7 +18,29 @@ export default new Vuex.Store({
       },
       fields: [],
     },
-    fields: { type: null, label: "", name: "", require: true, options: [] },
+    fields: {
+      type: null,
+      label: "travaux d’isolation  et aussi tout ce qu'i",
+      name: "",
+      value: [],
+      selected: "",
+      imgUrl: "",
+      require: true,
+      options: [
+        {
+          label: "Quels travaux d’isolation  et aussi tout ce qu'il",
+          description:
+            "Quels travaux d’isolation souhaitez-vous réaliser et aussi tout ce qu'il",
+          value: "1",
+        },
+        {
+          label: "Quels travaux d’isolation  et aussi tout ce qu'il",
+          description:
+            "Quels travaux d’isolation souhaitez-vous réaliser et aussi tout ce qu'il",
+          value: "1",
+        },
+      ],
+    },
   },
   mutations: {
     ADD_STEPS_DATAS(state, payload) {

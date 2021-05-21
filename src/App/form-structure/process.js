@@ -36,7 +36,7 @@
         info: {
           header_title: "Tous les travaux",
           title: "Quelle est la mitoyenneté de votre logement ?",
-          step_id: 1,
+          step_id: 2,
           name: "step2",
           state: [
             {

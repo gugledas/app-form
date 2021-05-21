@@ -147,7 +147,9 @@
         </b-row>
 
         <b-col cols="12" class="form-nav-bouton">
-          <button class="next-bouton next-bouton--disable">Suivant</button>
+          <button class="next-bouton next-bouton--disable" @click="suivant">
+            Suivant
+          </button>
         </b-col>
       </b-row>
     </b-container>
@@ -201,6 +203,9 @@ export default {
     },
   },
   methods: {
+    suivant() {
+      this.$store.dispatch("suivant");
+    },
     addFormField() {
       this.$refs.formField.openAddFormFieldPopUp();
     },

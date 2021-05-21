@@ -5,7 +5,7 @@
         <b-col class="full-block shadow" cols="12" lg="10">
           <pages></pages>
         </b-col>
-        <b-col class="small">
+        <b-col class="">
           <div>
             <b-button
               variant="light"
@@ -14,7 +14,23 @@
               >configuration</b-button
             >
             <b-button class="m-4" size="sm" @click="newPage">New page</b-button>
-
+            <b-button
+              class="m-4"
+              variant="success"
+              size="sm"
+              @click="saveToLocal"
+              >Save</b-button
+            >
+            <b-button
+              class="m-4"
+              variant="danger"
+              size="sm"
+              @click="saveStorage"
+              >clear storage</b-button
+            >
+            <b-button class="m-4" variant="info" size="sm" @click="preview"
+              >Preview</b-button
+            >
             <b-modal
               id="modal-prevent-closing"
               ref="modal"
@@ -44,12 +60,10 @@
                       label="Title"
                       label-for="name-input"
                       invalid-feedback="title is required"
-                      :state="titleState"
                     >
                       <b-form-input
                         id="name-input"
                         v-model="formDatas.info.title"
-                        :state="titleState"
                         required
                       ></b-form-input>
                     </b-form-group>
@@ -75,22 +89,30 @@
         </b-col>
       </b-row>
     </b-container>
+    ee.
+
     <b-row class="m-0"
-      ><b-col cols="12"
+      ><b-col cols="6"
         ><b-card class="mt-3" header="Form Data Result">
           datas:
-          <pre class="m-0">{{ $store.state.allStepsDatas }}</pre>
-          <p>
-            La date stockée dans Vuex est le {{ day }}-{{ month }}-{{ year }}.
-          </p>
+          <pre class="m-0"></pre>
+          <p>La date stockée dans Vuex est le pre.</p>
+          <pre>{{ currentSteps }}</pre>
         </b-card></b-col
-      ></b-row
-    >
+      ><b-col cols="6"
+        ><b-card class="mt-3" header="Form all steps">
+          datas:
+          <pre class="m-0"></pre>
+          <p>La date stockée dans Vuex est le pre.</p>
+          <pre>{{ allStepsDatas }}</pre>
+        </b-card></b-col
+      >
+    </b-row>
   </div>
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapGetters } from "vuex";
 import pages from "./pages.vue";
 export default {
   components: { pages },
@@ -106,17 +128,30 @@ export default {
         fields: [],
       },
       title: "",
-      titleState: null,
-      headerState: null,
-      headerTitle: "",
-      submittedTitle: [],
-      submittedHeaderTitle: [],
     };
   },
   computed: {
-    ...mapState(["year", "month", "day", "formDatas"]),
+    ...mapState(["year", "month", "day", "formDatas", "allStepsDatas"]),
+    ...mapGetters(["alla"]),
+    currentSteps() {
+      var local = localStorage.getItem("allo");
+      var recap = JSON.parse(local);
+      console.log("loaaaa", recap);
+      if (recap != null && recap.length) {
+        return recap[this.$store.state.stepsIndex].fields;
+      } else return this.formDatas;
+    },
   },
   methods: {
+    saveToLocal() {
+      localStorage.setItem("allo", JSON.stringify(this.allStepsDatas));
+      var local = localStorage.getItem("allo");
+      console.log("local", local);
+    },
+    saveStorage() {
+      localStorage.clear();
+    },
+    preview() {},
     newPage() {
       this.$store.dispatch("newPage");
     },

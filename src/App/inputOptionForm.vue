@@ -70,7 +70,7 @@
       </b-col>
     </b-row>
     <!-- if is type checbox with description -->
-    <b-row v-if="type == 'checkboxdesc'" class="p-2">
+    <b-row v-if="type == 'radiodesc'" class="p-2">
       <b-col cols="7">
         <b-form-group
           label="label :"
@@ -104,7 +104,7 @@
             label-for="input-option-label"
           >
             <b-form-input
-              v-model="optionsCheckDesc.label"
+              v-model="optionsRadioDesc.label"
               id="option-label"
               placeholder="Enter label"
               required
@@ -117,7 +117,7 @@
             label-for="input-option-description"
           >
             <b-form-input
-              v-model="optionsCheckDesc.description"
+              v-model="optionsRadioDesc.description"
               id="option-description"
               placeholder="Enter description"
               required
@@ -130,7 +130,7 @@
             label-for="input-option-val"
           >
             <b-form-input
-              v-model="optionsCheckDesc.value"
+              v-model="optionsRadioDesc.value"
               id="option-name"
               placeholder="Enter value of option"
               required
@@ -142,7 +142,7 @@
           <b-button type="reset" variant="danger" size="sm">Reset</b-button>
         </b-form>
         <b-card class="mt-3" header="Form Data Result">
-          <pre class="m-0">{{ optionsCheckDesc }}</pre>
+          <pre class="m-0">{{ optionsRadioDesc }}</pre>
         </b-card>
       </b-col>
     </b-row>
@@ -662,6 +662,8 @@ export default {
         return this.optionsMarkupNumber;
       } else if (base == "markupnumberrow") {
         return this.optionsMarkupNumber;
+      } else if (base == "number") {
+        return this.optionsNumber;
       } else return {};
     },
   },
@@ -682,9 +684,14 @@ export default {
     },
     onReset(event) {
       event.preventDefault;
+      for (let i in this.optionsToPush) {
+        this.optionsToPush[i] = "";
+        console.log("iss", this.optionsToPush[i]);
+      }
       // Reset our form values
-      this.optionsToPush.label = "";
-      this.optionsToPush.value = null;
+      // this.optionsToPush.label = "";
+      // this.optionsToPush.value = null;
+
       // Trick to reset/clear native browser form validation state
       this.show = false;
       this.$nextTick(() => {

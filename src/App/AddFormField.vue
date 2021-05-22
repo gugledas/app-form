@@ -22,7 +22,7 @@
               invalid-feedback="type is required"
             >
               <b-form-select
-                v-model="type"
+                v-model="fields.type"
                 :options="typeOptions"
                 id="name-input"
                 required
@@ -32,7 +32,7 @@
         </b-row>
         <!-- !-->
         <div>
-          <input-option-form :type="type"></input-option-form>
+          <input-option-form :type="fields.type"></input-option-form>
         </div>
 
         <b-row align-h="end">

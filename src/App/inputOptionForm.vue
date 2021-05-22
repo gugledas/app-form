@@ -271,10 +271,8 @@
             label-for="input-option-img"
           >
             <b-form-file
-              v-model="optionsCheckImg.img"
               id="option-name"
               placeholder="Choisir une image"
-              required
             ></b-form-file>
           </b-form-group>
 
@@ -310,10 +308,8 @@
           invalid-feedback="Markup image is required"
         >
           <b-form-file
-            v-model="fields.markup"
             id="markup-input"
             description="Choose Markup image"
-            required
           ></b-form-file>
         </b-form-group>
       </b-col>
@@ -407,10 +403,8 @@
           invalid-feedback="Markup image is required"
         >
           <b-form-file
-            v-model="fields.markup"
             id="markup-input"
             description="Choose Markup image"
-            required
           ></b-form-file>
         </b-form-group>
       </b-col>
@@ -576,8 +570,8 @@
         </b-card>
       </b-col>
     </b-row>
-    op:
-    <pre>{{ fields }}--{{ optionsToPush }}</pre>
+    <!-- op:
+    <pre>{{ fields }}--{{ optionsToPush }}</pre> -->
   </div>
 </template>
 

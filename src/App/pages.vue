@@ -11,6 +11,11 @@
     <b-container fluid class="center-container">
       <b-row class="block-container" align-h="center">
         <b-row>
+          <b-col cols="12" class="text-left" v-if="level > 0">
+            <div class="backButton" @click="back">
+              <img src="../../public/long-arrow-alt-left-solid.svg" alt="" />
+            </div>
+          </b-col>
           <b-col cols="12" class="text-left">
             <h3 class="question-title">{{ formDatas.info.title }}</h3>
           </b-col>
@@ -28,7 +33,7 @@
           >
           <b-col class="choice-section">
             <form ref="form" @submit.stop.prevent="handleSubmit">
-              de: {{ fields.value }}--{{ fields.selected }}
+              <!-- de: {{ fields.value }}--{{ fields.selected }} -->
 
               <!-- affiche sur le cas du type markup label up -->
               <b-row align-h="center" v-if="fields.type == 'number'">
@@ -147,10 +152,12 @@
         </b-row>
 
         <b-col cols="12" class="form-nav-bouton">
-          <button class="next-bouton next-bouton--disable" @click="suivant">
+          <button class="next-bouton next-bouton--active" @click="suivant">
             Suivant
           </button>
         </b-col>
+        <!-- pre: -->
+        <!-- <pre>{{ fields }}</pre> -->
       </b-row>
     </b-container>
 
@@ -175,7 +182,12 @@ export default {
     NumberMarkup,
     LabelRow,
   },
-  props: {},
+  props: {
+    level: {
+      type: Number,
+      default: 0,
+    },
+  },
   data: () => {
     return {
       modalFormFieldIsOpen: false,
@@ -204,10 +216,13 @@ export default {
   },
   methods: {
     suivant() {
-      this.$store.dispatch("suivant");
+      this.$parent.suivant();
     },
     addFormField() {
       this.$refs.formField.openAddFormFieldPopUp();
+    },
+    back() {
+      this.$parent.back();
     },
     getImage(il) {
       for (var i = 0; i < this.imageCheck.length; i++) {
@@ -223,8 +238,14 @@ export default {
 </script>
 
 <style lang="scss">
+$primary_color: #319899;
 .custom-control-input:checked ~ .custom-control-label::before {
-  background: teal;
+  background: $primary_color;
+}
+.backButton {
+  width: 20px;
+  margin: 7px 0;
+  cursor: pointer;
 }
 .help-container {
   margin-bottom: 0;
@@ -274,10 +295,10 @@ export default {
 .element-center {
   text-align: center;
   .button-travaux {
-    color: #49a0a2;
+    color: $primary_color;
     font-weight: 700;
     font-size: 0.8rem;
-    border-bottom: 2px solid #49a0a2;
+    border-bottom: 2px solid $primary_color;
     padding-bottom: 2px;
     cursor: pointer;
     display: inline-block;
@@ -355,7 +376,7 @@ export default {
         height: 56px;
         width: 100%;
         max-width: 465px;
-        background: teal;
+        background: $primary_color;
         border-radius: 2px;
         color: #fff;
         border: none;
@@ -364,7 +385,7 @@ export default {
         &--active {
           opacity: 1;
           &:hover {
-            background: rgb(5, 95, 95);
+            background: rgb(9, 94, 94);
           }
         }
         &--disable {

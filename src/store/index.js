@@ -85,6 +85,16 @@ export default new Vuex.Store({
         },
         fields: [],
       };
+      state.fields = {
+        type: "checkbox",
+        label: "Plusieurs choix possible.",
+        name: "",
+        value: [],
+        selected: "",
+        imgUrl: "",
+        require: true,
+        options: [],
+      };
     },
     ADD_FIELDS(state) {
       class proto {

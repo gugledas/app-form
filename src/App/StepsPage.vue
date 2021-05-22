@@ -2,8 +2,9 @@
   <div>
     <b-container class="bv-example-row" fluid="lg">
       <b-row class="">
-        <b-col class="full-block shadow" cols="12" lg="10">
-          <pages></pages>
+        <b-col class="full-block shadow" cols="12" lg="10" v-if="demo">
+          <!-- ste: {{ this.$store.state.stepsIndex }}--{{ demo }} -->
+          <pages :level="this.$store.state.stepsIndex"></pages>
         </b-col>
         <b-col class="">
           <div>
@@ -25,10 +26,10 @@
               class="m-4"
               variant="danger"
               size="sm"
-              @click="saveStorage"
+              @click="clearStorage"
               >clear storage</b-button
             >
-            <b-button class="m-4" variant="info" size="sm" @click="preview"
+            <b-button class="m-4" variant="info" size="sm" @click="prev"
               >Preview</b-button
             >
             <b-modal
@@ -89,9 +90,8 @@
         </b-col>
       </b-row>
     </b-container>
-    ee.
 
-    <b-row class="m-0"
+    <!-- <b-row class="m-0"
       ><b-col cols="6"
         ><b-card class="mt-3" header="Form Data Result">
           datas:
@@ -104,10 +104,10 @@
           datas:
           <pre class="m-0"></pre>
           <p>La date stockée dans Vuex est le pre.</p>
-          <pre>{{ allStepsDatas }}</pre>
+          <pre>{{ fields }}</pre>
         </b-card></b-col
       >
-    </b-row>
+    </b-row> -->
   </div>
 </template>
 
@@ -127,18 +127,35 @@ export default {
         },
         fields: [],
       },
+      demo: false,
       title: "",
     };
   },
+  mounted() {
+    var local = localStorage.getItem("allo");
+    var recap = JSON.parse(local);
+    console.log("loaaaa", recap);
+    if (recap != null && recap.length) {
+      this.$store.state.formDatas = this.currentSteps;
+      this.$store.state.fields = this.currentSteps.fields[0];
+    }
+  },
   computed: {
-    ...mapState(["year", "month", "day", "formDatas", "allStepsDatas"]),
+    ...mapState([
+      "year",
+      "month",
+      "day",
+      "formDatas",
+      "allStepsDatas",
+      "fields",
+    ]),
     ...mapGetters(["alla"]),
     currentSteps() {
       var local = localStorage.getItem("allo");
       var recap = JSON.parse(local);
       console.log("loaaaa", recap);
       if (recap != null && recap.length) {
-        return recap[this.$store.state.stepsIndex].fields;
+        return recap[this.$store.state.stepsIndex];
       } else return this.formDatas;
     },
   },
@@ -148,11 +165,33 @@ export default {
       var local = localStorage.getItem("allo");
       console.log("local", local);
     },
-    saveStorage() {
+    clearStorage() {
       localStorage.clear();
     },
-    preview() {},
+    back() {
+      this.$store.state.stepsIndex--;
+      this.$store.state.formDatas = this.currentSteps;
+      this.$store.state.fields = this.currentSteps.fields[0];
+      console.log("back");
+    },
+    suivant() {
+      var local = localStorage.getItem("allo");
+      var recap = JSON.parse(local);
+      var base = this.$store.state.stepsIndex;
+      if (recap.length >= 1 && base < recap.length - 1) {
+        console.log("local0", recap.length);
+        this.$store.state.stepsIndex++;
+        this.$store.state.formDatas = this.currentSteps;
+        this.$store.state.fields = this.currentSteps.fields[0];
+      }
+      console.log("base", this.currentSteps.length);
+    },
+    prev() {
+      this.demo = !this.demo;
+      console.log("prev", this.demo);
+    },
     newPage() {
+      this.demo = false;
       this.$store.dispatch("newPage");
     },
 
@@ -171,7 +210,7 @@ export default {
     handleSubmit(event) {
       event.preventDefault();
       // Exit when the form isn't valid
-
+      this.demo = true;
       //this.$store.dispatch("addSetpsDatas", this.formDatas);
       // Push the name to submitted names
       //this.submittedTitle.push(this.formDatas.info.title);

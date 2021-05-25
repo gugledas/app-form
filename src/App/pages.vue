@@ -19,6 +19,7 @@
           <b-col cols="12" class="text-left">
             <h3 class="question-title">{{ formDatas.info.title }}</h3>
           </b-col>
+          stepsState: {{ stepsState }}
           <!-- <div class="help-container">
             <div class="help-block">
               <p class="help-block__title">Aide</p>
@@ -33,9 +34,11 @@
           >
           <b-col class="choice-section">
             <form ref="form" @submit.stop.prevent="handleSubmit">
-              <!-- de: {{ fields.value }}--{{ fields.selected }} -->
+              fields value: {{ fields.value }}-- fields selected:{{
+                fields.selected
+              }}
 
-              <!-- affiche sur le cas du type markup label up -->
+              <!-- affiche sur le cas du type number -->
               <b-row align-h="center" v-if="fields.type == 'number'">
                 <label-row :options="fields.options"></label-row>
               </b-row>
@@ -152,7 +155,11 @@
         </b-row>
 
         <b-col cols="12" class="form-nav-bouton">
-          <button class="next-bouton next-bouton--active" @click="suivant">
+          <button
+            class="next-bouton"
+            :class="stepsState ? 'next-bouton--active' : 'next-bouton--disable'"
+            @click="suivant"
+          >
             Suivant
           </button>
         </b-col>
@@ -206,8 +213,18 @@ export default {
       ],
     };
   },
+  watch: {
+    fields() {
+      console.log("changement");
+    },
+  },
   computed: {
     ...mapState(["formDatas", "fields"]),
+    stepsState() {
+      if (this.fields.selected.length || this.fields.value.length) {
+        return true;
+      } else return false;
+    },
     taille() {
       if (this.fields.options.length) {
         return true;
@@ -216,7 +233,9 @@ export default {
   },
   methods: {
     suivant() {
-      this.$parent.suivant();
+      if (this.stepsState) {
+        this.$parent.suivant();
+      }
     },
     addFormField() {
       this.$refs.formField.openAddFormFieldPopUp();

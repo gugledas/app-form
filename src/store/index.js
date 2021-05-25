@@ -12,57 +12,57 @@ export default new Vuex.Store({
     allStepsDatas: [],
     formDatas: {
       info: {
-        headerTitle: " Tous les travaux",
-        title: "Quels travaux d’isolation souhaitez-vous réaliser ?",
+        headerTitle: "",
+        title: "",
         name: "",
       },
       fields: [],
     },
     fields: {
-      type: "checkbox",
-      label: "Plusieurs choix possible.",
+      type: "",
+      label: "",
       name: "",
       value: [],
       selected: "",
       imgUrl: "",
       require: true,
       options: [
-        {
-          label: "Combles aménagés par l'intérieur",
-          description:
-            "Quels travaux d’isolation souhaitez-vous réaliser et aussi tout ce qu'il",
-          value: "Combles aménagés par l'intérieur",
-        },
-        {
-          label: "Combles aménagés pal l'extérieur",
-          description:
-            "Quels travaux d’isolation souhaitez-vous réaliser et aussi tout ce qu'il",
-          value: "Combles aménagés pal l'extérieur",
-        },
-        {
-          label: "Combles perdus",
-          description:
-            "Quels travaux d’isolation souhaitez-vous réaliser et aussi tout ce qu'il",
-          value: "Combles perdus",
-        },
-        {
-          label: "Toit terrasse",
-          description:
-            "Quels travaux d’isolation souhaitez-vous réaliser et aussi tout ce qu'il",
-          value: "Toit terrasse",
-        },
-        {
-          label: "Mur",
-          description:
-            "Quels travaux d’isolation souhaitez-vous réaliser et aussi tout ce qu'il",
-          value: "Mur",
-        },
-        {
-          label: "Planchés de vide sanitaire,sous-sol",
-          description:
-            "Quels travaux d’isolation souhaitez-vous réaliser et aussi tout ce qu'il",
-          value: "Planchés de vide sanitaire,sous-sol",
-        },
+        // {
+        //   label: "Combles aménagés par l'intérieur",
+        //   description:
+        //     "Quels travaux d’isolation souhaitez-vous réaliser et aussi tout ce qu'il",
+        //   value: "Combles aménagés par l'intérieur",
+        // },
+        // {
+        //   label: "Combles aménagés pal l'extérieur",
+        //   description:
+        //     "Quels travaux d’isolation souhaitez-vous réaliser et aussi tout ce qu'il",
+        //   value: "Combles aménagés pal l'extérieur",
+        // },
+        // {
+        //   label: "Combles perdus",
+        //   description:
+        //     "Quels travaux d’isolation souhaitez-vous réaliser et aussi tout ce qu'il",
+        //   value: "Combles perdus",
+        // },
+        // {
+        //   label: "Toit terrasse",
+        //   description:
+        //     "Quels travaux d’isolation souhaitez-vous réaliser et aussi tout ce qu'il",
+        //   value: "Toit terrasse",
+        // },
+        // {
+        //   label: "Mur",
+        //   description:
+        //     "Quels travaux d’isolation souhaitez-vous réaliser et aussi tout ce qu'il",
+        //   value: "Mur",
+        // },
+        // {
+        //   label: "Planchés de vide sanitaire,sous-sol",
+        //   description:
+        //     "Quels travaux d’isolation souhaitez-vous réaliser et aussi tout ce qu'il",
+        //   value: "Planchés de vide sanitaire,sous-sol",
+        // },
       ],
     },
   },

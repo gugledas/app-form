@@ -1,5 +1,6 @@
 <template>
   <div>
+    options: {{ options }}
     <div v-if="type == 'up'">
       <div class="number-markup__input" v-for="(item, i) in options" :key="i">
         <label class="label">{{ item.label }}</label>
@@ -26,7 +27,7 @@
             <b-form-input
               v-model="item.value"
               type="number"
-              placeholder="Enter your name"
+              placeholder="--"
               class="input-field__input"
               min="1"
               max="100"
@@ -65,6 +66,8 @@ export default {
   watch: {
     value() {
       this.$emit("label-up-value", this.value);
+      this.$store.state.fields.value = this.options;
+      console.log("object", this.options);
     },
   },
 };

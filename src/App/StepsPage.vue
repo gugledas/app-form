@@ -2,10 +2,12 @@
   <div>
     <b-container class="bv-example-row" fluid="lg">
       <b-row class="">
-        <b-col class="full-block shadow" cols="12" lg="10" v-if="demo">
-          <!-- ste: {{ this.$store.state.stepsIndex }}--{{ demo }} -->
-          <pages :level="this.$store.state.stepsIndex"></pages>
-        </b-col>
+        <transition name="fade">
+          <b-col class="full-block shadow" cols="12" lg="10" v-if="demo">
+            ste: {{ this.$store.state.stepsIndex }}--{{ demo }}
+            <pages :level="this.$store.state.stepsIndex"></pages>
+          </b-col>
+        </transition>
         <b-col class="">
           <div>
             <b-button
@@ -91,7 +93,7 @@
       </b-row>
     </b-container>
 
-    <!-- <b-row class="m-0"
+    <b-row class="m-0"
       ><b-col cols="6"
         ><b-card class="mt-3" header="Form Data Result">
           datas:
@@ -107,7 +109,7 @@
           <pre>{{ fields }}</pre>
         </b-card></b-col
       >
-    </b-row> -->
+    </b-row>
   </div>
 </template>
 
@@ -136,8 +138,10 @@ export default {
     var recap = JSON.parse(local);
     console.log("loaaaa", recap);
     if (recap != null && recap.length) {
-      this.$store.state.formDatas = this.currentSteps;
-      this.$store.state.fields = this.currentSteps.fields[0];
+      this.$store.state.allStepsDatas = recap;
+      this.$store.state.formDatas =
+        this.allStepsDatas[this.$store.state.stepsIndex];
+      this.$store.state.fields = this.$store.state.formDatas.fields[0];
     }
   },
   computed: {
@@ -153,7 +157,7 @@ export default {
     currentSteps() {
       var local = localStorage.getItem("allo");
       var recap = JSON.parse(local);
-      console.log("loaaaa", recap);
+      console.log("lo", recap);
       if (recap != null && recap.length) {
         return recap[this.$store.state.stepsIndex];
       } else return this.formDatas;
@@ -170,8 +174,12 @@ export default {
     },
     back() {
       this.$store.state.stepsIndex--;
-      this.$store.state.formDatas = this.currentSteps;
-      this.$store.state.fields = this.currentSteps.fields[0];
+      // this.$store.state.formDatas = this.currentSteps;
+      // this.$store.state.fields = this.currentSteps.fields[0];
+      //
+      this.$store.state.formDatas =
+        this.allStepsDatas[this.$store.state.stepsIndex];
+      this.$store.state.fields = this.$store.state.formDatas.fields[0];
       console.log("back");
     },
     suivant() {
@@ -181,8 +189,10 @@ export default {
       if (recap.length >= 1 && base < recap.length - 1) {
         console.log("local0", recap.length);
         this.$store.state.stepsIndex++;
-        this.$store.state.formDatas = this.currentSteps;
-        this.$store.state.fields = this.currentSteps.fields[0];
+
+        this.$store.state.formDatas =
+          this.allStepsDatas[this.$store.state.stepsIndex];
+        this.$store.state.fields = this.$store.state.formDatas.fields[0];
       }
       console.log("base", this.currentSteps.length);
     },
@@ -224,6 +234,13 @@ export default {
 </script>
 
 <style lang="scss">
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
 .full-block {
   height: auto;
 }

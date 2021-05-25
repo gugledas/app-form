@@ -570,8 +570,8 @@
         </b-card>
       </b-col>
     </b-row>
-    <!-- op:
-    <pre>{{ fields }}--{{ optionsToPush }}</pre> -->
+    fields:
+    <pre>{{ fields }}--{{ optionsToPush }}</pre>
   </div>
 </template>
 

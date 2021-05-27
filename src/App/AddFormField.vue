@@ -18,13 +18,13 @@
           <b-col cols="7">
             <b-form-group
               label="Sélectionner un type"
-              label-for="name-input"
+              label-for="type-input"
               invalid-feedback="type is required"
             >
               <b-form-select
                 v-model="fields.type"
                 :options="typeOptions"
-                id="name-input"
+                id="type-input"
                 required
               ></b-form-select>
             </b-form-group>
@@ -74,15 +74,17 @@ export default {
       typeOptions: [
         { value: null, text: "Please select an option" },
         { value: "radio", text: "Radio" },
-        { value: "increment", text: "Spin Button" },
+        { value: "input", text: "Input" },
+        { value: "Select", text: "Select" },
+        { value: "number", text: "Number" },
         { value: "checkbox", text: "Checkbox" },
+        { value: "increment", text: "Spin Button" },
+        { value: "twolevel", text: "Two level input" },
         { value: "checkboximg", text: "Checkbox Image" },
+        { value: "codepostal", text: "Code Postal input" },
         { value: "radiodesc", text: "Radio with Description" },
         { value: "markupnumber", text: "Markup & Number label Up" },
         { value: "markupnumberrow", text: "Markup & Number label inline" },
-        { value: "input", text: "Input" },
-        { value: "number", text: "Number" },
-        { value: "Select", text: "Select" },
       ],
     };
   },

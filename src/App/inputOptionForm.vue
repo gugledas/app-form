@@ -17,6 +17,18 @@
         </b-form-group>
       </b-col>
 
+      <b-col sm="3">
+        <b-form-group label="require?" label-for="require-input">
+          <b-form-checkbox
+            id="require-input"
+            :value="true"
+            :unchecked-value="false"
+            required
+            v-model="fields.require"
+          ></b-form-checkbox>
+        </b-form-group>
+      </b-col>
+
       <b-col cols="7">
         <b-form-group
           label="name"
@@ -69,6 +81,7 @@
         </b-card>
       </b-col>
     </b-row>
+
     <!-- if is type checbox with description -->
     <b-row v-if="type == 'radiodesc'" class="p-2">
       <b-col cols="7">
@@ -78,6 +91,18 @@
           invalid-feedback="Name is required"
         >
           <b-form-input id="label-input" required></b-form-input>
+        </b-form-group>
+      </b-col>
+
+      <b-col sm="3">
+        <b-form-group label="require?" label-for="require-input">
+          <b-form-checkbox
+            id="require-input"
+            :value="true"
+            :unchecked-value="false"
+            required
+            v-model="fields.require"
+          ></b-form-checkbox>
         </b-form-group>
       </b-col>
 
@@ -162,6 +187,17 @@
           ></b-form-input>
         </b-form-group>
       </b-col>
+      <b-col sm="3">
+        <b-form-group label="require?" label-for="require-input">
+          <b-form-checkbox
+            id="require-input"
+            :value="true"
+            :unchecked-value="false"
+            required
+            v-model="fields.require"
+          ></b-form-checkbox>
+        </b-form-group>
+      </b-col>
       <!-- form option -->
       <b-col cols="12">
         <label>Options</label>
@@ -202,6 +238,39 @@
       </b-col>
     </b-row>
 
+    <!-- if is type codepostal -->
+    <b-row v-if="type == 'codepostal'" class="p-2">
+      <b-col cols="7">
+        <b-form-group label="Name" label-for="postal-input">
+          <b-form-input
+            id="postal-input"
+            required
+            v-model="fields.name"
+          ></b-form-input>
+        </b-form-group>
+      </b-col>
+      <b-col sm="3">
+        <b-form-group label="require?" label-for="require-input">
+          <b-form-checkbox
+            id="require-input"
+            :value="true"
+            :unchecked-value="false"
+            required
+            v-model="fields.require"
+          ></b-form-checkbox>
+        </b-form-group>
+      </b-col>
+      <b-col cols="12">
+        <b-form-group label="label :" label-for="label-postal">
+          <b-form-input
+            v-model="fields.label"
+            id="label-postal"
+            required
+          ></b-form-input>
+        </b-form-group>
+      </b-col>
+    </b-row>
+
     <!-- if is type increment -->
     <b-row v-if="type == 'increment'" class="p-2">
       <b-col cols="7">
@@ -215,6 +284,17 @@
             required
             v-model="fields.name"
           ></b-form-input>
+        </b-form-group>
+      </b-col>
+      <b-col sm="3">
+        <b-form-group label="require?" label-for="require-input">
+          <b-form-checkbox
+            id="require-input"
+            :value="true"
+            :unchecked-value="false"
+            required
+            v-model="fields.require"
+          ></b-form-checkbox>
         </b-form-group>
       </b-col>
     </b-row>
@@ -232,6 +312,17 @@
             id="label-input"
             required
           ></b-form-input>
+        </b-form-group>
+      </b-col>
+      <b-col sm="3">
+        <b-form-group label="require?" label-for="require-input">
+          <b-form-checkbox
+            id="require-input"
+            :value="true"
+            :unchecked-value="false"
+            required
+            v-model="fields.require"
+          ></b-form-checkbox>
         </b-form-group>
       </b-col>
 
@@ -311,6 +402,18 @@
             id="markup-input"
             description="Choose Markup image"
           ></b-form-file>
+        </b-form-group>
+      </b-col>
+
+      <b-col sm="3">
+        <b-form-group label="require?" label-for="require-input">
+          <b-form-checkbox
+            id="require-input"
+            :value="true"
+            :unchecked-value="false"
+            required
+            v-model="fields.require"
+          ></b-form-checkbox>
         </b-form-group>
       </b-col>
 
@@ -408,7 +511,17 @@
           ></b-form-file>
         </b-form-group>
       </b-col>
-
+      <b-col sm="3">
+        <b-form-group label="require?" label-for="require-input">
+          <b-form-checkbox
+            id="require-input"
+            :value="true"
+            :unchecked-value="false"
+            required
+            v-model="fields.require"
+          ></b-form-checkbox>
+        </b-form-group>
+      </b-col>
       <b-col cols="7">
         <b-form-group
           label="name"
@@ -502,6 +615,17 @@
             required
             v-model="fields.name"
           ></b-form-input>
+        </b-form-group>
+      </b-col>
+      <b-col sm="3">
+        <b-form-group label="require?" label-for="require-input">
+          <b-form-checkbox
+            id="require-input"
+            :value="true"
+            :unchecked-value="false"
+            required
+            v-model="fields.require"
+          ></b-form-checkbox>
         </b-form-group>
       </b-col>
       <!-- form option -->

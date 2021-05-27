@@ -4,7 +4,6 @@
       <b-button class="mx-4" variant="primary" size="sm" @click="addFormField"
         >Ajouter des Champs</b-button
       >
-
       <p class="button-travaux">{{ formDatas.info.headerTitle }}</p></b-row
     >
     <!-- center container -->
@@ -19,7 +18,7 @@
           <b-col cols="12" class="text-left">
             <h3 class="question-title">{{ formDatas.info.title }}</h3>
           </b-col>
-          stepsState: {{ stepsState }}
+          <!-- stepsState: {{ stepsState }} -->
           <!-- <div class="help-container">
             <div class="help-block">
               <p class="help-block__title">Aide</p>
@@ -34,10 +33,14 @@
           >
           <b-col class="choice-section">
             <form ref="form" @submit.stop.prevent="handleSubmit">
-              fields value: {{ fields.value }}-- fields selected:{{
+              <!-- fields value: {{ fields.value }}-- fields selected:{{
                 fields.selected
-              }}
-
+              }} -->
+              <b-row align-h="center" v-if="fields.type == 'codepostal'">
+                <b-col class="autocomplete">
+                  <autocomplete></autocomplete>
+                </b-col>
+              </b-row>
               <!-- affiche sur le cas du type number -->
               <b-row align-h="center" v-if="fields.type == 'number'">
                 <label-row :options="fields.options"></label-row>
@@ -154,6 +157,42 @@
           ></b-col>
         </b-row>
 
+        <b-row class="mt-5" v-if="fields.type == 'radio'">
+          <b-col cols="12" class="text-left">
+            <h3 class="question-title">{{ formDatas.info.title }}</h3>
+          </b-col>
+
+          <b-col cols="12" class="text-left"
+            ><p class="page-label">{{ fields.label }}</p></b-col
+          >
+          <b-col class="choice-section">
+            <form ref="form" @submit.stop.prevent="handleSubmit">
+              <!-- fields value: {{ fields.value }}-- fields selected:{{
+                fields.selected
+              }} -->
+
+              <!-- affiche pour le cas du type radio -->
+              <b-row v-if="fields.type == 'radio'">
+                <b-col cols="12" v-for="(item, i) in fields.options" :key="i">
+                  <div class="input-list">
+                    <b-col sm="11" class="input-list__label">
+                      <label class="m-0">{{ item.label }}</label>
+                    </b-col>
+                    <b-col class="input-list__input">
+                      <b-form-radio
+                        name="some-radios"
+                        v-model="fields.selected"
+                        size="lg"
+                        :id="`input-horizn-${i}`"
+                        :value="item.value"
+                      ></b-form-radio>
+                    </b-col>
+                  </div>
+                </b-col>
+              </b-row></form
+          ></b-col>
+        </b-row>
+
         <b-col cols="12" class="form-nav-bouton">
           <button
             class="next-bouton"
@@ -181,6 +220,7 @@ import { mapState } from "vuex";
 import AddFormField from "./AddFormField.vue";
 import LabelRow from "./input/LabelRow.vue";
 import NumberMarkup from "./NumberMarkup.vue";
+import autocomplete from "./Autocomplete";
 export default {
   components: {
     AddFormField,
@@ -188,6 +228,7 @@ export default {
     IncrementNumber: () => import("./IncrementNumber.vue"),
     NumberMarkup,
     LabelRow,
+    autocomplete,
   },
   props: {
     level: {
@@ -221,7 +262,11 @@ export default {
   computed: {
     ...mapState(["formDatas", "fields"]),
     stepsState() {
-      if (this.fields.selected.length || this.fields.value.length) {
+      if (this.fields.selected != "" || this.fields.value.length) {
+        return true;
+      } else if (this.fields.require) {
+        return false;
+      } else if (!this.fields.require) {
         return true;
       } else return false;
     },
@@ -381,6 +426,26 @@ $primary_color: #319899;
           font-weight: 300;
           padding: 10px 0;
           margin: 0;
+        }
+
+        .autocomplete {
+          max-width: 500px;
+          margin-top: 0.9rem;
+          .multiselect__tags {
+            min-height: 64px;
+
+            padding: 20px 40px 0 8px;
+            border-radius: 5px;
+            border: 1px solid $primary_color;
+          }
+          .multiselect__select {
+            display: none;
+          }
+          .multiselect__option--highlight {
+            background: $primary_color;
+            outline: none;
+            color: #fff;
+          }
         }
       }
       .page-label {

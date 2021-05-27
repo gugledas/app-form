@@ -1,6 +1,5 @@
 <template>
   <div>
-    options: {{ options }}
     <div v-if="type == 'up'">
       <div class="number-markup__input" v-for="(item, i) in options" :key="i">
         <label class="label">{{ item.label }}</label>

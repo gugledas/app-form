@@ -1,13 +1,27 @@
 <template>
   <div>
     <b-container class="bv-example-row" fluid="lg">
+      <div class="d-inline-flex mx-4 p-3">
+        <b-form-group label="steps Id" label-for="name-input">
+          <b-form-input
+            id="name-input"
+            v-model="stepsId"
+            type="number"
+            min="1"
+            :max="datasBd.length"
+            required
+          ></b-form-input>
+        </b-form-group>
+      </div>
       <b-row class="">
         <transition name="fade">
           <b-col class="full-block shadow" cols="12" lg="10" v-if="demo">
-            ste: {{ this.$store.state.stepsIndex }}--{{ demo }}
+            <!-- stepsIndex: {{ this.$store.state.stepsIndex }}--selected:
+            {{ fields.selected }} -->
             <pages :level="this.$store.state.stepsIndex"></pages>
           </b-col>
         </transition>
+
         <b-col class="">
           <div>
             <b-button
@@ -31,8 +45,11 @@
               @click="clearStorage"
               >clear storage</b-button
             >
-            <b-button class="m-4" variant="info" size="sm" @click="prev"
+            <b-button class="m-4" variant="info" size="sm" @click="preview"
               >Preview</b-button
+            >
+            <b-button class="m-4" size="sm" variant="light" @click="resetValue"
+              >Reset value</b-button
             >
             <b-modal
               id="modal-prevent-closing"
@@ -94,18 +111,23 @@
     </b-container>
 
     <b-row class="m-0"
-      ><b-col cols="6"
+      ><b-col cols="4"
         ><b-card class="mt-3" header="Form Data Result">
-          datas:
           <pre class="m-0"></pre>
-          <p>La date stockée dans Vuex est le pre.</p>
-          <pre>{{ currentSteps }}</pre>
+          <p>allStepsDatas</p>
+          <pre>{{ allStepsDatas }}</pre>
         </b-card></b-col
-      ><b-col cols="6"
+      ><b-col cols="4"
         ><b-card class="mt-3" header="Form all steps">
-          datas:
           <pre class="m-0"></pre>
-          <p>La date stockée dans Vuex est le pre.</p>
+          <p>formDatas:.</p>
+          <pre>{{ formDatas }}</pre>
+        </b-card></b-col
+      >
+      <b-col cols="4"
+        ><b-card class="mt-3" header="Form all steps">
+          <pre class="m-0"></pre>
+          <p>fields:.</p>
           <pre>{{ fields }}</pre>
         </b-card></b-col
       >
@@ -114,35 +136,29 @@
 </template>
 
 <script>
+import axios from "axios";
+import utilities from "./Utilities";
 import { mapState, mapGetters } from "vuex";
+
 import pages from "./pages.vue";
 export default {
   components: { pages },
   props: {},
   data: () => {
     return {
-      formDatasa: {
-        info: {
-          headerTitle: "",
-          title: "",
-          name: "step1",
-        },
-        fields: [],
-      },
+      datasBd: [],
+      stepsId: 1,
       demo: false,
       title: "",
     };
   },
+  watch: {
+    stepsId() {
+      this.datasBdOrLocalStorage();
+    },
+  },
   mounted() {
-    var local = localStorage.getItem("allo");
-    var recap = JSON.parse(local);
-    console.log("loaaaa", recap);
-    if (recap != null && recap.length) {
-      this.$store.state.allStepsDatas = recap;
-      this.$store.state.formDatas =
-        this.allStepsDatas[this.$store.state.stepsIndex];
-      this.$store.state.fields = this.$store.state.formDatas.fields[0];
-    }
+    this.loadStepsDatas();
   },
   computed: {
     ...mapState([
@@ -157,17 +173,75 @@ export default {
     currentSteps() {
       var local = localStorage.getItem("allo");
       var recap = JSON.parse(local);
-      console.log("lo", recap);
+      //console.log("lo", recap);
       if (recap != null && recap.length) {
         return recap[this.$store.state.stepsIndex];
       } else return this.formDatas;
     },
+    stepsDatas() {
+      var so = this.datasBd;
+      if (this.datasBd.length) {
+        return JSON.parse(so[this.stepsId - 1].forms);
+      } else return [];
+    },
   },
   methods: {
-    saveToLocal() {
-      localStorage.setItem("allo", JSON.stringify(this.allStepsDatas));
+    datasBdOrLocalStorage() {
       var local = localStorage.getItem("allo");
-      console.log("local", local);
+      var recap = JSON.parse(local);
+      console.log("loaaaa", recap);
+      if (this.stepsDatas.length) {
+        this.$store.state.allStepsDatas = this.stepsDatas;
+        this.$store.state.formDatas =
+          this.allStepsDatas[this.$store.state.stepsIndex];
+        this.$store.state.fields = this.$store.state.formDatas.fields[0];
+      } else if (recap != null && recap.length) {
+        this.$store.state.allStepsDatas = recap;
+        this.$store.state.formDatas =
+          this.allStepsDatas[this.$store.state.stepsIndex];
+        this.$store.state.fields = this.$store.state.formDatas.fields[0];
+      }
+    },
+    saveToLocal() {
+      var self = this;
+      localStorage.setItem("allo", JSON.stringify(this.allStepsDatas));
+      var forms = JSON.stringify(this.allStepsDatas);
+      var id = this.stepsId;
+      //var local = localStorage.getItem("allo");
+      //console.log("local", local);
+      utilities.saveSteps({ forms, id }).then((reponse) => {
+        console.log("savesteps: ", reponse);
+        axios
+          .post(
+            "http://lesroisdelareno.kksa" + "/query-ajax/insert-update",
+            reponse
+          )
+          .then(function (response) {
+            console.log("post response ", response);
+            self.loadStepsDatas();
+          })
+          .catch(function (error) {
+            console.log(error);
+            self.loadStepsDatas();
+          });
+      });
+    },
+    loadStepsDatas() {
+      var self = this;
+      var datas = "select * from `appformmanager_fomrs`";
+      axios
+        .post("http://lesroisdelareno.kksa" + "/query-ajax/select", datas)
+        .then(function (reponse) {
+          console.log("get reponse: ", reponse);
+          if (reponse.data) {
+            self.datasBd = reponse.data;
+            console.log("gee: ", self.datasBd);
+            self.datasBdOrLocalStorage();
+          }
+        })
+        .catch(function (error) {
+          console.log("get error ", error);
+        });
     },
     clearStorage() {
       localStorage.clear();
@@ -189,14 +263,13 @@ export default {
       if (recap.length >= 1 && base < recap.length - 1) {
         console.log("local0", recap.length);
         this.$store.state.stepsIndex++;
-
         this.$store.state.formDatas =
           this.allStepsDatas[this.$store.state.stepsIndex];
         this.$store.state.fields = this.$store.state.formDatas.fields[0];
       }
       console.log("base", this.currentSteps.length);
     },
-    prev() {
+    preview() {
       this.demo = !this.demo;
       console.log("prev", this.demo);
     },
@@ -204,7 +277,10 @@ export default {
       this.demo = false;
       this.$store.dispatch("newPage");
     },
-
+    resetValue() {
+      this.fields.selected = "";
+      this.fields.value = [];
+    },
     resetModal() {
       //   this.formDatas.info.title = "";
       //   this.titleState = null;
@@ -236,7 +312,7 @@ export default {
 <style lang="scss">
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.5s;
+  transition: opacity 0.2s;
 }
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;

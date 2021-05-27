@@ -29,7 +29,7 @@
               variant="danger"
               size="sm"
               @click="clearStorage"
-              >clear storage</b-button
+              > clear storage </b-button
             >
             <b-button class="m-4" variant="info" size="sm" @click="prev"
               >Preview</b-button

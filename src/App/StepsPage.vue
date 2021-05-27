@@ -140,7 +140,8 @@ import axios from "axios";
 import utilities from "./Utilities";
 import { mapState, mapGetters } from "vuex";
 
-import pages from "./pages.vue";
+//import pages from "./pages.vue";
+import pages from "./pages2.vue";
 export default {
   components: { pages },
   props: {},

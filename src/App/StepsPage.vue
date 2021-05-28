@@ -148,7 +148,7 @@ export default {
     return {
       datasBd: [],
       stepsId: 1,
-      demo: false,
+      demo: true,
       title: "",
     };
   },
@@ -192,9 +192,9 @@ export default {
       console.log("loaaaa", recap);
       if (this.stepsDatas.length) {
         this.$store.state.allStepsDatas = this.stepsDatas;
-        this.$store.state.formDatas =
-          this.allStepsDatas[this.$store.state.stepsIndex];
-        this.$store.state.fields = this.$store.state.formDatas.fields[0];
+        // this.$store.state.formDatas =
+        //   this.allStepsDatas[this.$store.state.stepsIndex];
+        // this.$store.state.fields = this.$store.state.formDatas.fields[0];
       } else if (recap != null && recap.length) {
         this.$store.state.allStepsDatas = recap;
         this.$store.state.formDatas =
@@ -203,7 +203,7 @@ export default {
       }
     },
     saveToLocal() {
-      var self = this;
+      //var self = this;
       localStorage.setItem("allo", JSON.stringify(this.allStepsDatas));
       var forms = JSON.stringify(this.allStepsDatas);
       var id = this.stepsId;
@@ -211,19 +211,19 @@ export default {
       //console.log("local", local);
       utilities.saveSteps({ forms, id }).then((reponse) => {
         console.log("savesteps: ", reponse);
-        axios
-          .post(
-            "http://lesroisdelareno.kksa" + "/query-ajax/insert-update",
-            reponse
-          )
-          .then(function (response) {
-            console.log("post response ", response);
-            self.loadStepsDatas();
-          })
-          .catch(function (error) {
-            console.log(error);
-            self.loadStepsDatas();
-          });
+        // axios
+        //   .post(
+        //     "http://lesroisdelareno.kksa" + "/query-ajax/insert-update",
+        //     reponse
+        //   )
+        //   .then(function (response) {
+        //     console.log("post response ", response);
+        //     self.loadStepsDatas();
+        //   })
+        //   .catch(function (error) {
+        //     console.log(error);
+        //     self.loadStepsDatas();
+        //   });
       });
     },
     loadStepsDatas() {

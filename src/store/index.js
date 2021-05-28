@@ -12,14 +12,101 @@ export default new Vuex.Store({
     allStepsDatas: [],
     formDatas: {
       info: {
-        headerTitle: "",
+        headerTitle: "Tout les traveaux",
         title: "",
         name: "",
       },
-      fields: [],
+      fields: [
+        {
+          type: "checkbox",
+          title:
+            "Quels travaux d’isolation souhaitez-vous réaliser et aussi tout ce qu'il",
+          label: "remuni",
+          name: "",
+          value: null,
+          selected: [],
+          imgUrl: "",
+          require: true,
+          options: [
+            {
+              label: "Combles aménagés par l'intérieur",
+              description:
+                "Quels travaux d’isolation souhaitez-vous réaliser et aussi tout ce qu'il",
+              value: "Combles aménagés par l'intérieur",
+            },
+            {
+              label: "Combles aménagés pal l'extérieur",
+              description:
+                "Quels travaux d’isolation souhaitez-vous réaliser et aussi tout ce qu'il",
+              value: "Combles aménagés pal l'extérieur",
+            },
+            {
+              label: "Combles perdus",
+              description:
+                "Quels travaux d’isolation souhaitez-vous réaliser et aussi tout ce qu'il",
+              value: "Combles perdus",
+            },
+            {
+              label: "Toit terrasse",
+              description:
+                "Quels travaux d’isolation souhaitez-vous réaliser et aussi tout ce qu'il",
+              value: "Toit terrasse",
+            },
+            {
+              label: "Mur",
+              description:
+                "Quels travaux d’isolation souhaitez-vous réaliser et aussi tout ce qu'il",
+              value: "Mur",
+            },
+            {
+              label: "Planchés de vide sanitaire,sous-sol",
+              description:
+                "Quels travaux d’isolation souhaitez-vous réaliser et aussi tout ce qu'il",
+              value: "Planchés de vide sanitaire,sous-sol",
+            },
+          ],
+        },
+        {
+          type: "radio",
+          title: "travaux d’isolation souhaitez-vous ussi tout Quels  ce qu'il",
+          label: "un seul choix possible",
+          name: "",
+          value: null,
+          selected: [],
+          imgUrl: "",
+          require: true,
+          options: [
+            {
+              label: "Combles aménagés par l'intérieur",
+              description:
+                "Quels travaux d’isolation souhaitez-vous réaliser et aussi tout ce qu'il",
+              value: "Combles aménagés par l'intérieur",
+            },
+            {
+              label: "Combles aménagés pal l'extérieur",
+              description:
+                "Quels travaux d’isolation souhaitez-vous réaliser et aussi tout ce qu'il",
+              value: "Combles aménagés pal l'extérieur",
+            },
+            {
+              label: "Combles perdus",
+              description:
+                "Quels travaux d’isolation souhaitez-vous réaliser et aussi tout ce qu'il",
+              value: "Combles perdus",
+            },
+            {
+              label: "Toit terrasse",
+              description:
+                "Quels travaux d’isolation souhaitez-vous réaliser et aussi tout ce qu'il",
+              value: "Toit terrasse",
+            },
+          ],
+        },
+      ],
     },
     fields: {
       type: "",
+      title: "",
       label: "",
       name: "",
       value: [],
@@ -65,6 +152,7 @@ export default new Vuex.Store({
         // },
       ],
     },
+    field: {},
   },
   getters: {
     alla() {
@@ -87,6 +175,20 @@ export default new Vuex.Store({
       };
       state.fields = {
         type: "checkbox",
+        title: "",
+        label: "Plusieurs choix possible.",
+        name: "",
+        value: [],
+        selected: "",
+        imgUrl: "",
+        require: true,
+        options: [],
+      };
+    },
+    RESET_FIELDS(state) {
+      state.fields = {
+        type: "checkbox",
+        title: "",
         label: "Plusieurs choix possible.",
         name: "",
         value: [],
@@ -126,6 +228,7 @@ export default new Vuex.Store({
     addFields({ commit }, payload) {
       console.log("objecte", payload);
       commit("ADD_FIELDS", payload);
+      commit("RESET_FIELDS");
     },
     newPage({ commit }) {
       commit("NEW_PAGE");

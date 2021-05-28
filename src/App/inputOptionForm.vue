@@ -5,6 +5,20 @@
     <b-row v-if="type == 'checkbox'" class="p-2">
       <b-col cols="7">
         <b-form-group
+          label="title :"
+          label-for="title-input"
+          invalid-feedback="Name is required"
+        >
+          <b-form-input
+            id="title-input"
+            required
+            v-model="fields.title"
+          ></b-form-input>
+        </b-form-group>
+      </b-col>
+
+      <b-col cols="7">
+        <b-form-group
           label="label :"
           label-for="label-input"
           invalid-feedback="Name is required"
@@ -604,6 +618,19 @@
 
     <!-- if is type Number -->
     <b-row v-if="type == 'number'" class="p-2">
+      <b-col cols="7">
+        <b-form-group
+          label="title :"
+          label-for="title-input"
+          invalid-feedback="Name is required"
+        >
+          <b-form-input
+            id="title-input"
+            required
+            v-model="fields.title"
+          ></b-form-input>
+        </b-form-group>
+      </b-col>
       <b-col cols="7">
         <b-form-group
           label="name"

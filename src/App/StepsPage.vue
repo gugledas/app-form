@@ -43,8 +43,9 @@
               variant="danger"
               size="sm"
               @click="clearStorage"
-              > clear storage </b-button
             >
+              clear storage
+            </b-button>
             <b-button class="m-4" variant="info" size="sm" @click="preview"
               >Preview</b-button
             >
@@ -149,7 +150,7 @@ export default {
     return {
       datasBd: [],
       stepsId: 1,
-      demo: false,
+      demo: true,
       title: "",
     };
   },

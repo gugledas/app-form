@@ -18,60 +18,15 @@
           <b-col cols="12" class="text-left">
             <h3 class="question-title">{{ formDatas.info.title }}</h3>
           </b-col>
-          <!-- stepsState: {{ stepsState }} -->
-          <!-- <div class="help-container">
-            <div class="help-block">
-              <p class="help-block__title">Aide</p>
-              <p class="help-block__content">
-                La mitoyenneté de votre logement va permettre de définir la
-                bonne solution en matière d’isolation thermique.
-              </p>
-            </div>
-          </div> -->
-          <b-col cols="12" class="text-left"
-            ><p class="page-label">{{ fields.label }}</p></b-col
-          >
-          <b-col class="choice-section">
-            <form ref="form" @submit.stop.prevent="handleSubmit"></form>
-          </b-col>
-        </b-row>
 
-        <b-row class="mt-5" v-if="fields.type == 'radio'">
-          <b-col cols="12" class="text-left">
-            <h3 class="question-title">{{ formDatas.info.title }}</h3>
-          </b-col>
-
-          <b-col cols="12" class="text-left"
-            ><p class="page-label">{{ fields.label }}</p></b-col
-          >
           <b-col class="choice-section">
             <form ref="form" @submit.stop.prevent="handleSubmit">
-              <!-- fields value: {{ fields.value }}-- fields selected:{{
-                fields.selected
-              }} -->
-
-              <!-- affiche pour le cas du type radio -->
-              <b-row v-if="fields.type == 'radio'">
-                <b-col cols="12" v-for="(item, i) in fields.options" :key="i">
-                  <div class="input-list">
-                    <b-col sm="11" class="input-list__label">
-                      <label class="m-0">{{ item.label }}</label>
-                    </b-col>
-                    <b-col class="input-list__input">
-                      <b-form-radio
-                        name="some-radios"
-                        v-model="fields.selected"
-                        size="lg"
-                        :id="`input-horizn-${i}`"
-                        :value="item.value"
-                      ></b-form-radio>
-                    </b-col>
-                  </div>
-                </b-col>
-              </b-row></form
-          ></b-col>
+              <div v-for="(field, i) in formDatas.fields" :key="i">
+                <div>champs : {{ field }}</div>
+              </div>
+            </form>
+          </b-col>
         </b-row>
-
         <b-col cols="12" class="form-nav-bouton">
           <button
             class="next-bouton"
@@ -97,17 +52,19 @@
 <script>
 import { mapState } from "vuex";
 import AddFormField from "./AddFormField.vue";
+/*
 import LabelRow from "./input/LabelRow.vue";
 import NumberMarkup from "./NumberMarkup.vue";
 import autocomplete from "./Autocomplete";
+/**/
 export default {
   components: {
     AddFormField,
-    ImageCheck: () => import("./ImageCheck.vue"),
-    IncrementNumber: () => import("./IncrementNumber.vue"),
-    NumberMarkup,
-    LabelRow,
-    autocomplete,
+    //ImageCheck: () => import("./ImageCheck.vue"),
+    //IncrementNumber: () => import("./IncrementNumber.vue"),
+    // NumberMarkup,
+    // LabelRow,
+    // autocomplete,
   },
   props: {
     level: {

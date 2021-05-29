@@ -12,9 +12,8 @@ const Utilities = {
           table: "appformmanager_fomrs",
           fields: {
             forms: datas.forms,
-            description:
-              "je ne sais pas ce que je fous la... Sérieux comment ai-je attéri ici?",
-            name: "hello is me",
+            description: datas.description,
+            name: datas.name,
           },
           action: "update",
         };

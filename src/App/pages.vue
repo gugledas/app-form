@@ -1,7 +1,12 @@
 <template>
   <div class="element-center">
     <b-row align-h="end" class="m-4">
-      <b-button class="mx-4" variant="primary" size="sm" @click="addFormField"
+      <b-button
+        class="mx-4"
+        v-if="this.$store.state.mode"
+        variant="primary"
+        size="sm"
+        @click="addFormField"
         >Ajouter des Champs</b-button
       >
       <p class="button-travaux">{{ formDatas.info.headerTitle }}</p></b-row
@@ -9,8 +14,8 @@
     <!-- center container -->
     <b-container fluid class="center-container">
       <b-row class="block-container" align-h="center">
-        <b-row>
-          <b-col cols="12" class="text-left" v-if="true">
+        <b-row class="w-100">
+          <b-col cols="12" class="text-left" v-if="level > 0">
             <div class="backButton" @click="back">
               <img src="../../public/long-arrow-alt-left-solid.svg" alt="" />
             </div>
@@ -33,6 +38,11 @@
             Suivant
           </button>
         </b-col>
+        <b-col cols="12" v-if="this.$store.state.mode">
+          <b-button variant="danger" @click="deleteSteps">
+            delete this steps
+          </b-button>
+        </b-col>
         <!-- pre: -->
         <!-- <pre>{{ fields }}</pre> -->
       </b-row>
@@ -42,6 +52,7 @@
     <add-form-field
       :isOpen="modalFormFieldIsOpen"
       ref="formField"
+      :fields="fields"
     ></add-form-field>
   </div>
 </template>
@@ -88,32 +99,9 @@ export default {
   computed: {
     ...mapState(["formDatas", "fields"]),
     stepsState() {
-      // var al = this.formDatas.fields;
-      // var ind = [];
-      // al.forEach((element) => {
-      //   if (
-      //     element.value != "" &&
-      //     element.value != [] &&
-      //     element.value != null
-      //   ) {
-      //     ind.push({ val: true, require: element.require });
-      //   } else {
-      //     ind.push({ val: false, require: element.require });
-      //   }
-      // });
-      // var ib = [];
-      // ind.forEach((element) => {
-      //   if (element.val == "false" && element.require == "true") {
-      //     ib.push("false");
-      //   } else if (element.val == "false" && element.require == "false") {
-      //     ib.push("true");
-      //   } else if (element.val == "true") {
-      //     ib.push("true");
-      //   }
-      // });
-      // var stat = ib.includes("false");
-      // console.log("ind", ind);
-      return true;
+      if (this.$store.state.allStepsDatas.length - 1 > this.level) {
+        return true;
+      } else return false;
     },
     taille() {
       if (this.fields.options.length) {
@@ -126,6 +114,12 @@ export default {
       if (this.stepsState) {
         this.$parent.suivant();
       }
+    },
+    deleteSteps() {
+      // var all = this.$store.state.allStepsDatas;
+      // var r = all.indexOf(this.formDatas);
+      //this.$emit("index-to-delete", r);
+      this.$store.dispatch("deleteStepsInAllSteps");
     },
     addFormField() {
       this.$refs.formField.openAddFormFieldPopUp();
@@ -224,12 +218,13 @@ $primary_color: #319899;
       .question-title {
         text-align: left;
         font-size: 1.4em;
-        margin-bottom: 10px;
+        margin-bottom: 30px;
         color: #222;
         line-height: 1.2;
       }
       .choice-section {
         max-width: 530px;
+        margin-top: 10px;
         width: 100%;
         .input-list {
           display: flex;
@@ -294,7 +289,7 @@ $primary_color: #319899;
         }
       }
       .page-label {
-        margin: 15px 0;
+        margin: 0 0 30px;
         font-size: 0.9em;
         color: #000;
       }

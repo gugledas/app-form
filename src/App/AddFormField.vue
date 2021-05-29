@@ -32,7 +32,10 @@
         </b-row>
         <!-- !-->
         <div>
-          <input-option-form :type="fields.type"></input-option-form>
+          <input-option-form
+            :type="fields.type"
+            :fields="fields"
+          ></input-option-form>
         </div>
 
         <b-row align-h="end">
@@ -56,18 +59,43 @@ import { mapState } from "vuex";
 import inputOptionForm from "./inputOptionForm.vue";
 export default {
   components: { inputOptionForm },
-  props: {},
+  props: {
+    fields: {
+      type: Object,
+      default: function () {
+        return {
+          type: "",
+          title: "",
+          label: "",
+          name: "",
+          value: [],
+          selected: "",
+          imgUrl: "",
+          require: true,
+          options: [],
+        };
+      },
+    },
+    genre: {
+      type: String,
+      default: "",
+    },
+  },
   data: () => {
     return {
       isOpen: false,
       typeFieldSelected: null,
       type: null,
-      // fields: {
-      //   type: null,
-      //   label: "",
-      //   name: "",
-      //   require: true,
-      //   options: [],
+      // fields    : {
+      //   type    : "",
+      //   title   : "",
+      //   label   : "",
+      //   name    : "",
+      //   value   : [],
+      //   selected: "",
+      //   imgUrl  : "",
+      //   require : true,
+      //   options : [],
       // },
       //datas to check form validity
       labelState: null,
@@ -79,7 +107,6 @@ export default {
         { value: "number", text: "Number" },
         { value: "checkbox", text: "Checkbox" },
         { value: "increment", text: "Spin Button" },
-        { value: "twolevel", text: "Two level input" },
         { value: "checkboximg", text: "Checkbox Image" },
         { value: "codepostal", text: "Code Postal input" },
         { value: "radiodesc", text: "Radio with Description" },
@@ -90,11 +117,11 @@ export default {
   },
   watch: {},
   computed: {
-    ...mapState(["fields"]),
+    ...mapState(["years"]),
   },
   methods: {
     optionAddToFields() {
-      this.$store.dispatch("addFields");
+      this.$store.dispatch("addFields", this.fields);
     },
     //
     openAddFormFieldPopUp() {

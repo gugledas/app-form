@@ -79,7 +79,7 @@
           >
             <b-form-input
               v-model="inputOptions.value"
-              id="option-name"
+              id="option-val"
               placeholder="Enter value of option"
               required
             ></b-form-input>
@@ -90,6 +90,48 @@
           >
           <b-button type="reset" variant="danger" size="sm">Reset</b-button>
         </b-form>
+        <b-form
+          @submit="onPush"
+          @reset="onReset"
+          class="border p-3"
+          v-for="(item, i) in fields.options"
+          :key="i"
+        >
+          <b-form-group
+            id="option-label"
+            label="Option label"
+            label-for="input-option-label"
+          >
+            <b-form-input
+              v-model="item.label"
+              :id="`option-label${i}`"
+              placeholder="Enter label"
+              required
+            ></b-form-input>
+          </b-form-group>
+
+          <b-form-group
+            id="option-val"
+            label="Option value"
+            label-for="input-option-val"
+          >
+            <b-form-input
+              v-model="item.value"
+              :id="`option-value${i}`"
+              placeholder="Enter value of option"
+              required
+            ></b-form-input>
+          </b-form-group>
+
+          <b-button type="submit" variant="primary" size="sm">Push</b-button>
+          <b-button type="reset" variant="dark" size="sm" class="mx-2"
+            >Reset</b-button
+          >
+          <b-button variant="danger" size="sm" @click="deleteOption(i)"
+            >delete</b-button
+          >
+        </b-form>
+
         <b-card class="mt-3" header="Form Data Result">
           <pre class="m-0">{{ inputOptions }}</pre>
         </b-card>
@@ -98,6 +140,20 @@
 
     <!-- if is type checbox with description -->
     <b-row v-if="type == 'radiodesc'" class="p-2">
+      <b-col cols="7">
+        <b-form-group
+          label="title :"
+          label-for="title-input"
+          invalid-feedback="Name is required"
+        >
+          <b-form-input
+            id="title-input"
+            required
+            v-model="fields.title"
+          ></b-form-input>
+        </b-form-group>
+      </b-col>
+
       <b-col cols="7">
         <b-form-group
           label="label :"
@@ -151,7 +207,7 @@
           </b-form-group>
 
           <b-form-group
-            id="option-name"
+            id="option-description"
             label="description"
             label-for="input-option-description"
           >
@@ -170,7 +226,7 @@
           >
             <b-form-input
               v-model="optionsRadioDesc.value"
-              id="option-name"
+              id="option-val"
               placeholder="Enter value of option"
               required
             ></b-form-input>
@@ -180,6 +236,47 @@
           >
           <b-button type="reset" variant="danger" size="sm">Reset</b-button>
         </b-form>
+        <b-form
+          @submit="onPush"
+          @reset="onReset"
+          class="border p-3"
+          v-for="(item, i) in fields.options"
+          :key="i"
+        >
+          <b-form-group
+            id="option-label"
+            label="Option label"
+            label-for="input-option-label"
+          >
+            <b-form-input
+              v-model="item.label"
+              :id="`option-label${i}`"
+              placeholder="Enter label"
+              required
+            ></b-form-input>
+          </b-form-group>
+
+          <b-form-group
+            id="option-val"
+            label="Option value"
+            label-for="input-option-val"
+          >
+            <b-form-input
+              v-model="item.value"
+              :id="`option-value${i}`"
+              placeholder="Enter value of option"
+              required
+            ></b-form-input>
+          </b-form-group>
+
+          <b-button type="submit" variant="primary" size="sm">Push</b-button>
+          <b-button type="reset" variant="dark" size="sm" class="mx-2"
+            >Reset</b-button
+          >
+          <b-button variant="danger" size="sm" @click="deleteOption(i)"
+            >delete</b-button
+          >
+        </b-form>
         <b-card class="mt-3" header="Form Data Result">
           <pre class="m-0">{{ optionsRadioDesc }}</pre>
         </b-card>
@@ -188,6 +285,20 @@
 
     <!-- if is type radios -->
     <b-row v-if="type == 'radio'" class="p-2">
+      <b-col cols="7">
+        <b-form-group
+          label="title :"
+          label-for="title-input"
+          invalid-feedback="Name is required"
+        >
+          <b-form-input
+            id="title-input"
+            required
+            v-model="fields.title"
+          ></b-form-input>
+        </b-form-group>
+      </b-col>
+
       <b-col cols="7">
         <b-form-group
           label="name"
@@ -236,7 +347,7 @@
           >
             <b-form-input
               v-model="optionsRadios.value"
-              id="option-name"
+              id="option-val"
               placeholder="Enter value of option"
               required
             ></b-form-input>
@@ -246,6 +357,47 @@
           >
           <b-button type="reset" variant="danger" size="sm">Reset</b-button>
         </b-form>
+        <b-form
+          @submit="onPush"
+          @reset="onReset"
+          class="border p-3"
+          v-for="(item, i) in fields.options"
+          :key="i"
+        >
+          <b-form-group
+            id="option-label"
+            label="Option label"
+            label-for="input-option-label"
+          >
+            <b-form-input
+              v-model="item.label"
+              :id="`option-label${i}`"
+              placeholder="Enter label"
+              required
+            ></b-form-input>
+          </b-form-group>
+
+          <b-form-group
+            id="option-val"
+            label="Option value"
+            label-for="input-option-val"
+          >
+            <b-form-input
+              v-model="item.value"
+              :id="`option-value${i}`"
+              placeholder="Enter value of option"
+              required
+            ></b-form-input>
+          </b-form-group>
+
+          <b-button type="submit" variant="primary" size="sm">Push</b-button>
+          <b-button type="reset" variant="dark" size="sm" class="mx-2"
+            >Reset</b-button
+          >
+          <b-button variant="danger" size="sm" @click="deleteOption(i)"
+            >delete</b-button
+          >
+        </b-form>
         <b-card class="mt-3" header="Form Data Result">
           <pre class="m-0">{{ optionsRadios }}</pre>
         </b-card>
@@ -254,6 +406,19 @@
 
     <!-- if is type codepostal -->
     <b-row v-if="type == 'codepostal'" class="p-2">
+      <b-col cols="7">
+        <b-form-group
+          label="title :"
+          label-for="title-input"
+          invalid-feedback="Name is required"
+        >
+          <b-form-input
+            id="title-input"
+            required
+            v-model="fields.title"
+          ></b-form-input>
+        </b-form-group>
+      </b-col>
       <b-col cols="7">
         <b-form-group label="Name" label-for="postal-input">
           <b-form-input
@@ -289,6 +454,19 @@
     <b-row v-if="type == 'increment'" class="p-2">
       <b-col cols="7">
         <b-form-group
+          label="title :"
+          label-for="title-input"
+          invalid-feedback="Name is required"
+        >
+          <b-form-input
+            id="title-input"
+            required
+            v-model="fields.title"
+          ></b-form-input>
+        </b-form-group>
+      </b-col>
+      <b-col cols="7">
+        <b-form-group
           label="Name"
           label-for="increment-input"
           invalid-feedback="Name is required"
@@ -317,6 +495,19 @@
     <b-row v-if="type == 'checkboximg'" class="p-2">
       <b-col cols="7">
         <b-form-group
+          label="title :"
+          label-for="title-input"
+          invalid-feedback="Name is required"
+        >
+          <b-form-input
+            id="title-input"
+            required
+            v-model="fields.title"
+          ></b-form-input>
+        </b-form-group>
+      </b-col>
+      <b-col cols="7">
+        <b-form-group
           label="label :"
           label-for="label-input"
           invalid-feedback="Name is required"
@@ -331,7 +522,6 @@
       <b-col sm="3">
         <b-form-group label="require?" label-for="require-input">
           <b-form-checkbox
-            id="require-input"
             :value="true"
             :unchecked-value="false"
             required
@@ -357,6 +547,16 @@
       <b-col cols="12">
         <label>Options</label>
         <b-form @submit="onPush" @reset="onReset" class="border p-3">
+          <b-form-group label="isActive?" label-for="require-input">
+            <b-form-checkbox
+              id="require-input"
+              :value="true"
+              :unchecked-value="false"
+              required
+              v-model="optionsCheckImg.isActive"
+            ></b-form-checkbox>
+          </b-form-group>
+
           <b-form-group
             id="option-label"
             label="label"
@@ -376,9 +576,21 @@
             label-for="input-option-img"
           >
             <b-form-file
-              id="option-name"
+              id="option-img"
               placeholder="Choisir une image"
             ></b-form-file>
+          </b-form-group>
+          <b-form-group
+            id="desc-img"
+            label="description"
+            label-for="input-option-val"
+          >
+            <b-form-input
+              v-model="optionsCheckImg.description"
+              id="desc-imge"
+              placeholder="1 Côté"
+              required
+            ></b-form-input>
           </b-form-group>
 
           <b-form-group
@@ -388,7 +600,7 @@
           >
             <b-form-input
               v-model="optionsCheckImg.value"
-              id="option-name"
+              id="option-val"
               placeholder="Enter value of option"
               required
             ></b-form-input>
@@ -397,6 +609,81 @@
             >Push</b-button
           >
           <b-button type="reset" variant="danger" size="sm">Reset</b-button>
+        </b-form>
+        <b-form
+          @submit="onPush"
+          @reset="onReset"
+          class="border p-3"
+          v-for="(item, i) in fields.options"
+          :key="i"
+        >
+          <!-- al -->
+          <b-form-group label="isActive?" label-for="require-input">
+            <b-form-checkbox
+              :id="`require-input${i}`"
+              :value="true"
+              :unchecked-value="false"
+              required
+              v-model="item.isActive"
+            ></b-form-checkbox>
+          </b-form-group>
+
+          <b-form-group
+            :id="`option-label${i}`"
+            label="label"
+            label-for="input-option-label"
+          >
+            <b-form-input
+              v-model="item.label"
+              :id="`option-label${i}`"
+              placeholder="Enter label"
+              required
+            ></b-form-input>
+          </b-form-group>
+
+          <b-form-group
+            :id="`option-img${i}`"
+            label="img"
+            label-for="input-option-img"
+          >
+            <b-form-file
+              :id="`option-img${i}`"
+              placeholder="Choisir une image"
+            ></b-form-file>
+          </b-form-group>
+          <b-form-group
+            :id="`desc-img${i}`"
+            label="description"
+            label-for="input-option-val"
+          >
+            <b-form-input
+              v-model="item.description"
+              :id="`desc-img${i}`"
+              placeholder="1 Côté"
+              required
+            ></b-form-input>
+          </b-form-group>
+
+          <b-form-group
+            :id="`option-val${i}`"
+            label="value"
+            label-for="input-option-val"
+          >
+            <b-form-input
+              v-model="item.value"
+              :id="`option-val${i}`"
+              placeholder="Enter value of option"
+              required
+            ></b-form-input>
+          </b-form-group>
+
+          <b-button type="submit" variant="primary" size="sm">Push</b-button>
+          <b-button type="reset" variant="dark" size="sm" class="mx-2"
+            >Reset</b-button
+          >
+          <b-button variant="danger" size="sm" @click="deleteOption(i)"
+            >delete</b-button
+          >
         </b-form>
         <b-card class="mt-3" header="Form Data Result">
           <pre class="m-0">{{ optionsCheckImg }}</pre>
@@ -408,6 +695,19 @@
     <b-row v-if="type == 'markupnumber'" class="p-2">
       <b-col cols="7">
         <b-form-group
+          label="title :"
+          label-for="title-input"
+          invalid-feedback="Name is required"
+        >
+          <b-form-input
+            id="title-input"
+            required
+            v-model="fields.title"
+          ></b-form-input>
+        </b-form-group>
+      </b-col>
+      <b-col cols="7">
+        <b-form-group
           label="label :"
           label-for="markup-input"
           invalid-feedback="Markup image is required"
@@ -505,6 +805,58 @@
           >
           <b-button type="reset" variant="danger" size="sm">Reset</b-button>
         </b-form>
+        <b-form
+          @submit="onPush"
+          @reset="onReset"
+          class="border p-3"
+          v-for="(item, i) in fields.options"
+          :key="i"
+        >
+          <b-form-group label="label" label-for="input-option-label">
+            <b-form-input
+              v-model="item.label"
+              placeholder="Enter label"
+              required
+            ></b-form-input>
+          </b-form-group>
+
+          <b-form-group label="name" label-for="input-option-name">
+            <b-form-input
+              v-model="item.name"
+              placeholder="Enter name"
+              required
+            ></b-form-input>
+          </b-form-group>
+
+          <b-form-group
+            id="option-val"
+            label="value"
+            label-for="input-option-val"
+          >
+            <b-form-input
+              v-model="item.value"
+              placeholder="Enter value of option"
+              type="number"
+              min="1"
+              required
+            ></b-form-input>
+          </b-form-group>
+          <b-form-group label="Input unit" label-for="input-option-unit">
+            <b-form-input
+              v-model="item.unit"
+              placeholder="Enter unit of option"
+              required
+            ></b-form-input>
+          </b-form-group>
+
+          <b-button type="submit" variant="primary" size="sm">Push</b-button>
+          <b-button type="reset" variant="dark" size="sm" class="mx-2"
+            >Reset</b-button
+          >
+          <b-button variant="danger" size="sm" @click="deleteOption(i)"
+            >delete</b-button
+          >
+        </b-form>
         <b-card class="mt-3" header="Form Data Result">
           <pre class="m-0">{{ optionsMarkupNumber }}</pre>
         </b-card>
@@ -515,7 +867,20 @@
     <b-row v-if="type == 'markupnumberrow'" class="p-2">
       <b-col cols="7">
         <b-form-group
-          label="label :"
+          label="title :"
+          label-for="title-input"
+          invalid-feedback="Name is required"
+        >
+          <b-form-input
+            id="title-input"
+            required
+            v-model="fields.title"
+          ></b-form-input>
+        </b-form-group>
+      </b-col>
+      <b-col cols="7">
+        <b-form-group
+          label="Markup image :"
           label-for="markup-input"
           invalid-feedback="Markup image is required"
         >
@@ -609,6 +974,54 @@
             >Push</b-button
           >
           <b-button type="reset" variant="danger" size="sm">Reset</b-button>
+        </b-form>
+        <b-form
+          @submit="onPush"
+          @reset="onReset"
+          class="border p-3"
+          v-for="(item, i) in fields.options"
+          :key="i"
+        >
+          <b-form-group label="label" label-for="input-option-label">
+            <b-form-input
+              v-model="item.label"
+              placeholder="Enter label"
+              required
+            ></b-form-input>
+          </b-form-group>
+
+          <b-form-group label="name" label-for="input-option-name">
+            <b-form-input
+              v-model="item.name"
+              placeholder="Enter name"
+              required
+            ></b-form-input>
+          </b-form-group>
+
+          <b-form-group label="value" label-for="input-option-val">
+            <b-form-input
+              v-model="item.value"
+              placeholder="Enter value of option"
+              type="number"
+              min="1"
+              required
+            ></b-form-input>
+          </b-form-group>
+          <b-form-group label="Input unit" label-for="input-option-unit">
+            <b-form-input
+              v-model="item.unit"
+              placeholder="Enter unit of option"
+              required
+            ></b-form-input>
+          </b-form-group>
+
+          <b-button type="submit" variant="primary" size="sm">Push</b-button>
+          <b-button type="reset" variant="dark" size="sm" class="mx-2"
+            >Reset</b-button
+          >
+          <b-button variant="danger" size="sm" @click="deleteOption(i)"
+            >delete</b-button
+          >
         </b-form>
         <b-card class="mt-3" header="Form Data Result">
           <pre class="m-0">{{ optionsMarkupNumber }}</pre>
@@ -716,6 +1129,47 @@
           >
           <b-button type="reset" variant="danger" size="sm">Reset</b-button>
         </b-form>
+        <b-form
+          @submit="onPush"
+          @reset="onReset"
+          class="border p-3"
+          v-for="(item, i) in fields.options"
+          :key="i"
+        >
+          <b-form-group
+            id="option-label"
+            label="Option label"
+            label-for="input-option-label"
+          >
+            <b-form-input
+              v-model="item.label"
+              :id="`option-label${i}`"
+              placeholder="Enter label"
+              required
+            ></b-form-input>
+          </b-form-group>
+
+          <b-form-group
+            id="option-val"
+            label="Option value"
+            label-for="input-option-val"
+          >
+            <b-form-input
+              v-model="item.value"
+              :id="`option-value${i}`"
+              placeholder="Enter value of option"
+              required
+            ></b-form-input>
+          </b-form-group>
+
+          <b-button type="submit" variant="primary" size="sm">Push</b-button>
+          <b-button type="reset" variant="dark" size="sm" class="mx-2"
+            >Reset</b-button
+          >
+          <b-button variant="danger" size="sm" @click="deleteOption(i)"
+            >delete</b-button
+          >
+        </b-form>
         <b-card class="mt-3" header="Form Data Result">
           <pre class="m-0">{{ optionsNumber }}</pre>
         </b-card>
@@ -735,14 +1189,38 @@ export default {
       type: String,
       default: null,
     },
+    genre: {
+      type: String,
+      default: "",
+    },
+    fields: {
+      type: Object,
+      default: function () {
+        return {
+          type: "",
+          title: "",
+          label: "",
+          name: "",
+          value: [],
+          selected: "",
+          imgUrl: "",
+          require: true,
+          options: [],
+        };
+      },
+    },
   },
   data: () => {
     return {
       //json
       // fields: {
-      //   type: null,
+      //   type: "",
+      //   title: "",
       //   label: "",
       //   name: "",
+      //   value: [],
+      //   selected: "",
+      //   imgUrl: "",
       //   require: true,
       //   options: [],
       // },
@@ -767,6 +1245,8 @@ export default {
         label: "",
         value: "",
         img: "",
+        description: "",
+        isActive: false,
       },
       //object of type number Markup
       optionsMarkupNumber: {
@@ -792,7 +1272,7 @@ export default {
     },
   },
   computed: {
-    ...mapState(["fields"]),
+    ...mapState(["formDatas"]),
     optionsToPush() {
       var base = this.type;
       if (base == "checkbox") {
@@ -813,6 +1293,17 @@ export default {
     },
   },
   methods: {
+    deleteOption(index) {
+      var all = this.fields.options;
+      console.log("i", all, index);
+
+      for (var i = all.length - 1; i >= 0; i--) {
+        if (i === index) {
+          all.splice(i, 1);
+          console.log("iii");
+        }
+      }
+    },
     //logic for fields options
     onPush(event) {
       event.preventDefault();

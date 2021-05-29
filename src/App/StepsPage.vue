@@ -12,17 +12,27 @@
             required
           ></b-form-input>
         </b-form-group>
+
+        <b-button
+          class="m-4"
+          size="sm"
+          variant="light"
+          @click="$store.dispatch('changeMode')"
+          >admin?</b-button
+        >
       </div>
-      <b-row class="">
+
+      <b-row align-h="center">
         <transition name="fade">
-          <b-col class="full-block shadow" cols="12" lg="10" v-if="demo">
+          <b-col class="full-block shadow" cols="12" lg="9" v-if="demo">
             <!-- stepsIndex: {{ this.$store.state.stepsIndex }}--selected:
             {{ fields.selected }} -->
+
             <pages :level="this.$store.state.stepsIndex"></pages>
           </b-col>
         </transition>
 
-        <b-col class="">
+        <b-col class="" v-if="this.$store.state.mode">
           <div>
             <b-button
               variant="light"
@@ -31,6 +41,13 @@
               >configuration</b-button
             >
             <b-button class="m-4" size="sm" @click="newPage">New page</b-button>
+            <b-button
+              class="m-4"
+              variant="info"
+              size="sm"
+              @click="clearFormDatas"
+              >Clear steps</b-button
+            >
             <b-button
               class="m-4"
               variant="success"
@@ -88,6 +105,31 @@
                       ></b-form-input>
                     </b-form-group>
                   </b-col>
+
+                  <b-col cols="8">
+                    <hr />
+                    <label for="">datas for datasBase</label>
+                    <b-form-group label="name" label-for="name-input">
+                      <b-form-input
+                        id="db-input"
+                        v-model="datasBase.name"
+                        required
+                      ></b-form-input>
+                    </b-form-group>
+                  </b-col>
+
+                  <b-col cols="8">
+                    <b-form-group
+                      label="Description"
+                      label-for="description-input"
+                    >
+                      <b-form-textarea
+                        id="desc-input"
+                        v-model="datasBase.description"
+                        required
+                      ></b-form-textarea>
+                    </b-form-group>
+                  </b-col>
                 </b-row>
                 <b-button size="sm" variant="light" class="shadow-sm"
                   >Generate JSON</b-button
@@ -110,7 +152,7 @@
       </b-row>
     </b-container>
 
-    <b-row class="m-0"
+    <b-row class="m-0" v-if="this.$store.state.mode"
       ><b-col cols="4"
         ><b-card class="mt-3" header="Form Data Result">
           <pre class="m-0"></pre>
@@ -150,6 +192,12 @@ export default {
       stepsId: 1,
       demo: true,
       title: "",
+      datasBase: {
+        description: "",
+        id: null,
+        forms: "",
+        name: "",
+      },
     };
   },
   watch: {
@@ -181,52 +229,75 @@ export default {
     stepsDatas() {
       var so = this.datasBd;
       if (this.datasBd.length) {
-        return JSON.parse(so[this.stepsId - 1].forms);
-      } else return [];
+        console.log("object io", so[this.stepsId - 1]);
+        return so[this.stepsId - 1];
+      } else return "vide";
     },
   },
   methods: {
+    deleteSteps(datas) {
+      var all = this.$store.state.allStepsDatas;
+      var r = all.indexOf(this.formDatas);
+      this.$emit("index-to-delete", r);
+      console.log("de", datas);
+      for (var i = all.length - 1; i >= 0; i--) {
+        if (i === r) {
+          all.splice(i, 1);
+          console.log("iiippp");
+        }
+      }
+    },
     datasBdOrLocalStorage() {
       var local = localStorage.getItem("allo");
       var recap = JSON.parse(local);
       console.log("loaaaa", recap);
-      if (this.stepsDatas.length) {
-        this.$store.state.allStepsDatas = this.stepsDatas;
-        // this.$store.state.formDatas =
-        //   this.allStepsDatas[this.$store.state.stepsIndex];
+      if (this.stepsDatas != "vide") {
+        this.datasBase = this.stepsDatas;
+        console.log("aaa", this.datasBase);
+        var rep = JSON.parse(this.datasBase.forms);
+        this.$store.state.allStepsDatas = rep;
+        this.$store.state.formDatas =
+          this.allStepsDatas[this.$store.state.stepsIndex];
         // this.$store.state.fields = this.$store.state.formDatas.fields[0];
       } else if (recap != null && recap.length) {
+        console.log("appppaaa", recap);
         this.$store.state.allStepsDatas = recap;
         this.$store.state.formDatas =
           this.allStepsDatas[this.$store.state.stepsIndex];
-        this.$store.state.fields = this.$store.state.formDatas.fields[0];
+        //this.$store.state.fields = this.$store.state.formDatas.fields[0];
+      } else if (this.stepsDatas == "vide") {
+        alert(
+          "Désolé nous n'avons pas pue accéder à la BD  et vous n'avez aucune données dans votre localStorage"
+        );
       }
     },
     saveToLocal() {
       //var self = this;
       localStorage.setItem("allo", JSON.stringify(this.allStepsDatas));
       var forms = JSON.stringify(this.allStepsDatas);
-      var id = this.stepsId;
+      this.datasBase.forms = forms;
+      var datas = this.datasBase;
       //var local = localStorage.getItem("allo");
       //console.log("local", local);
-      utilities.saveSteps({ forms, id }).then((reponse) => {
+      utilities.saveSteps(datas).then((reponse) => {
         console.log("savesteps: ", reponse);
-        // axios
-        //   .post(
-        //     "http://lesroisdelareno.kksa" + "/query-ajax/insert-update",
-        //     reponse
-        //   )
-        //   .then(function (response) {
-        //     console.log("post response ", response);
-        //     self.loadStepsDatas();
-        //   })
-        //   .catch(function (error) {
-        //     console.log(error);
-        //     self.loadStepsDatas();
-        //   });
+        axios
+          .post(
+            "http://lesroisdelareno.kksa" + "/query-ajax/insert-update",
+            reponse
+          )
+          .then(function (response) {
+            console.log("post response ", response);
+            self.loadStepsDatas();
+          })
+          .catch(function (error) {
+            console.log(error);
+            self.loadStepsDatas();
+          });
       });
     },
     loadStepsDatas() {
+      //this.datasBdOrLocalStorage();
       var self = this;
       var datas = "select * from `appformmanager_fomrs`";
       axios
@@ -241,6 +312,7 @@ export default {
         })
         .catch(function (error) {
           console.log("get error ", error);
+          self.datasBdOrLocalStorage();
         });
     },
     clearStorage() {
@@ -276,6 +348,9 @@ export default {
     newPage() {
       this.demo = false;
       this.$store.dispatch("newPage");
+    },
+    clearFormDatas() {
+      this.$store.dispatch("resetFormDatas");
     },
     resetValue() {
       this.fields.selected = "";

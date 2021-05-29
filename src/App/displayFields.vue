@@ -18,15 +18,29 @@
     >
     <b-col class="choice-section">
       <form ref="form" @submit.stop.prevent="handleSubmit">
-        <!-- fields value: {{ fields.value }}-- fields selected:{{
-                fields.selected
-              }} -->
+        <!-- fields value: {{ formDatas.fields[id].value }}-- fields selected:{{
+          formDatas.fields[id].selected
+        }} -->
         <!-- affiche sur le cas du type codepostal -->
         <b-row align-h="center" v-if="type == 'codepostal'">
           <b-col class="autocomplete">
             <autocomplete></autocomplete>
           </b-col>
         </b-row>
+        <!-- affiche pour le cas du type checkbox image -->
+        <b-row align-h="center" class="m-0" v-if="type == 'checkboximg'">
+          <div
+            v-for="(img, i) in formDatas.fields[id].options"
+            :key="i"
+            @click="getImage(i)"
+          >
+            <imageCheck
+              :description="img.description"
+              :isActive="img.isActive"
+            />
+          </div>
+        </b-row>
+
         <!-- affiche sur le cas du type number -->
         <b-row align-h="center" v-if="type == 'number'">
           <label-row :options="formDatas.fields[id].options"></label-row>
@@ -67,7 +81,7 @@
                   name="some-radios"
                   v-model="formDatas.fields[id].value"
                   size="lg"
-                  :id="`input-radio-${i}`"
+                  :id="`input-radio-a${i}`"
                   :value="item.value"
                 ></b-form-radio>
               </b-col>
@@ -94,7 +108,6 @@
                   name="some-radios"
                   v-model="formDatas.fields[id].value"
                   size="lg"
-                  :id="`input-horizni-${i}`"
                   :value="item.value"
                 ></b-form-checkbox>
               </b-col>
@@ -131,16 +144,33 @@
             </div>
           </b-col>
         </b-row>
-        <!-- affiche pour le cas du type checkbox image -->
-        <b-row align-h="center" class="m-0" v-if="false">
-          <div v-for="(img, i) in imageCheck" :key="i" @click="getImage(i)">
-            <imageCheck
-              :isActive="img.isActive"
-              :description="img.description"
-            />
-          </div>
-        </b-row></form
-    ></b-col>
+      </form>
+      <b-row align-h="center" v-if="this.$store.state.mode">
+        <b-col sm="2" class="my-3"
+          ><b-button
+            class="mx-3"
+            variant="success"
+            size="sm"
+            @click="editFormField"
+            >edit</b-button
+          ></b-col
+        ><b-col sm="2" class="my-3"
+          ><b-button
+            class="mx-3"
+            variant="danger"
+            size="sm"
+            @click="deleteField"
+            >delete</b-button
+          ></b-col
+        >
+      </b-row>
+    </b-col>
+
+    <add-form-field
+      :isOpen="isOpen"
+      ref="editFormField"
+      :fields="fields"
+    ></add-form-field>
   </div>
 </template>
 
@@ -148,6 +178,7 @@
 import { mapState } from "vuex";
 import LabelRow from "./input/LabelRow.vue";
 import NumberMarkup from "./NumberMarkup.vue";
+import AddFormField from "./AddFormField.vue";
 import autocomplete from "./Autocomplete";
 export default {
   components: {
@@ -156,6 +187,7 @@ export default {
     NumberMarkup,
     LabelRow,
     autocomplete,
+    AddFormField,
   },
   props: {
     type: {
@@ -171,22 +203,70 @@ export default {
     return {
       isOpen: false,
       typeFieldSelected: null,
-
-      // fields: {
-      //   type: null,
-      //   label: "",
-      //   name: "",
-      //   require: true,
-      //   options: [],
-      // },
+      option: {},
+      fields: {
+        type: "",
+        title: "",
+        label: "",
+        name: "",
+        value: [],
+        selected: "",
+        imgUrl: "",
+        require: true,
+        options: [],
+      },
       //datas to check form validity
       labelState: null,
     };
   },
   watch: {},
   computed: {
-    ...mapState(["fields", "formDatas"]),
+    ...mapState(["formDatas"]),
   },
-  methods: {},
+  methods: {
+    getImage(il) {
+      var le = this.formDatas.fields[this.id].options;
+      console.log("le", le);
+      for (var i = 0; i < le.length; i++) {
+        if (i == il) {
+          le[i].isActive = !le[i].isActive;
+          this.formDatas.fields[this.id].value = le[i].value;
+        } else {
+          le[i].isActive = false;
+        }
+      }
+    },
+    editFormField() {
+      this.$refs.editFormField.openAddFormFieldPopUp();
+      this.fields = this.formDatas.fields[this.id];
+    },
+    deleteField() {
+      var all = this.formDatas.fields;
+      for (var i = all.length - 1; i >= 0; i--) {
+        if (i === this.id) {
+          all.splice(i, 1);
+          console.log("iiippp");
+        }
+      }
+      this.fields = this.formDatas.fields[this.id];
+    },
+    resetModal() {
+      //this.type = null;
+    },
+    handleOk(event) {
+      event.preventDefault();
+      this.handleSubmit();
+    },
+    handleSubmit(event) {
+      event.preventDefault();
+      this.isOpen = !this.isOpen;
+      // Push the name to submitted names
+      this.$emit("input_to_add", this.fields);
+      // Hide the modal manually
+      this.$nextTick(() => {
+        this.$bvModal.hide("modal-prevent-closing");
+      });
+    },
+  },
 };
 </script>

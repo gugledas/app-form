@@ -1,7 +1,12 @@
 <template>
   <div class="element-center">
     <b-row align-h="end" class="m-4">
-      <b-button class="mx-4" variant="primary" size="sm" @click="addFormField"
+      <b-button
+        class="mx-4"
+        v-if="this.$store.state.mode"
+        variant="primary"
+        size="sm"
+        @click="addFormField"
         >Ajouter des Champs</b-button
       >
       <p class="button-travaux">{{ formDatas.info.headerTitle }}</p></b-row
@@ -9,188 +14,19 @@
     <!-- center container -->
     <b-container fluid class="center-container">
       <b-row class="block-container" align-h="center">
-        <b-row>
+        <b-row class="w-100">
           <b-col cols="12" class="text-left" v-if="level > 0">
             <div class="backButton" @click="back">
               <img src="../../public/long-arrow-alt-left-solid.svg" alt="" />
             </div>
           </b-col>
-          <b-col cols="12" class="text-left">
-            <h3 class="question-title">{{ formDatas.info.title }}</h3>
-          </b-col>
-          <!-- stepsState: {{ stepsState }} -->
-          <!-- <div class="help-container">
-            <div class="help-block">
-              <p class="help-block__title">Aide</p>
-              <p class="help-block__content">
-                La mitoyenneté de votre logement va permettre de définir la
-                bonne solution en matière d’isolation thermique.
-              </p>
-            </div>
-          </div> -->
-          <b-col cols="12" class="text-left"
-            ><p class="page-label">{{ fields.label }}</p></b-col
+          <div
+            v-for="(field, i) in this.formDatas.fields"
+            :key="i"
+            class="col-12 p-0 mb-5"
           >
-          <b-col class="choice-section">
-            <form ref="form" @submit.stop.prevent="handleSubmit">
-              <!-- fields value: {{ fields.value }}-- fields selected:{{
-                fields.selected
-              }} -->
-              <b-row align-h="center" v-if="fields.type == 'codepostal'">
-                <b-col class="autocomplete">
-                  <autocomplete></autocomplete>
-                </b-col>
-              </b-row>
-              <!-- affiche sur le cas du type number -->
-              <b-row align-h="center" v-if="fields.type == 'number'">
-                <label-row :options="fields.options"></label-row>
-              </b-row>
-
-              <!-- affiche sur le cas du type markup label up -->
-              <b-row align-h="center" v-if="fields.type == 'markupnumberrow'"
-                ><number-markup :options="fields.options"></number-markup
-              ></b-row>
-
-              <!-- affiche sur le cas du type markup label up -->
-              <b-row align-h="center" v-if="fields.type == 'markupnumber'"
-                ><number-markup
-                  type="up"
-                  :options="fields.options"
-                ></number-markup
-              ></b-row>
-              <!-- affiche sur le cas du type increment number -->
-              <b-row align-h="center" v-if="fields.type == 'increment'">
-                <increment-number></increment-number>
-              </b-row>
-
-              <!-- affiche pour le cas du type radio -->
-              <b-row v-if="fields.type == 'radio'">
-                <b-col cols="12" v-for="(item, i) in fields.options" :key="i">
-                  <div class="input-list">
-                    <b-col sm="11" class="input-list__label">
-                      <label class="m-0">{{ item.label }}</label>
-                    </b-col>
-                    <b-col class="input-list__input">
-                      <b-form-radio
-                        name="some-radios"
-                        v-model="fields.selected"
-                        size="lg"
-                        :id="`input-horizni-${i}`"
-                        :value="item.value"
-                      ></b-form-radio>
-                    </b-col>
-                  </div>
-                </b-col>
-              </b-row>
-
-              <!-- affiche pour le cas du type checkbox -->
-              <b-row v-if="fields.type == 'checkbox'">
-                <b-col cols="12" v-for="(item, i) in fields.options" :key="i">
-                  <div class="input-list">
-                    <b-col
-                      sm="11"
-                      class="
-                        input-list__label
-                        d-flex
-                        align-items-start
-                        flex-column
-                      "
-                    >
-                      <label class="m-0">{{ item.label }}</label>
-                    </b-col>
-                    <b-col class="input-list__input">
-                      <b-form-checkbox
-                        name="some-radios"
-                        v-model="fields.value"
-                        size="lg"
-                        :id="`input-horizni-${i}`"
-                        :value="item.value"
-                      ></b-form-checkbox>
-                    </b-col>
-                  </div>
-                </b-col>
-              </b-row>
-
-              <!-- affiche pour le cas du type radio with description -->
-              <b-row v-if="fields.type == 'radiodesc'">
-                <b-col cols="12" v-for="(item, i) in fields.options" :key="i">
-                  <div class="input-list">
-                    <b-col
-                      sm="11"
-                      class="
-                        input-list__label
-                        d-flex
-                        align-items-start
-                        flex-column
-                      "
-                    >
-                      <label class="m-0">{{ item.label }}</label>
-                      <small class="input-list__description">{{
-                        item.description
-                      }}</small>
-                    </b-col>
-                    <b-col class="input-list__input">
-                      <b-form-radio
-                        name="some-radios"
-                        v-model="fields.selected"
-                        size="lg"
-                        :id="`input-horizni-${i}`"
-                        :value="item.value"
-                      ></b-form-radio>
-                    </b-col>
-                  </div>
-                </b-col>
-              </b-row>
-
-              <b-row align-h="center" class="m-0" v-if="false">
-                <div
-                  v-for="(img, i) in imageCheck"
-                  :key="i"
-                  @click="getImage(i)"
-                >
-                  <imageCheck
-                    :isActive="img.isActive"
-                    :description="img.description"
-                  />
-                </div>
-              </b-row></form
-          ></b-col>
-        </b-row>
-
-        <b-row class="mt-5" v-if="fields.type == 'radio'">
-          <b-col cols="12" class="text-left">
-            <h3 class="question-title">{{ formDatas.info.title }}</h3>
-          </b-col>
-
-          <b-col cols="12" class="text-left"
-            ><p class="page-label">{{ fields.label }}</p></b-col
-          >
-          <b-col class="choice-section">
-            <form ref="form" @submit.stop.prevent="handleSubmit">
-              <!-- fields value: {{ fields.value }}-- fields selected:{{
-                fields.selected
-              }} -->
-
-              <!-- affiche pour le cas du type radio -->
-              <b-row v-if="fields.type == 'radio'">
-                <b-col cols="12" v-for="(item, i) in fields.options" :key="i">
-                  <div class="input-list">
-                    <b-col sm="11" class="input-list__label">
-                      <label class="m-0">{{ item.label }}</label>
-                    </b-col>
-                    <b-col class="input-list__input">
-                      <b-form-radio
-                        name="some-radios"
-                        v-model="fields.selected"
-                        size="lg"
-                        :id="`input-horizn-${i}`"
-                        :value="item.value"
-                      ></b-form-radio>
-                    </b-col>
-                  </div>
-                </b-col>
-              </b-row></form
-          ></b-col>
+            <display-fields :type="field.type" :id="i"></display-fields>
+          </div>
         </b-row>
 
         <b-col cols="12" class="form-nav-bouton">
@@ -202,6 +38,11 @@
             Suivant
           </button>
         </b-col>
+        <b-col cols="12" v-if="this.$store.state.mode">
+          <b-button variant="danger" @click="deleteSteps">
+            delete this steps
+          </b-button>
+        </b-col>
         <!-- pre: -->
         <!-- <pre>{{ fields }}</pre> -->
       </b-row>
@@ -211,6 +52,7 @@
     <add-form-field
       :isOpen="modalFormFieldIsOpen"
       ref="formField"
+      :fields="fields"
     ></add-form-field>
   </div>
 </template>
@@ -218,17 +60,12 @@
 <script>
 import { mapState } from "vuex";
 import AddFormField from "./AddFormField.vue";
-import LabelRow from "./input/LabelRow.vue";
-import NumberMarkup from "./NumberMarkup.vue";
-import autocomplete from "./Autocomplete";
+
+import DisplayFields from "./displayFields.vue";
 export default {
   components: {
     AddFormField,
-    ImageCheck: () => import("./ImageCheck.vue"),
-    IncrementNumber: () => import("./IncrementNumber.vue"),
-    NumberMarkup,
-    LabelRow,
-    autocomplete,
+    DisplayFields,
   },
   props: {
     level: {
@@ -262,11 +99,7 @@ export default {
   computed: {
     ...mapState(["formDatas", "fields"]),
     stepsState() {
-      if (this.fields.selected != "" || this.fields.value.length) {
-        return true;
-      } else if (this.fields.require) {
-        return false;
-      } else if (!this.fields.require) {
+      if (this.$store.state.allStepsDatas.length - 1 > this.level) {
         return true;
       } else return false;
     },
@@ -281,6 +114,12 @@ export default {
       if (this.stepsState) {
         this.$parent.suivant();
       }
+    },
+    deleteSteps() {
+      // var all = this.$store.state.allStepsDatas;
+      // var r = all.indexOf(this.formDatas);
+      //this.$emit("index-to-delete", r);
+      this.$store.dispatch("deleteStepsInAllSteps");
     },
     addFormField() {
       this.$refs.formField.openAddFormFieldPopUp();
@@ -379,12 +218,13 @@ $primary_color: #319899;
       .question-title {
         text-align: left;
         font-size: 1.4em;
-        margin-bottom: 10px;
+        margin-bottom: 30px;
         color: #222;
         line-height: 1.2;
       }
       .choice-section {
         max-width: 530px;
+        margin-top: 10px;
         width: 100%;
         .input-list {
           display: flex;
@@ -449,13 +289,13 @@ $primary_color: #319899;
         }
       }
       .page-label {
-        margin: 15px 0;
+        margin: 0 0 30px;
         font-size: 0.9em;
         color: #000;
       }
     }
     .form-nav-bouton {
-      margin: 3rem 0;
+      margin: 1rem 0;
       .next-bouton {
         height: 56px;
         width: 100%;

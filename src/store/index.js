@@ -2,109 +2,22 @@ import Vue from "vue";
 import Vuex from "vuex";
 
 Vue.use(Vuex);
-
+import axios from "axios";
 export default new Vuex.Store({
   state: {
-    month: 8,
-    day: 12,
-    year: 2008,
     stepsIndex: 0,
-    mode: false,
+    /**
+     * true, si on est administrateur.
+     */
+    mode: true,
+    /**
+     * contient les etapes d'un formulaire
+     */
     allStepsDatas: [],
-    formDatas: {
-      info: {
-        headerTitle: "Tout les traveaux",
-        title: "",
-        name: "",
-      },
-      fields: [
-        {
-          type: "checkbox",
-          title:
-            "Quels travaux d’isolation souhaitez-vous réaliser et aussi tout ce qu'il",
-          label: "remuni",
-          name: "",
-          value: [],
-          selected: [],
-          imgUrl: "",
-          require: true,
-          options: [
-            {
-              label: "Combles aménagés par l'intérieur",
-              description:
-                "Quels travaux d’isolation souhaitez-vous réaliser et aussi tout ce qu'il",
-              value: "Combles aménagés par l'intérieur",
-            },
-            {
-              label: "Combles aménagés pal l'extérieur",
-              description:
-                "Quels travaux d’isolation souhaitez-vous réaliser et aussi tout ce qu'il",
-              value: "Combles aménagés pal l'extérieur",
-            },
-            {
-              label: "Combles perdus",
-              description:
-                "Quels travaux d’isolation souhaitez-vous réaliser et aussi tout ce qu'il",
-              value: "Combles perdus",
-            },
-            {
-              label: "Toit terrasse",
-              description:
-                "Quels travaux d’isolation souhaitez-vous réaliser et aussi tout ce qu'il",
-              value: "Toit terrasse",
-            },
-            {
-              label: "Mur",
-              description:
-                "Quels travaux d’isolation souhaitez-vous réaliser et aussi tout ce qu'il",
-              value: "Mur",
-            },
-            {
-              label: "Planchés de vide sanitaire,sous-sol",
-              description:
-                "Quels travaux d’isolation souhaitez-vous réaliser et aussi tout ce qu'il",
-              value: "Planchés de vide sanitaire,sous-sol",
-            },
-          ],
-        },
-        {
-          type: "checkbox",
-          title: "travaux d’isolation souhaitez-vous ussi tout Quels  ce qu'il",
-          label: "un seul choix possible",
-          name: "",
-          value: [],
-          selected: [],
-          imgUrl: "",
-          require: true,
-          options: [
-            {
-              label: "Combles aménagés par l'intérieur",
-              description:
-                "Quels travaux d’isolation souhaitez-vous réaliser et aussi tout ce qu'il",
-              value: "Combles aménagés par l'intérieur",
-            },
-            {
-              label: "Combles aménagés pal l'extérieur",
-              description:
-                "Quels travaux d’isolation souhaitez-vous réaliser et aussi tout ce qu'il",
-              value: "Combles aménagés pal l'extérieur",
-            },
-            {
-              label: "Combles perdus",
-              description:
-                "Quels travaux d’isolation souhaitez-vous réaliser et aussi tout ce qu'il",
-              value: "Combles perdus",
-            },
-            {
-              label: "Toit terrasse",
-              description:
-                "Quels travaux d’isolation souhaitez-vous réaliser et aussi tout ce qu'il",
-              value: "Toit terrasse",
-            },
-          ],
-        },
-      ],
-    },
+    /**
+     * Contient l'information d'une etape du formulaire selectionné.
+     */
+    //formDatas: {},
     fields: {
       type: "",
       title: "",
@@ -114,50 +27,58 @@ export default new Vuex.Store({
       selected: "",
       imgUrl: "",
       require: true,
-      options: [
-        // {
-        //   label: "Combles aménagés par l'intérieur",
-        //   description:
-        //     "Quels travaux d’isolation souhaitez-vous réaliser et aussi tout ce qu'il",
-        //   value: "Combles aménagés par l'intérieur",
-        // },
-        // {
-        //   label: "Combles aménagés pal l'extérieur",
-        //   description:
-        //     "Quels travaux d’isolation souhaitez-vous réaliser et aussi tout ce qu'il",
-        //   value: "Combles aménagés pal l'extérieur",
-        // },
-        // {
-        //   label: "Combles perdus",
-        //   description:
-        //     "Quels travaux d’isolation souhaitez-vous réaliser et aussi tout ce qu'il",
-        //   value: "Combles perdus",
-        // },
-        // {
-        //   label: "Toit terrasse",
-        //   description:
-        //     "Quels travaux d’isolation souhaitez-vous réaliser et aussi tout ce qu'il",
-        //   value: "Toit terrasse",
-        // },
-        // {
-        //   label: "Mur",
-        //   description:
-        //     "Quels travaux d’isolation souhaitez-vous réaliser et aussi tout ce qu'il",
-        //   value: "Mur",
-        // },
-        // {
-        //   label: "Planchés de vide sanitaire,sous-sol",
-        //   description:
-        //     "Quels travaux d’isolation souhaitez-vous réaliser et aussi tout ce qu'il",
-        //   value: "Planchés de vide sanitaire,sous-sol",
-        // },
-      ],
+      options: [],
     },
     field: {},
+
+    /**
+     * Contient le formulaire selectionné par le client.
+     */
+    /*
+    form: {
+      id: "",
+      forms: "",
+      description: "",
+      name: "",
+    },
+    /**/
+    /**
+     * Contient la liste des formulaire recupere de la BD.
+     */
+    items: [],
+    /**
+     * Contient l'id du formulaire selectionné.
+     */
+    formId: null,
   },
   getters: {
-    alla() {
-      return { val: "alla" };
+    /**
+     * Contient le formulaire selectionné par le client.
+     */
+    form: (state) => {
+      if (state.items.length && state.formId !== null) {
+        console.log("MAJ de form");
+        const form = state.items[state.formId];
+        form.forms = JSON.parse(form.forms);
+        return form;
+      }
+      return {
+        id: "",
+        forms: "",
+        description: "",
+        name: "",
+      };
+    },
+    /**
+     * Contient l'information d'une etape du formulaire selectionné.
+     * par defaut, etape 0;
+     */
+    formDatas: (state, getters) => {
+      if (getters.form.forms) {
+        return getters.form.forms[state.stepsIndex];
+      } else {
+        return {};
+      }
     },
   },
   mutations: {
@@ -218,7 +139,7 @@ export default new Vuex.Store({
         options: [],
       };
     },
-    ADD_FIELDS(state, payload) {
+    ADD_FIELDS(getters, payload) {
       class proto {
         constructor(hauteur) {
           this.hauteur = hauteur;
@@ -229,15 +150,25 @@ export default new Vuex.Store({
       for (let i in raq.hauteur) {
         sh[i] = raq.hauteur[i];
       }
-
-      console.log("object addfields", sh);
-      state.formDatas.fields.push(sh);
+      console.log("ADD_FIELDS : ", getters);
+      //state.formDatas.fields.push(sh);
     },
     NEW_PAGE(state) {
       state.allStepsDatas.push(state.formDatas);
     },
     SUIVANT(state) {
       state.stepsIndex++;
+    },
+    SET_ITEMS(state, payload) {
+      state.items = payload;
+    },
+    SET_FORM_ID(state, payload) {
+      state.formId = payload;
+    },
+    SET_FORM(state) {
+      const form = state.items[state.formId];
+      form.forms = JSON.parse(form.forms);
+      state.form = form;
     },
   },
   actions: {
@@ -266,6 +197,26 @@ export default new Vuex.Store({
     },
     changeMode({ commit }) {
       commit("CHANGE_MODE");
+    },
+    setForm({ commit }) {
+      commit("SET_FORM");
+    },
+    setFormId({ commit }, payload) {
+      commit("SET_FORM_ID", payload);
+    },
+    loadStepsDatas({ commit }) {
+      //this.datasBdOrLocalStorage();
+      //var self = this;
+      var datas = "select * from `appformmanager_fomrs`";
+      axios
+        .post("http://lesroisdelareno.kksa" + "/query-ajax/select", datas)
+        .then((reponse) => {
+          console.log("get loadStepsDatas: ", reponse);
+          commit("SET_ITEMS", reponse.data);
+        })
+        .catch((error) => {
+          console.log("get error ", error);
+        });
     },
   },
   modules: {},

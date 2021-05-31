@@ -1181,7 +1181,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapGetters } from "vuex";
 export default {
   components: {},
   props: {
@@ -1272,7 +1272,7 @@ export default {
     },
   },
   computed: {
-    ...mapState(["formDatas"]),
+    ...mapGetters(["formDatas"]),
     optionsToPush() {
       var base = this.type;
       if (base == "checkbox") {

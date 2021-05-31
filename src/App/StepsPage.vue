@@ -1,38 +1,22 @@
 <template>
   <div>
-    <b-container class="bv-example-row" fluid="lg">
-      <div class="d-inline-flex mx-4 p-3">
-        <b-form-group label="steps Id" label-for="name-input">
-          <b-form-input
-            id="name-input"
-            v-model="stepsId"
-            type="number"
-            min="1"
-            :max="datasBd.length"
-            required
-          ></b-form-input>
-        </b-form-group>
-
-        <b-button
-          class="m-4"
-          size="sm"
-          variant="light"
-          @click="$store.dispatch('changeMode')"
-          >admin?</b-button
-        >
+    <b-container class="bv-example-row bg-light p-5" fluid="lg">
+      <div>
+        <h4 class="titre">Edition du formulaire: {{ form.name }}</h4>
       </div>
-
       <b-row align-h="center">
         <transition name="fade">
-          <b-col class="full-block shadow" cols="12" lg="9" v-if="demo">
-            <!-- stepsIndex: {{ this.$store.state.stepsIndex }}--selected:
-            {{ fields.selected }} -->
-
-            <pages :level="this.$store.state.stepsIndex"></pages>
+          <b-col
+            class="full-block shadow"
+            cols="12"
+            lg="9"
+            v-if="formDatas && formDatas.info"
+          >
+            <pages :level="stepsIndex"></pages>
           </b-col>
         </transition>
 
-        <b-col class="" v-if="this.$store.state.mode">
+        <b-col class="" v-if="$store.state.mode">
           <div>
             <b-button
               variant="light"
@@ -78,6 +62,7 @@
               @ok="handleOk"
               hide-footer
             >
+              <!--
               <form ref="form" @submit="handleSubmit" @reset="resetModal">
                 <b-row>
                   <b-col cols="8">
@@ -131,6 +116,16 @@
                       ></b-form-textarea>
                     </b-form-group>
                   </b-col>
+
+                  <b-col cols="8">
+                    <b-form-group label="Id" label-for="description-input">
+                      <b-form-textarea
+                        id="desc-input-id"
+                        v-model="datasBase.id"
+                        required
+                      ></b-form-textarea>
+                    </b-form-group>
+                  </b-col>
                 </b-row>
                 <b-button size="sm" variant="light" class="shadow-sm"
                   >Generate JSON</b-button
@@ -147,6 +142,7 @@
                   </div></b-row
                 >
               </form>
+            -->
             </b-modal>
           </div>
         </b-col>
@@ -157,8 +153,8 @@
       ><b-col cols="4"
         ><b-card class="mt-3" header="Form Data Result">
           <pre class="m-0"></pre>
-          <p>allStepsDatas</p>
-          <pre>{{ allStepsDatas }}</pre>
+          <p>formulaire Generale</p>
+          <pre>{{ form }}</pre>
         </b-card></b-col
       ><b-col cols="4"
         ><b-card class="mt-3" header="Form all steps">
@@ -183,11 +179,16 @@ import axios from "axios";
 import utilities from "./Utilities";
 import { mapState, mapGetters } from "vuex";
 
-//import pages from "./pages.vue";
-import pages from "./pages2.vue";
+import pages from "./pages.vue";
+//import pages from "./pages2.vue";
 export default {
   components: { pages },
-  props: {},
+  props: {
+    id: {
+      type: String,
+      required: true,
+    },
+  },
   data: () => {
     return {
       datasBd: [],
@@ -208,18 +209,18 @@ export default {
     },
   },
   mounted() {
-    this.loadStepsDatas();
+    this.$store.dispatch("setFormId", this.id);
   },
   computed: {
     ...mapState([
+      "stepsIndex",
       "year",
       "month",
       "day",
-      "formDatas",
       "allStepsDatas",
       "fields",
     ]),
-    ...mapGetters(["alla"]),
+    ...mapGetters(["form", "formDatas"]),
     currentSteps() {
       var local = localStorage.getItem("allo");
       var recap = JSON.parse(local);
@@ -298,6 +299,9 @@ export default {
           });
       });
     },
+    /**
+     * @depreciated
+     */
     loadStepsDatas() {
       //this.datasBdOrLocalStorage();
       var self = this;
@@ -314,7 +318,6 @@ export default {
         })
         .catch(function (error) {
           console.log("get error ", error);
-          self.datasBdOrLocalStorage();
         });
     },
     clearStorage() {

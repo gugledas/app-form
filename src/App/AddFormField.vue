@@ -3,7 +3,7 @@
     <b-modal
       id="modal-addForm"
       ref="addForm"
-      title="Ajouter des champs dans la page"
+      title="Ajouter des champs dans la page..."
       hide-footer
       v-model="isOpen"
       @ok="handleOk"
@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapGetters } from "vuex";
 import inputOptionForm from "./inputOptionForm.vue";
 export default {
   components: { inputOptionForm },
@@ -76,6 +76,7 @@ export default {
         };
       },
     },
+    /**/
     genre: {
       type: String,
       default: "",
@@ -86,17 +87,19 @@ export default {
       isOpen: false,
       typeFieldSelected: null,
       type: null,
-      // fields    : {
-      //   type    : "",
-      //   title   : "",
-      //   label   : "",
-      //   name    : "",
-      //   value   : [],
-      //   selected: "",
-      //   imgUrl  : "",
-      //   require : true,
-      //   options : [],
-      // },
+      /*
+      fields: {
+        type: "",
+        title: "",
+        label: "",
+        name: "",
+        value: [],
+        selected: "",
+        imgUrl: "",
+        require: true,
+        options: [],
+      },
+      /**/
       //datas to check form validity
       labelState: null,
       typeOptions: [
@@ -117,11 +120,23 @@ export default {
   },
   watch: {},
   computed: {
-    ...mapState(["years"]),
+    ...mapGetters(["formDatas"]),
   },
   methods: {
     optionAddToFields() {
-      this.$store.dispatch("addFields", this.fields);
+      //this.$store.dispatch("addFields", this.fields);
+      class proto {
+        constructor(hauteur) {
+          this.hauteur = hauteur;
+        }
+      }
+      const protoD = new proto(this.fields);
+      var sh = {};
+      for (let i in protoD.hauteur) {
+        sh[i] = protoD.hauteur[i];
+      }
+      this.formDatas.fields.push(sh);
+      //this.fields = {};
     },
     //
     openAddFormFieldPopUp() {

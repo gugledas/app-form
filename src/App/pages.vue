@@ -52,13 +52,12 @@
     <add-form-field
       :isOpen="modalFormFieldIsOpen"
       ref="formField"
-      :fields="fields"
     ></add-form-field>
   </div>
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapGetters } from "vuex";
 import AddFormField from "./AddFormField.vue";
 
 import DisplayFields from "./displayFields.vue";
@@ -97,9 +96,10 @@ export default {
     },
   },
   computed: {
-    ...mapState(["formDatas", "fields"]),
+    //...mapState(["fields"]),
+    ...mapGetters(["formDatas"]),
     stepsState() {
-      if (this.$store.state.allStepsDatas.length - 1 > this.level) {
+      if (this.$store.getters.form.forms.length - 1 > this.level) {
         return true;
       } else return false;
     },
@@ -112,7 +112,8 @@ export default {
   methods: {
     suivant() {
       if (this.stepsState) {
-        this.$parent.suivant();
+        //this.$parent.suivant();
+        this.$store.state.stepsIndex++;
       }
     },
     deleteSteps() {
@@ -125,7 +126,8 @@ export default {
       this.$refs.formField.openAddFormFieldPopUp();
     },
     back() {
-      this.$parent.back();
+      //this.$parent.back();
+      this.$store.state.stepsIndex--;
     },
     getImage(il) {
       for (var i = 0; i < this.imageCheck.length; i++) {

@@ -9,8 +9,9 @@
         @click="addFormField"
         >Ajouter des Champs</b-button
       >
-      <p class="button-travaux">{{ formDatas.info.headerTitle }}</p></b-row
-    >
+      <p class="button-travaux">{{ formDatas.info.headerTitle }}</p>
+      step: {{ stepsState }}// level: {{ level }} <br />
+    </b-row>
     <!-- center container -->
     <b-container fluid class="center-container">
       <b-row class="block-container" align-h="center">
@@ -97,11 +98,50 @@ export default {
   },
   computed: {
     //...mapState(["fields"]),
-    ...mapGetters(["formDatas"]),
+    ...mapGetters(["formDatas", "form"]),
     stepsState() {
+      var state = null;
+      var value = null;
+      var req = null;
+      var opt = null;
+
+      this.formDatas.fields.forEach((element) => {
+        if (element.value.length && element.value != " ") {
+          value = true;
+        } else {
+          value = false;
+        }
+      });
+      this.formDatas.fields.forEach((element) => {
+        if (element.require) {
+          req = true;
+        } else {
+          req = false;
+        }
+      });
+      this.formDatas.fields.forEach((element) => {
+        if (element.options.length) {
+          element.options.forEach((item) => {
+            if (item.value.length && element.value != " ") {
+              opt = true;
+            } else opt = false;
+          });
+        }
+      });
+
       if (this.$store.getters.form.forms.length - 1 > this.level) {
-        return true;
-      } else return false;
+        if (req && value) {
+          state = true;
+        } else if (!req && opt) {
+          state = true;
+        } else {
+          state = false;
+        }
+      }
+
+      // console.log("object", value, req, opt);
+
+      return state;
     },
     taille() {
       if (this.fields.options.length) {
@@ -117,10 +157,15 @@ export default {
       }
     },
     deleteSteps() {
-      // var all = this.$store.state.allStepsDatas;
-      // var r = all.indexOf(this.formDatas);
-      //this.$emit("index-to-delete", r);
-      this.$store.dispatch("deleteStepsInAllSteps");
+      var all = this.$store.getters.form.forms;
+      var r = all.indexOf(this.formDatas);
+      for (var i = all.length - 1; i >= 0; i--) {
+        if (i === r) {
+          all.splice(i, 1);
+          console.log("iiippp");
+        }
+      }
+      //this.$store.dispatch("deleteStepsInAllSteps");
     },
     addFormField() {
       this.$refs.formField.openAddFormFieldPopUp();

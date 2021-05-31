@@ -2,7 +2,7 @@
   <div>
     <div>
       <multiselect
-        v-model="this.$store.state.fields.selected"
+        v-model="value.value"
         :options="options"
         :custom-label="nameWithLang"
         placeholder=""
@@ -31,12 +31,19 @@
 import Multiselect from "vue-multiselect";
 
 export default {
+  props: {
+    value: {
+      type: Object,
+      default: function () {
+        return { value: "" };
+      },
+    },
+  },
   components: {
     Multiselect,
   },
   data() {
     return {
-      value: "",
       options: [
         { name: "Vue.js", language: "JavaScript" },
         { name: "Rails", language: "Ruby" },

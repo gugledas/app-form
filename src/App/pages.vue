@@ -29,7 +29,11 @@
             <display-fields :type="field.type" :id="i"></display-fields>
           </div>
         </b-row>
-
+        <div>
+          <markup-image></markup-image>
+          <markup-title></markup-title>
+          <label-up></label-up>
+        </div>
         <b-col cols="12" class="form-nav-bouton">
           <button
             class="next-bouton"
@@ -60,12 +64,17 @@
 <script>
 import { mapGetters } from "vuex";
 import AddFormField from "./AddFormField.vue";
-
+import LabelUp from "./input/LabelUp";
 import DisplayFields from "./displayFields.vue";
+import MarkupImage from "./input/MarkupImage.vue";
+import MarkupTitle from "./input/MarkupTitle.vue";
 export default {
   components: {
     AddFormField,
     DisplayFields,
+    MarkupImage,
+    MarkupTitle,
+    LabelUp,
   },
   props: {
     level: {
@@ -267,13 +276,7 @@ $primary_color: #319899;
     justify-content: center;
     .block-container {
       max-width: 500px;
-      .question-title {
-        text-align: left;
-        font-size: 1.4em;
-        margin-bottom: 30px;
-        color: #222;
-        line-height: 1.2;
-      }
+
       .choice-section {
         max-width: 530px;
         margin-top: 10px;

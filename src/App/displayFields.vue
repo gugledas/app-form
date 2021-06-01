@@ -1,8 +1,5 @@
 <template>
   <div>
-    <b-col cols="12" class="text-left">
-      <h3 class="question-title">{{ formDatas.fields[id].title }}</h3>
-    </b-col>
     value: {{ formDatas.fields[id].value }}--selected:
     {{ formDatas.fields[id].selected }}
     <!-- stepsState: {{ stepsState }} -->
@@ -15,9 +12,7 @@
               </p>
             </div>
           </div> -->
-    <b-col cols="12" class="text-left"
-      ><p class="page-label">{{ formDatas.fields[id].label }}</p></b-col
-    >
+
     <b-col class="choice-section">
       <form ref="form" @submit.stop.prevent="handleSubmit">
         <!-- fields value: {{ formDatas.fields[id].value }}-- fields selected:{{
@@ -68,28 +63,8 @@
         </b-row>
 
         <!-- affiche pour le cas du type radio -->
-        <b-row v-if="type == 'radio'">
-          <b-col
-            cols="12"
-            v-for="(item, i) in formDatas.fields[id].options"
-            :key="i"
-          >
-            <div class="input-list">
-              <b-col sm="11" class="input-list__label">
-                <label class="m-0">{{ item.label }}</label>
-              </b-col>
-              <b-col class="input-list__input">
-                <b-form-radio
-                  name="some-radios"
-                  v-model="formDatas.fields[id].value"
-                  size="lg"
-                  :id="`input-radio-a${i}`"
-                  :value="item.value"
-                ></b-form-radio>
-              </b-col>
-            </div>
-          </b-col>
-        </b-row>
+
+        <radio v-if="type == 'radio'" :id="id"></radio>
 
         <!-- affiche pour le cas du type input -->
         <b-row v-if="type == 'input'">
@@ -137,60 +112,12 @@
         </b-row>
 
         <!-- affiche pour le cas du type checkbox -->
-        <b-row v-if="type == 'checkbox'">
-          <b-col
-            cols="12"
-            v-for="(item, i) in formDatas.fields[id].options"
-            :key="i"
-          >
-            <div class="input-list">
-              <b-col
-                sm="11"
-                class="input-list__label d-flex align-items-start flex-column"
-              >
-                <label class="m-0">{{ item.label }}</label>
-              </b-col>
-              <b-col class="input-list__input">
-                <b-form-checkbox
-                  name="some-radios"
-                  v-model="formDatas.fields[id].selected"
-                  size="lg"
-                  :value="item.value"
-                ></b-form-checkbox>
-              </b-col>
-            </div>
-          </b-col>
-        </b-row>
+
+        <checkbox v-if="type == 'checkbox'" :id="id"></checkbox>
 
         <!-- affiche pour le cas du type radio with description -->
-        <b-row v-if="type == 'radiodesc'">
-          <b-col
-            cols="12"
-            v-for="(item, i) in formDatas.fields[id].options"
-            :key="i"
-          >
-            <div class="input-list">
-              <b-col
-                sm="11"
-                class="input-list__label d-flex align-items-start flex-column"
-              >
-                <label class="m-0">{{ item.label }}</label>
-                <small class="input-list__description">{{
-                  item.description
-                }}</small>
-              </b-col>
-              <b-col class="input-list__input">
-                <b-form-radio
-                  name="some-radios"
-                  v-model="formDatas.fields[id].value"
-                  size="lg"
-                  :id="`input-horizni-${i}`"
-                  :value="item.value"
-                ></b-form-radio>
-              </b-col>
-            </div>
-          </b-col>
-        </b-row>
+
+        <radio-desc v-if="type == 'radiodesc'" :id="id"></radio-desc>
       </form>
       <b-row align-h="center" v-if="this.$store.state.mode">
         <b-col sm="2" class="my-3"
@@ -227,6 +154,9 @@ import LabelRow from "./input/LabelRow.vue";
 import NumberMarkup from "./NumberMarkup.vue";
 import AddFormField from "./AddFormField.vue";
 import autocomplete from "./Autocomplete";
+import Radio from "./input/Radio.vue";
+import RadioDesc from "./input/RadioDesc";
+import Checkbox from "./input/Checkbox.vue";
 export default {
   components: {
     ImageCheck: () => import("./ImageCheck.vue"),
@@ -235,6 +165,9 @@ export default {
     LabelRow,
     autocomplete,
     AddFormField,
+    Radio,
+    RadioDesc,
+    Checkbox,
   },
   props: {
     type: {

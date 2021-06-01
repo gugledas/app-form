@@ -18,17 +18,7 @@ export default new Vuex.Store({
      * Contient l'information d'une etape du formulaire selectionné.
      */
     //formDatas: {},
-    fields: {
-      type: "",
-      title: "",
-      label: "",
-      name: "",
-      value: null,
-      selected: [],
-      imgUrl: "",
-      require: true,
-      options: [],
-    },
+    fields: {},
     field: {},
 
     /**

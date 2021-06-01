@@ -56,7 +56,7 @@ export default {
   &__img {
     margin: 10px 0 30px 0;
     width: 100%;
-    height: 100%;
+
     img {
       width: 170px;
       height: 140px;

@@ -74,29 +74,6 @@ export default {
 </script>
 
 <style lang="scss">
-.number-markup__input {
-  display: flex;
-  justify-content: center;
-  flex-flow: wrap column;
-  .label {
-    font-weight: 600;
-  }
-  .input-field {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    padding-left: 42px;
-    &__input {
-      width: 131px;
-      height: 50px;
-      padding: 0 0 0 4em;
-    }
-    &__unit {
-      margin: 0 8px;
-    }
-  }
-}
 .row-content {
   margin: 1.5rem auto;
   width: 100%;
@@ -106,7 +83,6 @@ export default {
     flex-direction: row;
     align-items: center;
     .label {
-      font-weight: 300;
       font-size: 1.2em;
       //padding: 0 80px 0 0;
     }

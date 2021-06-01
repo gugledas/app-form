@@ -68,7 +68,7 @@ export default {
           title: "",
           label: "",
           name: "",
-          value: null,
+          value: [],
           selected: [],
           imgUrl: "",
           require: true,
@@ -110,11 +110,13 @@ export default {
         { value: "number", text: "Number" },
         { value: "checkbox", text: "Checkbox" },
         { value: "increment", text: "Spin Button" },
+        { value: "markuptitle", text: "Markup Title" },
+        { value: "markupimage", text: "Markup Image" },
         { value: "checkboximg", text: "Checkbox Image" },
         { value: "codepostal", text: "Code Postal input" },
         { value: "radiodesc", text: "Radio with Description" },
-        { value: "markupnumber", text: "Markup & Number label Up" },
-        { value: "markupnumberrow", text: "Markup & Number label inline" },
+        { value: "numberinline", text: "Number label inline" },
+        { value: "numberup", text: "Number label up" },
       ],
     };
   },
@@ -139,7 +141,7 @@ export default {
       (this.fields.type = ""), (this.fields.title = "");
       this.fields.label = "";
       this.fields.name = "";
-      this.fields.value = null;
+      this.fields.value = [];
       this.fields.selected = [];
       this.fields.imgUrl = "";
       this.fields.require = true;

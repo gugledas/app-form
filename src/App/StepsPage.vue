@@ -22,8 +22,9 @@
               variant="light"
               class="shadow-sm"
               v-b-modal.modal-prevent-closing
-              >configuration</b-button
             >
+              Configuration
+            </b-button>
 
             <b-button
               class="m-4"
@@ -60,7 +61,12 @@
               @ok="handleOk"
               hide-footer
             >
-              <form ref="form" @submit="handleSubmit" @reset="resetModal">
+              <form
+                ref="form"
+                @submit="handleSubmit"
+                @reset="resetModal"
+                v-if="formDatas && formDatas.info"
+              >
                 <b-row>
                   <b-col cols="8">
                     <b-form-group
@@ -142,24 +148,25 @@
     </b-container>
 
     <b-row class="m-0" v-if="this.$store.state.mode"
-      ><b-col cols="4"
-        ><b-card class="mt-3" header="Form Data Result">
+      ><b-col cols="4">
+        <b-card class="mt-3 text-left" header="Form Data Result">
           <pre class="m-0"></pre>
           <p>formulaire Generale</p>
-          <pre>{{ form }}</pre>
-        </b-card></b-col
-      ><b-col cols="4"
-        ><b-card class="mt-3" header="Form all steps">
-          <pre class="m-0"></pre>
+          <pre class="text-left">{{ form }}</pre>
+        </b-card>
+      </b-col>
+      <b-col cols="4">
+        <b-card class="mt-3 text-left" header="Form all steps">
+          <pre class="m-0 text-left"></pre>
           <p>formDatas:.</p>
-          <pre>{{ formDatas }}</pre>
-        </b-card></b-col
-      >
-      <b-col cols="4"
-        ><b-card class="mt-3" header="Form all steps">
+          <pre class="text-left">{{ formDatas }}</pre>
+        </b-card>
+      </b-col>
+      <b-col cols="4">
+        <b-card class="mt-3 text-left" header="Form all steps">
           <pre class="m-0"></pre>
           <p>fields:.</p>
-          <pre>{{ fields }}</pre>
+          <pre class="text-left">{{ fields }}</pre>
         </b-card></b-col
       >
     </b-row>
@@ -376,10 +383,7 @@ export default {
       event.preventDefault();
       // Exit when the form isn't valid
       this.demo = true;
-      //this.$store.dispatch("addSetpsDatas", this.formDatas);
-      // Push the name to submitted names
-      //this.submittedTitle.push(this.formDatas.info.title);
-      // Hide the modal manually
+
       this.$nextTick(() => {
         this.$bvModal.hide("modal-prevent-closing");
       });

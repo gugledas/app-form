@@ -1,60 +1,65 @@
 <template>
-  <b-row class="p-2">
-    <b-col cols="7">
-      <b-form-group
-        label="label :"
-        label-for="label-input"
-        invalid-feedback="Name is required"
-      >
-        <b-form-input
-          id="label-input"
-          required
-          v-model="fields.label"
-        ></b-form-input>
-      </b-form-group>
-    </b-col>
-
-    <b-col sm="3">
-      <b-form-group label="require?" label-for="require-input">
-        <b-form-checkbox
-          id="require-input"
-          :value="true"
-          :unchecked-value="false"
-          required
-          v-model="fields.require"
-        ></b-form-checkbox>
-      </b-form-group>
-    </b-col>
-
-    <b-col cols="7">
-      <b-form-group label="name">
-        <b-form-input
-          id="name-input"
-          required
-          v-model="fields.name"
-        ></b-form-input>
-      </b-form-group>
-    </b-col>
-
-    <b-col cols="7">
-      <b-form-group label="value">
-        <b-form-input v-model="fields.value"></b-form-input>
-      </b-form-group>
-    </b-col>
-  </b-row>
+  <div>
+    <b-row class="mb-3">
+      <b-col sm="12">
+        <b-form-group label="Label" invalid-feedback="Name is required">
+          <b-input-group>
+            <b-form-input v-model="fields.label" @input="input"></b-form-input>
+            <b-form-input
+              required
+              v-model="fields.name"
+              :readonly="readonly"
+              @dblclick="toogleReadOnly"
+            ></b-form-input>
+          </b-input-group>
+        </b-form-group>
+      </b-col>
+      <b-col cols="7">
+        <b-form-group label="value">
+          <b-form-input type="text" v-model="fields.value"></b-form-input>
+        </b-form-group>
+      </b-col>
+      <b-col sm="3">
+        <b-form-group label="require?" label-for="require-input">
+          <b-form-checkbox
+            id="require-input"
+            :value="true"
+            :unchecked-value="false"
+            required
+            v-model="fields.require"
+          ></b-form-checkbox>
+        </b-form-group>
+      </b-col>
+    </b-row>
+    <ValidationFields :field="fields"></ValidationFields>
+  </div>
 </template>
 
 <script>
+import { snakeCase } from "snake-case";
+import ValidationFields from "./ValidationFields.vue";
 export default {
   props: {
     fields: {
       type: Object,
-      require: true,
+      required: true,
+      validator: function (val) {
+        return val.label === undefined ||
+          val.value === undefined ||
+          val.name === undefined ||
+          val.require === undefined
+          ? false
+          : true;
+      },
     },
+  },
+  components: {
+    ValidationFields,
   },
   data() {
     return {
       value: 1,
+      readonly: true,
       //Object of type checkbox
       inputOptions: {
         label: "",
@@ -64,6 +69,15 @@ export default {
   },
   watch: {},
   methods: {
+    input() {
+      if (this.readonly && this.field.name.length <= 32) {
+        this.field.name = snakeCase(this.field.label);
+      }
+    },
+    toogleReadOnly() {
+      if (this.readonly) this.readonly = false;
+      else this.readonly = true;
+    },
     deleteOption(index) {
       var all = this.fields.options;
       console.log("i", all, index);

@@ -219,10 +219,10 @@
               required
             ></b-form-input>
           </b-form-group>
-          <b-button type="submit" variant="primary" size="sm" class="mr-2"
-            >Push</b-button
-          >
-          <b-button type="reset" variant="danger" size="sm">Reset</b-button>
+          <b-button type="submit" variant="primary" size="sm" class="mr-2">
+            Push
+          </b-button>
+          <b-button type="reset" variant="danger" size="sm"> Reset </b-button>
         </b-form>
         <b-form
           @submit="onPush"
@@ -264,13 +264,13 @@
             ></b-form-input>
           </b-form-group>
 
-          <b-button type="submit" variant="primary" size="sm">Push</b-button>
-          <b-button type="reset" variant="dark" size="sm" class="mx-2"
-            >Reset</b-button
-          >
-          <b-button variant="danger" size="sm" @click="deleteOption(i)"
-            >delete</b-button
-          >
+          <b-button type="submit" variant="primary" size="sm"> Push </b-button>
+          <b-button type="reset" variant="dark" size="sm" class="mx-2">
+            Reset
+          </b-button>
+          <b-button variant="danger" size="sm" @click="deleteOption(i)">
+            delete
+          </b-button>
         </b-form>
         <b-card class="mt-3" header="Form Data Result">
           <pre class="m-0">{{ optionsMarkupNumber }}</pre>

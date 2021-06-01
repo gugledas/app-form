@@ -68,27 +68,7 @@
 
         <!-- affiche pour le cas du type input -->
         <b-row v-if="type == 'input'">
-          <b-col
-            cols="12"
-            v-for="(item, i) in formDatas.fields[id].options"
-            :key="i"
-          >
-            <div class="row-input">
-              <div class="row-input__row">
-                <b-col sm="6">
-                  <label class="label">{{ item.label }} </label>
-                </b-col>
-                <b-col sm="6" class="input-field">
-                  <b-form-input
-                    v-model="item.value"
-                    type="text"
-                    placeholder=""
-                    class="input-field__input"
-                  ></b-form-input>
-                </b-col>
-              </div>
-            </div>
-          </b-col>
+          <InputText :field="formDatas.fields[id]"></InputText>
         </b-row>
 
         <!-- affiche pour le cas du type select -->
@@ -119,6 +99,7 @@
 
         <radio-desc v-if="type == 'radiodesc'" :id="id"></radio-desc>
       </form>
+
       <b-row align-h="center" v-if="this.$store.state.mode">
         <b-col sm="2" class="my-3"
           ><b-button
@@ -168,6 +149,7 @@ export default {
     Radio,
     RadioDesc,
     Checkbox,
+    InputText: () => import("./DisplaysFields/InputText.vue"),
   },
   props: {
     type: {

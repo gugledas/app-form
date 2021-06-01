@@ -1,23 +1,5 @@
 <template>
   <div>
-    <b-col cols="12" class="text-left">
-      <h3 class="question-title">{{ formDatas.fields[id].title }}</h3>
-    </b-col>
-    value: {{ formDatas.fields[id].value }}--selected:
-    {{ formDatas.fields[id].selected }}
-    <!-- stepsState: {{ stepsState }} -->
-    <!-- <div class="help-container">
-            <div class="help-block">
-              <p class="help-block__title">Aide</p>
-              <p class="help-block__content">
-                La mitoyenneté de votre logement va permettre de définir la
-                bonne solution en matière d’isolation thermique.
-              </p>
-            </div>
-          </div> -->
-    <b-col cols="12" class="text-left">
-      <p class="page-label">{{ formDatas.fields[id].label }}</p>
-    </b-col>
     <b-col class="choice-section">
       <form ref="form" @submit.stop.prevent="handleSubmit">
         <!-- fields value: {{ formDatas.fields[id].value }}-- fields selected:{{
@@ -93,27 +75,7 @@
 
         <!-- affiche pour le cas du type input -->
         <b-row v-if="type == 'input'">
-          <b-col
-            cols="12"
-            v-for="(item, i) in formDatas.fields[id].options"
-            :key="i"
-          >
-            <div class="row-input">
-              <div class="row-input__row">
-                <b-col sm="6">
-                  <label class="label">{{ item.label }} </label>
-                </b-col>
-                <b-col sm="6" class="input-field">
-                  <b-form-input
-                    v-model="item.value"
-                    type="text"
-                    placeholder=""
-                    class="input-field__input"
-                  ></b-form-input>
-                </b-col>
-              </div>
-            </div>
-          </b-col>
+          <InputText :field="formDatas.fields[id]"></InputText>
         </b-row>
 
         <!-- affiche pour le cas du type select -->
@@ -192,6 +154,7 @@
           </b-col>
         </b-row>
       </form>
+
       <b-row align-h="center" v-if="this.$store.state.mode">
         <b-col sm="2" class="my-3"
           ><b-button
@@ -235,6 +198,7 @@ export default {
     LabelRow,
     autocomplete,
     AddFormField,
+    InputText: () => import("./DisplaysFields/InputText.vue"),
   },
   props: {
     type: {

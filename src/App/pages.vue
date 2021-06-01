@@ -1,52 +1,59 @@
 <template>
   <div class="element-center">
     <b-row align-h="end" class="m-4">
-      <b-button
-        class="mx-4"
-        v-if="this.$store.state.mode"
-        variant="primary"
-        size="sm"
-        @click="addFormField"
-        >Ajouter des Champs</b-button
-      >
-      <p class="button-travaux">{{ formDatas.info.headerTitle }}</p>
-      step: {{ stepsState }}// level: {{ level }} <br />
+      <b-col>
+        <b-button
+          class="mx-4"
+          v-if="mode"
+          variant="primary"
+          size="sm"
+          @click="addFormField"
+        >
+          Ajouter des Champs
+        </b-button>
+        <p class="button-travaux">{{ formDatas.info.headerTitle }}</p>
+        <p>Status de validation : {{ stepsState }}</p>
+      </b-col>
     </b-row>
     <!-- center container -->
     <b-container fluid class="center-container">
-      <b-row class="block-container" align-h="center">
-        <b-row class="w-100">
-          <b-col cols="12" class="text-left" v-if="level > 0">
-            <div class="backButton" @click="back">
-              <img src="../../public/long-arrow-alt-left-solid.svg" alt="" />
+      <ValidationObserver v-slot="{ invalid }">
+        <b-row class="block-container" align-h="center">
+          <b-row class="w-100">
+            <b-col cols="12" class="text-left" v-if="level > 0">
+              <div class="backButton" @click="back">
+                <img src="../../public/long-arrow-alt-left-solid.svg" alt="" />
+              </div>
+            </b-col>
+            <div
+              v-for="(field, i) in formDatas.fields"
+              :key="i"
+              class="col-12 p-0 mb-5"
+            >
+              <display-fields :type="field.type" :id="i"></display-fields>
             </div>
-          </b-col>
-          <div
-            v-for="(field, i) in this.formDatas.fields"
-            :key="i"
-            class="col-12 p-0 mb-5"
-          >
-            <display-fields :type="field.type" :id="i"></display-fields>
-          </div>
-        </b-row>
+          </b-row>
 
-        <b-col cols="12" class="form-nav-bouton">
-          <button
-            class="next-bouton"
-            :class="stepsState ? 'next-bouton--active' : 'next-bouton--disable'"
-            @click="suivant"
-          >
-            Suivant
-          </button>
-        </b-col>
-        <b-col cols="12" v-if="this.$store.state.mode">
-          <b-button variant="danger" @click="deleteSteps">
-            delete this steps
-          </b-button>
-        </b-col>
-        <!-- pre: -->
-        <!-- <pre>{{ fields }}</pre> -->
-      </b-row>
+          <b-col cols="12" class="form-nav-bouton">
+            <button
+              class="next-bouton"
+              :class="
+                stepsState && !invalid
+                  ? 'next-bouton--active'
+                  : 'next-bouton--disable'
+              "
+              @click="suivant"
+            >
+              Suivant
+            </button>
+          </b-col>
+          <b-col cols="12" v-if="mode">
+            <b-button variant="danger" @click="deleteSteps">
+              delete this steps
+            </b-button>
+          </b-col>
+        </b-row>
+      </ValidationObserver>
     </b-container>
 
     <!-- add modal field -->
@@ -58,7 +65,8 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { ValidationObserver } from "vee-validate";
+import { mapGetters, mapState } from "vuex";
 import AddFormField from "./AddFormField.vue";
 
 import DisplayFields from "./displayFields.vue";
@@ -66,6 +74,7 @@ export default {
   components: {
     AddFormField,
     DisplayFields,
+    ValidationObserver,
   },
   props: {
     level: {
@@ -97,55 +106,16 @@ export default {
     },
   },
   computed: {
-    //...mapState(["fields"]),
+    ...mapState(["mode"]),
     ...mapGetters(["formDatas", "form"]),
     stepsState() {
       var state = null;
-      var value = null;
-      var req = null;
-      var opt = null;
-      var selected = null;
-      this.formDatas.fields.forEach((element) => {
-        if (element.value) {
-          value = true;
-        }
-      });
-      this.formDatas.fields.forEach((element) => {
-        if (element.type == "checkbox" && element.selected.length) {
-          selected = true;
-        }
-      });
-      this.formDatas.fields.forEach((element) => {
-        if (element.require) {
-          req = true;
-        }
-      });
-      this.formDatas.fields.forEach((element) => {
-        if (element.options.length) {
-          element.options.forEach((item) => {
-            if (item.value.length < 1) {
-              opt = null;
-            } else {
-              opt = true;
-            }
-          });
-        }
-      });
 
       if (this.$store.getters.form.forms.length - 1 > this.level) {
-        if (req && value) {
-          state = true;
-        } else if (!req && opt) {
-          state = true;
-        } else if (req && selected) {
-          state = true;
-        } else {
-          state = false;
-        }
+        state = true;
       }
 
-      console.log("object", value, req, opt, selected);
-
+      console.log(" StepsState : ");
       return state;
     },
     taille() {
@@ -157,7 +127,7 @@ export default {
   methods: {
     suivant() {
       if (this.stepsState) {
-        //this.$parent.suivant();
+        // this.$parent.suivant();
         this.$store.state.stepsIndex++;
       }
     },

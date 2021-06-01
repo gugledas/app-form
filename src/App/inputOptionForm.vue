@@ -9,11 +9,7 @@
           label-for="title-input"
           invalid-feedback="Name is required"
         >
-          <b-form-input
-            id="title-input"
-            required
-            v-model="fields.title"
-          ></b-form-input>
+          <b-form-input id="title-input" v-model="fields.title"></b-form-input>
         </b-form-group>
       </b-col>
 
@@ -23,11 +19,7 @@
           label-for="label-input"
           invalid-feedback="Name is required"
         >
-          <b-form-input
-            id="label-input"
-            required
-            v-model="fields.label"
-          ></b-form-input>
+          <b-form-input id="label-input" v-model="fields.label"></b-form-input>
         </b-form-group>
       </b-col>
 
@@ -140,125 +132,7 @@
 
     <!-- if is type input -->
     <b-row v-if="type == 'input'" class="p-2">
-      <b-col cols="7">
-        <b-form-group
-          label="title :"
-          label-for="title-input"
-          invalid-feedback="Name is required"
-        >
-          <b-form-input required v-model="fields.title"></b-form-input>
-        </b-form-group>
-      </b-col>
-
-      <b-col cols="7">
-        <b-form-group
-          label="label :"
-          label-for="label-input"
-          invalid-feedback="Name is required"
-        >
-          <b-form-input
-            id="label-input"
-            required
-            v-model="fields.label"
-          ></b-form-input>
-        </b-form-group>
-      </b-col>
-
-      <b-col sm="3">
-        <b-form-group label="require?" label-for="require-input">
-          <b-form-checkbox
-            id="require-input"
-            :value="true"
-            :unchecked-value="false"
-            required
-            v-model="fields.require"
-          ></b-form-checkbox>
-        </b-form-group>
-      </b-col>
-
-      <b-col cols="7">
-        <b-form-group
-          label="name"
-          label-for="name-input"
-          invalid-feedback="Name is required"
-        >
-          <b-form-input
-            id="name-input"
-            required
-            v-model="fields.name"
-          ></b-form-input>
-        </b-form-group>
-      </b-col>
-      <b-col cols="12">
-        <label>Options</label>
-        <b-form @submit="onPush" @reset="onReset" class="border p-3">
-          <b-form-group
-            id="option-label"
-            label="Option label"
-            label-for="input-option-label"
-          >
-            <b-form-input
-              v-model="optionsInput.label"
-              id="option-label"
-              placeholder="Enter label"
-              required
-            ></b-form-input>
-          </b-form-group>
-
-          <b-form-group
-            id="option-val"
-            label="Option value"
-            label-for="input-option-val"
-          >
-            <b-form-input
-              v-model="optionsInput.value"
-              id="option-val"
-              placeholder="Enter value of option"
-              required
-            ></b-form-input>
-          </b-form-group>
-
-          <b-button type="submit" variant="primary" size="sm" class="mr-2"
-            >Push</b-button
-          >
-          <b-button type="reset" variant="danger" size="sm">Reset</b-button>
-        </b-form>
-        <b-form
-          @submit="onPush"
-          @reset="onReset"
-          class="border p-3"
-          v-for="(item, i) in fields.options"
-          :key="i"
-        >
-          <b-form-group label="Option label" label-for="input-option-label">
-            <b-form-input
-              v-model="item.label"
-              placeholder="Enter label"
-              required
-            ></b-form-input>
-          </b-form-group>
-
-          <b-form-group label="Option value" label-for="input-option-val">
-            <b-form-input
-              v-model="item.value"
-              placeholder="Enter value of option"
-              required
-            ></b-form-input>
-          </b-form-group>
-
-          <b-button type="submit" variant="primary" size="sm">Push</b-button>
-          <b-button type="reset" variant="dark" size="sm" class="mx-2"
-            >Reset</b-button
-          >
-          <b-button variant="danger" size="sm" @click="deleteOption(i)"
-            >delete</b-button
-          >
-        </b-form>
-
-        <b-card class="mt-3" header="Form Data Result">
-          <pre class="m-0">{{ inputOptions }}</pre>
-        </b-card>
-      </b-col>
+      <InputText :field="fields"></InputText>
     </b-row>
 
     <!-- if is type select -->
@@ -1216,10 +1090,10 @@
               required
             ></b-form-input>
           </b-form-group>
-          <b-button type="submit" variant="primary" size="sm" class="mr-2"
-            >Push</b-button
-          >
-          <b-button type="reset" variant="danger" size="sm">Reset</b-button>
+          <b-button type="submit" variant="primary" size="sm" class="mr-2">
+            Push
+          </b-button>
+          <b-button type="reset" variant="danger" size="sm"> Reset </b-button>
         </b-form>
         <b-form
           @submit="onPush"
@@ -1261,13 +1135,13 @@
             ></b-form-input>
           </b-form-group>
 
-          <b-button type="submit" variant="primary" size="sm">Push</b-button>
-          <b-button type="reset" variant="dark" size="sm" class="mx-2"
-            >Reset</b-button
-          >
-          <b-button variant="danger" size="sm" @click="deleteOption(i)"
-            >delete</b-button
-          >
+          <b-button type="submit" variant="primary" size="sm"> Push </b-button>
+          <b-button type="reset" variant="dark" size="sm" class="mx-2">
+            Reset
+          </b-button>
+          <b-button variant="danger" size="sm" @click="deleteOption(i)">
+            delete
+          </b-button>
         </b-form>
         <b-card class="mt-3" header="Form Data Result">
           <pre class="m-0">{{ optionsMarkupNumber }}</pre>
@@ -1429,7 +1303,9 @@
 <script>
 import { mapGetters } from "vuex";
 export default {
-  components: {},
+  components: {
+    InputText: () => import("./EditsFields/InputText.vue"),
+  },
   props: {
     type: {
       type: String,

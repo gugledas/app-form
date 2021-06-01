@@ -13,9 +13,9 @@
               </p>
             </div>
           </div> -->
-    <b-col cols="12" class="text-left"
-      ><p class="page-label">{{ formDatas.fields[id].label }}</p></b-col
-    >
+    <b-col cols="12" class="text-left">
+      <p class="page-label">{{ formDatas.fields[id].label }}</p>
+    </b-col>
     <b-col class="choice-section">
       <form ref="form" @submit.stop.prevent="handleSubmit">
         <!-- fields value: {{ formDatas.fields[id].value }}-- fields selected:{{

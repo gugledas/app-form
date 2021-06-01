@@ -2,7 +2,7 @@
   <div class="spin-block">
     <b-form-spinbutton
       id="demo-sb"
-      v-model="value"
+      v-model="formDatas.fields[id].value"
       class="spin-button"
       min="1"
       max="20"

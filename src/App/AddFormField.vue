@@ -68,8 +68,8 @@ export default {
           title: "",
           label: "",
           name: "",
-          value: [],
-          selected: "",
+          value: null,
+          selected: [],
           imgUrl: "",
           require: true,
           options: [],
@@ -139,8 +139,8 @@ export default {
       (this.fields.type = ""), (this.fields.title = "");
       this.fields.label = "";
       this.fields.name = "";
-      this.fields.value = [];
-      this.fields.selected = "";
+      this.fields.value = null;
+      this.fields.selected = [];
       this.fields.imgUrl = "";
       this.fields.require = true;
       this.fields.options = [];

@@ -735,11 +735,6 @@
           ></b-form-checkbox>
         </b-form-group>
       </b-col>
-      <b-col cols="7">
-        <b-form-group label="value" label-for="increment-input">
-          <b-form-input id="name-input" required type="number"></b-form-input>
-        </b-form-group>
-      </b-col>
     </b-row>
 
     <!-- if is type checbox images -->
@@ -1452,8 +1447,8 @@ export default {
           title: "",
           label: "",
           name: "",
-          value: [],
-          selected: "",
+          value: null,
+          selected: [],
           imgUrl: "",
           require: true,
           options: [],

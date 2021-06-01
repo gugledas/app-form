@@ -104,27 +104,30 @@ export default {
       var value = null;
       var req = null;
       var opt = null;
-
+      var selected = null;
       this.formDatas.fields.forEach((element) => {
-        if (element.value.length && element.value != " ") {
+        if (element.value) {
           value = true;
-        } else {
-          value = false;
+        }
+      });
+      this.formDatas.fields.forEach((element) => {
+        if (element.type == "checkbox" && element.selected.length) {
+          selected = true;
         }
       });
       this.formDatas.fields.forEach((element) => {
         if (element.require) {
           req = true;
-        } else {
-          req = false;
         }
       });
       this.formDatas.fields.forEach((element) => {
         if (element.options.length) {
           element.options.forEach((item) => {
-            if (item.value.length && element.value != " ") {
+            if (item.value.length < 1) {
+              opt = null;
+            } else {
               opt = true;
-            } else opt = false;
+            }
           });
         }
       });
@@ -134,12 +137,14 @@ export default {
           state = true;
         } else if (!req && opt) {
           state = true;
+        } else if (req && selected) {
+          state = true;
         } else {
           state = false;
         }
       }
 
-      // console.log("object", value, req, opt);
+      console.log("object", value, req, opt, selected);
 
       return state;
     },

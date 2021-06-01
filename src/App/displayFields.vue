@@ -3,7 +3,8 @@
     <b-col cols="12" class="text-left">
       <h3 class="question-title">{{ formDatas.fields[id].title }}</h3>
     </b-col>
-
+    value: {{ formDatas.fields[id].value }}--selected:
+    {{ formDatas.fields[id].selected }}
     <!-- stepsState: {{ stepsState }} -->
     <!-- <div class="help-container">
             <div class="help-block">
@@ -63,7 +64,7 @@
         ></b-row>
         <!-- affiche sur le cas du type increment number -->
         <b-row align-h="center" v-if="type == 'increment'">
-          <increment-number :fields="id"></increment-number>
+          <increment-number :id="id"></increment-number>
         </b-row>
 
         <!-- affiche pour le cas du type radio -->
@@ -152,7 +153,7 @@
               <b-col class="input-list__input">
                 <b-form-checkbox
                   name="some-radios"
-                  v-model="formDatas.fields[id].value"
+                  v-model="formDatas.fields[id].selected"
                   size="lg"
                   :value="item.value"
                 ></b-form-checkbox>
@@ -255,8 +256,8 @@ export default {
         title: "",
         label: "",
         name: "",
-        value: [],
-        selected: "",
+        value: null,
+        selected: [],
         imgUrl: "",
         require: true,
         options: [],

@@ -2,7 +2,7 @@
   <div class="spin-block">
     <b-form-spinbutton
       id="demo-sb"
-      v-model="$store.state.fields.selected"
+      v-model="value"
       class="spin-button"
       min="1"
       max="20"
@@ -25,11 +25,21 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
+  props: {
+    id: {
+      type: Number,
+      require: true,
+    },
+  },
   data() {
     return {
       value: 1,
     };
+  },
+  computed: {
+    ...mapGetters(["formDatas"]),
   },
 };
 </script>

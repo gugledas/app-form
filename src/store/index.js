@@ -57,7 +57,6 @@ export default new Vuex.Store({
      */
     form: (state) => {
       if (state.items.length && state.formId !== null) {
-        console.log("MAJ de form");
         const form = state.items[state.formId];
         form.forms = JSON.parse(form.forms);
         return form;
@@ -77,7 +76,14 @@ export default new Vuex.Store({
       if (getters.form.forms) {
         return getters.form.forms[state.stepsIndex];
       } else {
-        return {};
+        return {
+          info: {
+            headerTitle: "",
+            title: "",
+            name: "",
+          },
+          fields: [],
+        };
       }
     },
   },
@@ -89,22 +95,7 @@ export default new Vuex.Store({
     CHANGE_MODE(state) {
       state.mode = !state.mode;
     },
-    DELETE_STEPS_IN_ALL_STEPS(state) {
-      var all = state.allStepsDatas;
-      var r = all.indexOf(state.formDatas);
-      console.log("de", r);
-      for (var i = all.length - 1; i >= 0; i--) {
-        if (i === r) {
-          all.splice(i, 1);
-          console.log("iiippp");
-          if (all.length > state.stepsIndex + 1) {
-            state.formDatas = all[state.stepsIndex];
-          } else {
-            state.formDatas = all[state.stepsIndex - 1];
-          }
-        }
-      }
-    },
+
     RESET_FORM_DATAS(state) {
       state.formDatas = {
         info: {
@@ -153,9 +144,7 @@ export default new Vuex.Store({
       console.log("ADD_FIELDS : ", getters);
       //state.formDatas.fields.push(sh);
     },
-    NEW_PAGE(state) {
-      state.allStepsDatas.push(state.formDatas);
-    },
+
     SUIVANT(state) {
       state.stepsIndex++;
     },
@@ -170,11 +159,11 @@ export default new Vuex.Store({
       form.forms = JSON.parse(form.forms);
       state.form = form;
     },
+    STEPS_INDEX(state, i) {
+      state.stepsIndex = i;
+    },
   },
   actions: {
-    deleteStepsInAllSteps({ commit }) {
-      commit("DELETE_STEPS_IN_ALL_STEPS");
-    },
     addSetpsDatas({ commit }, payload) {
       commit("ADD_STEPS_DATAS", payload);
       commit("RESET_FORM_DATAS");
@@ -184,9 +173,9 @@ export default new Vuex.Store({
       commit("ADD_FIELDS", payload);
       commit("RESET_FIELDS");
     },
-    newPage({ commit }) {
-      commit("NEW_PAGE");
-      commit("RESET_FORM_DATAS");
+
+    stepsIndex({ commit }, i) {
+      commit("STEPS_INDEX", i);
     },
     resetFormDatas({ commit }) {
       //commit("NEW_PAGE");

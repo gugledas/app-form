@@ -24,13 +24,13 @@
               v-b-modal.modal-prevent-closing
               >configuration</b-button
             >
-            <b-button class="m-4" size="sm" @click="newPage">New page</b-button>
+
             <b-button
               class="m-4"
               variant="info"
               size="sm"
               @click="clearFormDatas"
-              >Clear steps</b-button
+              >Add new Steps</b-button
             >
             <b-button
               class="m-4"
@@ -47,9 +47,7 @@
             >
               clear storage
             </b-button>
-            <b-button class="m-4" variant="info" size="sm" @click="preview"
-              >Preview</b-button
-            >
+
             <b-button class="m-4" size="sm" variant="light" @click="resetValue"
               >Reset value</b-button
             >
@@ -62,7 +60,6 @@
               @ok="handleOk"
               hide-footer
             >
-              <!--
               <form ref="form" @submit="handleSubmit" @reset="resetModal">
                 <b-row>
                   <b-col cols="8">
@@ -87,7 +84,6 @@
                       <b-form-input
                         id="name-input"
                         v-model="formDatas.info.title"
-                        required
                       ></b-form-input>
                     </b-form-group>
                   </b-col>
@@ -98,12 +94,19 @@
                     <b-form-group label="name" label-for="name-input">
                       <b-form-input
                         id="db-input"
-                        v-model="datasBase.name"
+                        v-model="form.name"
                         required
                       ></b-form-input>
                     </b-form-group>
                   </b-col>
-
+                  <b-col cols="8">
+                    <b-form-group label="Id" label-for="description-input">
+                      <b-form-input
+                        id="desc-input-id"
+                        v-model="form.id"
+                      ></b-form-input>
+                    </b-form-group>
+                  </b-col>
                   <b-col cols="8">
                     <b-form-group
                       label="Description"
@@ -111,17 +114,7 @@
                     >
                       <b-form-textarea
                         id="desc-input"
-                        v-model="datasBase.description"
-                        required
-                      ></b-form-textarea>
-                    </b-form-group>
-                  </b-col>
-
-                  <b-col cols="8">
-                    <b-form-group label="Id" label-for="description-input">
-                      <b-form-textarea
-                        id="desc-input-id"
-                        v-model="datasBase.id"
+                        v-model="form.description"
                         required
                       ></b-form-textarea>
                     </b-form-group>
@@ -142,7 +135,6 @@
                   </div></b-row
                 >
               </form>
-            -->
             </b-modal>
           </div>
         </b-col>
@@ -275,15 +267,14 @@ export default {
       }
     },
     saveToLocal() {
-      //var self = this;
-      localStorage.setItem("allo", JSON.stringify(this.allStepsDatas));
-      var forms = JSON.stringify(this.allStepsDatas);
-      this.datasBase.forms = forms;
-      var datas = this.datasBase;
-      //var local = localStorage.getItem("allo");
-      //console.log("local", local);
+      var self = this;
+
+      var datas = this.form;
       utilities.saveSteps(datas).then((reponse) => {
+        var forms = JSON.stringify(reponse[0].fields);
+        localStorage.setItem("allo", JSON.stringify(forms));
         console.log("savesteps: ", reponse);
+
         axios
           .post(
             "http://lesroisdelareno.kksa" + "/query-ajax/insert-update",
@@ -291,11 +282,10 @@ export default {
           )
           .then(function (response) {
             console.log("post response ", response);
-            self.loadStepsDatas();
+            self.$store.dispatch("setFormId", self.id);
           })
           .catch(function (error) {
             console.log(error);
-            self.loadStepsDatas();
           });
       });
     },
@@ -350,16 +340,25 @@ export default {
       this.demo = !this.demo;
       console.log("prev", this.demo);
     },
-    newPage() {
-      this.demo = false;
-      this.$store.dispatch("newPage");
-    },
+
     clearFormDatas() {
-      this.$store.dispatch("resetFormDatas");
+      var all = {
+        info: {
+          headerTitle: "",
+          title: "",
+          name: "",
+        },
+        fields: [],
+      };
+      this.form.forms.push(all);
+      this.$store.state.stepsIndex = this.form.forms.length - 1;
+
+      //this.$store.dispatch("resetFormDatas");
     },
     resetValue() {
-      this.fields.selected = "";
-      this.fields.value = [];
+      this.$store.getters.formDatas.selected = "";
+      this.$store.getters.formDatas.value = [];
+      console.log("prev");
     },
     resetModal() {
       //   this.formDatas.info.title = "";

@@ -106,7 +106,7 @@ export default {
         { value: null, text: "Please select an option" },
         { value: "radio", text: "Radio" },
         { value: "input", text: "Input" },
-        { value: "Select", text: "Select" },
+        { value: "select", text: "Select" },
         { value: "number", text: "Number" },
         { value: "checkbox", text: "Checkbox" },
         { value: "increment", text: "Spin Button" },
@@ -136,6 +136,14 @@ export default {
         sh[i] = protoD.hauteur[i];
       }
       this.formDatas.fields.push(sh);
+      (this.fields.type = ""), (this.fields.title = "");
+      this.fields.label = "";
+      this.fields.name = "";
+      this.fields.value = [];
+      this.fields.selected = "";
+      this.fields.imgUrl = "";
+      this.fields.require = true;
+      this.fields.options = [];
       //this.fields = {};
     },
     //

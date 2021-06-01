@@ -3,6 +3,7 @@
     <b-col cols="12" class="text-left">
       <h3 class="question-title">{{ formDatas.fields[id].title }}</h3>
     </b-col>
+
     <!-- stepsState: {{ stepsState }} -->
     <!-- <div class="help-container">
             <div class="help-block">
@@ -24,7 +25,7 @@
         <!-- affiche sur le cas du type codepostal -->
         <b-row align-h="center" v-if="type == 'codepostal'">
           <b-col class="autocomplete">
-            <autocomplete></autocomplete>
+            <autocomplete :value="formDatas.fields[id]"></autocomplete>
           </b-col>
         </b-row>
         <!-- affiche pour le cas du type checkbox image -->
@@ -62,7 +63,7 @@
         ></b-row>
         <!-- affiche sur le cas du type increment number -->
         <b-row align-h="center" v-if="type == 'increment'">
-          <increment-number></increment-number>
+          <increment-number :fields="id"></increment-number>
         </b-row>
 
         <!-- affiche pour le cas du type radio -->
@@ -85,6 +86,51 @@
                   :value="item.value"
                 ></b-form-radio>
               </b-col>
+            </div>
+          </b-col>
+        </b-row>
+
+        <!-- affiche pour le cas du type input -->
+        <b-row v-if="type == 'input'">
+          <b-col
+            cols="12"
+            v-for="(item, i) in formDatas.fields[id].options"
+            :key="i"
+          >
+            <div class="row-input">
+              <div class="row-input__row">
+                <b-col sm="6">
+                  <label class="label">{{ item.label }} </label>
+                </b-col>
+                <b-col sm="6" class="input-field">
+                  <b-form-input
+                    v-model="item.value"
+                    type="text"
+                    placeholder=""
+                    class="input-field__input"
+                  ></b-form-input>
+                </b-col>
+              </div>
+            </div>
+          </b-col>
+        </b-row>
+
+        <!-- affiche pour le cas du type select -->
+        <b-row v-if="type == 'select'">
+          <b-col cols="12">
+            <div class="row-input">
+              <div class="row-input__row">
+                <b-col sm="6">
+                  <label class="label">{{ formDatas.fields[id].name }} </label>
+                </b-col>
+                <b-col sm="6" class="input-field">
+                  <b-form-select
+                    v-model="formDatas.fields[id].value"
+                    class="input-field__input"
+                    :options="formDatas.fields[id].options"
+                  ></b-form-select>
+                </b-col>
+              </div>
             </div>
           </b-col>
         </b-row>
@@ -248,7 +294,7 @@ export default {
           console.log("iiippp");
         }
       }
-      this.fields = this.formDatas.fields[this.id];
+      //this.fields = this.formDatas.fields[this.id];
     },
     resetModal() {
       //this.type = null;
@@ -270,3 +316,12 @@ export default {
   },
 };
 </script>
+<style lang="scss">
+.row-input {
+  margin-bottom: 1rem;
+  &__row {
+    display: flex;
+    align-items: center;
+  }
+}
+</style>

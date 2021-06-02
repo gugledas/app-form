@@ -9,10 +9,13 @@
           sm="11"
           class="input-list__label d-flex align-items-start flex-column"
         >
-          <label class="m-0">{{ item.text }}</label>
+          <label class="m-0 w-100" :for="`checkbox-a${field.name}${i}`">{{
+            item.text
+          }}</label>
         </b-col>
         <b-col class="input-list__input">
           <b-form-checkbox
+            :id="`checkbox-a${field.name}${i}`"
             name="some-radios"
             v-model="field.value"
             size="lg"

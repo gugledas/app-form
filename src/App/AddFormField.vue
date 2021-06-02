@@ -1,6 +1,7 @@
 <template>
   <div>
     <b-modal
+      size="lg"
       id="modal-addForm"
       ref="addForm"
       title="Ajouter des champs dans la page..."

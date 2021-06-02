@@ -11,7 +11,7 @@
             </div>
           </div> -->
 
-    <b-col class="choice-section">
+    <b-col class="choice-section min-height">
       <form ref="form" @submit.stop.prevent="handleSubmit">
         <!-- fields value: {{ formDatas.fields[id].value }}-- fields selected:{{
           formDatas.fields[id].selected
@@ -91,7 +91,7 @@
             variant="outline-success"
             @click="editFormField"
           >
-            <b-icon icon="pencil" class=""></b-icon>
+            <b-icon icon="pencil" font-scale="1" class=""></b-icon>
           </b-button>
         </div>
         <div class="my-3">
@@ -100,7 +100,7 @@
             size="sm"
             variant="outline-danger"
             @click="deleteField"
-            ><b-icon icon="trash" class=""></b-icon
+            ><b-icon icon="trash" font-scale="1" class=""></b-icon
           ></b-button>
         </div>
       </div>
@@ -210,5 +210,8 @@ export default {
   position: absolute;
   left: -75px;
   top: 0;
+}
+.min-height {
+  min-height: 100px;
 }
 </style>

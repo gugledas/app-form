@@ -68,10 +68,10 @@ export default {
           title: "",
           label: "",
           name: "",
-          value: [],
+          value: null,
           selected: [],
           imgUrl: "",
-          require: true,
+          require: "",
           options: [],
         };
       },

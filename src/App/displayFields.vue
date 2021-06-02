@@ -1,7 +1,5 @@
 <template>
   <div>
-    value: {{ formDatas.fields[id].value }}--selected:
-    {{ formDatas.fields[id].selected }}
     <!-- stepsState: {{ stepsState }} -->
     <!-- <div class="help-container">
             <div class="help-block">
@@ -67,9 +65,10 @@
         <radio v-if="type == 'radio'" :id="id"></radio>
 
         <!-- affiche pour le cas du type input -->
-        <b-row v-if="type == 'input'">
-          <InputText :field="formDatas.fields[id]"></InputText>
-        </b-row>
+        <InputText
+          :field="formDatas.fields[id]"
+          v-if="type == 'input'"
+        ></InputText>
 
         <!-- affiche pour le cas du type select -->
         <b-row v-if="type == 'select'">

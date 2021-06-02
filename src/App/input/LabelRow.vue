@@ -8,15 +8,18 @@
           </b-col>
           <ValidationProvider v-slot="v" :rules="field.require">
             <b-col sm="6" class="input-field">
+              <span class="input-field__unit" v-if="field.prefixe">
+                {{ field.prefixe }}
+              </span>
               <b-form-input
                 v-model="field.value"
-                type="number"
+                :type="field.type"
                 placeholder="--"
                 class="input-field__input"
-                min="1"
-                max="100"
-              ></b-form-input
-              ><span class="input-field__unit">{{ field.unit }}</span>
+              ></b-form-input>
+              <span class="input-field__unit" v-if="field.suffixe">
+                {{ field.suffixe }}
+              </span>
             </b-col>
             <div class="text-danger">
               <small v-for="(error, ii) in v.errors" :key="ii" class="d-block">
@@ -31,19 +34,17 @@
 </template>
 
 <script>
-//
+import { mapGetters } from "vuex";
 import { ValidationProvider, extend } from "vee-validate";
 import { required, email } from "vee-validate/dist/rules";
 //
 // No message specified.
 extend("email", email);
-
 // Override the default message.
 extend("required", {
   ...required,
   message: "Ce champs est requis",
 });
-
 export default {
   props: {
     field: {
@@ -65,6 +66,9 @@ export default {
       this.$store.state.fields.value = this.options;
       console.log("object", this.options);
     },
+  },
+  computed: {
+    ...mapGetters(["formDatas"]),
   },
   methods: {},
 };

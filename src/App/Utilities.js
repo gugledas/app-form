@@ -35,5 +35,25 @@ const Utilities = {
       resolv(result);
     });
   },
+
+  field() {
+    return {
+      type: "",
+      title: "",
+      label: "",
+      name: "",
+      value: null,
+      imgUrl: "",
+      require: "",
+      options: [],
+      states: [],
+    };
+  },
+  resetField(field) {
+    const defaultField = this.field();
+    for (const i in field) {
+      field[i] = defaultField[i];
+    }
+  },
 };
 export default Utilities;

@@ -4,13 +4,30 @@
       <b-col sm="12">
         <b-form-group label="Label" invalid-feedback="Name is required">
           <b-input-group>
-            <b-form-input v-model="field.label" @input="input"></b-form-input>
+            <b-form-input
+              v-model="field.label"
+              @input="input"
+              required
+            ></b-form-input>
             <b-form-input
               required
               v-model="field.name"
               :readonly="readonly"
               @dblclick="toogleReadOnly"
             ></b-form-input>
+          </b-input-group>
+        </b-form-group>
+      </b-col>
+      <b-col sm="12">
+        <b-form-group label="Valeur par defaut">
+          <b-form-input v-model="field.value" :type="type"></b-form-input>
+        </b-form-group>
+      </b-col>
+      <b-col sm="12">
+        <b-form-group label="Prefixe | suffixe">
+          <b-input-group>
+            <b-form-input v-model="prefixe"></b-form-input>
+            <b-form-input v-model="suffixe"></b-form-input>
           </b-input-group>
         </b-form-group>
       </b-col>
@@ -44,6 +61,8 @@ export default {
   data() {
     return {
       readonly: true,
+      prefixe: "",
+      suffixe: "",
     };
   },
   mounted() {
@@ -53,7 +72,13 @@ export default {
     //
   },
   computed: {
-    //
+    type() {
+      if (this.field.type.length > 2) {
+        return this.field.type;
+      } else {
+        return "text";
+      }
+    },
   },
   methods: {
     input() {

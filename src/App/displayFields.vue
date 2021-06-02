@@ -37,9 +37,8 @@
         </b-row>
 
         <!-- affiche sur le cas du type number -->
-
         <label-row
-          v-if="type == 'number'"
+          v-if="type == 'text' || type == 'number'"
           :field="formDatas.fields[id]"
         ></label-row>
 
@@ -116,6 +115,7 @@
 <script>
 import { mapGetters } from "vuex";
 import AddFormField from "./AddFormField.vue";
+import Utilities from "./Utilities.js";
 export default {
   components: {
     ImageCheck: () => import("./ImageCheck.vue"),
@@ -146,17 +146,7 @@ export default {
       isOpen: false,
       typeFieldSelected: null,
       option: {},
-      fields: {
-        type: "",
-        title: "",
-        label: "",
-        name: "",
-        value: null,
-        selected: [],
-        imgUrl: "",
-        require: true,
-        options: [],
-      },
+      fields: Utilities.field(),
       //datas to check form validity
       labelState: null,
     };

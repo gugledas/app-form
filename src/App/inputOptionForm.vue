@@ -7,7 +7,7 @@
 
     <InputText
       :field="fields"
-      v-if="type == 'input' || type == 'number'"
+      v-if="type == 'text' || type == 'number'"
     ></InputText>
 
     <!-- if is type select -->
@@ -149,6 +149,7 @@ import FormSelect from "./formulaire/FormSelect.vue";
 import FormRadio from "./formulaire/FormRadio";
 import FormCheckImg from "./formulaire/FormCheckImg.vue";
 import FormNumberInline from "./formulaire/FormNumberInline.vue";
+import Utilities from "./Utilities.js";
 export default {
   components: {
     FormCheckbox,
@@ -172,17 +173,7 @@ export default {
     fields: {
       type: Object,
       default: function () {
-        return {
-          type: "",
-          title: "",
-          label: "",
-          name: "",
-          value: null,
-          selected: [],
-          imgUrl: "",
-          require: "",
-          options: [],
-        };
+        return Utilities.field();
       },
     },
   },

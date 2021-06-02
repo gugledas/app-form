@@ -39,10 +39,11 @@
       },
       {
         type: "text",
-        value: [],
+        value: "",
         label: "model de champs",
-        name: "type_tache",
-        required: [], // contient les chaines de validation, example "required" ou "required|email",
+        name: "name_snake_case",
+        required: "",
+        state: [],
       },
       {
         type: "checkbox",

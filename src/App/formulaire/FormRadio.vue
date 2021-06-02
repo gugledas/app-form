@@ -24,17 +24,7 @@
           ></b-form-select>
         </b-form-group>
       </b-col>
-      <b-col sm="3">
-        <b-form-group label="require?" label-for="require-input">
-          <b-form-checkbox
-            id="require-input"
-            :value="'true'"
-            :unchecked-value="'false'"
-            required
-            v-model="fields.require"
-          ></b-form-checkbox>
-        </b-form-group>
-      </b-col>
+
       <!-- form option -->
       <b-col cols="12">
         <label>Options</label>
@@ -73,7 +63,7 @@
 
         <!--  -->
       </b-col>
-      <b-col
+      <b-col v-if="fields.options.length"
         ><b-card no-body class="mb-1" v-if="true">
           <b-card-header header-tag="header" class="p-1" role="tab">
             <b-button block v-b-toggle.accordion-option variant="dark"

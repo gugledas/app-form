@@ -76,7 +76,7 @@ export default {
     &__input {
       width: 131px;
       height: 50px;
-      padding: 0 0 0 4em;
+      text-align: center;
     }
     &__unit {
       margin: 0 8px;

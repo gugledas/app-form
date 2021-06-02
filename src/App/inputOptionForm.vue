@@ -131,7 +131,7 @@
     <!-- if is  Number label up  and Number label Inline-->
 
     <form-number-inline
-      v-if="type == 'number' || type == 'numberup'"
+      v-if="type == 'numberup'"
       :fields="fields"
     ></form-number-inline>
 

@@ -2,32 +2,42 @@
   <div>
     <div>
       <div class="row-content">
-        <div class="row-content__row">
+        <b-row class="row-content__row">
           <b-col sm="6">
             <label class="label">{{ field.label }} </label>
           </b-col>
-          <ValidationProvider v-slot="v" :rules="field.require">
-            <b-col sm="6" class="input-field">
-              <span class="input-field__unit" v-if="field.prefixe">
-                {{ field.prefixe }}
-              </span>
-              <b-form-input
-                v-model="field.value"
-                :type="field.type"
-                placeholder="--"
-                class="input-field__input"
-              ></b-form-input>
-              <span class="input-field__unit" v-if="field.suffixe">
-                {{ field.suffixe }}
-              </span>
-            </b-col>
-            <div class="text-danger">
-              <small v-for="(error, ii) in v.errors" :key="ii" class="d-block">
-                {{ error }}
-              </small>
-            </div>
-          </ValidationProvider>
-        </div>
+          <b-col sm="6"
+            ><ValidationProvider
+              v-slot="v"
+              :rules="field.require"
+              class="d-block"
+            >
+              <div sm="6" class="input-field">
+                <span class="input-field__unit" v-if="field.prefixe">
+                  {{ field.prefixe }}
+                </span>
+                <b-form-input
+                  v-model="field.value"
+                  :type="field.type"
+                  placeholder=""
+                  class="input-field__input"
+                ></b-form-input>
+                <span class="input-field__unit" v-if="field.suffixe">
+                  {{ field.suffixe }}
+                </span>
+              </div>
+              <div class="text-danger">
+                <small
+                  v-for="(error, ii) in v.errors"
+                  :key="ii"
+                  class="d-block"
+                >
+                  {{ error }}
+                </small>
+              </div>
+            </ValidationProvider></b-col
+          >
+        </b-row>
       </div>
     </div>
   </div>
@@ -94,7 +104,7 @@ export default {
       &__input {
         width: 131px;
         height: 50px;
-        padding: 0 0 0 3.5em;
+        text-align: center;
       }
       &__unit {
         margin: 0 8px;

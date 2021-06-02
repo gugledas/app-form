@@ -156,6 +156,10 @@ export default new Vuex.Store({
     STEPS_INDEX(state, i) {
       state.stepsIndex = i;
     },
+    SET_FORM_DATAS_VALIDATE(state, value) {
+      console.log(" MAJ de SET_FORM_DATAS_VALIDATE ");
+      state.formDatasValidate = value;
+    },
   },
   actions: {
     addSetpsDatas({ commit }, payload) {
@@ -200,6 +204,9 @@ export default new Vuex.Store({
         .catch((error) => {
           console.log("get error ", error);
         });
+    },
+    setFormDatasValidate({ commit }, payload) {
+      commit("SET_FORM_DATAS_VALIDATE", payload);
     },
   },
   modules: {},

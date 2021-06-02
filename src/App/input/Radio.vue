@@ -2,7 +2,12 @@
   <b-row>
     <b-col cols="12" class="text-left"
       ><p class="page-label">{{ field.label }}</p></b-col
-    ><ValidationProvider v-slot="v" :rules="field.require" class="col-12 p-0">
+    ><ValidationProvider
+      v-slot="v"
+      :rules="field.require"
+      class="col-12 p-0"
+      :name="field.name"
+    >
       <b-col cols="12" v-for="(item, i) in field.options" :key="i">
         <div class="input-list">
           <b-col sm="11" class="input-list__label">

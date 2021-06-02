@@ -57,8 +57,7 @@
             </b-button>
           </b-col>
         </b-row>
-        <!-- pre: -->
-        <pre class="text-left">{{ formDatasValidate }}</pre>
+        <getStatusValidation :validation-observer="v"></getStatusValidation>
       </ValidationObserver>
     </b-container>
 
@@ -77,12 +76,14 @@ import { mapGetters, mapState } from "vuex";
 import AddFormField from "./AddFormField.vue";
 //import LabelUp from "./input/LabelUp";
 import DisplayFields from "./displayFields.vue";
+import getStatusValidation from "./EditsFields/getStatusValidation.vue";
 
 export default {
   components: {
     AddFormField,
     DisplayFields,
     ValidationObserver,
+    getStatusValidation,
   },
   props: {
     level: {
@@ -106,8 +107,10 @@ export default {
         { isActive: false, description: "3 côté" },
         { isActive: false, description: "4 côté" },
       ],
-      formDatasValidate: {},
     };
+  },
+  mounted() {
+    //
   },
   watch: {
     fields() {
@@ -115,7 +118,7 @@ export default {
     },
   },
   computed: {
-    ...mapState(["mode", "formDatasValidate0"]),
+    ...mapState(["mode"]),
     ...mapGetters(["formDatas", "form"]),
     stepsState() {
       var state = null;
@@ -134,9 +137,6 @@ export default {
     },
   },
   methods: {
-    formDatasValidateV(v) {
-      console.log(v);
-    },
     suivant() {
       if (this.stepsState) {
         // this.$parent.suivant();

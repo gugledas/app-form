@@ -44,11 +44,15 @@
         </b-row>
       </div>
     </transition>
-  </div>
+    <!--
+    <pre class="text-left">
+      {{ formDatasValidate }}
+    </pre>
+  --></div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
 import { ValidationProvider, extend } from "vee-validate";
 import { required, email } from "vee-validate/dist/rules";
 //
@@ -65,7 +69,9 @@ export default {
       type: Object,
       require: true,
       validator: function (val) {
-        return val.states !== undefined ? true : false;
+        return val.states !== undefined && val.states !== undefined
+          ? true
+          : false;
       },
     },
   },
@@ -86,6 +92,7 @@ export default {
   },
   computed: {
     ...mapGetters(["formDatas"]),
+    ...mapState(["formDatasValidate"]),
     validationField() {
       if (this.field.states.length) {
         for (const i in this.formDatas.fields) {
@@ -93,15 +100,18 @@ export default {
           if (field.name !== this.field.name) {
             for (const j in this.field.states) {
               const state = this.field.states[j];
-              if (field.name === state.field) {
+              if (field.name === state.name) {
                 // visible
                 if (state.action === "visible") {
                   if (field.value === "" && state.operator === "not_empty")
                     return false;
                   else if (field.value !== "" && state.operator === "empty")
                     return false;
-                  else if (state.operator === "validated") return false;
-                  //return this.formDatasValidate[field.name].valid;
+                  else if (
+                    state.operator === "validated" &&
+                    this.formDatasValidate[field.name]
+                  )
+                    return this.formDatasValidate[field.name].valid;
                 }
               }
             }

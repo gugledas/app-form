@@ -2,7 +2,7 @@ const validation = {
   conditions() {
     return {
       action: "",
-      field: "",
+      name: "",
       operator: "",
       value: "",
     };

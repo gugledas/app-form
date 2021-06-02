@@ -72,7 +72,7 @@
                   label-cols="4"
                 >
                   <b-form-select
-                    v-model="condition.field"
+                    v-model="condition.name"
                     :options="listeChamps"
                     size="sm"
                   ></b-form-select>
@@ -92,7 +92,11 @@
                 </b-form-group>
               </div>
               <div class="svg-content">
-                <b-button variant="transparent" class="m-0 p-0">
+                <b-button
+                  variant="transparent"
+                  class="m-0 p-0"
+                  @click="deleteState(i)"
+                >
                   <b-icon icon="trash" class="px-2" variant="danger"></b-icon>
                 </b-button>
               </div>
@@ -180,6 +184,10 @@ export default {
     },
     addCondition() {
       this.field.states.push(Validation.conditions());
+    },
+    deleteState(i) {
+      console.log("i : ", i);
+      this.field.states.splice(i, 1);
     },
   },
 };

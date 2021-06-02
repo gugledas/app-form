@@ -33,28 +33,23 @@
             label="Option label"
             label-for="input-option-label"
           >
-            <b-form-input
-              v-model="inputOptions.text"
-              id="option-label"
-              placeholder="Enter label"
-              required
-              @input="automaticValue"
-            ></b-form-input>
-          </b-form-group>
-
-          <b-form-group
-            id="option-val"
-            label="Option value"
-            label-for="input-option-val"
-          >
-            <b-form-input
-              v-model="inputOptions.value"
-              id="option-val"
-              placeholder="Enter value of option"
-              required
-              :readonly="readonlyValue"
-              @dblclick="toogleReadOnlyValue"
-            ></b-form-input>
+            <b-input-group>
+              <b-form-input
+                v-model="inputOptions.text"
+                id="option-label"
+                placeholder="Enter label"
+                required
+                @input="automaticValue"
+              ></b-form-input>
+              <b-form-input
+                v-model="inputOptions.value"
+                id="option-val"
+                placeholder="Enter value of option"
+                required
+                :readonly="readonlyValue"
+                @dblclick="toogleReadOnlyValue"
+              ></b-form-input>
+            </b-input-group>
           </b-form-group>
 
           <b-button type="submit" variant="primary" size="sm" class="mr-2"
@@ -87,7 +82,7 @@
 
 <script>
 import { snakeCase } from "snake-case";
-import ValidationFields from "./ValidationFields.vue";
+import ValidationFields from "../EditsFields/ValidationFields";
 import OptionTable from "../OptionTable.vue";
 export default {
   props: {

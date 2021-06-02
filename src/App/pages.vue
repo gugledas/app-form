@@ -16,7 +16,7 @@
     </b-row>
     <!-- center container -->
     <b-container fluid class="center-container">
-      <ValidationObserver v-slot="{ invalid }">
+      <ValidationObserver v-slot="v">
         <b-row class="block-container" align-h="center">
           <b-row class="w-100">
             <b-col cols="12" class="text-left" v-if="level > 0">
@@ -42,7 +42,7 @@
             <button
               class="next-bouton"
               :class="
-                stepsState && !invalid
+                stepsState && !v.invalid
                   ? 'next-bouton--active'
                   : 'next-bouton--disable'
               "
@@ -58,7 +58,7 @@
           </b-col>
         </b-row>
         <!-- pre: -->
-        <!-- <pre>{{ fields }}</pre> -->
+        <pre class="text-left">{{ formDatasValidate }}</pre>
       </ValidationObserver>
     </b-container>
 
@@ -81,7 +81,6 @@ export default {
   components: {
     AddFormField,
     DisplayFields,
-
     ValidationObserver,
   },
   props: {
@@ -106,6 +105,7 @@ export default {
         { isActive: false, description: "3 côté" },
         { isActive: false, description: "4 côté" },
       ],
+      formDatasValidate: {},
     };
   },
   watch: {
@@ -114,7 +114,7 @@ export default {
     },
   },
   computed: {
-    ...mapState(["mode"]),
+    ...mapState(["mode", "formDatasValidate0"]),
     ...mapGetters(["formDatas", "form"]),
     stepsState() {
       var state = null;
@@ -133,6 +133,9 @@ export default {
     },
   },
   methods: {
+    formDatasValidateV(v) {
+      console.log(v);
+    },
     suivant() {
       if (this.stepsState) {
         // this.$parent.suivant();

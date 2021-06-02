@@ -40,6 +40,10 @@ export default new Vuex.Store({
      * Contient l'id du formulaire selectionné.
      */
     formId: null,
+    /**
+     * permet de determiner le status des champs sur une etape
+     */
+    formDatasValidate: {},
   },
   getters: {
     /**

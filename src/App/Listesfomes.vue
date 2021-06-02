@@ -1,5 +1,13 @@
 <template lang="html">
   <div>
+    <b-button
+      size="sm"
+      variant="outline-info"
+      @click="addForm()"
+      v-b-modal.add-edit-form
+    >
+      +
+    </b-button>
     <b-table :items="items" :fields="fields">
       <template #cell(action)="data">
         <b-button size="sm" variant="outline-primary" class="mr-2">
@@ -15,6 +23,7 @@
         </b-button>
       </template>
     </b-table>
+    <AddEditForm></AddEditForm>
   </div>
 </template>
 
@@ -25,7 +34,7 @@ export default {
   name: "Listesfomes",
   props: {},
   components: {
-    //
+    AddEditForm: () => import("./ConfigsForms/AddEditForm.vue"),
   },
   data() {
     return {
@@ -57,6 +66,9 @@ export default {
   methods: {
     updateForm(id) {
       this.$router.push({ path: `/edit-form/${id}` });
+    },
+    addForm() {
+      //
     },
   },
 };

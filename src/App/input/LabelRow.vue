@@ -47,7 +47,7 @@ extend("required", {
 export default {
   props: {
     field: {
-      type: Array,
+      type: Object,
       require: true,
     },
   },

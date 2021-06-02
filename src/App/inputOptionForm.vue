@@ -5,7 +5,10 @@
     <form-checkbox v-if="type == 'checkbox'" :fields="fields"></form-checkbox>
     <!-- if is type input -->
 
-    <form-input v-if="type == 'input'" :fields="fields"></form-input>
+    <InputText
+      :field="fields"
+      v-if="type == 'input' || type == 'number'"
+    ></InputText>
 
     <!-- if is type select -->
     <form-select v-if="type == 'select'" :fields="fields"></form-select>
@@ -140,7 +143,7 @@
 <script>
 import { mapGetters } from "vuex";
 import FormCheckbox from "./formulaire/FormCheckbox.vue";
-import FormInput from "./formulaire/FormInput.vue";
+//import FormInput from "./formulaire/FormInput.vue";
 import FormRadioDesc from "./formulaire/FormRadioDesc.vue";
 import FormSelect from "./formulaire/FormSelect.vue";
 import FormRadio from "./formulaire/FormRadio";
@@ -149,12 +152,13 @@ import FormNumberInline from "./formulaire/FormNumberInline.vue";
 export default {
   components: {
     FormCheckbox,
-    FormInput,
+    //FormInput,
     FormSelect,
     FormRadioDesc,
     FormRadio,
     FormCheckImg,
     FormNumberInline,
+    InputText: () => import("./EditsFields/InputText.vue"),
   },
   props: {
     type: {
@@ -176,7 +180,7 @@ export default {
           value: null,
           selected: [],
           imgUrl: "",
-          require: true,
+          require: "",
           options: [],
         };
       },

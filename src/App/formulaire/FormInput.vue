@@ -23,8 +23,8 @@
         <b-form-group label="require?" label-for="require-input">
           <b-form-checkbox
             id="require-input"
-            :value="true"
-            :unchecked-value="false"
+            :value="'true'"
+            :unchecked-value="'false'"
             required
             v-model="fields.require"
           ></b-form-checkbox>

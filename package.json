@@ -18,7 +18,8 @@
     "vue": "^2.6.11",
     "vue-multiselect": "^2.1.6",
     "vue-router": "^3.5.1",
-    "vuex": "^3.4.0"
+    "vuex": "^3.4.0",
+    "wbuutilities": "file:../wbuutilities"
   },
   "devDependencies": {
     "@babel/polyfill": "^7.11.5",

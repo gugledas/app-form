@@ -90,8 +90,8 @@
             variant="success"
             size="sm"
             @click="editFormField"
-            >edit</b-button
-          ></b-col
+            >edit
+          </b-button></b-col
         ><b-col sm="2" class="my-3"
           ><b-button
             class="mx-3"

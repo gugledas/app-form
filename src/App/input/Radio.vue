@@ -6,14 +6,18 @@
       <b-col cols="12" v-for="(item, i) in field.options" :key="i">
         <div class="input-list">
           <b-col sm="11" class="input-list__label">
-            <label class="m-0">{{ item.text }}</label>
+            <label
+              class="m-0 d-block w-100"
+              :for="`input-radio-a${field.name}${i}`"
+              >{{ item.text }}</label
+            >
           </b-col>
           <b-col class="input-list__input">
             <b-form-radio
               name="some-radios"
               v-model="field.value"
               size="lg"
-              :id="`input-radio-a${i}`"
+              :id="`input-radio-a${field.name}${i}`"
               :value="item.value"
             ></b-form-radio>
           </b-col>

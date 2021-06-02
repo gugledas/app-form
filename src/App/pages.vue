@@ -277,7 +277,9 @@ $primary_color: #319899;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            cursor: pointer;
+            label {
+              cursor: pointer;
+            }
           }
           &__input {
             text-align: right;

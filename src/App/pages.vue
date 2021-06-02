@@ -36,7 +36,6 @@
           <div>
             <markup-image></markup-image>
             <markup-title></markup-title>
-            <label-up></label-up>
           </div>
           <b-col cols="12" class="form-nav-bouton">
             <button
@@ -74,7 +73,6 @@
 import { ValidationObserver } from "vee-validate";
 import { mapGetters, mapState } from "vuex";
 import AddFormField from "./AddFormField.vue";
-import LabelUp from "./input/LabelUp";
 import DisplayFields from "./displayFields.vue";
 import MarkupImage from "./input/MarkupImage.vue";
 import MarkupTitle from "./input/MarkupTitle.vue";
@@ -84,7 +82,7 @@ export default {
     DisplayFields,
     MarkupImage,
     MarkupTitle,
-    LabelUp,
+
     ValidationObserver,
   },
   props: {

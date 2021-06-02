@@ -5,12 +5,12 @@
       title: "Quels travaux d’isolation souhaitez-vous réaliser ?",
       step_id: 1,
       name: "step1",
-      type: "step"
+      type: "step",
     },
     fields: [
       {
         type: "markup",
-        value: "Quels travaux d’isolation souhaitez-vous réaliser ?"
+        value: "Quels travaux d’isolation souhaitez-vous réaliser ?",
       },
       {
         type: "checkbox",
@@ -21,28 +21,28 @@
         options: [
           {
             text: "Combles aménagés par l’intérieur",
-            val: "val1"
+            val: "val1",
           },
           {
             text: "Renovation du miroir",
-            val: "renovaion_cuisine_miroir"
+            val: "renovaion_cuisine_miroir",
           },
           {
             text: "Combles perdus",
-            val: "val1"
+            val: "val1",
           },
           {
             text: "Toit-terrasse",
-            val: "val1"
-          }
-        ]
+            val: "val1",
+          },
+        ],
       },
       {
         type: "text",
         value: [],
         label: "model de champs",
         name: "type_tache",
-        required: [] // contient les chaines de validation, example "required" ou "required|email",
+        required: [], // contient les chaines de validation, example "required" ou "required|email",
       },
       {
         type: "checkbox",
@@ -52,18 +52,18 @@
         options: [
           {
             text: "J'accepter d'etre developpeur",
-            val: "condition-validée"
-          }
+            val: "condition-validée",
+          },
         ],
         state: [
           {
             name: "type_renovation",
             value: "renovaion_cuisine_miroir",
-            operator: "AND"
-          }
-        ]
-      }
-    ]
+            operator: "AND",
+          },
+        ],
+      },
+    ],
   },
   {
     info: {
@@ -73,8 +73,10 @@
       name: "step2",
       state: [
         {
-          fields: [[{name: "type_renovation", value: "val1", operator: "AND"}]]
-        }
+          fields: [
+            [{ name: "type_renovation", value: "val1", operator: "AND" }],
+          ],
+        },
       ],
       fields: [
         {
@@ -86,27 +88,27 @@
             {
               text: "val1",
               val: "val1",
-              img: "url"
+              img: "url",
             },
             {
               text: "val1",
               val: "val1",
-              img: "url"
+              img: "url",
             },
             {
               text: "val1",
               val: "val1",
-              img: "url"
+              img: "url",
             },
             {
               text: "val1",
               val: "val1",
-              img: "url"
-            }
-          ]
-        }
-      ]
-    }
+              img: "url",
+            },
+          ],
+        },
+      ],
+    },
   },
   {
     info: {
@@ -116,34 +118,34 @@
       name: "step3",
       state: [
         {
-          fields: [[{name: "type_tache", value: "val1", operator: "AND"}]]
-        }
+          fields: [[{ name: "type_tache", value: "val1", operator: "AND" }]],
+        },
       ],
       fields: [
         {
-          markup: "url img"
+          markup: "url img",
         },
         {
           type: "number",
           label: "Longueur",
           require: true,
-          name: "type_tache[longueur]"
+          name: "type_tache[longueur]",
         },
         {
           type: "number",
           label: "Largeur",
           require: true,
-          name: "longueur"
+          name: "longueur",
         },
         {
           type: "number",
           label: "Hauteur",
           require: true,
           name: "Hauteur",
-          default: 3
-        }
-      ]
-    }
+          default: 3,
+        },
+      ],
+    },
   },
   {
     info: {
@@ -153,8 +155,8 @@
       name: "step4",
       state: [
         {
-          fields: [[{name: "type_tache", value: "val1", operator: "AND"}]]
-        }
+          fields: [[{ name: "type_tache", value: "val1", operator: "AND" }]],
+        },
       ],
       fields: [
         {
@@ -166,22 +168,22 @@
             {
               text: "val1",
               description: "sdfdf ",
-              val: "val1"
+              val: "val1",
             },
             {
               text: "val1",
               val: "val1",
-              description: "sdfdf "
+              description: "sdfdf ",
             },
             {
               text: "val1",
               val: "val1",
-              description: "sdfdf "
-            }
-          ]
-        }
-      ]
-    }
+              description: "sdfdf ",
+            },
+          ],
+        },
+      ],
+    },
   },
   {
     info: {
@@ -191,8 +193,8 @@
       name: "step4",
       state: [
         {
-          fields: [[{name: "type_tache", value: "val1", operator: "AND"}]]
-        }
+          fields: [[{ name: "type_tache", value: "val1", operator: "AND" }]],
+        },
       ],
       fields: [
         {
@@ -203,16 +205,16 @@
           options: [
             {
               text: "Oui",
-              val: "oui"
+              val: "oui",
             },
             {
               text: "Non",
-              val: "non"
-            }
-          ]
-        }
-      ]
-    }
+              val: "non",
+            },
+          ],
+        },
+      ],
+    },
   },
   {
     info: {
@@ -222,8 +224,8 @@
       name: "step4",
       state: [
         {
-          fields: [[{name: "type_tache", value: "val1", operator: "AND"}]]
-        }
+          fields: [[{ name: "type_tache", value: "val1", operator: "AND" }]],
+        },
       ],
       fields: [
         {
@@ -234,16 +236,16 @@
           options: [
             {
               text: "Protection renforcée contre les bruits extérieurs",
-              val: "Protection renforcée contre les bruits extérieurs"
+              val: "Protection renforcée contre les bruits extérieurs",
             },
             {
               text: "Non",
-              val: "non"
-            }
-          ]
-        }
-      ]
-    }
+              val: "non",
+            },
+          ],
+        },
+      ],
+    },
   },
   {
     info: {
@@ -253,8 +255,8 @@
       name: "step4",
       state: [
         {
-          fields: [[{name: "type_tache", value: "val1", operator: "AND"}]]
-        }
+          fields: [[{ name: "type_tache", value: "val1", operator: "AND" }]],
+        },
       ],
       fields: [
         {
@@ -265,16 +267,16 @@
           options: [
             {
               text: "Oui",
-              val: "oui"
+              val: "oui",
             },
             {
               text: "Non",
-              val: "non"
-            }
-          ]
-        }
-      ]
-    }
+              val: "non",
+            },
+          ],
+        },
+      ],
+    },
   },
   {
     info: {
@@ -287,11 +289,13 @@
           validate: [
             {
               step: "step1",
-              fields: [[{name: "type_tache", value: "val1", operator: "AND"}]]
-            }
-          ]
-        }
-      ]
-    }
-  }
+              fields: [
+                [{ name: "type_tache", value: "val1", operator: "AND" }],
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  },
 ];

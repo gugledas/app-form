@@ -39,24 +39,18 @@
         </b-row>
 
         <!-- affiche sur le cas du type number -->
-        <b-row align-h="center" v-if="type == 'number'">
-          <label-row :options="formDatas.fields[id].options"></label-row>
-        </b-row>
+
+        <label-row
+          v-if="type == 'number'"
+          :field="formDatas.fields[id]"
+        ></label-row>
 
         <!-- affiche sur le cas du type markup label up -->
-        <b-row align-h="center" v-if="type == 'markupnumberrow'"
-          ><number-markup
-            :options="formDatas.fields[id].options"
-          ></number-markup
-        ></b-row>
 
-        <!-- affiche sur le cas du type markup label up -->
-        <b-row align-h="center" v-if="type == 'markupnumber'"
-          ><number-markup
-            type="up"
-            :options="formDatas.fields[id].options"
-          ></number-markup
-        ></b-row>
+        <label-up
+          v-if="type == 'numberup'"
+          :field="formDatas.fields[id]"
+        ></label-up>
         <!-- affiche sur le cas du type increment number -->
         <b-row align-h="center" v-if="type == 'increment'">
           <increment-number :id="id"></increment-number>
@@ -67,33 +61,25 @@
         <radio v-if="type == 'radio'" :id="id"></radio>
 
         <!-- affiche pour le cas du type input -->
-        <b-row v-if="type == 'input'">
-          <InputText :field="formDatas.fields[id]"></InputText>
-        </b-row>
+
+        <InputText
+          v-if="type == 'input'"
+          :field="formDatas.fields[id]"
+        ></InputText>
 
         <!-- affiche pour le cas du type select -->
-        <b-row v-if="type == 'select'">
-          <b-col cols="12">
-            <div class="row-input">
-              <div class="row-input__row">
-                <b-col sm="6">
-                  <label class="label">{{ formDatas.fields[id].name }} </label>
-                </b-col>
-                <b-col sm="6" class="input-field">
-                  <b-form-select
-                    v-model="formDatas.fields[id].value"
-                    class="input-field__input"
-                    :options="formDatas.fields[id].options"
-                  ></b-form-select>
-                </b-col>
-              </div>
-            </div>
-          </b-col>
-        </b-row>
+
+        <select-display
+          v-if="type == 'select'"
+          :field="formDatas.fields[id]"
+        ></select-display>
 
         <!-- affiche pour le cas du type checkbox -->
 
-        <checkbox v-if="type == 'checkbox'" :id="id"></checkbox>
+        <checkbox
+          v-if="type == 'checkbox'"
+          :field="formDatas.fields[id]"
+        ></checkbox>
 
         <!-- affiche pour le cas du type radio with description -->
 
@@ -131,25 +117,21 @@
 
 <script>
 import { mapGetters } from "vuex";
-import LabelRow from "./input/LabelRow.vue";
-import NumberMarkup from "./NumberMarkup.vue";
 import AddFormField from "./AddFormField.vue";
-import autocomplete from "./Autocomplete";
-import Radio from "./input/Radio.vue";
-import RadioDesc from "./input/RadioDesc";
-import Checkbox from "./input/Checkbox.vue";
 export default {
   components: {
     ImageCheck: () => import("./ImageCheck.vue"),
     IncrementNumber: () => import("./IncrementNumber.vue"),
-    NumberMarkup,
-    LabelRow,
-    autocomplete,
+
     AddFormField,
-    Radio,
-    RadioDesc,
-    Checkbox,
-    InputText: () => import("./DisplaysFields/InputText.vue"),
+    InputText: () => import("./input/InputText.vue"),
+    autocomplete: () => import("./Autocomplete"),
+    Radio: () => import("./input/Radio.vue"),
+    RadioDesc: () => import("./input/RadioDesc"),
+    Checkbox: () => import("./input/Checkbox.vue"),
+    LabelRow: () => import("./input/LabelRow.vue"),
+    SelectDisplay: () => import("./input/SelectDisplay.vue"),
+    LabelUp: () => import("./input/LabelUp.vue"),
   },
   props: {
     type: {
@@ -232,12 +214,4 @@ export default {
   },
 };
 </script>
-<style lang="scss">
-.row-input {
-  margin-bottom: 1rem;
-  &__row {
-    display: flex;
-    align-items: center;
-  }
-}
-</style>
+<style lang="scss"></style>

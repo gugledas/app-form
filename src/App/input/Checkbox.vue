@@ -1,9 +1,9 @@
 <template>
   <b-row>
     <b-col cols="12" class="text-left"
-      ><p class="page-label">{{ formDatas.fields[id].label }}</p></b-col
+      ><p class="page-label">{{ field.label }}</p></b-col
     >
-    <b-col cols="12" v-for="(item, i) in formDatas.fields[id].options" :key="i">
+    <b-col cols="12" v-for="(item, i) in field.options" :key="i">
       <div class="input-list">
         <b-col
           sm="11"
@@ -14,7 +14,7 @@
         <b-col class="input-list__input">
           <b-form-checkbox
             name="some-radios"
-            v-model="formDatas.fields[id].value"
+            v-model="field.value"
             size="lg"
             :value="item.value"
           ></b-form-checkbox>
@@ -28,8 +28,8 @@
 import { mapGetters } from "vuex";
 export default {
   props: {
-    id: {
-      type: Number,
+    field: {
+      type: Object,
       require: true,
     },
   },

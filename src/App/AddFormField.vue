@@ -115,7 +115,6 @@ export default {
         { value: "checkboximg", text: "Checkbox Image" },
         { value: "codepostal", text: "Code Postal input" },
         { value: "radiodesc", text: "Radio with Description" },
-        { value: "numberinline", text: "Number label inline" },
         { value: "numberup", text: "Number label up" },
       ],
     };
@@ -138,7 +137,9 @@ export default {
         sh[i] = protoD.hauteur[i];
       }
       this.formDatas.fields.push(sh);
-      (this.fields.type = ""), (this.fields.title = "");
+      console.log("pus,sh", this.formDatas);
+      this.fields.type = "";
+      this.fields.title = "";
       this.fields.label = "";
       this.fields.name = "";
       this.fields.value = [];

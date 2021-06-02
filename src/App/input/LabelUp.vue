@@ -1,33 +1,53 @@
 <template>
   <div>
-    <div>
-      <div class="number-markup__input">
-        <label class="label">je suis le label up</label>
+    <div class="number-markup__input">
+      <label class="label">{{ field.label }}</label>
+
+      <ValidationProvider v-slot="v" :rules="field.require">
         <div class="input-field">
           <b-form-input
-            v-model="value"
+            v-model="field.value"
             type="number"
             placeholder=""
             class="input-field__input"
             min="1"
             max="100"
           ></b-form-input
-          ><span class="input-field__unit">cm</span>
+          ><span class="input-field__unit">{{ field.unit }}</span>
         </div>
-      </div>
+        <div class="text-danger">
+          <small v-for="(error, ii) in v.errors" :key="ii" class="d-block">
+            {{ error }}
+          </small>
+        </div>
+      </ValidationProvider>
     </div>
   </div>
 </template>
 
 <script>
+//
+import { ValidationProvider, extend } from "vee-validate";
+import { required, email } from "vee-validate/dist/rules";
+//
+// No message specified.
+extend("email", email);
+
+// Override the default message.
+extend("required", {
+  ...required,
+  message: "Ce champs est requis",
+});
+
 export default {
   props: {
-    options: {
+    field: {
       type: Array,
-      default: function () {
-        return [];
-      },
+      require: true,
     },
+  },
+  components: {
+    ValidationProvider,
   },
   data() {
     return {

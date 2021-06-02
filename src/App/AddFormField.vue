@@ -40,13 +40,9 @@
 
         <b-row align-h="end">
           <div class="mr-3">
-            <b-button @click="isOpen = !isOpen" class="mr-2" size="sm"
-              >cancel</b-button
-            >
-            <b-button type="reset" class="mr-2" variant="danger" size="sm"
-              >Reset</b-button
-            >
-            <b-button type="submit" variant="primary" class="mr-2">ok</b-button>
+            <b-button type="submit" variant="primary" class="mr-2">{{
+              nameButtonOk
+            }}</b-button>
           </div></b-row
         >
       </form>
@@ -61,6 +57,11 @@ import Utilities from "./Utilities.js";
 export default {
   components: { inputOptionForm },
   props: {
+    nouveau: {
+      type: Boolean,
+      require: true,
+      default: true,
+    },
     fields: {
       type: Object,
       default: function () {
@@ -78,19 +79,7 @@ export default {
       isOpen: false,
       typeFieldSelected: null,
       type: null,
-      /*
-      fields: {
-        type: "",
-        title: "",
-        label: "",
-        name: "",
-        value: [],
-        selected: "",
-        imgUrl: "",
-        require: true,
-        options: [],
-      },
-      /**/
+
       //datas to check form validity
       labelState: null,
       typeOptions: [
@@ -113,6 +102,9 @@ export default {
   watch: {},
   computed: {
     ...mapGetters(["formDatas"]),
+    nameButtonOk() {
+      return this.nouveau ? "Ajouter" : "Mettre à jour";
+    },
   },
   methods: {
     optionAddToFields() {
@@ -153,7 +145,9 @@ export default {
       // Exit when the form isn't valid
 
       this.isOpen = !this.isOpen;
-      this.optionAddToFields();
+      if (this.nouveau) {
+        this.optionAddToFields();
+      }
       // Push the name to submitted names
       this.$emit("input_to_add", this.fields);
       // Hide the modal manually

@@ -3,13 +3,13 @@
     <b-row align-h="end" class="m-4">
       <b-col>
         <b-button
-          class="mx-4"
+          class="mx-4 bouton-add"
           v-if="mode"
           variant="primary"
           size="sm"
           @click="addFormField"
         >
-          Ajouter des Champs
+          +
         </b-button>
         <p class="button-travaux">{{ formDatas.info.headerTitle }}</p>
       </b-col>
@@ -66,6 +66,7 @@
     <add-form-field
       :isOpen="modalFormFieldIsOpen"
       ref="formField"
+      :nouveau="true"
     ></add-form-field>
   </div>
 </template>
@@ -182,6 +183,10 @@ $primary_color: #319899;
   width: 20px;
   margin: 7px 0;
   cursor: pointer;
+}
+.bouton-add {
+  font-size: 1.5rem;
+  padding: 0 11px;
 }
 .help-container {
   margin-bottom: 0;
@@ -323,6 +328,7 @@ $primary_color: #319899;
         color: #000;
       }
     }
+
     .form-nav-bouton {
       margin: 1rem 0;
       .next-bouton {

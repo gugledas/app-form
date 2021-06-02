@@ -83,31 +83,34 @@
         <radio-desc v-if="type == 'radiodesc'" :id="id"></radio-desc>
       </form>
 
-      <b-row align-h="center" v-if="this.$store.state.mode">
-        <b-col sm="2" class="my-3"
-          ><b-button
-            class="mx-3"
-            variant="success"
+      <div v-if="this.$store.state.mode" class="boutton-absolute">
+        <div sm="2" class="my-3">
+          <b-button
+            class="mx-3 p-2"
             size="sm"
+            variant="outline-success"
             @click="editFormField"
-            >edit
-          </b-button></b-col
-        ><b-col sm="2" class="my-3"
-          ><b-button
-            class="mx-3"
-            variant="danger"
+          >
+            <b-icon icon="pencil" class=""></b-icon>
+          </b-button>
+        </div>
+        <div class="my-3">
+          <b-button
+            class=""
             size="sm"
+            variant="outline-danger"
             @click="deleteField"
-            >delete</b-button
-          ></b-col
-        >
-      </b-row>
+            ><b-icon icon="trash" class=""></b-icon
+          ></b-button>
+        </div>
+      </div>
     </b-col>
 
     <add-form-field
       :isOpen="isOpen"
       ref="editFormField"
       :fields="fields"
+      :nouveau="false"
     ></add-form-field>
   </div>
 </template>
@@ -202,4 +205,10 @@ export default {
   },
 };
 </script>
-<style lang="scss"></style>
+<style lang="scss">
+.boutton-absolute {
+  position: absolute;
+  left: -75px;
+  top: 0;
+}
+</style>

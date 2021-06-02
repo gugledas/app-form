@@ -156,7 +156,7 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(["formDatas", "form"]),
+    ...mapGetters(["formDatas"]),
     listeChamps() {
       const typeValide = ["text", "number"];
       const fields = [];

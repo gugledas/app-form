@@ -34,7 +34,7 @@
 </template>
 
 <script>
-//
+import { mapGetters } from "vuex";
 import { ValidationProvider, extend } from "vee-validate";
 import { required, email } from "vee-validate/dist/rules";
 //
@@ -66,6 +66,9 @@ export default {
       this.$store.state.fields.value = this.options;
       console.log("object", this.options);
     },
+  },
+  computed: {
+    ...mapGetters(["formDatas"]),
   },
   methods: {},
 };

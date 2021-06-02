@@ -37,9 +37,10 @@
         </b-row>
 
         <!-- affiche sur le cas du type number -->
-        <b-row align-h="center" v-if="type == 'number'">
-          <label-row :options="formDatas.fields[id].options"></label-row>
-        </b-row>
+        <label-row
+          v-if="type == 'text' || type == 'number'"
+          :field="formDatas.fields[id]"
+        ></label-row>
 
         <!-- affiche sur le cas du type markup label up -->
         <b-row align-h="center" v-if="type == 'markupnumberrow'"
@@ -65,10 +66,6 @@
         <radio v-if="type == 'radio'" :id="id"></radio>
 
         <!-- affiche pour le cas du type input -->
-        <InputText
-          :field="formDatas.fields[id]"
-          v-if="type == 'input'"
-        ></InputText>
 
         <!-- affiche pour le cas du type select -->
         <b-row v-if="type == 'select'">
@@ -137,6 +134,7 @@ import autocomplete from "./Autocomplete";
 import Radio from "./input/Radio.vue";
 import RadioDesc from "./input/RadioDesc";
 import Checkbox from "./input/Checkbox.vue";
+import Utilities from "./Utilities.js";
 export default {
   components: {
     ImageCheck: () => import("./ImageCheck.vue"),
@@ -148,7 +146,6 @@ export default {
     Radio,
     RadioDesc,
     Checkbox,
-    InputText: () => import("./DisplaysFields/InputText.vue"),
   },
   props: {
     type: {
@@ -165,17 +162,7 @@ export default {
       isOpen: false,
       typeFieldSelected: null,
       option: {},
-      fields: {
-        type: "",
-        title: "",
-        label: "",
-        name: "",
-        value: null,
-        selected: [],
-        imgUrl: "",
-        require: true,
-        options: [],
-      },
+      fields: Utilities.field(),
       //datas to check form validity
       labelState: null,
     };

@@ -57,23 +57,14 @@
 <script>
 import { mapGetters } from "vuex";
 import inputOptionForm from "./inputOptionForm.vue";
+import Utilities from "./Utilities.js";
 export default {
   components: { inputOptionForm },
   props: {
     fields: {
       type: Object,
       default: function () {
-        return {
-          type: "",
-          title: "",
-          label: "",
-          name: "",
-          value: null,
-          selected: [],
-          imgUrl: "",
-          require: "",
-          options: [],
-        };
+        return Utilities.field();
       },
     },
     /**/
@@ -105,7 +96,7 @@ export default {
       typeOptions: [
         { value: null, text: "Please select an option" },
         { value: "radio", text: "Radio" },
-        { value: "input", text: "Input" },
+        { value: "text", text: "text" },
         { value: "select", text: "Select" },
         { value: "number", text: "Number" },
         { value: "checkbox", text: "Checkbox" },
@@ -138,15 +129,7 @@ export default {
         sh[i] = protoD.hauteur[i];
       }
       this.formDatas.fields.push(sh);
-      (this.fields.type = ""), (this.fields.title = "");
-      this.fields.label = "";
-      this.fields.name = "";
-      this.fields.value = [];
-      this.fields.selected = [];
-      this.fields.imgUrl = "";
-      this.fields.require = true;
-      this.fields.options = [];
-      //this.fields = {};
+      Utilities.resetField(this.fields);
     },
     //
     openAddFormFieldPopUp() {

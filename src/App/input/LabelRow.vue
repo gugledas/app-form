@@ -1,38 +1,32 @@
 <template>
   <div>
-    <div v-if="type == 'up'">
-      <div class="number-markup__input" v-for="(item, i) in options" :key="i">
-        <label class="label">{{ item.label }}</label>
-        <div class="input-field">
-          <b-form-input
-            v-model="item.value"
-            type="number"
-            placeholder="--"
-            class="input-field__input"
-            min="1"
-            max="100"
-          ></b-form-input
-          ><span class="input-field__unit">{{ item.unit }}</span>
-        </div>
-      </div>
-    </div>
-    <div v-if="type == 'row'">
-      <div class="row-content" v-for="(item, i) in options" :key="i">
+    <div>
+      <div class="row-content">
         <div class="row-content__row">
           <b-col sm="6">
-            <label class="label">{{ item.label }} </label>
+            <label class="label">{{ field.label }} </label>
           </b-col>
-          <b-col sm="6" class="input-field">
-            <b-form-input
-              v-model="item.value"
-              type="number"
-              placeholder="--"
-              class="input-field__input"
-              min="1"
-              max="100"
-            ></b-form-input
-            ><span class="input-field__unit">{{ item.unit }}</span>
-          </b-col>
+          <ValidationProvider v-slot="v" :rules="field.require">
+            <b-col sm="6" class="input-field">
+              <span class="input-field__unit" v-if="field.prefixe">
+                {{ field.prefixe }}
+              </span>
+              <b-form-input
+                v-model="field.value"
+                :type="field.type"
+                placeholder="--"
+                class="input-field__input"
+              ></b-form-input>
+              <span class="input-field__unit" v-if="field.suffixe">
+                {{ field.suffixe }}
+              </span>
+            </b-col>
+            <div class="text-danger">
+              <small v-for="(error, ii) in v.errors" :key="ii" class="d-block">
+                {{ error }}
+              </small>
+            </div>
+          </ValidationProvider>
         </div>
       </div>
     </div>
@@ -40,22 +34,26 @@
 </template>
 
 <script>
+//
+import { ValidationProvider, extend } from "vee-validate";
+import { required, email } from "vee-validate/dist/rules";
+//
+// No message specified.
+extend("email", email);
+// Override the default message.
+extend("required", {
+  ...required,
+  message: "Ce champs est requis",
+});
 export default {
   props: {
-    type: {
-      type: String,
-      default: "row",
+    field: {
+      type: Object,
+      require: true,
     },
-    unit: {
-      type: String,
-      default: "",
-    },
-    options: {
-      type: Array,
-      default: function () {
-        return [];
-      },
-    },
+  },
+  components: {
+    ValidationProvider,
   },
   data() {
     return {

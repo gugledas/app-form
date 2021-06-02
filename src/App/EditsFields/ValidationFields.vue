@@ -6,12 +6,7 @@
           Configuration avancée
         </b-button>
       </b-card-header>
-      <b-collapse
-        id="accordion-1"
-        visible
-        accordion="my-accordion"
-        role="tabpanel"
-      >
+      <b-collapse id="accordion-1" accordion="my-accordion" role="tabpanel">
         <b-card-body>
           <b-form-group
             label="Selectionner les elments de validation"
@@ -26,10 +21,91 @@
         </b-card-body>
       </b-collapse>
     </b-card>
+    <!-- -->
+    <b-card no-body class="mb-1">
+      <b-card-header header-tag="header" class="p-1" role="tab">
+        <b-button block v-b-toggle.accordion-2 variant="info">
+          Condition d'affichage
+        </b-button>
+      </b-card-header>
+      <b-collapse
+        id="accordion-2"
+        accordion="my-accordion"
+        role="tabpanel"
+        visible
+      >
+        <b-card-body>
+          <div class="mb-3">
+            <b-button variant="outline-primary" size="sm" @click="addCondition">
+              + Ajouter une condition
+            </b-button>
+          </div>
+          <div
+            v-for="(condition, i) in field.states"
+            :key="i"
+            class="border pt-3 pl-0 pr-0 mb-3 bg-light"
+          >
+            <div class="d-flex w-100 align-items-center">
+              <div class="svg-content px-2">
+                <b-button variant="transparent" class="m-0 p-0">
+                  <b-icon icon="arrows-move"></b-icon>
+                </b-button>
+              </div>
+              <div class="content-action">
+                <b-form-group
+                  label="Action"
+                  label-for="input-lazy"
+                  label-size="sm"
+                  label-cols="4"
+                >
+                  <b-form-select
+                    v-model="condition.action"
+                    :options="optionsAction"
+                    size="sm"
+                  ></b-form-select>
+                </b-form-group>
+                <!-- -->
+                <b-form-group
+                  label="si le champs"
+                  label-for="input-lazy"
+                  label-size="sm"
+                  label-cols="4"
+                >
+                  <b-form-select
+                    v-model="condition.field"
+                    :options="listeChamps"
+                    size="sm"
+                  ></b-form-select>
+                </b-form-group>
+                <!-- -->
+                <b-form-group
+                  label="est"
+                  label-for="input-lazy"
+                  label-size="sm"
+                  label-cols="4"
+                >
+                  <b-form-select
+                    v-model="condition.operator"
+                    :options="listsOperators"
+                    size="sm"
+                  ></b-form-select>
+                </b-form-group>
+              </div>
+              <div class="svg-content">
+                <b-button variant="transparent" class="m-0 p-0">
+                  <b-icon icon="trash" class="px-2" variant="danger"></b-icon>
+                </b-button>
+              </div>
+            </div>
+          </div>
+        </b-card-body>
+      </b-collapse>
+    </b-card>
   </div>
 </template>
 <script>
-//import magentoSynchroListSites from "./ListSites.vue";
+import Validation from "../config/validation.js";
+import { mapGetters } from "vuex";
 export default {
   name: "ValidationFields",
   props: {
@@ -37,7 +113,9 @@ export default {
       type: Object,
       required: true,
       validator: function (val) {
-        return val.require !== undefined ? true : false;
+        return val.require !== undefined && val.states !== undefined
+          ? true
+          : false;
       },
     },
   },
@@ -65,6 +143,8 @@ export default {
         },
       ],
       selected: [],
+      listsOperators: Validation.listsOperators(),
+      optionsAction: Validation.Action(),
     };
   },
   mounted() {
@@ -76,17 +156,46 @@ export default {
     },
   },
   computed: {
-    //
+    ...mapGetters(["formDatas", "form"]),
+    listeChamps() {
+      const typeValide = ["text", "number"];
+      const fields = [];
+      if (this.formDatas && this.formDatas.fields.length > 1) {
+        for (const i in this.formDatas.fields) {
+          const field = this.formDatas.fields[i];
+          if (
+            field.name !== this.field.name &&
+            typeValide.includes(field.type)
+          ) {
+            fields.push({ text: field.label, value: field.name });
+          }
+        }
+      }
+      return fields;
+    },
   },
   methods: {
     retriveRules() {
-      this.selected = this.field.require.split("|");
+      if (this.field.require) this.selected = this.field.require.split("|");
+    },
+    addCondition() {
+      this.field.states.push(Validation.conditions());
     },
   },
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.content-action {
+  width: calc(100% - 80px);
+}
+.svg-content {
+  svg {
+    min-width: 40px;
+    font-size: 1rem !important;
+  }
+}
+</style>
 
 <!--
  //nom du fichier en pascal.

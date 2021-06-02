@@ -98,7 +98,6 @@ export default {
     },
     allo(row) {
       this.options[row.index]._showDetails = false;
-      console.log("allo", row);
     },
     deleteOption(index) {
       var all = this.options;

@@ -73,7 +73,7 @@ export default {
   },
   computed: {
     type() {
-      if (this.field.type.length > 2) {
+      if (this.field.type === "text" || this.field.type === "number") {
         return this.field.type;
       } else {
         return "text";

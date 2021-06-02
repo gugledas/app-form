@@ -38,6 +38,14 @@
             ></b-form-input>
           </b-form-group>
 
+          <b-form-group label="Description" v-if="desc">
+            <b-form-input
+              placeholder="Enter value of option"
+              required
+              v-model="row.item.description"
+            ></b-form-input>
+          </b-form-group>
+
           <b-button type="reset" variant="dark" size="sm" class="mx-2"
             >Reset</b-button
           >
@@ -64,6 +72,10 @@ import { snakeCase } from "snake-case";
 export default {
   name: "OptionsTable",
   props: {
+    desc: {
+      type: Boolean,
+      default: false,
+    },
     options: {
       type: Array,
       default: function () {
@@ -74,7 +86,7 @@ export default {
   components: {},
   data() {
     return {
-      fields: [
+      fieldSimple: [
         {
           label: "label",
           key: "text",
@@ -89,12 +101,37 @@ export default {
           key: "action",
         },
       ],
+      fieldDesc: [
+        {
+          label: "label",
+          key: "text",
+        },
+        {
+          label: "value",
+          key: "value",
+        },
+        {
+          label: "desc",
+          key: "description",
+        },
+
+        {
+          label: "",
+          key: "action",
+        },
+      ],
       readonlyValue: true,
     };
   },
   mounted() {},
   watch: {},
-  computed: {},
+  computed: {
+    fields() {
+      if (this.desc) {
+        return this.fieldDesc;
+      } else return this.fieldSimple;
+    },
+  },
   methods: {
     toogleReadOnlyValue() {
       if (this.readonlyValue) this.readonlyValue = false;

@@ -9,8 +9,8 @@
           sm="11"
           class="input-list__label d-flex align-items-start flex-column"
         >
-          <label class="m-0" :for="`input-horizni-${i}`">{{
-            item.label
+          <label class="m-0 w-100" :for="`input-horizni-${i}`">{{
+            item.text
           }}</label>
           <small class="input-list__description">{{ item.description }}</small>
         </b-col>

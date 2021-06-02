@@ -53,6 +53,17 @@
           <increment-number :id="id"></increment-number>
         </b-row>
 
+        <!-- affiche sur le cas du type markup title && image -->
+
+        <markup-title
+          v-if="type == 'markuptitle'"
+          :field="formDatas.fields[id]"
+        ></markup-title>
+        <markup-image
+          v-if="type == 'markupimage'"
+          :field="formDatas.fields[id]"
+        ></markup-image>
+
         <!-- affiche pour le cas du type radio -->
 
         <radio v-if="type == 'radio'" :field="formDatas.fields[id]"></radio>
@@ -132,6 +143,9 @@ export default {
     Checkbox: () => import("./input/Checkbox.vue"),
     LabelRow: () => import("./input/LabelRow.vue"),
     SelectDisplay: () => import("./input/SelectDisplay.vue"),
+    MarkupTitle: () => import("./input/MarkupTitle.vue"),
+    MarkupImage: () => import("./input/MarkupImage.vue"),
+
     LabelUp: () => import("./input/LabelUp.vue"),
   },
   props: {

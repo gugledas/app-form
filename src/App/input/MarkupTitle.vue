@@ -1,12 +1,17 @@
 <template>
   <b-col cols="12" class="text-left">
-    <h3 class="question-title">{{ text }}</h3>
+    <h3 class="question-title">{{ field.label }}</h3>
   </b-col>
 </template>
 
 <script>
 export default {
-  props: {},
+  props: {
+    field: {
+      type: Object,
+      required: true,
+    },
+  },
   data() {
     return {
       text: "Quelles sont les caractéristiques de votre logement ?",

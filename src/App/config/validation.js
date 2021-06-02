@@ -41,6 +41,8 @@ const validation = {
       if (field.name !== currentField.name) {
         for (const j in currentField.states) {
           const state = currentField.states[j];
+          // si le champs n'est pas definit on retourne false;
+          if (formDatasValidate[state.name] === undefined) return false;
           if (field.name === state.name) {
             // visible
             if (state.action === "visible") {

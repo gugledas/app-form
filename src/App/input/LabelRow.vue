@@ -1,8 +1,5 @@
 <template>
   <div>
-    <pre class="d-none">
-      validationField : {{ validationField }}
-    </pre>
     <transition v-if="validationField" name="fade">
       <div class="row-content">
         <b-row class="row-content__row">
@@ -25,6 +22,7 @@
                   :type="field.type"
                   placeholder=""
                   class="input-field__input"
+                  :name="field.name"
                 ></b-form-input>
                 <span class="input-field__unit" v-if="field.suffixe">
                   {{ field.suffixe }}
@@ -53,17 +51,10 @@
 
 <script>
 import { mapGetters, mapState } from "vuex";
-import { ValidationProvider, extend } from "vee-validate";
-import { required, email } from "vee-validate/dist/rules";
+import { ValidationProvider } from "vee-validate";
 import Validation from "../config/validation.js";
-//
-// No message specified.
-extend("email", email);
-// Override the default message.
-extend("required", {
-  ...required,
-  message: "Ce champs est requis",
-});
+import "../EditsFields/vee-validate-custom.js";
+
 export default {
   props: {
     field: {

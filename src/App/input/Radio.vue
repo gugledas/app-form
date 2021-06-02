@@ -38,10 +38,11 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
 //
 import { ValidationProvider, extend } from "vee-validate";
 import { required, email } from "vee-validate/dist/rules";
+import Validation from "../config/validation.js";
 //
 // No message specified.
 extend("email", email);
@@ -70,6 +71,18 @@ export default {
   watch: {},
   computed: {
     ...mapGetters(["formDatas"]),
+    ...mapState(["formDatasValidate"]),
+    validationField() {
+      if (this.field.states.length) {
+        var status = Validation.computedValidation(
+          this.formDatas,
+          this.field,
+          this.formDatasValidate
+        );
+        if (status !== undefined) return status;
+      }
+      return true;
+    },
   },
   methods: {},
 };

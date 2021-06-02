@@ -35,6 +35,30 @@ const validation = {
       },
     ];
   },
+  computedValidation: function (formDatas, currentField, formDatasValidate) {
+    for (const i in formDatas.fields) {
+      const field = formDatas.fields[i];
+      if (field.name !== currentField.name) {
+        for (const j in currentField.states) {
+          const state = currentField.states[j];
+          if (field.name === state.name) {
+            // visible
+            if (state.action === "visible") {
+              if (field.value === "" && state.operator === "not_empty")
+                return false;
+              else if (field.value !== "" && state.operator === "empty")
+                return false;
+              else if (
+                state.operator === "validated" &&
+                formDatasValidate[field.name]
+              )
+                return formDatasValidate[field.name].valid;
+            }
+          }
+        }
+      }
+    }
+  },
 };
 
 export default validation;

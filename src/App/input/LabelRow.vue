@@ -55,6 +55,7 @@
 import { mapGetters, mapState } from "vuex";
 import { ValidationProvider, extend } from "vee-validate";
 import { required, email } from "vee-validate/dist/rules";
+import Validation from "../config/validation.js";
 //
 // No message specified.
 extend("email", email);
@@ -95,6 +96,7 @@ export default {
     ...mapState(["formDatasValidate"]),
     validationField() {
       if (this.field.states.length) {
+        /*
         for (const i in this.formDatas.fields) {
           const field = this.formDatas.fields[i];
           if (field.name !== this.field.name) {
@@ -117,6 +119,13 @@ export default {
             }
           }
         }
+        /**/
+        var status = Validation.computedValidation(
+          this.formDatas,
+          this.field,
+          this.formDatasValidate
+        );
+        if (status !== undefined) return status;
       }
       return true;
     },

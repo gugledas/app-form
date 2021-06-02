@@ -24,6 +24,7 @@
               v-model="row.item.text"
               placeholder="Enter label"
               required
+              @input="automaticValue(row)"
             ></b-form-input>
           </b-form-group>
 
@@ -32,6 +33,8 @@
               placeholder="Enter value of option"
               required
               v-model="row.item.value"
+              :readonly="readonlyValue"
+              @dblclick="toogleReadOnlyValue"
             ></b-form-input>
           </b-form-group>
 
@@ -56,6 +59,8 @@
 </template>
 
 <script>
+import { snakeCase } from "snake-case";
+
 export default {
   name: "OptionsTable",
   props: {
@@ -84,12 +89,29 @@ export default {
           key: "action",
         },
       ],
+      readonlyValue: true,
     };
   },
   mounted() {},
   watch: {},
   computed: {},
   methods: {
+    toogleReadOnlyValue() {
+      if (this.readonlyValue) this.readonlyValue = false;
+      else this.readonlyValue = true;
+    },
+    automaticValue(row) {
+      if (this.readonlyValue && this.options[row.index].text.length <= 50) {
+        this.options[row.index].value = snakeCase(this.options[row.index].text);
+      }
+    },
+    ArrayValue() {
+      if (this.arrayValue.length) {
+        this.fields.value = this.arrayValue;
+      } else {
+        this.fields.value = [];
+      }
+    },
     onPush(event) {
       event.preventDefault();
     },

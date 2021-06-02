@@ -31,28 +31,26 @@
         <b-form @submit="onPush" @reset="onReset" class="border p-3">
           <b-form-group
             id="option-label"
-            label="label"
+            label="Option label"
             label-for="input-option-label"
           >
-            <b-form-input
-              v-model="inputOptions.text"
-              id="option-label"
-              placeholder="Enter label"
-              required
-            ></b-form-input>
-          </b-form-group>
-
-          <b-form-group
-            id="option-val"
-            label="value"
-            label-for="input-option-val"
-          >
-            <b-form-input
-              v-model="inputOptions.value"
-              id="option-val"
-              placeholder="Enter value of option"
-              required
-            ></b-form-input>
+            <b-input-group>
+              <b-form-input
+                v-model="inputOptions.text"
+                id="option-label"
+                placeholder="Enter label"
+                required
+                @input="automaticValue"
+              ></b-form-input>
+              <b-form-input
+                v-model="inputOptions.value"
+                id="option-val"
+                placeholder="Enter value of option"
+                required
+                :readonly="readonlyValue"
+                @dblclick="toogleReadOnlyValue"
+              ></b-form-input>
+            </b-input-group>
           </b-form-group>
           <b-button type="submit" variant="primary" size="sm" class="mr-2"
             >Push</b-button
@@ -88,7 +86,7 @@
 
 <script>
 import { snakeCase } from "snake-case";
-import ValidationFields from "./ValidationFields.vue";
+import ValidationFields from "../EditsFields/ValidationFields";
 import OptionTable from "../OptionTable.vue";
 export default {
   props: {
@@ -112,6 +110,8 @@ export default {
   data() {
     return {
       value: 1,
+      arrayValue: [],
+      readonlyValue: true,
       readonly: true,
       //Object of type checkbox
       inputOptions: {
@@ -122,6 +122,22 @@ export default {
   },
   watch: {},
   methods: {
+    toogleReadOnlyValue() {
+      if (this.readonlyValue) this.readonlyValue = false;
+      else this.readonlyValue = true;
+    },
+    automaticValue() {
+      if (this.readonlyValue && this.inputOptions.text.length <= 50) {
+        this.inputOptions.value = snakeCase(this.inputOptions.text);
+      }
+    },
+    ArrayValue() {
+      if (this.arrayValue.length) {
+        this.fields.value = this.arrayValue;
+      } else {
+        this.fields.value = [];
+      }
+    },
     input() {
       if (this.readonly && this.fields.name.length <= 32) {
         this.fields.name = snakeCase(this.fields.label);

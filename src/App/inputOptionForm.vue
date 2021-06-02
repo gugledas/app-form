@@ -24,105 +24,22 @@
     <form-radio v-if="type == 'radio'" :fields="fields"></form-radio>
 
     <!-- if is type codepostal -->
-    <b-row v-if="type == 'codepostal'" class="p-2">
-      <b-col cols="7">
-        <b-form-group label="Label">
-          <b-form-input required v-model="fields.label"></b-form-input>
-        </b-form-group>
-      </b-col>
 
-      <b-col cols="7">
-        <b-form-group label="Name" label-for="postal-input">
-          <b-form-input
-            id="postal-input"
-            required
-            v-model="fields.name"
-          ></b-form-input>
-        </b-form-group>
-      </b-col>
-      <b-col sm="3">
-        <b-form-group label="require?" label-for="require-input">
-          <b-form-checkbox
-            id="require-input"
-            :value="true"
-            :unchecked-value="false"
-            required
-            v-model="fields.require"
-          ></b-form-checkbox>
-        </b-form-group>
-      </b-col>
-      <b-col cols="7">
-        <b-form-group label="value">
-          <b-form-input id="title-input" v-model="fields.value"></b-form-input>
-        </b-form-group>
-      </b-col>
-    </b-row>
-
+    <form-autocomplete
+      v-if="type == 'codepostal'"
+      :fields="fields"
+    ></form-autocomplete>
     <!-- if is type increment -->
-    <b-row v-if="type == 'increment'" class="p-2">
-      <b-col cols="7">
-        <b-form-group label="label">
-          <b-form-input required v-model="fields.label"></b-form-input>
-        </b-form-group>
-      </b-col>
-      <b-col cols="7">
-        <b-form-group
-          label="Name"
-          label-for="increment-input"
-          invalid-feedback="Name is required"
-        >
-          <b-form-input
-            id="name-input"
-            required
-            v-model="fields.name"
-          ></b-form-input>
-        </b-form-group>
-      </b-col>
-      <b-col sm="3">
-        <b-form-group label="require?" label-for="require-input">
-          <b-form-checkbox
-            id="require-input"
-            :value="true"
-            :unchecked-value="false"
-            required
-            v-model="fields.require"
-          ></b-form-checkbox>
-        </b-form-group>
-      </b-col>
-      <b-col cols="7">
-        <b-form-group label="value">
-          <b-form-input required v-model="fields.value"></b-form-input>
-        </b-form-group>
-      </b-col>
-    </b-row>
 
-    <!-- if is type markup title -->
-    <b-row v-if="type == 'markuptitle'" class="p-2">
-      <b-col cols="7">
-        <b-form-group label="label">
-          <b-form-input required v-model="fields.label"></b-form-input>
-        </b-form-group>
-      </b-col>
-      <b-col cols="7">
-        <b-form-group label="Name">
-          <b-form-input v-model="fields.name"></b-form-input>
-        </b-form-group>
-      </b-col>
-    </b-row>
+    <form-spinner v-if="type == 'increment'" :fields="fields"></form-spinner>
 
-    <!-- if is type markup image -->
-    <b-row v-if="type == 'markupimage'" class="p-2">
-      <b-col cols="7">
-        <b-form-group label="Url">
-          <b-form-input required v-model="fields.imgUrl"></b-form-input>
-        </b-form-group>
-      </b-col>
-      <b-col cols="7">
-        <b-form-group label="Name">
-          <b-form-input v-model="fields.name"></b-form-input>
-        </b-form-group>
-      </b-col>
-    </b-row>
+    <!-- if is type markup title && markup Image -->
+
+    <form-markup
+      v-if="type == 'markuptitle' || type == 'markupimage'"
+      :fields="fields"
+    ></form-markup>
+
     <!-- if is type checbox images -->
 
     <form-check-img v-if="type == 'checkboximg'" :fields="fields">
@@ -160,6 +77,9 @@ export default {
     FormCheckImg,
     FormNumberInline,
     InputText: () => import("./EditsFields/InputText.vue"),
+    FormSpinner: () => import("./formulaire/FormSpinner.vue"),
+    FormAutocomplete: () => import("./formulaire/FormAutocomplete.vue"),
+    FormMarkup: () => import("./formulaire/FormMarkup.vue"),
   },
   props: {
     type: {

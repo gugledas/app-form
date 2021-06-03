@@ -23,6 +23,7 @@
           </b-col>
         </b-row>
         <!-- affiche pour le cas du type checkbox image -->
+        <!--
         <b-row align-h="center" class="m-0" v-if="type == 'checkboximg'">
           <div
             v-for="(img, i) in formDatas.fields[id].options"
@@ -30,11 +31,17 @@
             @click="getImage(i)"
           >
             <imageCheck
-              :description="img.description"
+              :description="img.label"
               :isActive="img.isActive"
+              :urlImage="baseUrl + img.img"
             />
           </div>
         </b-row>
+      -->
+        <ImageCheck
+          :field="formDatas.fields[id]"
+          v-if="type == 'checkboximg'"
+        ></ImageCheck>
 
         <!-- affiche sur le cas du type number -->
         <label-row
@@ -130,9 +137,10 @@
 import { mapGetters } from "vuex";
 import AddFormField from "./AddFormField.vue";
 import Utilities from "./Utilities.js";
+
 export default {
   components: {
-    ImageCheck: () => import("./ImageCheck.vue"),
+    ImageCheck: () => import("./input/ImageCheckV2.vue"),
     IncrementNumber: () => import("./IncrementNumber.vue"),
 
     AddFormField,

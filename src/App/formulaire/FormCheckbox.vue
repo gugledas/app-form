@@ -25,6 +25,8 @@
           ></b-form-select>
         </b-form-group>
       </b-col>
+
+      <!-- options -->
       <b-col cols="12">
         <label>Options</label>
         <b-form @submit="onPush" @reset="onReset" class="border p-3">
@@ -52,10 +54,10 @@
             </b-input-group>
           </b-form-group>
 
-          <b-button type="submit" variant="primary" size="sm" class="mr-2"
-            >Push</b-button
-          >
-          <b-button type="reset" variant="danger" size="sm">Reset</b-button>
+          <b-button type="submit" variant="primary" size="sm" class="mr-2">
+            Push
+          </b-button>
+          <b-button type="reset" variant="danger" size="sm"> Reset </b-button>
         </b-form>
       </b-col>
       <b-col v-if="fields.options.length"

@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- ce template doit plus etre utilisé, utilisé => input/ImageCheck.vue -->
     <div class="choice-button">
       <div
         class="choice-button__img"
@@ -44,7 +43,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../../node_modules/@braid/vue-formulate/themes/snow/snow.scss";
+@import "@braid/vue-formulate/themes/snow/snow.scss";
 $border_color: #49a0a2;
 .choice-button {
   max-width: 150px;
@@ -90,7 +89,7 @@ $border_color: #49a0a2;
         background-repeat: no-repeat;
         background-size: 12px;
         background-color: #49a0a2;
-        background-image: url("../../public/check-solid.svg");
+        background-image: url("../../../public/check-solid.svg");
       }
     }
   }

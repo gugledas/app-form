@@ -1,49 +1,25 @@
 <template>
   <b-row class="p-2">
-    <b-col cols="7">
-      <b-form-group
-        label="label :"
-        label-for="label-input"
-        invalid-feedback="Name is required"
-      >
-        <b-form-input
-          v-model="fields.label"
-          id="label-input"
-          required
-        ></b-form-input>
-      </b-form-group>
-    </b-col>
-    <b-col sm="3">
-      <b-form-group label="require?" label-for="require-input">
-        <b-form-checkbox
-          :value="true"
-          :unchecked-value="false"
-          required
-          v-model="fields.require"
-        ></b-form-checkbox>
+    <b-col sm="12">
+      <b-form-group label="Label" invalid-feedback="Name is required">
+        <b-input-group>
+          <b-form-input v-model="fields.label" @input="input"></b-form-input>
+          <b-form-input
+            required
+            v-model="fields.name"
+            :readonly="readonly"
+            @dblclick="toogleReadOnly"
+          ></b-form-input>
+        </b-input-group>
       </b-form-group>
     </b-col>
 
-    <b-col cols="7">
-      <b-form-group
-        label="name"
-        label-for="name-input"
-        invalid-feedback="Name is required"
-      >
-        <b-form-input
-          id="name-input"
-          required
-          v-model="fields.name"
-        ></b-form-input>
-      </b-form-group>
-    </b-col>
     <!-- form option -->
     <b-col cols="12">
       <label>Options</label>
       <b-form @submit="onPush" @reset="onReset" class="border p-3">
-        <b-form-group label="isActive?" label-for="require-input">
+        <b-form-group label="isActive?">
           <b-form-checkbox
-            id="require-input"
             :value="true"
             :unchecked-value="false"
             required
@@ -51,34 +27,10 @@
           ></b-form-checkbox>
         </b-form-group>
 
-        <b-form-group
-          id="option-label"
-          label="label"
-          label-for="input-option-label"
-        >
+        <b-form-group label="label" label-for="input-option-label">
           <b-form-input
             v-model="inputOptions.label"
-            id="option-label"
             placeholder="Enter label"
-            required
-          ></b-form-input>
-        </b-form-group>
-
-        <b-form-group id="option-img" label="img" label-for="input-option-img">
-          <b-form-file
-            id="option-img"
-            placeholder="Choisir une image"
-          ></b-form-file>
-        </b-form-group>
-        <b-form-group
-          id="desc-img"
-          label="description"
-          label-for="input-option-val"
-        >
-          <b-form-input
-            v-model="inputOptions.description"
-            id="desc-imge"
-            placeholder="1 Côté"
             required
           ></b-form-input>
         </b-form-group>
@@ -95,15 +47,20 @@
             required
           ></b-form-input>
         </b-form-group>
-        <b-button type="submit" variant="primary" size="sm" class="mr-2"
-          >Push</b-button
-        >
-        <b-button type="reset" variant="danger" size="sm">Reset</b-button>
+        <manageImages
+          @ev_manage_images_img="ev_manage_images_img($event, inputOptions)"
+        ></manageImages>
+        <b-button type="submit" variant="primary" size="sm" class="mr-2">
+          Push
+        </b-button>
+        <b-button type="reset" variant="danger" size="sm"> Reset </b-button>
       </b-form>
+      <hr />
+      <!-- list edit options-->
       <b-form
         @submit="onPush"
         @reset="onReset"
-        class="border p-3"
+        class="border p-3 mb-3 bg-light"
         v-for="(item, i) in fields.options"
         :key="i"
       >
@@ -132,16 +89,6 @@
         </b-form-group>
 
         <b-form-group
-          :id="`option-img${i}`"
-          label="img"
-          label-for="input-option-img"
-        >
-          <b-form-file
-            :id="`option-img${i}`"
-            placeholder="Choisir une image"
-          ></b-form-file>
-        </b-form-group>
-        <b-form-group
           :id="`desc-img${i}`"
           label="description"
           label-for="input-option-val"
@@ -167,10 +114,15 @@
           ></b-form-input>
         </b-form-group>
 
+        <manageImages
+          @ev_manage_images_img="ev_manage_images_img($event, item)"
+          :img_url="item.img"
+        ></manageImages>
+
         <b-button type="submit" variant="primary" size="sm">Push</b-button>
-        <b-button type="reset" variant="dark" size="sm" class="mx-2"
-          >Reset</b-button
-        >
+        <b-button type="reset" variant="dark" size="sm" class="mx-2">
+          Reset
+        </b-button>
         <b-button variant="danger" size="sm" @click="deleteOption(i)"
           >delete</b-button
         >
@@ -179,16 +131,28 @@
         <pre class="m-0">{{ inputOptions }}</pre>
       </b-card>
     </b-col>
+    <b-col sm="12">
+      <ValidationFields :field="fields"></ValidationFields>
+    </b-col>
   </b-row>
 </template>
 
 <script>
+import { snakeCase } from "snake-case";
+import ValidationFields from "../EditsFields/ValidationFields";
+import manageImages from "../EditsFields/manage-images.vue";
+//import OptionTable from "../OptionTable.vue";
 export default {
   props: {
     fields: {
       type: Object,
       require: true,
     },
+  },
+  components: {
+    ValidationFields,
+    manageImages,
+    //OptionTable,
   },
   data() {
     return {
@@ -201,6 +165,7 @@ export default {
         description: "",
         isActive: false,
       },
+      readonly: true,
     };
   },
   watch: {},
@@ -246,6 +211,20 @@ export default {
       this.$nextTick(() => {
         this.show = true;
       });
+    },
+    input() {
+      if (this.readonly && this.fields.name.length <= 32) {
+        this.fields.name = snakeCase(this.fields.label);
+      }
+    },
+    toogleReadOnly() {
+      if (this.readonly) this.readonly = false;
+      else this.readonly = true;
+    },
+    ev_manage_images_img(data, inputOptions) {
+      if (data.url) {
+        inputOptions.img = data.url;
+      }
     },
   },
 };

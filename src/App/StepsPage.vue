@@ -149,7 +149,7 @@
 
     <b-row class="m-0" v-if="this.$store.state.mode"
       ><b-col cols="4">
-        <b-card class="mt-3 text-left" header="Form Data Result">
+        <b-card class="mt-3 text-left d-none" header="Form Data Result">
           <pre class="m-0"></pre>
           <p>formulaire Generale</p>
           <pre class="text-left">{{ form }}</pre>

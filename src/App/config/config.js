@@ -8,8 +8,9 @@ const vm = new Vue();
 //console.log("Module Vue :  ", vm, "\n $bvToast : ", vm.$bvToast);
 AjaxToastBootStrap.$bvToast = vm.$bvToast;
 export default {
-  baseURl: "http://lesroisdelareno.kksa",
-
+  baseURl: window.location.host.includes("localhost")
+    ? "http://lesroisdelareno.kksa"
+    : window.location.host,
   /**
    * Permet d'ajouter et d'editer un formulaire.
    */

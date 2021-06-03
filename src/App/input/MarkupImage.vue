@@ -1,22 +1,29 @@
 <template>
   <div class="number-markup__img">
-    <img :src="imgUrl" />
+    <img :src="img_url_format" />
   </div>
 </template>
 
 <script>
+import config from "../config/config.js";
 export default {
   props: {
-    imgUrl: {
-      type: String,
-      default:
-        "https://prod-taro-front.lamaisonsaintgobain.fr/c57576e3ca88b4d321458b05c7c7371c.svg",
+    field: {
+      type: Object,
+      require: true,
     },
   },
   data() {
     return {
       text: 1,
     };
+  },
+  computed: {
+    img_url_format() {
+      if (this.field.imgUrl && this.field.imgUrl !== undefined)
+        return config.baseURl + this.field.imgUrl;
+      return null;
+    },
   },
   methods: {
     labelUpValue(datas) {

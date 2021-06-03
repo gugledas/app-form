@@ -13,7 +13,9 @@
             min="1"
             max="100"
           ></b-form-input
-          ><span class="input-field__unit">{{ field.unit }}</span>
+          ><span class="input-field__unit" v-if="field.suffixe">{{
+            field.suffixe
+          }}</span>
         </div>
         <div class="text-danger">
           <small v-for="(error, ii) in v.errors" :key="ii" class="d-block">
@@ -42,7 +44,7 @@ extend("required", {
 export default {
   props: {
     field: {
-      type: Array,
+      type: Object,
       require: true,
     },
   },

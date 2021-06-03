@@ -2,9 +2,10 @@
   <div>
     <b-row class="mb-3">
       <b-col sm="12">
-        <b-form-group label="Label" invalid-feedback="Name is required">
+        <b-form-group label="Label">
           <b-input-group>
             <b-form-input
+              id="label-up"
               v-model="fields.label"
               @input="input"
               required
@@ -18,13 +19,18 @@
           </b-input-group>
         </b-form-group>
       </b-col>
-      <b-col sm="12" v-if="fields.type == 'markupimage'">
-        <b-form-group label="Url de l'image">
-          <b-form-input v-model="fields.imgUrl" id="image-url"></b-form-input>
+      <b-col sm="12">
+        <b-form-group label="Valeur par defaut">
+          <b-form-input v-model="fields.value" type="number"></b-form-input>
         </b-form-group>
-        <manageImages
-          @ev_manage_images_img="ev_manage_images_img($event)"
-        ></manageImages>
+      </b-col>
+      <b-col sm="6">
+        <b-form-group label=" suffixe">
+          <b-input-group>
+            <!-- <b-form-input v-model="prefixe" id="prefixe"></b-form-input> -->
+            <b-form-input v-model="fields.suffixe" id="suffixe"></b-form-input>
+          </b-input-group>
+        </b-form-group>
       </b-col>
     </b-row>
     <ValidationFields :field="fields"></ValidationFields>
@@ -34,14 +40,9 @@
 <script>
 import { snakeCase } from "snake-case";
 import ValidationFields from "../EditsFields/ValidationFields";
-import manageImages from "../EditsFields/manage-images.vue";
 export default {
   name: "FormMarkup",
   props: {
-    title: {
-      type: Boolean,
-      default: true,
-    },
     fields: {
       type: Object,
       required: true,
@@ -58,12 +59,13 @@ export default {
 
   components: {
     ValidationFields,
-    manageImages,
   },
   data() {
     return {
       readonly: true,
       value: "",
+      prefixe: "",
+      suffixe: "",
     };
   },
   mounted() {
@@ -74,11 +76,6 @@ export default {
   },
   computed: {},
   methods: {
-    ev_manage_images_img(data) {
-      if (data.url) {
-        this.fields.imgUrl = data.url;
-      }
-    },
     inputValue() {
       if (this.value.length) {
         return (this.fields.value = Number(this.value));

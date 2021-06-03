@@ -47,10 +47,7 @@
 
     <!-- if is  Number label up  and Number label Inline-->
 
-    <form-number-inline
-      v-if="type == 'numberup'"
-      :fields="fields"
-    ></form-number-inline>
+    <form-number-up v-if="type == 'numberup'" :fields="fields"></form-number-up>
 
     fields:
     <pre>{{ fields }}--{{ optionsToPush }}</pre>
@@ -65,7 +62,7 @@ import FormRadioDesc from "./formulaire/FormRadioDesc.vue";
 import FormSelect from "./formulaire/FormSelect.vue";
 import FormRadio from "./formulaire/FormRadio";
 import FormCheckImg from "./formulaire/FormCheckImg.vue";
-import FormNumberInline from "./formulaire/FormNumberInline.vue";
+import FormNumberUp from "./formulaire/FormNumberUp.vue";
 import Utilities from "./Utilities.js";
 export default {
   components: {
@@ -75,7 +72,7 @@ export default {
     FormRadioDesc,
     FormRadio,
     FormCheckImg,
-    FormNumberInline,
+    FormNumberUp,
     InputText: () => import("./EditsFields/InputText.vue"),
     FormSpinner: () => import("./formulaire/FormSpinner.vue"),
     FormAutocomplete: () => import("./formulaire/FormAutocomplete.vue"),

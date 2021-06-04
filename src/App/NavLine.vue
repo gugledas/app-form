@@ -1,19 +1,25 @@
 <template>
   <div class="nav-line">
-    <b-button
-      v-for="(item, i) in idLevel"
-      :key="i"
-      v-b-tooltip.hover
-      :title="'Etape ' + i"
-      variant="info"
-      class="nav-line__nav"
-      @click="loadSteps(i)"
-    ></b-button>
+    <div v-for="(item, i) in idLevel" :key="i" class="w-100">
+      <b-button
+        :title="'Etape ' + i"
+        variant="info"
+        class="nav-line__nav"
+        :id="'tooltip-1' + i"
+        :class="i == stepsIndex ? 'nav-line__nav--dark' : ''"
+        @click="loadSteps(i)"
+      >
+      </b-button
+      ><b-tooltip :target="'tooltip-1' + i" triggers="hover" variant="info">
+        <b>etape {{ i }}</b> <br />
+        <div>{{ form.forms[i].info.title }}</div>
+      </b-tooltip>
+    </div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
 
 export default {
   props: {},
@@ -25,6 +31,7 @@ export default {
   },
   watch: {},
   computed: {
+    ...mapState(["stepsIndex"]),
     ...mapGetters(["form"]),
     idLevel() {
       var id = [];
@@ -59,6 +66,9 @@ export default {
     width: 100%;
     border-left: 1px solid rgb(237, 237, 237);
     border-radius: 0;
+    &--dark {
+      background: teal;
+    }
   }
 }
 </style>

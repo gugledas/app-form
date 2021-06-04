@@ -30,6 +30,13 @@ export default {
     };
   },
   watch: {},
+  mounted() {
+    var step = localStorage.getItem("step");
+    console.log("object,", step);
+    if (step !== null && step.length) {
+      this.$store.state.stepsIndex = Number(step);
+    }
+  },
   computed: {
     ...mapState(["stepsIndex"]),
     ...mapGetters(["form"]),
@@ -47,6 +54,7 @@ export default {
     loadSteps(i) {
       this.$store.state.stepsIndex = i;
       console.log("object,", i);
+      localStorage.setItem("step", i);
     },
   },
 };

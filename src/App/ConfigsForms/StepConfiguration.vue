@@ -56,7 +56,7 @@
 <script>
 import { mapGetters, mapState } from "vuex";
 import { snakeCase } from "snake-case";
-import ValidationFields from "./ValidationFields.vue";
+import ValidationFields from "./ValidationEtapes.vue";
 export default {
   name: "StepConfiguration",
   props: {

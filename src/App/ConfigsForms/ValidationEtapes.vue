@@ -45,14 +45,27 @@
                 </b-form-group>
                 <!-- -->
                 <b-form-group
-                  label="si le champs"
+                  label="si l'etape "
+                  label-for="input-lazy"
+                  label-size="sm"
+                  label-cols="4"
+                >
+                  <b-form-select
+                    v-model="condition.state_name"
+                    :options="listeDesEtapes"
+                    size="sm"
+                  ></b-form-select>
+                </b-form-group>
+                <!-- -->
+                <b-form-group
+                  label="si le champs "
                   label-for="input-lazy"
                   label-size="sm"
                   label-cols="4"
                 >
                   <b-form-select
                     v-model="condition.name"
-                    :options="listeDesEtapes"
+                    :options="listeDesChamps(condition)"
                     size="sm"
                   ></b-form-select>
                 </b-form-group>
@@ -134,11 +147,15 @@ export default {
     ...mapGetters(["formDatas", "form"]),
     listeDesEtapes() {
       const etapes = [];
+      console.log("this.form.forms : ", this.form.forms);
       if (this.form && this.form.forms.length > 1) {
         for (const i in this.form.forms) {
           const form = this.form.forms[i];
-          if (form.name !== this.formDatas.name) {
-            etapes.push({ text: form.title, value: form.name });
+          if (
+            form.info.name !== "" &&
+            form.info.name !== this.formDatas.info.name
+          ) {
+            etapes.push({ text: form.info.title, value: form.info.name });
           }
         }
       }
@@ -153,6 +170,23 @@ export default {
     deleteState(i) {
       console.log("i : ", i);
       this.formDatas.states.splice(i, 1);
+    },
+    listeDesChamps(condition) {
+      const fields = [];
+      if (condition.state_name && condition.state_name !== "") {
+        var form = Validation.getFormStateByName(
+          condition.state_name,
+          this.form.forms
+        );
+        if (form !== undefined) {
+          console.log("form : ", form);
+          for (const i in form.fields) {
+            const field = form.fields[i];
+            fields.push({ text: field.label, value: field.name });
+          }
+        }
+      }
+      return fields;
     },
   },
 };

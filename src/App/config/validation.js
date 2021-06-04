@@ -5,6 +5,7 @@ const validation = {
       name: "",
       operator: "",
       value: "",
+      state_name: "",
     };
   },
   listsOperators() {
@@ -19,6 +20,10 @@ const validation = {
       },
       {
         text: " vide",
+        value: "empty",
+      },
+      {
+        text: "Valeur",
         value: "empty",
       },
     ];
@@ -58,6 +63,14 @@ const validation = {
             }
           }
         }
+      }
+    }
+  },
+  getFormStateByName(state_name, forms) {
+    for (const i in forms) {
+      const form = forms[i];
+      if (form.info.name === state_name) {
+        return form;
       }
     }
   },

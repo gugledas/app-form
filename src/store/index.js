@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import utilities from "./utilities.js";
 
 Vue.use(Vuex);
 import axios from "axios";
@@ -173,9 +174,11 @@ export default new Vuex.Store({
       commit("ADD_FIELDS", payload);
       commit("RESET_FIELDS");
     },
-
-    stepsIndex({ commit }, i) {
-      commit("STEPS_INDEX", i);
+    /**
+     * Elle definit la logique permettant de passer à une autre etape.
+     */
+    stepsIndex({ commit, state, getters }, i) {
+      commit("STEPS_INDEX", utilities.selectNextState(state, getters, i));
     },
     resetFormDatas({ commit }) {
       //commit("NEW_PAGE");
@@ -214,7 +217,6 @@ export default new Vuex.Store({
     setItems({ commit }, payload) {
       commit("SET_ITEMS", payload);
     },
-
     setFormDatasValidate({ commit }, payload) {
       commit("SET_FORM_DATAS_VALIDATE", payload);
     },

@@ -129,7 +129,7 @@ export default {
     },
   },
   computed: {
-    ...mapState(["mode"]),
+    ...mapState(["mode", "stepsIndex"]),
     ...mapGetters(["formDatas", "form"]),
     stepsState() {
       var state = null;
@@ -150,8 +150,7 @@ export default {
   methods: {
     suivant() {
       if (this.stepsState) {
-        // this.$parent.suivant();
-        this.$store.state.stepsIndex++;
+        this.$store.dispatch("stepsIndex", this.stepsIndex);
       }
     },
     deleteSteps() {

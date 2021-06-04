@@ -1,1 +1,44 @@
-@import '../node_modules/@braid/vue-formulate/themes/snow/snow.scss';
+@use '@braid/vue-formulate/themes/snow/snow.scss';
+@use './variables.scss' as *;
+@use './field.scss'; //
+
+.boutton-absolute {
+  position        : absolute;
+  left            : calc(100% + 30px);
+  top             : 0;
+  right           : auto;
+  border          : 1px solid #dee2e6;
+  background-color: #f8f9fa;
+  display         : flex;
+
+  .btn {
+    border-radius: 0;
+    border       : none;
+  }
+}
+
+.min-height {
+  min-height: 50px;
+}
+//animation transition fade
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s;
+}
+/* .fade-leave-active below version 2.1.8 */
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+// StepsPage.vue
+
+.full-block {
+  height          : auto;
+  background-color: #FFF;
+  padding         : 1rem;
+}
+
+hr {
+  margin-bottom: $margin-bouton;
+}

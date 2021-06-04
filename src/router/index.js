@@ -1,6 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Listesfomes from "../App/Listesfomes.vue";
+import "../App/scss/style.scss";
 
 Vue.use(VueRouter);
 

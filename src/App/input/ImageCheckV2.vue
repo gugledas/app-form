@@ -105,7 +105,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import "@braid/vue-formulate/themes/snow/snow.scss";
 $border_color: #49a0a2;
 .choice-button {
   max-width: 150px;

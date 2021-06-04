@@ -1,54 +1,52 @@
 <template>
-  <div>
-    <b-modal
-      size="lg"
-      id="modal-addForm"
-      ref="addForm"
-      title="Ajouter des champs dans la page..."
-      hide-footer
-      v-model="isOpen"
-      @ok="handleOk"
+  <b-modal
+    size="lg"
+    id="modal-addForm"
+    ref="addForm"
+    title="Ajouter des champs dans la page"
+    hide-footer
+    v-model="isOpen"
+    @ok="handleOk"
+  >
+    <form
+      ref="forme"
+      @submit="handleSubmit"
+      @reset="resetModal"
+      @hidden="resetModal"
     >
-      <form
-        ref="forme"
-        @submit="handleSubmit"
-        @reset="resetModal"
-        @hidden="resetModal"
-      >
-        <b-row>
-          <b-col cols="7">
-            <b-form-group
-              label="Sélectionner un type"
-              label-for="type-input"
-              invalid-feedback="type is required"
-            >
-              <b-form-select
-                v-model="fields.type"
-                :options="typeOptions"
-                id="type-input"
-                required
-              ></b-form-select>
-            </b-form-group>
-          </b-col>
-        </b-row>
-        <!-- !-->
-        <div>
-          <input-option-form
-            :type="fields.type"
-            :fields="fields"
-          ></input-option-form>
-        </div>
+      <b-row>
+        <b-col cols="7">
+          <b-form-group
+            label="Sélectionner un type"
+            label-for="type-input"
+            invalid-feedback="type is required"
+          >
+            <b-form-select
+              v-model="fields.type"
+              :options="typeOptions"
+              id="type-input"
+              required
+            ></b-form-select>
+          </b-form-group>
+        </b-col>
+      </b-row>
+      <!-- !-->
+      <div>
+        <input-option-form
+          :type="fields.type"
+          :fields="fields"
+        ></input-option-form>
+      </div>
 
-        <b-row align-h="end">
-          <div class="mr-3">
-            <b-button type="submit" variant="primary" class="mr-2">{{
-              nameButtonOk
-            }}</b-button>
-          </div></b-row
-        >
-      </form>
-    </b-modal>
-  </div>
+      <b-row align-h="end">
+        <div class="mr-3">
+          <b-button type="submit" variant="primary" class="mr-2">{{
+            nameButtonOk
+          }}</b-button>
+        </div>
+      </b-row>
+    </form>
+  </b-modal>
 </template>
 
 <script>
@@ -130,10 +128,6 @@ export default {
 
     resetModal() {
       this.type = null;
-
-      //   this.titleState = null;
-      //   this.headerTitle = "";
-      //   this.headerState = null;
     },
     handleOk(event) {
       // Prevent modal from closing

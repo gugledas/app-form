@@ -2,16 +2,11 @@
   <div>
     <b-container class="bv-example-row bg-light p-5" fluid="lg">
       <div>
-        <h4 class="titre">Edition du formulaire: {{ form.name }}</h4>
+        <h4 class="titre mb-3">Edition du formulaire: {{ form.name }}</h4>
       </div>
       <b-row align-h="center">
         <transition name="fade">
-          <b-col
-            class="full-block shadow"
-            cols="12"
-            lg="9"
-            v-if="formDatas && formDatas.info"
-          >
+          <b-col class="" cols="12" lg="9" v-if="formDatas && formDatas.info">
             <pages :level="stepsIndex"></pages>
           </b-col>
         </transition>
@@ -31,15 +26,17 @@
               variant="info"
               size="sm"
               @click="clearFormDatas"
-              >Add new Steps</b-button
             >
+              Add new Steps
+            </b-button>
             <b-button
               class="m-4"
               variant="success"
               size="sm"
               @click="saveToLocal"
-              >Save</b-button
             >
+              Save
+            </b-button>
             <b-button
               class="m-4"
               variant="danger"
@@ -49,9 +46,9 @@
               clear storage
             </b-button>
 
-            <b-button class="m-4" size="sm" variant="light" @click="resetValue"
-              >Reset value</b-button
-            >
+            <b-button class="m-4" size="sm" variant="light" @click="resetValue">
+              Reset value
+            </b-button>
             <b-modal
               id="modal-prevent-closing"
               ref="modal"
@@ -126,11 +123,12 @@
                     </b-form-group>
                   </b-col>
                 </b-row>
-                <b-button size="sm" variant="light" class="shadow-sm"
-                  >Generate JSON</b-button
-                ><b-button type="reset" class="mx-3" variant="danger" size="sm"
-                  >Reset</b-button
-                >
+                <b-button size="sm" variant="light" class="shadow-sm">
+                  Generate JSON
+                </b-button>
+                <b-button type="reset" class="mx-3" variant="danger" size="sm">
+                  Reset
+                </b-button>
                 <hr class="my-3" />
                 <b-row align-h="end">
                   <div class="mr-3">
@@ -391,16 +389,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss">
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.2s;
-}
-.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
-  opacity: 0;
-}
-.full-block {
-  height: auto;
-}
-</style>

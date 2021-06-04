@@ -75,6 +75,7 @@ export default new Vuex.Store({
             headerTitle: "",
             title: "",
             name: "",
+            states: [],
           },
           fields: [],
         };
@@ -96,6 +97,7 @@ export default new Vuex.Store({
           headerTitle: "",
           title: "",
           name: "",
+          states: [],
         },
         fields: [],
       };
@@ -191,9 +193,10 @@ export default new Vuex.Store({
     setFormId({ commit }, payload) {
       commit("SET_FORM_ID", payload);
     },
+    /**
+     * Recupere les formulaires en BD.
+     */
     loadStepsDatas({ commit }) {
-      //this.datasBdOrLocalStorage();
-      //var self = this;
       var datas = "select * from `appformmanager_fomrs`";
       axios
         .post("http://lesroisdelareno.kksa" + "/query-ajax/select", datas)
@@ -205,6 +208,13 @@ export default new Vuex.Store({
           console.log("get error ", error);
         });
     },
+    /**
+     * Permet de modifier la structure du formulaire.
+     */
+    setItems({ commit }, payload) {
+      commit("SET_ITEMS", payload);
+    },
+
     setFormDatasValidate({ commit }, payload) {
       commit("SET_FORM_DATAS_VALIDATE", payload);
     },

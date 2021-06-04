@@ -1,0 +1,80 @@
+@use "./variables.scss" as *;
+
+.choice-section {
+  max-width   : 480px;
+  margin-top  : 10px;
+  width       : 100%;
+  margin-left : auto;
+  margin-right: auto;
+  position    : relative;
+
+  .input-list {
+    display      : flex;
+    align-items  : center;
+    padding      : 10px 0;
+    border-bottom: 1px solid #94909052;
+    border-top   : 1px solid #94909052;
+
+    &__description {
+      color      : #8a8a8a;
+      font-size  : 0.8em;
+      margin-top : 10px;
+      font-style : italic;
+      font-weight: 300;
+    }
+
+    &__label {
+      text-align     : left;
+      // margin-left: -12px;
+      padding        : 10px 0;
+      margin-bottom  : 0;
+      font-size      : 1em;
+      font-family    : Ubuntu, sans-serif;
+      font-weight    : 400;
+      width          : 100%;
+      height         : 100%;
+      display        : flex;
+      align-items    : center;
+      justify-content: space-between;
+
+      label {
+        cursor: pointer;
+      }
+    }
+
+    &__input {
+      text-align : right;
+      margin-left: 6px;
+    }
+  }
+
+  .input-label {
+    border-top   : 1px solid #80808012;
+    border-bottom: 1px solid #88828212;
+    font-weight  : 300;
+    padding      : 10px 0;
+    margin       : 0;
+  }
+
+  .autocomplete {
+    max-width : 500px;
+    margin-top: 0.9rem;
+
+    .multiselect__tags {
+      min-height   : 64px;
+      padding      : 20px 40px 0 8px;
+      border-radius: 5px;
+      border       : 1px solid $primary_color;
+    }
+
+    .multiselect__select {
+      display: none;
+    }
+
+    .multiselect__option--highlight {
+      background: $primary_color;
+      outline   : none;
+      color     : #fff;
+    }
+  }
+}

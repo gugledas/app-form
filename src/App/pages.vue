@@ -1,89 +1,100 @@
 <template>
-  <div class="element-center">
-    <b-row align-h="end" class="m-4">
-      <b-col>
+  <div class="element-center full-block shadow">
+    <div class="choice-section text-right">
+      <b-row align-h="end">
+        <b-col>
+          <p class="button-travaux">{{ formDatas.info.headerTitle }}</p>
+        </b-col>
+      </b-row>
+      <b-button-group class="boutton-absolute" v-if="mode">
         <b-button
-          class="mx-4 bouton-add"
-          v-if="mode"
-          variant="primary"
-          size="sm"
+          variant="outline-info"
           @click="addFormField"
+          size="sm"
+          v-b-tooltip.hover.v-info
+          title="Ajouter un champs"
         >
-          +
+          <b-icon icon="plus" style="font-size: 1.5rem"></b-icon>
         </b-button>
-        <p class="button-travaux">{{ formDatas.info.headerTitle }}</p>
-      </b-col>
-    </b-row>
+        <b-button
+          variant="outline-success"
+          @click="configSteps"
+          size="sm"
+          v-b-tooltip.hover.v-success
+          title="Editer le formulaire"
+        >
+          <b-icon icon="pencil"></b-icon>
+        </b-button>
+        <b-button
+          variant="outline-danger"
+          @click="deleteSteps"
+          size="sm"
+          v-b-tooltip.hover.v-danger
+          title="Suprimer le formulaire"
+        >
+          <b-icon icon="trash"></b-icon>
+        </b-button>
+      </b-button-group>
+    </div>
     <!-- center container -->
-    <b-container fluid class="center-container">
-      <ValidationObserver v-slot="v">
-        <b-row class="block-container" align-h="center">
-          <b-row class="w-100">
-            <b-col cols="12" class="text-left" v-if="level > 0">
-              <div class="backButton" @click="back">
-                <img src="../../public/long-arrow-alt-left-solid.svg" alt="" />
-              </div>
-            </b-col>
-            <div
-              v-for="(field, i) in formDatas.fields"
-              :key="i"
-              class="col-12 p-0 mb-5"
-            >
-              <display-fields :type="field.type" :id="i"></display-fields>
-            </div>
-          </b-row>
-          <!--
-          <div>
-            <markup-image></markup-image>
-            <markup-title></markup-title>
-          </div>
-        -->
-          <b-col cols="12" class="form-nav-bouton">
-            <button
-              class="next-bouton"
-              :class="
-                stepsState && !v.invalid
-                  ? 'next-bouton--active'
-                  : 'next-bouton--disable'
-              "
-              @click="suivant"
-            >
-              Suivant
-            </button>
-          </b-col>
-          <b-col cols="12" v-if="mode">
-            <b-button variant="danger" @click="deleteSteps">
-              delete this steps
-            </b-button>
-          </b-col>
-        </b-row>
-        <getStatusValidation :validation-observer="v"></getStatusValidation>
-      </ValidationObserver>
-    </b-container>
 
-    <!-- add modal field -->
-    <add-form-field
-      :isOpen="modalFormFieldIsOpen"
-      ref="formField"
-      :nouveau="true"
-    ></add-form-field>
+    <ValidationObserver v-slot="v" class="center-container">
+      <b-row class="block-container" align-h="center">
+        <b-col cols="12" class="text-left" v-if="level > 0">
+          <div class="backButton" @click="back">
+            <img src="../../public/long-arrow-alt-left-solid.svg" alt="" />
+          </div>
+        </b-col>
+        <div
+          v-for="(field, i) in formDatas.fields"
+          :key="i"
+          class="col-12 p-0 mb-5"
+        >
+          <display-fields :type="field.type" :id="i"></display-fields>
+        </div>
+
+        <b-col cols="12" class="form-nav-bouton">
+          <button
+            class="next-bouton"
+            :class="
+              stepsState && !v.invalid
+                ? 'next-bouton--active'
+                : 'next-bouton--disable'
+            "
+            @click="suivant"
+          >
+            Suivant
+          </button>
+        </b-col>
+      </b-row>
+      <getStatusValidation :validation-observer="v"></getStatusValidation>
+    </ValidationObserver>
+
+    <!-- editions/configs -->
+    <div v-if="mode">
+      <add-form-field
+        :isOpen="modalFormFieldIsOpen"
+        ref="formField"
+        :nouveau="true"
+      ></add-form-field>
+      <StepConfiguration ref="StepConfiguration"></StepConfiguration>
+    </div>
   </div>
 </template>
 
 <script>
 import { ValidationObserver } from "vee-validate";
 import { mapGetters, mapState } from "vuex";
-import AddFormField from "./AddFormField.vue";
-//import LabelUp from "./input/LabelUp";
 import DisplayFields from "./displayFields.vue";
 import getStatusValidation from "./EditsFields/getStatusValidation.vue";
 
 export default {
   components: {
-    AddFormField,
     DisplayFields,
     ValidationObserver,
     getStatusValidation,
+    AddFormField: () => import("./AddFormField.vue"),
+    StepConfiguration: () => import("./ConfigsForms/StepConfiguration.vue"),
   },
   props: {
     level: {
@@ -157,6 +168,9 @@ export default {
     addFormField() {
       this.$refs.formField.openAddFormFieldPopUp();
     },
+    configSteps() {
+      this.$refs.StepConfiguration.openPopUp();
+    },
     back() {
       //this.$parent.back();
       this.$store.state.stepsIndex--;
@@ -175,7 +189,7 @@ export default {
 </script>
 
 <style lang="scss">
-$primary_color: #319899;
+@use "./scss/variables.scss" as *;
 .custom-control-input:checked ~ .custom-control-label::before {
   background: $primary_color;
 }
@@ -184,10 +198,7 @@ $primary_color: #319899;
   margin: 7px 0;
   cursor: pointer;
 }
-.bouton-add {
-  font-size: 1.5rem;
-  padding: 0 11px;
-}
+
 .help-container {
   margin-bottom: 0;
   position: absolute;
@@ -234,7 +245,7 @@ $primary_color: #319899;
   }
 }
 .element-center {
-  text-align: center;
+  //text-align: center;
   .button-travaux {
     color: $primary_color;
     font-weight: 700;
@@ -245,83 +256,15 @@ $primary_color: #319899;
     display: inline-block;
     white-space: nowrap;
   }
-  //center-container
+
   .center-container {
     display: flex;
-    padding: 1rem;
+    padding-top: 20px;
     margin-bottom: 2rem;
     justify-content: center;
     .block-container {
       max-width: 500px;
 
-      .choice-section {
-        max-width: 530px;
-        margin-top: 10px;
-        width: 100%;
-        .input-list {
-          display: flex;
-          align-items: center;
-          padding: 10px 0;
-          border-bottom: 1px solid #94909052;
-          border-top: 1px solid #94909052;
-          &__description {
-            color: #8a8a8a;
-            font-size: 0.8em;
-            margin-top: 10px;
-            font-style: italic;
-            font-weight: 300;
-          }
-          &__label {
-            text-align: left;
-            // margin-left: -12px;
-            padding: 10px 0;
-            margin-bottom: 0;
-            font-size: 1em;
-            font-family: Ubuntu, sans-serif;
-            font-weight: 400;
-            background-color: #fff;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            label {
-              cursor: pointer;
-            }
-          }
-          &__input {
-            text-align: right;
-            margin-left: 6px;
-          }
-        }
-        .input-label {
-          border-top: 1px solid #80808012;
-          border-bottom: 1px solid #88828212;
-          font-weight: 300;
-          padding: 10px 0;
-          margin: 0;
-        }
-
-        .autocomplete {
-          max-width: 500px;
-          margin-top: 0.9rem;
-          .multiselect__tags {
-            min-height: 64px;
-
-            padding: 20px 40px 0 8px;
-            border-radius: 5px;
-            border: 1px solid $primary_color;
-          }
-          .multiselect__select {
-            display: none;
-          }
-          .multiselect__option--highlight {
-            background: $primary_color;
-            outline: none;
-            color: #fff;
-          }
-        }
-      }
       .page-label {
         margin: 0 0 30px;
         font-size: 0.9em;

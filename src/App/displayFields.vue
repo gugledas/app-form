@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="choice-section min-height">
     <!-- stepsState: {{ stepsState }} -->
     <!-- <div class="help-container">
             <div class="help-block">
@@ -11,7 +11,7 @@
             </div>
           </div> -->
 
-    <b-col class="choice-section min-height">
+    <div>
       <form ref="form" @submit.stop.prevent="handleSubmit">
         <!-- fields value: {{ formDatas.fields[id].value }}-- fields selected:{{
           formDatas.fields[id].selected
@@ -101,28 +101,29 @@
         <radio-desc v-if="type == 'radiodesc'" :id="id"></radio-desc>
       </form>
 
-      <div v-if="this.$store.state.mode" class="boutton-absolute">
-        <div sm="2" class="my-3">
-          <b-button
-            class="mx-3 p-2"
-            size="sm"
-            variant="outline-success"
-            @click="editFormField"
-          >
-            <b-icon icon="pencil" font-scale="1" class=""></b-icon>
-          </b-button>
-        </div>
-        <div class="my-3">
-          <b-button
-            class=""
-            size="sm"
-            variant="outline-danger"
-            @click="deleteField"
-            ><b-icon icon="trash" font-scale="1" class=""></b-icon
-          ></b-button>
-        </div>
+      <div v-if="this.$store.state.mode" class="boutton-absolute d-flex">
+        <b-button
+          class="border-0"
+          size="sm"
+          variant="outline-success"
+          @click="editFormField"
+          v-b-tooltip.hover.v-success
+          title="Editer ce champs"
+        >
+          <b-icon icon="pencil" font-scale="1" class=""></b-icon>
+        </b-button>
+
+        <b-button
+          class="border-0"
+          size="sm"
+          variant="outline-danger"
+          @click="deleteField"
+          v-b-tooltip.hover.v-danger
+          title="Supprimer ce champs"
+          ><b-icon icon="trash" font-scale="1" class=""></b-icon
+        ></b-button>
       </div>
-    </b-col>
+    </div>
 
     <add-form-field
       :isOpen="isOpen"
@@ -227,13 +228,4 @@ export default {
   },
 };
 </script>
-<style lang="scss">
-.boutton-absolute {
-  position: absolute;
-  left: -75px;
-  top: 0;
-}
-.min-height {
-  min-height: 100px;
-}
-</style>
+<style lang="scss"></style>

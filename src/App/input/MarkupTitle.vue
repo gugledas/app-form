@@ -1,7 +1,7 @@
 <template>
-  <b-col cols="12" class="text-left">
+  <div class="text-left">
     <h3 class="question-title">{{ field.label }}</h3>
-  </b-col>
+  </div>
 </template>
 
 <script>

@@ -23,14 +23,14 @@ const validation = {
       },
     ];
   },
-  Action() {
+  Action(val = "Ce champs") {
     return [
       {
-        text: "Ce champs est visible",
+        text: val + " est visible",
         value: "visible",
       },
       {
-        text: "Ce champs est caché",
+        text: val + " est caché",
         value: "hidden",
       },
     ];

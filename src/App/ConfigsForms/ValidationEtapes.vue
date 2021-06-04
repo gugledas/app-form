@@ -82,6 +82,38 @@
                     size="sm"
                   ></b-form-select>
                 </b-form-group>
+                <!-- -->
+                <b-form-group
+                  label="valeur"
+                  label-for="input-lazy"
+                  label-size="sm"
+                  label-cols="4"
+                  v-if="
+                    condition.operator == 'egal' &&
+                    form_validation_options.length === 0
+                  "
+                >
+                  <b-form-input
+                    required
+                    v-model="condition.value"
+                  ></b-form-input>
+                </b-form-group>
+                <b-form-group
+                  label="valeur"
+                  label-for="input-lazy"
+                  label-size="sm"
+                  label-cols="4"
+                  v-if="
+                    condition.operator == 'egal' &&
+                    form_validation_options.length > 0
+                  "
+                >
+                  <b-form-select
+                    v-model="condition.value"
+                    :options="form_validation_options"
+                    size="sm"
+                  ></b-form-select>
+                </b-form-group>
               </div>
               <div class="svg-content">
                 <b-button
@@ -133,6 +165,7 @@ export default {
       selected: [],
       listsOperators: Validation.listsOperators(),
       optionsAction: Validation.Action("Cette etape"),
+      form_validation_options: [],
     };
   },
   mounted() {
@@ -179,14 +212,20 @@ export default {
           this.form.forms
         );
         if (form !== undefined) {
-          console.log("form : ", form);
+          console.log("form , ", form);
           for (const i in form.fields) {
             const field = form.fields[i];
+            if (condition.name == field.name && field.options.length) {
+              this.put_form_validation_options(field.options);
+            }
             fields.push({ text: field.label, value: field.name });
           }
         }
       }
       return fields;
+    },
+    put_form_validation_options(options) {
+      this.form_validation_options = options;
     },
   },
 };

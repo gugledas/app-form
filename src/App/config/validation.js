@@ -23,8 +23,8 @@ const validation = {
         value: "empty",
       },
       {
-        text: "Valeur",
-        value: "empty",
+        text: "la valeur du champs est egal à",
+        value: "egal",
       },
     ];
   },

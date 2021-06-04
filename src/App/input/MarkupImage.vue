@@ -37,7 +37,7 @@ export default {
 .number-markup {
   &__img {
     width: 100%;
-    margin: 30px 0;
+    text-align: center;
     img {
       width: 170px;
       height: 140px;

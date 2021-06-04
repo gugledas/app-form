@@ -2,11 +2,14 @@
   <div>
     <b-container class="bv-example-row bg-light p-5" fluid="lg">
       <div>
-        <h4 class="titre mb-3">Edition du formulaire: {{ form.name }}</h4>
+        <h5 class="titre mb-3 shadow-sm p-2">
+          Edition du formulaire: <span class="form-title">{{ form.name }}</span>
+        </h5>
       </div>
       <b-row align-h="center">
         <transition name="fade">
           <b-col class="" cols="12" lg="9" v-if="formDatas && formDatas.info">
+            <nav-line></nav-line>
             <pages :level="stepsIndex"></pages>
           </b-col>
         </transition>
@@ -174,12 +177,13 @@
 <script>
 import axios from "axios";
 import utilities from "./Utilities";
+import NavLine from "./NavLine.vue";
 import { mapState, mapGetters } from "vuex";
 
 import pages from "./pages.vue";
 //import pages from "./pages2.vue";
 export default {
-  components: { pages },
+  components: { pages, NavLine },
   props: {
     id: {
       type: String,
@@ -389,3 +393,11 @@ export default {
   },
 };
 </script>
+<style lang="scss">
+.form-title {
+  font-size: 1.05rem;
+  letter-spacing: 2px;
+  margin-left: 10px;
+  font-weight: 600;
+}
+</style>

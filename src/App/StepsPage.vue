@@ -3,7 +3,7 @@
     <b-container class="bv-example-row bg-light p-5" fluid="lg">
       <div>
         <h5 class="titre mb-3 shadow-sm p-2">
-          Edition du formulaire: <span class="form-title">{{ form.name }}</span>
+          Gestion du formulaire: <span class="form-title">{{ form.name }}</span>
         </h5>
       </div>
       <b-row align-h="center">
@@ -14,48 +14,36 @@
           </b-col>
         </transition>
 
-        <b-col class="" v-if="$store.state.mode">
-          <div>
+        <b-col class="" cols="12" lg="3" v-if="$store.state.mode">
+          <div class="block-button">
             <b-button
               variant="light"
+              squared
               class="shadow-sm"
               v-b-modal.modal-prevent-closing
             >
               Configuration
             </b-button>
 
-            <b-button
-              class="m-4"
-              variant="info"
-              size="sm"
-              @click="clearFormDatas"
-            >
+            <b-button squared variant="info" size="sm" @click="clearFormDatas">
+              <b-icon
+                icon="plus"
+                style="font-size: 2.5rem"
+                class="mr-2"
+              ></b-icon>
               Add new Steps
             </b-button>
-            <b-button
-              class="m-4"
-              variant="success"
-              size="sm"
-              @click="saveToLocal"
-            >
-              Save
-            </b-button>
-            <b-button
-              class="m-4"
-              variant="danger"
-              size="sm"
-              @click="clearStorage"
-            >
-              clear storage
-            </b-button>
 
-            <b-button class="m-4" size="sm" variant="light" @click="resetValue">
+            <b-button squared size="sm" variant="dark" @click="resetValue">
               Reset value
+            </b-button>
+            <b-button squared variant="success" size="sm" @click="saveToLocal">
+              Save
             </b-button>
             <b-modal
               id="modal-prevent-closing"
               ref="modal"
-              title="Create your form page"
+              title="Edition du formulaire"
               @show="resetModal"
               @hidden="resetModal"
               @ok="handleOk"
@@ -69,34 +57,6 @@
               >
                 <b-row>
                   <b-col cols="8">
-                    <b-form-group
-                      label="Header title"
-                      label-for="header-title-input"
-                      invalid-feedback="the header title is required"
-                    >
-                      <b-form-input
-                        id="header-title-input"
-                        v-model="formDatas.info.headerTitle"
-                        required
-                      ></b-form-input>
-                    </b-form-group>
-                  </b-col>
-                  <b-col cols="8">
-                    <b-form-group
-                      label="Title"
-                      label-for="name-input"
-                      invalid-feedback="title is required"
-                    >
-                      <b-form-input
-                        id="name-input"
-                        v-model="formDatas.info.title"
-                      ></b-form-input>
-                    </b-form-group>
-                  </b-col>
-
-                  <b-col cols="8">
-                    <hr />
-                    <label for="">datas for datasBase</label>
                     <b-form-group label="name" label-for="name-input">
                       <b-form-input
                         id="db-input"
@@ -126,18 +86,14 @@
                     </b-form-group>
                   </b-col>
                 </b-row>
-                <b-button size="sm" variant="light" class="shadow-sm">
-                  Generate JSON
-                </b-button>
-                <b-button type="reset" class="mx-3" variant="danger" size="sm">
-                  Reset
-                </b-button>
+
                 <hr class="my-3" />
                 <b-row align-h="end">
                   <div class="mr-3">
-                    <b-button type="submit" class="mr-2">cancel</b-button>
+                    <b-button class="mr-2">export</b-button>
+
                     <b-button type="submit" variant="primary" class="mr-2"
-                      >ok</b-button
+                      >Mise à jour</b-button
                     >
                   </div></b-row
                 >
@@ -319,9 +275,7 @@ export default {
           console.log("get error ", error);
         });
     },
-    clearStorage() {
-      localStorage.clear();
-    },
+
     back() {
       this.$store.state.stepsIndex--;
       // this.$store.state.formDatas = this.currentSteps;
@@ -399,5 +353,14 @@ export default {
   letter-spacing: 2px;
   margin-left: 10px;
   font-weight: 600;
+}
+.block-button {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-evenly;
+  button {
+    margin: 5px;
+  }
 }
 </style>

@@ -79,6 +79,10 @@
       ></add-form-field>
       <StepConfiguration ref="StepConfiguration"></StepConfiguration>
     </div>
+    <pre>
+      stepsIndexs :
+      {{ stepsIndexs }}
+    </pre>
   </div>
 </template>
 
@@ -129,7 +133,7 @@ export default {
     },
   },
   computed: {
-    ...mapState(["mode", "stepsIndex"]),
+    ...mapState(["mode", "stepsIndex", "stepsIndexs"]),
     ...mapGetters(["formDatas", "form"]),
     stepsState() {
       var state = null;
@@ -153,6 +157,10 @@ export default {
         this.$store.dispatch("stepsIndex", this.stepsIndex);
       }
     },
+    back() {
+      this.$store.dispatch("stepsBack");
+      //this.$store.state.stepsIndex--;
+    },
     deleteSteps() {
       var all = this.$store.getters.form.forms;
       var r = all.indexOf(this.formDatas);
@@ -170,10 +178,7 @@ export default {
     configSteps() {
       this.$refs.StepConfiguration.openPopUp();
     },
-    back() {
-      //this.$parent.back();
-      this.$store.state.stepsIndex--;
-    },
+
     getImage(il) {
       for (var i = 0; i < this.imageCheck.length; i++) {
         if (i == il) {

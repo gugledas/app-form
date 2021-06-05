@@ -25,6 +25,7 @@
         >
           <b-icon icon="pencil"></b-icon>
         </b-button>
+
         <b-button
           variant="outline-danger"
           @click="deleteSteps"
@@ -168,6 +169,7 @@ export default {
         if (i === r) {
           all.splice(i, 1);
           console.log("iiippp");
+          this.$store.state.stepsIndex = this.form.forms.length - 1;
         }
       }
       //this.$store.dispatch("deleteStepsInAllSteps");

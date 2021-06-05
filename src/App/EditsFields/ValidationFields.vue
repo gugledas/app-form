@@ -1,5 +1,6 @@
 <template lang="html">
   <div class="accordion" role="tablist">
+    <!-- Field validation -->
     <b-card no-body class="mb-1">
       <b-card-header header-tag="header" class="p-1" role="tab">
         <b-button block v-b-toggle.accordion-1 variant="info">
@@ -21,19 +22,14 @@
         </b-card-body>
       </b-collapse>
     </b-card>
-    <!-- -->
+    <!-- Field  -->
     <b-card no-body class="mb-1">
       <b-card-header header-tag="header" class="p-1" role="tab">
         <b-button block v-b-toggle.accordion-2 variant="info">
           Condition d'affichage
         </b-button>
       </b-card-header>
-      <b-collapse
-        id="accordion-2"
-        accordion="my-accordion"
-        role="tabpanel"
-        visible
-      >
+      <b-collapse id="accordion-2" accordion="my-accordion" role="tabpanel">
         <b-card-body>
           <div class="mb-3">
             <b-button variant="outline-primary" size="sm" @click="addCondition">
@@ -105,10 +101,29 @@
         </b-card-body>
       </b-collapse>
     </b-card>
+    <!-- price -->
+    <b-card no-body class="mb-1">
+      <b-card-header header-tag="header" class="p-1" role="tab">
+        <b-button block v-b-toggle.accordion-3 variant="info">
+          Mecanisme de calcul du prix
+        </b-button>
+      </b-card-header>
+      <b-collapse
+        id="accordion-3"
+        accordion="my-accordion"
+        role="tabpanel"
+        visible
+      >
+        <b-card-body>
+          <PriceFields :field="field"></PriceFields>
+        </b-card-body>
+      </b-collapse>
+    </b-card>
   </div>
 </template>
 <script>
 import Validation from "../config/validation.js";
+import PriceFields from "../Price/PriceFields.vue";
 import { mapGetters } from "vuex";
 export default {
   name: "ValidationFields",
@@ -124,7 +139,7 @@ export default {
     },
   },
   components: {
-    //
+    PriceFields,
   },
   data() {
     return {
@@ -162,11 +177,12 @@ export default {
   computed: {
     ...mapGetters(["formDatas"]),
     listeChamps() {
-      const typeValide = ["text", "number"];
+      const typeValide = ["text", "number", "radio", "checkbox", "select"];
       const fields = [];
       if (this.formDatas && this.formDatas.fields.length > 1) {
         for (const i in this.formDatas.fields) {
           const field = this.formDatas.fields[i];
+          console.log("field.type : ", field.type);
           if (
             field.name !== this.field.name &&
             typeValide.includes(field.type)

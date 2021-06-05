@@ -44,6 +44,22 @@
         name: "name_snake_case",
         required: "",
         state: [],
+        prix: {
+          action: "prix_utilisables", //prix_utilisables| prix_referentiels
+          cout: 100.0, // valeur decimal;
+          // Contient les champs permettant de faire la multiplication des couts
+          // self, represente le champs lui meme.
+          // le type de champs, doit etre de type 'prix_referentiels'
+          components: [
+            {
+              field_name: "--self",
+            },
+            {
+              field_name: "nom_du_champs",
+              step_name: "nom_etape",
+            },
+          ],
+        },
       },
       {
         type: "checkbox",

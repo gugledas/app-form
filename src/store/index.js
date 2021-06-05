@@ -50,6 +50,10 @@ export default new Vuex.Store({
      * permet de faire le retour arriere.
      */
     stepsIndexs: [],
+    /**
+     * Contient le prix calculer progressivement en function de l'action utilisateur(suivant,back).
+     */
+    price: 0,
   },
   getters: {
     /**
@@ -176,6 +180,18 @@ export default new Vuex.Store({
     REMOVE_STEPS_INDEXS(state) {
       console.log("remove stepIndex in array ");
       if (state.stepsIndexs.length) state.stepsIndexs.splice(-1, 1);
+    },
+    /**
+     * Ajout du prix de l'etape.
+     */
+    AJOUT_PRIX_STEPS(state, prix) {
+      state.price += prix;
+    },
+    /**
+     * retire le prix de l'etape.
+     */
+    REMOVE_PRIX_STEPS(state, prix) {
+      state.price -= prix;
     },
   },
   actions: {

@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import utilities from "./utilities.js";
 
 Vue.use(Vuex);
 import axios from "axios";
@@ -41,9 +42,14 @@ export default new Vuex.Store({
      */
     formId: null,
     /**
-     * permet de determiner le status des champs sur une etape
+     * Permet de determiner le status des champs sur une etape
      */
     formDatasValidate: {},
+    /**
+     * Contient les index pacourut par un utilisateur,
+     * permet de faire le retour arriere.
+     */
+    stepsIndexs: [],
   },
   getters: {
     /**
@@ -90,7 +96,6 @@ export default new Vuex.Store({
     CHANGE_MODE(state) {
       state.mode = !state.mode;
     },
-
     RESET_FORM_DATAS(state) {
       state.formDatas = {
         info: {
@@ -162,6 +167,16 @@ export default new Vuex.Store({
       console.log(" MAJ de SET_FORM_DATAS_VALIDATE ");
       state.formDatasValidate = value;
     },
+    SET_STEPS_INDEXS(state, value) {
+      state.stepsIndexs = value;
+    },
+    ADD_STEPS_INDEXS(state, value) {
+      state.stepsIndexs.push(value);
+    },
+    REMOVE_STEPS_INDEXS(state) {
+      console.log("remove stepIndex in array ");
+      if (state.stepsIndexs.length) state.stepsIndexs.splice(-1, 1);
+    },
   },
   actions: {
     addSetpsDatas({ commit }, payload) {
@@ -169,13 +184,23 @@ export default new Vuex.Store({
       commit("RESET_FORM_DATAS");
     },
     addFields({ commit }, payload) {
-      console.log("objecte", payload);
+      //console.log("objecte", payload);
       commit("ADD_FIELDS", payload);
       commit("RESET_FIELDS");
     },
-
-    stepsIndex({ commit }, i) {
-      commit("STEPS_INDEX", i);
+    /**
+     * Elle definit la logique permettant de passer à une autre etape.
+     */
+    async stepsIndex({ commit, state, getters }, i) {
+      const new_index = await utilities.selectNextState(state, getters, i);
+      commit("STEPS_INDEX", new_index);
+      commit("ADD_STEPS_INDEXS", new_index);
+    },
+    async stepsBack({ commit, state }) {
+      await commit("REMOVE_STEPS_INDEXS");
+      let new_index = state.stepsIndexs[state.stepsIndexs.length - 1];
+      if (!new_index) new_index = 0;
+      commit("STEPS_INDEX", new_index);
     },
     resetFormDatas({ commit }) {
       //commit("NEW_PAGE");
@@ -214,9 +239,11 @@ export default new Vuex.Store({
     setItems({ commit }, payload) {
       commit("SET_ITEMS", payload);
     },
-
     setFormDatasValidate({ commit }, payload) {
       commit("SET_FORM_DATAS_VALIDATE", payload);
+    },
+    setStepsIndexs({ commit }, payload) {
+      commit("SET_STEPS_INDEXS", payload);
     },
   },
   modules: {},

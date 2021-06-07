@@ -95,6 +95,7 @@ export default {
         { value: "codepostal", text: "Code Postal input" },
         { value: "radiodesc", text: "Radio with Description" },
         { value: "numberup", text: "Number label up" },
+        { value: "file", text: "Ajout de fichiers" },
       ],
     };
   },

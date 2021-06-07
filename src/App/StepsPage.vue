@@ -148,28 +148,17 @@
       </b-row>
     </b-container>
 
-    <b-row class="m-0" v-if="this.$store.state.mode"
-      ><b-col cols="4">
-        <b-card class="mt-3 text-left d-none" header="Form Data Result">
-          <pre class="m-0"></pre>
-          <p>formulaire Generale</p>
-          <pre class="text-left">{{ form }}</pre>
+    <b-row class="m-0" v-if="this.$store.state.mode">
+      <b-col cols="4">
+        <b-card class="mt-3 text-left d-none-0" header="Price">
+          <pre class="text-left">{{ price }}</pre>
         </b-card>
       </b-col>
       <b-col cols="4">
-        <b-card class="mt-3 text-left" header="Form all steps">
-          <pre class="m-0 text-left"></pre>
-          <p>formDatas:.</p>
+        <b-card class="mt-3 text-left" header="formDatas:">
           <pre class="text-left">{{ formDatas }}</pre>
         </b-card>
       </b-col>
-      <b-col cols="4">
-        <b-card class="mt-3 text-left" header="Form all steps">
-          <pre class="m-0"></pre>
-          <p>fields:.</p>
-          <pre class="text-left">{{ fields }}</pre>
-        </b-card></b-col
-      >
     </b-row>
   </div>
 </template>
@@ -213,14 +202,7 @@ export default {
     this.$store.dispatch("setFormId", this.id);
   },
   computed: {
-    ...mapState([
-      "stepsIndex",
-      "year",
-      "month",
-      "day",
-      "allStepsDatas",
-      "fields",
-    ]),
+    ...mapState(["stepsIndex", "allStepsDatas", "fields", "price"]),
     ...mapGetters(["form", "formDatas"]),
     currentSteps() {
       var local = localStorage.getItem("allo");
@@ -277,7 +259,6 @@ export default {
     },
     saveToLocal() {
       var self = this;
-
       var datas = this.form;
       utilities.saveSteps(datas).then((reponse) => {
         var forms = JSON.stringify(reponse[0].fields);

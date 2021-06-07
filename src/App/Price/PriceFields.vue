@@ -20,6 +20,7 @@
         label-for="input-lazy"
         label-size="sm"
         label-cols="4"
+        class="mb-3"
       >
         <b-form-input
           required
@@ -28,26 +29,60 @@
         ></b-form-input>
       </b-form-group>
       <!-- ! -->
-      <div class="border p-2">
+      <div v-if="field.prix.action === 'prix_utilisables'">
         <div class="mb-3">
           <b-button variant="outline-primary" size="sm" @click="addCondition">
             + Ajouter une condition
           </b-button>
         </div>
-        <b-form-group
+        <div
           v-for="(component, i) in field.prix.components"
           :key="i"
-          label="Action"
-          label-for="input-lazy"
-          label-size="sm"
-          label-cols="4"
+          class="border p-2"
         >
-          <b-form-select
-            v-model="field.prix.action"
-            :options="optionsAction"
-            size="sm"
-          ></b-form-select>
-        </b-form-group>
+          <!-- -->
+          <b-form-group
+            label="si l'etape "
+            label-for="input-lazy"
+            label-size="sm"
+            label-cols="4"
+          >
+            <b-form-select
+              v-model="component.state_name"
+              :options="listeDesEtapes"
+              size="sm"
+            ></b-form-select>
+          </b-form-group>
+          <!-- -->
+          <b-form-group
+            label="si champs "
+            label-for="input-lazy"
+            label-size="sm"
+            label-cols="4"
+            v-if="component.state_name !== ''"
+          >
+            <b-form-select
+              v-model="component.name"
+              :options="listeDesChamps(component)"
+              size="sm"
+            ></b-form-select>
+          </b-form-group>
+
+          <!-- -->
+          <b-form-group
+            label="si options "
+            label-for="input-lazy"
+            label-size="sm"
+            label-cols="4"
+            v-if="component.name !== ''"
+          >
+            <b-form-select
+              v-model="component.value"
+              :options="component.options"
+              size="sm"
+            ></b-form-select>
+          </b-form-group>
+        </div>
       </div>
     </div>
   </div>
@@ -55,6 +90,11 @@
 
 <script>
 import Price from "../config/price.js";
+import {
+  validationRessource as Validation,
+  ValidationInstance,
+} from "../config/validation.js";
+import { mapGetters } from "vuex";
 export default {
   name: "PriceFields",
   props: {
@@ -78,7 +118,12 @@ export default {
     //
   },
   computed: {
-    //
+    ...mapGetters(["formDatas", "form"]),
+    listeDesEtapes() {
+      const etapes = [];
+      Validation.listesEtapes(this.form, this.formDatas, etapes);
+      return etapes;
+    },
   },
   methods: {
     /**
@@ -90,10 +135,24 @@ export default {
       }
     },
     /**
-     * on ajoute une condition de choix;
+     * On ajoute une condition de choix;
      */
     addCondition() {
-      //  this.field.prix.components.push({});
+      this.field.prix.components.push({
+        state_name: "",
+        name: "",
+        value: "",
+      });
+    },
+    /**
+     * Liste des champs;
+     */
+    listeDesChamps(component) {
+      const fields = [];
+      const ValidationInst = new ValidationInstance();
+      ValidationInst.listeDesChamps(component, this.form, fields);
+      component.options = ValidationInst.StepeValidationOptions;
+      return fields;
     },
   },
 };

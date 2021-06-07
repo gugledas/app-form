@@ -45,21 +45,25 @@
               v-model="row.item.description"
             ></b-form-input>
           </b-form-group>
+          <b-form-group label="cout (€)">
+            <b-form-input type="number" v-model="row.item.cout"></b-form-input>
+          </b-form-group>
 
-          <b-button type="reset" variant="dark" size="sm" class="mx-2"
-            >Reset</b-button
-          >
-          <b-button variant="danger" size="sm" @click="deleteOption(row.index)"
-            >delete</b-button
-          >
+          <b-button type="reset" variant="dark" size="sm" class="mx-2">
+            Reset
+          </b-button>
+          <b-button variant="danger" size="sm" @click="deleteOption(row.index)">
+            delete
+          </b-button>
           <b-button
             type="submit"
             variant="primary"
             class="mx-2"
             size="sm"
             @click="row.item.value.length ? allo(row) : ''"
-            >ok</b-button
           >
+            ok
+          </b-button>
         </b-form>
       </template>
     </b-table>

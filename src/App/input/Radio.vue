@@ -1,8 +1,5 @@
 <template>
   <div>
-    <pre>
-      validationField {{ validationField }}
-    </pre>
     <transition v-if="validationField" name="fade">
       <b-row>
         <b-col cols="12" class="text-left"
@@ -48,7 +45,7 @@
 <script>
 import { mapGetters, mapState } from "vuex";
 import { ValidationProvider } from "vee-validate";
-import Validation from "../config/validation.js";
+import { validationRessource as Validation } from "../config/validation.js";
 import "../EditsFields/vee-validate-custom.js";
 
 export default {

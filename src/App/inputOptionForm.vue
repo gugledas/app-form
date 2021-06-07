@@ -9,6 +9,7 @@
       :field="fields"
       v-if="type == 'text' || type == 'number'"
     ></InputText>
+    <InputFiles :field="fields" v-if="type == 'file'"></InputFiles>
 
     <!-- if is type select -->
     <form-select v-if="type == 'select'" :fields="fields"></form-select>
@@ -74,6 +75,7 @@ export default {
     FormCheckImg,
     FormNumberUp,
     InputText: () => import("./EditsFields/InputText.vue"),
+    InputFiles: () => import("./EditsFields/InputFiles.vue"),
     FormSpinner: () => import("./formulaire/FormSpinner.vue"),
     FormAutocomplete: () => import("./formulaire/FormAutocomplete.vue"),
     FormMarkup: () => import("./formulaire/FormMarkup.vue"),

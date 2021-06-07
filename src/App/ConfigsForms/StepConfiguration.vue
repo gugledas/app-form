@@ -37,6 +37,7 @@
             v-model="formDatas.info.name"
             :readonly="readonly"
             @dblclick="toogleReadOnly"
+            :state="state_name"
           ></b-form-input>
         </b-input-group>
       </b-form-group>
@@ -72,6 +73,7 @@ export default {
     return {
       isOpen: false,
       readonly: true,
+      state_name: true,
     };
   },
   mounted() {
@@ -82,7 +84,14 @@ export default {
   },
   computed: {
     ...mapState(["mode"]),
-    ...mapGetters(["formDatas"]),
+    ...mapGetters(["formDatas", "form"]),
+    ListNameforms() {
+      const lists = [];
+      for (const i in this.form.forms) {
+        lists.push(this.form.forms[i].info.name);
+      }
+      return lists;
+    },
   },
   methods: {
     openPopUp() {
@@ -107,7 +116,13 @@ export default {
     },
     input() {
       if (this.readonly && this.formDatas.info.name.length <= 32) {
-        this.formDatas.info.name = snakeCase(this.formDatas.info.title);
+        const valName = snakeCase(this.formDatas.info.title);
+        if (this.ListNameforms.includes(valName)) {
+          this.state_name = false;
+        } else {
+          this.state_name = true;
+        }
+        this.formDatas.info.name = valName;
       }
     },
     toogleReadOnly() {

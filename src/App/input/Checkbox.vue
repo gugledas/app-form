@@ -48,7 +48,7 @@
 <script>
 import { mapGetters, mapState } from "vuex";
 import { ValidationProvider } from "vee-validate";
-import Validation from "../config/validation.js";
+import { validationRessource as Validation } from "../config/validation.js";
 import "../EditsFields/vee-validate-custom.js";
 export default {
   props: {

@@ -86,6 +86,20 @@
                     size="sm"
                   ></b-form-select>
                 </b-form-group>
+                <!-- -->
+                <b-form-group
+                  label="Valeur"
+                  label-for="input-lazy"
+                  label-size="sm"
+                  label-cols="4"
+                  v-if="condition.operator === 'egal'"
+                >
+                  <b-form-select
+                    v-model="condition.value"
+                    :options="listsOptionsCondition(condition)"
+                    size="sm"
+                  ></b-form-select>
+                </b-form-group>
               </div>
               <div class="svg-content">
                 <b-button
@@ -122,7 +136,7 @@
   </div>
 </template>
 <script>
-import Validation from "../config/validation.js";
+import { validationRessource as Validation } from "../config/validation.js";
 import PriceFields from "../Price/PriceFields.vue";
 import { mapGetters } from "vuex";
 export default {
@@ -182,7 +196,6 @@ export default {
       if (this.formDatas && this.formDatas.fields.length > 1) {
         for (const i in this.formDatas.fields) {
           const field = this.formDatas.fields[i];
-          console.log("field.type : ", field.type);
           if (
             field.name !== this.field.name &&
             typeValide.includes(field.type)
@@ -204,6 +217,18 @@ export default {
     deleteState(i) {
       console.log("i : ", i);
       this.field.states.splice(i, 1);
+    },
+    listsOptionsCondition(condition) {
+      if (this.formDatas && this.formDatas.fields.length > 1) {
+        for (const i in this.formDatas.fields) {
+          const field = this.formDatas.fields[i];
+          if (field.name === condition.name) {
+            return field.options;
+          }
+        }
+      } else {
+        return [];
+      }
     },
   },
 };

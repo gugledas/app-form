@@ -132,7 +132,7 @@
   </div>
 </template>
 <script>
-import Validation from "../config/validation.js";
+import { validationRessource as Validation } from "../config/validation.js";
 import { mapGetters } from "vuex";
 export default {
   name: "ValidationFields",
@@ -180,7 +180,7 @@ export default {
     ...mapGetters(["formDatas", "form"]),
     listeDesEtapes() {
       const etapes = [];
-      console.log("this.form.forms : ", this.form.forms);
+      /*
       if (this.form && this.form.forms.length > 1) {
         for (const i in this.form.forms) {
           const form = this.form.forms[i];
@@ -192,6 +192,8 @@ export default {
           }
         }
       }
+      /**/
+      Validation.listesEtapes(this.form, this.formDatas, etapes);
       return etapes;
     },
   },

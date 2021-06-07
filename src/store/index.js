@@ -208,15 +208,25 @@ export default new Vuex.Store({
      * Elle definit la logique permettant de passer à une autre etape.
      */
     async stepsIndex({ commit, state, getters }, i) {
+      //on determine le cout de l'etape:
+      const price = await utilities.getPriceStape(getters);
+      if (price > 0) {
+        commit("AJOUT_PRIX_STEPS", price);
+      }
       const new_index = await utilities.selectNextState(state, getters, i);
       commit("STEPS_INDEX", new_index);
       commit("ADD_STEPS_INDEXS", new_index);
     },
-    async stepsBack({ commit, state }) {
+    async stepsBack({ commit, state, getters }) {
       await commit("REMOVE_STEPS_INDEXS");
       let new_index = state.stepsIndexs[state.stepsIndexs.length - 1];
       if (!new_index) new_index = 0;
-      commit("STEPS_INDEX", new_index);
+      await commit("STEPS_INDEX", new_index);
+      //remove price states
+      const price = await utilities.getPriceStape(getters);
+      if (price > 0) {
+        commit("REMOVE_PRIX_STEPS", price);
+      }
     },
     resetFormDatas({ commit }) {
       //commit("NEW_PAGE");

@@ -4,29 +4,14 @@
       <b-col sm="12">
         <compositeHeaderField :field="field"></compositeHeaderField>
       </b-col>
-      <b-col sm="12">
-        <b-form-group label="Valeur par defaut">
-          <b-form-input v-model="field.value" :type="type"></b-form-input>
-        </b-form-group>
-      </b-col>
-      <b-col sm="12">
-        <b-form-group label="Prefixe | suffixe">
-          <b-input-group>
-            <b-form-input v-model="prefixe"></b-form-input>
-            <b-form-input v-model="suffixe"></b-form-input>
-          </b-input-group>
-        </b-form-group>
-      </b-col>
     </b-row>
-    <ValidationFields :field="field"></ValidationFields>
   </div>
 </template>
 
 <script>
 import compositeHeaderField from "./compositeHeaderField.vue";
-import ValidationFields from "./ValidationFields.vue";
 export default {
-  name: "InputText",
+  name: "InputFiles",
   props: {
     field: {
       type: Object,
@@ -42,13 +27,11 @@ export default {
     },
   },
   components: {
-    ValidationFields,
     compositeHeaderField,
   },
   data() {
     return {
-      prefixe: "",
-      suffixe: "",
+      //
     };
   },
   mounted() {
@@ -58,16 +41,10 @@ export default {
     //
   },
   computed: {
-    type() {
-      if (this.field.type === "text" || this.field.type === "number") {
-        return this.field.type;
-      } else {
-        return "text";
-      }
-    },
+    //
   },
   methods: {
-    //,
+    //
   },
 };
 </script>

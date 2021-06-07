@@ -1,4 +1,4 @@
-const validation = {
+const validationRessource = {
   conditions() {
     return {
       action: "",
@@ -40,6 +40,9 @@ const validation = {
       },
     ];
   },
+  /**
+   * Retourne false, pour desactiver.
+   */
   computedValidation: function (formDatas, currentField, formDatasValidate) {
     for (const i in formDatas.fields) {
       const field = formDatas.fields[i];
@@ -60,8 +63,33 @@ const validation = {
                 formDatasValidate[field.name]
               )
                 return formDatasValidate[field.name].valid;
+              else if (state.operator === "egal") {
+                if (field.value) {
+                  return field.value.includes(state.value) ? true : false;
+                } else {
+                  return false;
+                }
+              }
             }
           }
+        }
+      }
+    }
+  },
+
+  /**
+   * Retourne la liste des etapes.
+   */
+  listesEtapes(form, formDatas, etapes = []) {
+    if (form && form.forms.length > 1) {
+      console.log("listesEtapes ");
+      for (const i in form.forms) {
+        const currentForm = form.forms[i];
+        if (currentForm.info.name !== "") {
+          etapes.push({
+            text: "(" + i + ") " + currentForm.info.title,
+            value: currentForm.info.name,
+          });
         }
       }
     }
@@ -76,4 +104,31 @@ const validation = {
   },
 };
 
-export default validation;
+class ValidationInstance {
+  constructor() {
+    //
+    this.StepeValidationOptions = [];
+  }
+  //Retourne les etapes sous forme de listes.
+  listeDesChamps(condition, form, fields = []) {
+    if (condition.state_name && condition.state_name !== "") {
+      var currentForm = validationRessource.getFormStateByName(
+        condition.state_name,
+        form.forms
+      );
+      if (currentForm !== undefined) {
+        console.log("listeDesChamps ", currentForm);
+        for (const i in currentForm.fields) {
+          const field = currentForm.fields[i];
+          if (condition.name == field.name && field.options.length) {
+            this.StepeValidationOptions = field.options;
+          }
+          fields.push({ text: field.label, value: field.name });
+        }
+      }
+    }
+  }
+}
+/**/
+
+export { validationRessource, ValidationInstance };

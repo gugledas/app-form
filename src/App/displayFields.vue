@@ -99,6 +99,9 @@
         <!-- affiche pour le cas du type radio with description -->
 
         <radio-desc v-if="type == 'radiodesc'" :id="id"></radio-desc>
+
+        <!-- -->
+        <files :field="formDatas.fields[id]" v-if="type == 'file'"></files>
       </form>
 
       <div v-if="this.$store.state.mode" class="boutton-absolute d-flex">
@@ -154,7 +157,7 @@ export default {
     SelectDisplay: () => import("./input/SelectDisplay.vue"),
     MarkupTitle: () => import("./input/MarkupTitle.vue"),
     MarkupImage: () => import("./input/MarkupImage.vue"),
-
+    files: () => import("./EditsFields/files.vue.vue"),
     LabelUp: () => import("./input/LabelUp.vue"),
   },
   props: {

@@ -42,11 +42,7 @@
         </b-row>
       </div>
     </transition>
-    <!--
-    <pre class="text-left">
-      {{ formDatasValidate }}
-    </pre>
-  --></div>
+  </div>
 </template>
 
 <script>

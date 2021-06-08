@@ -102,6 +102,12 @@
 
         <!-- -->
         <files :field="formDatas.fields[id]" v-if="type == 'file'"></files>
+        <!-- -->
+        <recapitulatif
+          :field="formDatas.fields[id]"
+          v-if="type == 'recapitulatif'"
+        ></recapitulatif>
+        <!-- -->
       </form>
 
       <div v-if="this.$store.state.mode" class="boutton-absolute d-flex">
@@ -159,6 +165,7 @@ export default {
     MarkupImage: () => import("./input/MarkupImage.vue"),
     files: () => import("./EditsFields/files.vue.vue"),
     LabelUp: () => import("./input/LabelUp.vue"),
+    recapitulatif: () => import("./input/recapitulatif.vue"),
   },
   props: {
     type: {

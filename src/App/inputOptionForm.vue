@@ -10,6 +10,7 @@
       v-if="type == 'text' || type == 'number'"
     ></InputText>
     <InputFiles :field="fields" v-if="type == 'file'"></InputFiles>
+    <inputRecap :field="fields" v-if="type == 'recapitulatif'"></inputRecap>
 
     <!-- if is type select -->
     <form-select v-if="type == 'select'" :fields="fields"></form-select>
@@ -79,6 +80,7 @@ export default {
     FormSpinner: () => import("./formulaire/FormSpinner.vue"),
     FormAutocomplete: () => import("./formulaire/FormAutocomplete.vue"),
     FormMarkup: () => import("./formulaire/FormMarkup.vue"),
+    inputRecap: () => import("./EditsFields/inputRecap.vue"),
   },
   props: {
     type: {

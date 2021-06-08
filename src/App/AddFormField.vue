@@ -81,22 +81,7 @@ export default {
 
       //datas to check form validity
       labelState: null,
-      typeOptions: [
-        { value: null, text: "Please select an option" },
-        { value: "radio", text: "Radio" },
-        { value: "text", text: "text" },
-        { value: "select", text: "Select" },
-        { value: "number", text: "Number" },
-        { value: "checkbox", text: "Checkbox" },
-        { value: "increment", text: "Spin Button" },
-        { value: "markuptitle", text: "Markup Title" },
-        { value: "markupimage", text: "Markup Image" },
-        { value: "checkboximg", text: "Checkbox Image" },
-        { value: "codepostal", text: "Code Postal input" },
-        { value: "radiodesc", text: "Radio with Description" },
-        { value: "numberup", text: "Number label up" },
-        { value: "file", text: "Ajout de fichiers" },
-      ],
+      typeOptions: Utilities.typeOptions(),
     };
   },
   watch: {},

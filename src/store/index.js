@@ -54,6 +54,10 @@ export default new Vuex.Store({
      * Contient le prix calculer progressivement en function de l'action utilisateur(suivant,back).
      */
     price: 0,
+    /**
+     * Contient le status du formulaire suivant.
+     */
+    StatusStepsIndexs: true,
   },
   getters: {
     /**
@@ -198,6 +202,9 @@ export default new Vuex.Store({
     REMOVE_PRIX_STEPS(state, prix) {
       state.price -= prix;
     },
+    SET_STATUS_STEPS_INDEX(state, val) {
+      state.StatusStepsIndexs = val;
+    },
   },
   actions: {
     addSetpsDatas({ commit }, payload) {
@@ -217,6 +224,8 @@ export default new Vuex.Store({
       const price = await utilities.getPriceStape(getters);
       if (price > 0) {
         commit("AJOUT_PRIX_STEPS", price);
+      } else {
+        commit("SET_STATUS_STEPS_INDEX", false);
       }
       const new_index = await utilities.selectNextState(state, getters, i);
       commit("STEPS_INDEX", new_index);
@@ -227,6 +236,10 @@ export default new Vuex.Store({
       let new_index = state.stepsIndexs[state.stepsIndexs.length - 1];
       if (!new_index) new_index = 0;
       await commit("STEPS_INDEX", new_index);
+      //activation du bouton submit
+      if (!state.StatusStepsIndexs) {
+        commit("SET_STATUS_STEPS_INDEX", true);
+      }
       //remove price states
       const price = await utilities.getPriceStape(getters);
       if (price > 0) {

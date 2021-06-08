@@ -4,12 +4,13 @@ export default {
    * Selectionne la prochaine etape valide.
    */
   selectNextState(state, getters, i) {
-    const j = i + 1;
+    var j = i + 1;
     console.log("selectNextState : ", state, "\n", getters, "\n", i);
     this.forms = getters.form.forms;
     for (const k in this.forms) {
       let kk = parseInt(k);
       if (kk >= j) {
+        j = null;
         const form = this.forms[k];
         if (this.validateState(form.states)) {
           console.log("etape valide : ", k);

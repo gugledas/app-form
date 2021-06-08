@@ -29,6 +29,7 @@
       </b-col>
     </b-row>
     <getStatusValidation :validation-observer="v"></getStatusValidation>
+    StatusStepsIndexs : {{ StatusStepsIndexs }}
   </ValidationObserver>
 </template>
 
@@ -62,11 +63,14 @@ export default {
     //
   },
   computed: {
-    ...mapState(["mode", "stepsIndex", "stepsIndexs"]),
+    ...mapState(["mode", "stepsIndex", "stepsIndexs", "StatusStepsIndexs"]),
     ...mapGetters(["formDatas"]),
     stepsState() {
       var state = null;
-      if (this.$store.getters.form.forms.length - 1 > this.level) {
+      if (
+        this.$store.getters.form.forms.length - 1 > this.level ||
+        !this.StatusStepsIndexs
+      ) {
         state = true;
       }
       //console.log(" StepsState : ");

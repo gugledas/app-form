@@ -56,6 +56,7 @@ export default new Vuex.Store({
     price: 0,
     /**
      * Contient le status du formulaire suivant.
+     true: form activé.
      */
     StatusStepsIndexs: true,
   },
@@ -224,12 +225,15 @@ export default new Vuex.Store({
       const price = await utilities.getPriceStape(getters);
       if (price > 0) {
         commit("AJOUT_PRIX_STEPS", price);
+      }
+      //
+      const new_index = await utilities.selectNextState(state, getters, i);
+      if (new_index) {
+        commit("STEPS_INDEX", new_index);
+        commit("ADD_STEPS_INDEXS", new_index);
       } else {
         commit("SET_STATUS_STEPS_INDEX", false);
       }
-      const new_index = await utilities.selectNextState(state, getters, i);
-      commit("STEPS_INDEX", new_index);
-      commit("ADD_STEPS_INDEXS", new_index);
     },
     async stepsBack({ commit, state, getters }) {
       await commit("REMOVE_STEPS_INDEXS");

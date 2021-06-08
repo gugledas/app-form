@@ -68,8 +68,8 @@ export default {
     stepsState() {
       var state = null;
       if (
-        this.$store.getters.form.forms.length - 1 > this.level ||
-        !this.StatusStepsIndexs
+        this.$store.getters.form.forms.length - 1 > this.level &&
+        this.StatusStepsIndexs
       ) {
         state = true;
       }

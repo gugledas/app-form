@@ -13,8 +13,7 @@
       >
         <display-fields :type="field.type" :id="i"></display-fields>
       </div>
-
-      <b-col cols="12" class="form-nav-bouton">
+      <b-col cols="12" class="form-nav-bouton" v-if="StatusStepsIndexs">
         <button
           class="next-bouton"
           :class="
@@ -23,13 +22,29 @@
               : 'next-bouton--disable'
           "
           @click="suivant"
+          :disabled="stepsState && !v.invalid ? false : true"
         >
           Suivant
         </button>
       </b-col>
+      <b-col cols="12" v-if="!StatusStepsIndexs" class="form-nav-bouton">
+        <b-row>
+          <b-col cols="6">
+            <button class="next-bouton" @click="Save">
+              <b-icon icon="server"></b-icon>
+              Enregistrer
+            </button>
+          </b-col>
+          <b-col cols="6">
+            <button class="next-bouton" @click="Save">
+              <b-icon icon="server"></b-icon>
+              Me rappeller
+            </button>
+          </b-col>
+        </b-row>
+      </b-col>
     </b-row>
     <getStatusValidation :validation-observer="v"></getStatusValidation>
-    StatusStepsIndexs : {{ StatusStepsIndexs }}
   </ValidationObserver>
 </template>
 
@@ -66,14 +81,10 @@ export default {
     ...mapState(["mode", "stepsIndex", "stepsIndexs", "StatusStepsIndexs"]),
     ...mapGetters(["formDatas"]),
     stepsState() {
-      var state = null;
-      if (
-        this.$store.getters.form.forms.length - 1 > this.level &&
-        this.StatusStepsIndexs
-      ) {
+      var state = false;
+      if (this.$store.getters.form.forms.length - 1 > this.level) {
         state = true;
       }
-      //console.log(" StepsState : ");
       return state;
     },
   },
@@ -86,6 +97,9 @@ export default {
     back() {
       this.$store.dispatch("stepsBack");
       //this.$store.state.stepsIndex--;
+    },
+    Save() {
+      //
     },
   },
 };

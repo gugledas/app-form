@@ -185,6 +185,7 @@ export default new Vuex.Store({
       state.stepsIndexs = value;
     },
     ADD_STEPS_INDEXS(state, value) {
+      console.log("state.stepsIndexs : ", state.stepsIndexs, "\n :: ", value);
       state.stepsIndexs.push(value);
     },
     REMOVE_STEPS_INDEXS(state) {
@@ -229,8 +230,18 @@ export default new Vuex.Store({
       //
       const new_index = await utilities.selectNextState(state, getters, i);
       if (new_index) {
-        commit("STEPS_INDEX", new_index);
+        await commit("STEPS_INDEX", new_index);
         commit("ADD_STEPS_INDEXS", new_index);
+        // on verifie si on est sur la derniere etape,
+        console.log(
+          "state.form.forms.length : ",
+          getters.form.forms.length,
+          " :: ",
+          new_index
+        );
+        if (getters.form.forms.length === new_index + 1) {
+          commit("SET_STATUS_STEPS_INDEX", false);
+        }
       } else {
         commit("SET_STATUS_STEPS_INDEX", false);
       }
@@ -292,6 +303,9 @@ export default new Vuex.Store({
     },
     setStepsIndexs({ commit }, payload) {
       commit("SET_STEPS_INDEXS", payload);
+    },
+    setStatusStepsIndex({ commit }, payload) {
+      commit("SET_STATUS_STEPS_INDEX", payload);
     },
   },
   modules: {},

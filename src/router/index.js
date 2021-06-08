@@ -17,6 +17,12 @@ const routes = [
     props: true,
     component: () => import("../App/StepsPage.vue"),
   },
+  {
+    path: "/estimation-devis/:id",
+    name: "Travaux de renovation ",
+    props: true,
+    component: () => import("../App/userpage.vue"),
+  },
 ];
 
 const router = new VueRouter({

@@ -10,7 +10,12 @@
     </b-button>
     <b-table :items="items" :fields="fields">
       <template #cell(action)="data">
-        <b-button size="sm" variant="outline-primary" class="mr-2">
+        <b-button
+          size="sm"
+          variant="outline-primary"
+          class="mr-2"
+          @click="voirForm(data.index)"
+        >
           voir
         </b-button>
 
@@ -67,14 +72,12 @@ export default {
     updateForm(id) {
       this.$router.push({ path: `/edit-form/${id}` });
     },
-    addForm() {
-      //
+    voirForm(id) {
+      this.$router.push({ path: `/estimation-devis/${id}` });
     },
   },
 };
 </script>
-
-<style lang="scss" scoped></style>
 
 <!--
  //nom du fichier en pascal.

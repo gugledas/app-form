@@ -73,7 +73,7 @@ export default {
     ...mapGetters(["formDatas"]),
     ...mapState(["formDatasValidate"]),
     validationField() {
-      if (this.field.states.length) {
+      if (this.field.states && this.field.states.length) {
         var status = Validation.computedValidation(
           this.formDatas,
           this.field,

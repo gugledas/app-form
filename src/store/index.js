@@ -62,7 +62,12 @@ export default new Vuex.Store({
     form: (state) => {
       if (state.items.length && state.formId !== null) {
         const form = state.items[state.formId];
-        form.forms = JSON.parse(form.forms);
+        var TypeDonnee = typeof form.forms;
+        if (form.forms && form.forms !== "" && TypeDonnee === "string") {
+          form.forms = JSON.parse(form.forms);
+        } else if (form.forms === "") {
+          form.forms = [];
+        }
         return form;
       }
       return {

@@ -1,84 +1,113 @@
 ((typeof self !== 'undefined' ? self : this)["webpackJsonpappForm"] = (typeof self !== 'undefined' ? self : this)["webpackJsonpappForm"] || []).push([[22],{
 
-/***/ "795e":
+/***/ "47e7":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 // ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"d67b4404-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/input/RadioDesc.vue?vue&type=template&id=4b45003c&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('b-row',[_c('b-col',{staticClass:"text-left",attrs:{"cols":"12"}},[_c('p',{staticClass:"page-label"},[_vm._v(_vm._s(_vm.formDatas.fields[_vm.id].label))])]),_vm._l((_vm.formDatas.fields[_vm.id].options),function(item,i){return _c('b-col',{key:i,attrs:{"cols":"12"}},[_c('div',{staticClass:"input-list"},[_c('b-col',{staticClass:"input-list__label d-flex align-items-start flex-column",attrs:{"sm":"11"}},[_c('label',{staticClass:"m-0 w-100",attrs:{"for":("input-horizni-" + i)}},[_vm._v(_vm._s(item.text))]),_c('small',{staticClass:"input-list__description"},[_vm._v(_vm._s(item.description))])]),_c('b-col',{staticClass:"input-list__input"},[_c('b-form-radio',{attrs:{"name":"some-radios","size":"lg","id":("input-horizni-" + i),"value":item.value},model:{value:(_vm.formDatas.fields[_vm.id].value),callback:function ($$v) {_vm.$set(_vm.formDatas.fields[_vm.id], "value", $$v)},expression:"formDatas.fields[id].value"}})],1)],1)])})],2)}
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"203ace7c-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/formulaire/FormAutocomplete.vue?vue&type=template&id=7bf892ad&scoped=true&lang=html&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('b-row',{staticClass:"mb-3"},[_c('b-col',{attrs:{"sm":"12"}},[_c('b-form-group',{attrs:{"label":"Label","invalid-feedback":"Name is required"}},[_c('b-input-group',[_c('b-form-input',{attrs:{"required":""},on:{"input":_vm.input},model:{value:(_vm.fields.label),callback:function ($$v) {_vm.$set(_vm.fields, "label", $$v)},expression:"fields.label"}}),_c('b-form-input',{attrs:{"required":"","readonly":_vm.readonly},on:{"dblclick":_vm.toogleReadOnly},model:{value:(_vm.fields.name),callback:function ($$v) {_vm.$set(_vm.fields, "name", $$v)},expression:"fields.name"}})],1)],1)],1),_c('b-col',{attrs:{"sm":"12"}},[_c('b-form-group',{attrs:{"label":"Valeur par defaut","label-for":"autocomple-value"}},[_c('b-form-input',{attrs:{"id":"autocomple-value"},on:{"input":_vm.inputValue},model:{value:(_vm.fields.value),callback:function ($$v) {_vm.$set(_vm.fields, "value", $$v)},expression:"fields.value"}})],1)],1)],1),_c('ValidationFields',{attrs:{"field":_vm.fields}})],1)}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/App/input/RadioDesc.vue?vue&type=template&id=4b45003c&
+// CONCATENATED MODULE: ./src/App/formulaire/FormAutocomplete.vue?vue&type=template&id=7bf892ad&scoped=true&lang=html&
 
-// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/objectSpread2.js + 1 modules
-var objectSpread2 = __webpack_require__("5530");
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.function.name.js
+var es_function_name = __webpack_require__("b0c0");
 
-// EXTERNAL MODULE: ./node_modules/core-js/modules/es.number.constructor.js
-var es_number_constructor = __webpack_require__("a9e3");
+// EXTERNAL MODULE: ./node_modules/snake-case/dist.es2015/index.js + 5 modules
+var dist_es2015 = __webpack_require__("a4d6");
 
-// EXTERNAL MODULE: ./node_modules/vuex/dist/vuex.esm.js
-var vuex_esm = __webpack_require__("2f62");
+// EXTERNAL MODULE: ./src/App/EditsFields/ValidationFields.vue + 10 modules
+var ValidationFields = __webpack_require__("0931");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/input/RadioDesc.vue?vue&type=script&lang=js&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/formulaire/FormAutocomplete.vue?vue&type=script&lang=js&
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ var RadioDescvue_type_script_lang_js_ = ({
+/* harmony default export */ var FormAutocompletevue_type_script_lang_js_ = ({
+  name: "InputText",
   props: {
-    id: {
-      type: Number,
-      require: true
+    fields: {
+      type: Object,
+      required: true,
+      validator: function validator(val) {
+        return val.label === undefined || val.value === undefined || val.name === undefined || val.require === undefined ? false : true;
+      }
     }
+  },
+  components: {
+    ValidationFields: ValidationFields["a" /* default */]
   },
   data: function data() {
     return {
-      value: 1
+      readonly: true,
+      value: ""
     };
   },
-  watch: {},
-  computed: Object(objectSpread2["a" /* default */])({}, Object(vuex_esm["b" /* mapGetters */])(["formDatas"])),
-  methods: {}
+  mounted: function mounted() {//
+  },
+  watch: {//
+  },
+  computed: {},
+  methods: {
+    inputValue: function inputValue() {
+      if (this.value.length) {
+        return this.fields.value = this.value;
+      }
+    },
+    input: function input() {
+      if (this.readonly && this.fields.name.length <= 32) {
+        this.fields.name = Object(dist_es2015["a" /* snakeCase */])(this.fields.label);
+      }
+    },
+    toogleReadOnly: function toogleReadOnly() {
+      if (this.readonly) this.readonly = false;else this.readonly = true;
+    }
+  }
 });
-// CONCATENATED MODULE: ./src/App/input/RadioDesc.vue?vue&type=script&lang=js&
- /* harmony default export */ var input_RadioDescvue_type_script_lang_js_ = (RadioDescvue_type_script_lang_js_); 
+// CONCATENATED MODULE: ./src/App/formulaire/FormAutocomplete.vue?vue&type=script&lang=js&
+ /* harmony default export */ var formulaire_FormAutocompletevue_type_script_lang_js_ = (FormAutocompletevue_type_script_lang_js_); 
 // EXTERNAL MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
 var componentNormalizer = __webpack_require__("2877");
 
-// CONCATENATED MODULE: ./src/App/input/RadioDesc.vue
+// CONCATENATED MODULE: ./src/App/formulaire/FormAutocomplete.vue
 
 
 
@@ -87,17 +116,17 @@ var componentNormalizer = __webpack_require__("2877");
 /* normalize component */
 
 var component = Object(componentNormalizer["a" /* default */])(
-  input_RadioDescvue_type_script_lang_js_,
+  formulaire_FormAutocompletevue_type_script_lang_js_,
   render,
   staticRenderFns,
   false,
   null,
-  null,
+  "7bf892ad",
   null
   
 )
 
-/* harmony default export */ var RadioDesc = __webpack_exports__["default"] = (component.exports);
+/* harmony default export */ var FormAutocomplete = __webpack_exports__["default"] = (component.exports);
 
 /***/ })
 

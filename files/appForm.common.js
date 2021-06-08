@@ -83,11 +83,11 @@ module.exports =
 /******/
 /******/
 /******/ 		// mini-css-extract-plugin CSS loading
-/******/ 		var cssChunks = {"2":1,"3":1,"4":1,"5":1,"6":1,"7":1,"8":1,"10":1,"11":1,"12":1,"13":1};
+/******/ 		var cssChunks = {"2":1,"3":1,"4":1,"5":1,"6":1,"7":1,"8":1,"10":1,"11":1,"12":1,"13":1,"14":1,"15":1};
 /******/ 		if(installedCssChunks[chunkId]) promises.push(installedCssChunks[chunkId]);
 /******/ 		else if(installedCssChunks[chunkId] !== 0 && cssChunks[chunkId]) {
 /******/ 			promises.push(installedCssChunks[chunkId] = new Promise(function(resolve, reject) {
-/******/ 				var href = "css/" + ({}[chunkId]||chunkId) + "." + {"0":"31d6cfe0","2":"2d029869","3":"12f7a969","4":"61e966bc","5":"6dbeb030","6":"9a4bf606","7":"f952e6e4","8":"ac5b10c9","9":"31d6cfe0","10":"ac55bce5","11":"3def3390","12":"dd3fcea7","13":"e5f1a246","14":"31d6cfe0","15":"31d6cfe0","16":"31d6cfe0","17":"31d6cfe0","18":"31d6cfe0","19":"31d6cfe0","20":"31d6cfe0","21":"31d6cfe0","22":"31d6cfe0"}[chunkId] + ".css";
+/******/ 				var href = "css/" + ({}[chunkId]||chunkId) + "." + {"0":"31d6cfe0","2":"2d029869","3":"c38a230f","4":"61e966bc","5":"6dbeb030","6":"9a4bf606","7":"f952e6e4","8":"ac5b10c9","9":"31d6cfe0","10":"49c10811","11":"42efe657","12":"3def3390","13":"dd3fcea7","14":"e5f1a246","15":"44ac9b6b","16":"31d6cfe0","17":"31d6cfe0","18":"31d6cfe0","19":"31d6cfe0","20":"31d6cfe0","21":"31d6cfe0","22":"31d6cfe0","23":"31d6cfe0","24":"31d6cfe0","25":"31d6cfe0"}[chunkId] + ".css";
 /******/ 				var fullhref = __webpack_require__.p + href;
 /******/ 				var existingLinkTags = document.getElementsByTagName("link");
 /******/ 				for(var i = 0; i < existingLinkTags.length; i++) {
@@ -54921,7 +54921,7 @@ Vue.use(BVToastPlugin);
 const vm = new Vue();
 console.log("log Vue :  ", vm, "\n $bvToast : ", vm.$bvToast);
 */
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"d67b4404-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App.vue?vue&type=template&id=4d9eba4c&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"203ace7c-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App.vue?vue&type=template&id=4d9eba4c&
 var Appvue_type_template_id_4d9eba4c_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"app-form",attrs:{"id":"app"}},[_c('div',{attrs:{"id":"nav"}},[_c('router-link',{attrs:{"to":"/"}},[_vm._v(" Gestion des formlaires ")]),_vm._v(" | "),_c('router-link',{attrs:{"to":"/about"}},[_vm._v("About")])],1),_c('router-view')],1)}
 var staticRenderFns = []
 
@@ -55161,6 +55161,58 @@ var es_string_includes = __webpack_require__("2532");
         }
       }
     }
+  },
+  getPriceStape: function getPriceStape(getters) {
+    for (var i in getters.formDatas.fields) {
+      var currentfield = getters.formDatas.fields[i]; //On parcourt les champs afin de determiner s'ils ont un cout.
+
+      if (currentfield.prix && currentfield.prix.action === "prix_utilisables") {
+        var coutDeBase = currentfield.prix.cout;
+
+        if (!currentfield.prix.components.length) {
+          return coutDeBase;
+        } // On determine le cout final en fonction des relations definits;
+
+
+        var price = 0;
+
+        for (var c in currentfield.prix.components) {
+          var component = currentfield.prix.components[c];
+
+          for (var s in getters.form.forms) {
+            var form = getters.form.forms[s]; //on determine le formulaire utilisé.
+
+            if (form.info.name == component.state_name) {
+              for (var f in form.fields) {
+                var field = form.fields[f]; //on determine le champs utilisé
+
+                if (field.name == component.name) {
+                  // On verifie si cest le meme champs.
+                  if (component.name == currentfield.name) {
+                    price += coutDeBase * currentfield.value;
+                  } // On verifie si les options sont definits.
+                  else if (component.value) {
+                      for (var o in field.options) {
+                        var option = field.options[o];
+
+                        if (option.value === component.value) {
+                          if (option.cout) {
+                            price += currentfield.value * option.cout;
+                          }
+                        }
+                      }
+                    } else {
+                      price += currentfield.value * field.prix.cout;
+                    }
+                }
+              }
+            }
+          }
+        }
+
+        return price;
+      }
+    }
   }
 });
 // EXTERNAL MODULE: ./node_modules/axios/index.js
@@ -55230,7 +55282,12 @@ external_commonjs_vue_commonjs2_vue_root_Vue_default.a.use(vuex_esm["a" /* defau
      * Contient les index pacourut par un utilisateur,
      * permet de faire le retour arriere.
      */
-    stepsIndexs: []
+    stepsIndexs: [],
+
+    /**
+     * Contient le prix calculer progressivement en function de l'action utilisateur(suivant,back).
+     */
+    price: 0
   },
   getters: {
     /**
@@ -55360,6 +55417,20 @@ external_commonjs_vue_commonjs2_vue_root_Vue_default.a.use(vuex_esm["a" /* defau
     REMOVE_STEPS_INDEXS: function REMOVE_STEPS_INDEXS(state) {
       console.log("remove stepIndex in array ");
       if (state.stepsIndexs.length) state.stepsIndexs.splice(-1, 1);
+    },
+
+    /**
+     * Ajout du prix de l'etape.
+     */
+    AJOUT_PRIX_STEPS: function AJOUT_PRIX_STEPS(state, prix) {
+      state.price += prix;
+    },
+
+    /**
+     * retire le prix de l'etape.
+     */
+    REMOVE_PRIX_STEPS: function REMOVE_PRIX_STEPS(state, prix) {
+      state.price -= prix;
     }
   },
   actions: {
@@ -55380,21 +55451,31 @@ external_commonjs_vue_commonjs2_vue_root_Vue_default.a.use(vuex_esm["a" /* defau
      */
     stepsIndex: function stepsIndex(_ref3, i) {
       return _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-        var commit, state, getters, new_index;
+        var commit, state, getters, price, new_index;
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 commit = _ref3.commit, state = _ref3.state, getters = _ref3.getters;
                 _context.next = 3;
-                return utilities.selectNextState(state, getters, i);
+                return utilities.getPriceStape(getters);
 
               case 3:
+                price = _context.sent;
+
+                if (price > 0) {
+                  commit("AJOUT_PRIX_STEPS", price);
+                }
+
+                _context.next = 7;
+                return utilities.selectNextState(state, getters, i);
+
+              case 7:
                 new_index = _context.sent;
                 commit("STEPS_INDEX", new_index);
                 commit("ADD_STEPS_INDEXS", new_index);
 
-              case 6:
+              case 10:
               case "end":
                 return _context.stop();
             }
@@ -55404,21 +55485,33 @@ external_commonjs_vue_commonjs2_vue_root_Vue_default.a.use(vuex_esm["a" /* defau
     },
     stepsBack: function stepsBack(_ref4) {
       return _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
-        var commit, state, new_index;
+        var commit, state, getters, new_index, price;
         return regeneratorRuntime.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                commit = _ref4.commit, state = _ref4.state;
+                commit = _ref4.commit, state = _ref4.state, getters = _ref4.getters;
                 _context2.next = 3;
                 return commit("REMOVE_STEPS_INDEXS");
 
               case 3:
                 new_index = state.stepsIndexs[state.stepsIndexs.length - 1];
                 if (!new_index) new_index = 0;
-                commit("STEPS_INDEX", new_index);
+                _context2.next = 7;
+                return commit("STEPS_INDEX", new_index);
 
-              case 6:
+              case 7:
+                _context2.next = 9;
+                return utilities.getPriceStape(getters);
+
+              case 9:
+                price = _context2.sent;
+
+                if (price > 0) {
+                  commit("REMOVE_PRIX_STEPS", price);
+                }
+
+              case 11:
               case "end":
                 return _context2.stop();
             }
@@ -58506,7 +58599,7 @@ if (inBrowser && window.Vue) {
 
 /* harmony default export */ var vue_router_esm = (VueRouter);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"d67b4404-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/Listesfomes.vue?vue&type=template&id=10f215a4&scoped=true&lang=html&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"203ace7c-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/Listesfomes.vue?vue&type=template&id=10f215a4&scoped=true&lang=html&
 var Listesfomesvue_type_template_id_10f215a4_scoped_true_lang_html_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('b-button',{directives:[{name:"b-modal",rawName:"v-b-modal.add-edit-form",modifiers:{"add-edit-form":true}}],attrs:{"size":"sm","variant":"outline-info"},on:{"click":function($event){return _vm.addForm()}}},[_vm._v(" + ")]),_c('b-table',{attrs:{"items":_vm.items,"fields":_vm.fields},scopedSlots:_vm._u([{key:"cell(action)",fn:function(data){return [_c('b-button',{staticClass:"mr-2",attrs:{"size":"sm","variant":"outline-primary"}},[_vm._v(" voir ")]),_c('b-button',{attrs:{"size":"sm","variant":"outline-warning"},on:{"click":function($event){return _vm.updateForm(data.index)}}},[_vm._v(" MAJ ")])]}}])}),_c('AddEditForm')],1)}
 var Listesfomesvue_type_template_id_10f215a4_scoped_true_lang_html_staticRenderFns = []
 

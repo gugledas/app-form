@@ -217,7 +217,7 @@ $({ target: 'String', proto: true, forced: !MDN_POLYFILL_BUG && !CORRECT_IS_REGE
 
 "use strict";
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"d67b4404-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/vue-upload-drop-images/dist/vue-upload-drop-images.vue?vue&type=template&id=518f540d&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"203ace7c-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/vue-upload-drop-images/dist/vue-upload-drop-images.vue?vue&type=template&id=518f540d&scoped=true&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"container",on:{"dragover":function($event){$event.preventDefault();return _vm.dragOver($event)},"dragleave":function($event){$event.preventDefault();return _vm.dragLeave($event)},"drop":function($event){$event.preventDefault();return _vm.drop($event)}}},[_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.dropped == 2),expression:"dropped == 2"}],staticClass:"drop"}),_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.error),expression:"error"}],staticClass:"error"},[_vm._v(" "+_vm._s(_vm.error)+" ")]),_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.Imgs.length == 0),expression:"Imgs.length == 0"}],staticClass:"beforeUpload"},[_c('input',{ref:"uploadInput",staticStyle:{"z-index":"1"},attrs:{"type":"file","accept":"image/*","multiple":""},on:{"change":_vm.previewImgs}}),_c('svg',{staticClass:"icon",attrs:{"xmlns":"http://www.w3.org/2000/svg","viewBox":"0 0 24 24"}},[_c('title',[_vm._v("Upload Image")]),_c('g',{attrs:{"id":"Upload_Image","data-name":"Upload Image"}},[_c('g',{attrs:{"id":"_Group_","data-name":"<Group>"}},[_c('g',{attrs:{"id":"_Group_2","data-name":"<Group>"}},[_c('g',{attrs:{"id":"_Group_3","data-name":"<Group>"}},[_c('circle',{staticStyle:{"fill":"none","stroke":"#303c42","stroke-linecap":"round","stroke-linejoin":"round"},attrs:{"id":"_Path_","data-name":"<Path>","cx":"18.5","cy":"16.5","r":"5"}})]),_c('polyline',{staticStyle:{"fill":"none","stroke":"#303c42","stroke-linecap":"round","stroke-linejoin":"round"},attrs:{"id":"_Path_2","data-name":"<Path>","points":"16.5 15.5 18.5 13.5 20.5 15.5"}}),_c('line',{staticStyle:{"fill":"none","stroke":"#303c42","stroke-linecap":"round","stroke-linejoin":"round"},attrs:{"id":"_Path_3","data-name":"<Path>","x1":"18.5","y1":"13.5","x2":"18.5","y2":"19.5"}})]),_c('g',{attrs:{"id":"_Group_4","data-name":"<Group>"}},[_c('polyline',{staticStyle:{"fill":"none","stroke":"#303c42","stroke-linecap":"round","stroke-linejoin":"round"},attrs:{"id":"_Path_4","data-name":"<Path>","points":"0.6 15.42 6 10.02 8.98 13"}}),_c('polyline',{staticStyle:{"fill":"none","stroke":"#303c42","stroke-linecap":"round","stroke-linejoin":"round"},attrs:{"id":"_Path_5","data-name":"<Path>","points":"17.16 11.68 12.5 7.02 7.77 11.79"}}),_c('circle',{staticStyle:{"fill":"none","stroke":"#303c42","stroke-linecap":"round","stroke-linejoin":"round"},attrs:{"id":"_Path_6","data-name":"<Path>","cx":"8","cy":"6.02","r":"1.5"}}),_c('path',{staticStyle:{"fill":"none","stroke":"#303c42","stroke-linecap":"round","stroke-linejoin":"round"},attrs:{"id":"_Path_7","data-name":"<Path>","d":"M19.5,11.6V4A1.5,1.5,0,0,0,18,2.5H2A1.5,1.5,0,0,0,.5,4V15A1.5,1.5,0,0,0,2,16.5H13.5"}})])])])]),_c('p',{staticClass:"mainMessage"},[_vm._v(" "+_vm._s(_vm.uploadMsg ? _vm.uploadMsg : "Click to upload or drop your images here")+" ")])]),_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.Imgs.length > 0),expression:"Imgs.length > 0"}],staticClass:"imgsPreview"},[_c('button',{staticClass:"clearButton",on:{"click":_vm.reset}},[_vm._v(" "+_vm._s(_vm.clearAll ? _vm.clearAll : "clear All")+" ")]),_vm._l((_vm.Imgs),function(img,i){return _c('div',{key:i,staticClass:"imageHolder"},[_c('img',{attrs:{"src":img}}),_c('span',{staticClass:"delete",staticStyle:{"color":"white"},on:{"click":function($event){return _vm.deleteImg(--i)}}},[_c('svg',{staticClass:"icon",attrs:{"xmlns":"http://www.w3.org/2000/svg","fill":"none","viewBox":"0 0 24 24","stroke":"currentColor"}},[_c('path',{attrs:{"stroke-linecap":"round","stroke-linejoin":"round","stroke-width":"2","d":"M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"}})])]),(++i == _vm.Imgs.length)?_c('div',{staticClass:"plus",on:{"click":_vm.append}},[_vm._v("+")]):_vm._e()])})],2)])}
 var staticRenderFns = []
 
@@ -3556,6 +3556,29 @@ module.exports = function () {
 /* harmony import */ var _mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_css_loader_dist_cjs_js_ref_6_oneOf_1_1_vue_loader_lib_loaders_stylePostLoader_js_postcss_loader_src_index_js_ref_6_oneOf_1_2_cache_loader_dist_cjs_js_ref_0_0_vue_loader_lib_index_js_vue_loader_options_vue_upload_drop_images_vue_vue_type_style_index_0_id_518f540d_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_css_loader_dist_cjs_js_ref_6_oneOf_1_1_vue_loader_lib_loaders_stylePostLoader_js_postcss_loader_src_index_js_ref_6_oneOf_1_2_cache_loader_dist_cjs_js_ref_0_0_vue_loader_lib_index_js_vue_loader_options_vue_upload_drop_images_vue_vue_type_style_index_0_id_518f540d_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
 /* unused harmony reexport * */
 
+
+/***/ }),
+
+/***/ "bee2":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return _createClass; });
+function _defineProperties(target, props) {
+  for (var i = 0; i < props.length; i++) {
+    var descriptor = props[i];
+    descriptor.enumerable = descriptor.enumerable || false;
+    descriptor.configurable = true;
+    if ("value" in descriptor) descriptor.writable = true;
+    Object.defineProperty(target, descriptor.key, descriptor);
+  }
+}
+
+function _createClass(Constructor, protoProps, staticProps) {
+  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+  if (staticProps) _defineProperties(Constructor, staticProps);
+  return Constructor;
+}
 
 /***/ }),
 

@@ -120,8 +120,9 @@
 </template>
 
 <script>
-import axios from "axios";
-import utilities from "./Utilities";
+//import axios from "axios";
+import config from "./config/config.js";
+//import utilities from "./Utilities";
 import NavLine from "./NavLine.vue";
 import { mapState, mapGetters } from "vuex";
 
@@ -214,8 +215,14 @@ export default {
       }
     },
     saveToLocal() {
-      var self = this;
-      var datas = this.form;
+      //var self = this;
+      //var datas = this.form;
+      config.prepareDatasToSave(this.form).then((val) => {
+        config.saveForm(val).then(() => {
+          //
+        });
+      });
+      /*
       utilities.saveSteps(datas).then((reponse) => {
         var forms = JSON.stringify(reponse[0].fields);
         localStorage.setItem("allo", JSON.stringify(forms));
@@ -234,27 +241,7 @@ export default {
             console.log(error);
           });
       });
-    },
-    /**
-     * @depreciated
-     */
-    loadStepsDatas() {
-      //this.datasBdOrLocalStorage();
-      var self = this;
-      var datas = "select * from `appformmanager_fomrs`";
-      axios
-        .post("http://lesroisdelareno.kksa" + "/query-ajax/select", datas)
-        .then(function (reponse) {
-          console.log("get reponse: ", reponse);
-          if (reponse.data) {
-            self.datasBd = reponse.data;
-            console.log("gee: ", self.datasBd);
-            self.datasBdOrLocalStorage();
-          }
-        })
-        .catch(function (error) {
-          console.log("get error ", error);
-        });
+      /**/
     },
 
     back() {

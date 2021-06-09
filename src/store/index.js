@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import utilities from "./utilities.js";
+import { drupalUtilities } from "drupal-vuejs";
 
 Vue.use(Vuex);
 import axios from "axios";
@@ -313,12 +314,21 @@ export default new Vuex.Store({
     setItems({ commit }, payload) {
       commit("SET_ITEMS", payload);
     },
+    /**
+     *  --
+     */
     setFormDatasValidate({ commit }, payload) {
       commit("SET_FORM_DATAS_VALIDATE", payload);
     },
+    /**
+     *  --
+     */
     setStepsIndexs({ commit }, payload) {
       commit("SET_STEPS_INDEXS", payload);
     },
+    /**
+     *  --
+     */
     setStatusStepsIndex({ commit }, payload) {
       commit("SET_STATUS_STEPS_INDEX", payload);
     },
@@ -333,8 +343,29 @@ export default new Vuex.Store({
       const statusEmail = await state.userlogin.email.ref.validate();
       console.log(" :: ", statusEmail);
       if (statusName.valid && statusTelephone.valid && statusEmail.valid) {
-        // creation de l'utilisateur.
+        // Creation de l'utilisateur.
       }
+
+      const datas = { name: "kksa" };
+      drupalUtilities
+        .post("/user/register?_format=json", datas)
+        .then((resp) => {
+          console.log("drupalUtilities : ", resp);
+        })
+        .catch((error) => {
+          console.log("error GET drupalUtilities : ", error);
+        });
+      /**/
+      /*
+      drupalUtilities
+        .get("/node/10?_format=json")
+        .then((resp) => {
+          console.log("drupalUtilities : ", resp);
+        })
+        .catch((error) => {
+          console.log("error GET drupalUtilities : ", error);
+        });
+        /**/
     },
   },
   modules: {},

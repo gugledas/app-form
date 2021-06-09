@@ -107,7 +107,7 @@ export default {
       });
     },
     SaveByUser() {
-      //
+      this.$store.dispatch("saveDatasUser");
     },
   },
 };

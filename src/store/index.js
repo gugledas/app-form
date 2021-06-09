@@ -59,6 +59,27 @@ export default new Vuex.Store({
      true: form activé.
      */
     StatusStepsIndexs: true,
+    /**
+     * Stockque les infos liée à l'utilisateur.
+     */
+    userlogin: {
+      name: {
+        value: "",
+        ref: "",
+      },
+      prenom: {
+        value: "",
+        ref: "",
+      },
+      telephone: {
+        value: "",
+        ref: "",
+      },
+      email: {
+        value: "",
+        ref: "",
+      },
+    },
   },
   getters: {
     /**
@@ -199,7 +220,7 @@ export default new Vuex.Store({
       state.price += prix;
     },
     /**
-     * retire le prix de l'etape.
+     * Retire le prix de l'etape.
      */
     REMOVE_PRIX_STEPS(state, prix) {
       state.price -= prix;
@@ -300,6 +321,20 @@ export default new Vuex.Store({
     },
     setStatusStepsIndex({ commit }, payload) {
       commit("SET_STATUS_STEPS_INDEX", payload);
+    },
+    /**
+     * Enregistre les données et cree le compte utilisateur.
+     */
+    async saveDatasUser({ commit, state }) {
+      //on valide les données utilisateur,
+      console.log(commit, state);
+      const statusName = await state.userlogin.name.ref.validate();
+      const statusTelephone = await state.userlogin.telephone.ref.validate();
+      const statusEmail = await state.userlogin.email.ref.validate();
+      console.log(" :: ", statusEmail);
+      if (statusName.valid && statusTelephone.valid && statusEmail.valid) {
+        // creation de l'utilisateur.
+      }
     },
   },
   modules: {},

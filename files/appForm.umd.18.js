@@ -1,193 +1,87 @@
 ((typeof self !== 'undefined' ? self : this)["webpackJsonpappForm"] = (typeof self !== 'undefined' ? self : this)["webpackJsonpappForm"] || []).push([[18],{
 
-/***/ "15e7":
+/***/ "./node_modules/cache-loader/dist/cjs.js?!./node_modules/babel-loader/lib/index.js!./node_modules/cache-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./src/App/ConfigsForms/AddEditForm.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/ConfigsForms/AddEditForm.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-// ESM COMPAT FLAG
-__webpack_require__.r(__webpack_exports__);
-
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"203ace7c-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/EditsFields/InputFiles.vue?vue&type=template&id=335e1928&scoped=true&lang=html&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('b-row',{staticClass:"mb-3"},[_c('b-col',{attrs:{"sm":"12"}},[_c('compositeHeaderField',{attrs:{"field":_vm.field}})],1)],1)],1)}
-var staticRenderFns = []
-
-
-// CONCATENATED MODULE: ./src/App/EditsFields/InputFiles.vue?vue&type=template&id=335e1928&scoped=true&lang=html&
-
-// EXTERNAL MODULE: ./node_modules/core-js/modules/es.function.name.js
-var es_function_name = __webpack_require__("b0c0");
-
-// EXTERNAL MODULE: ./src/App/EditsFields/compositeHeaderField.vue + 4 modules
-var compositeHeaderField = __webpack_require__("d3ee");
-
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/EditsFields/InputFiles.vue?vue&type=script&lang=js&
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ var InputFilesvue_type_script_lang_js_ = ({
-  name: "InputFiles",
-  props: {
-    field: {
-      type: Object,
-      required: true,
-      validator: function validator(val) {
-        return val.label === undefined || val.value === undefined || val.name === undefined || val.require === undefined ? false : true;
-      }
-    }
-  },
-  components: {
-    compositeHeaderField: compositeHeaderField["a" /* default */]
-  },
-  data: function data() {
-    return {//
-    };
-  },
-  mounted: function mounted() {//
-  },
-  watch: {//
-  },
-  computed: {//
-  },
-  methods: {//
-  }
-});
-// CONCATENATED MODULE: ./src/App/EditsFields/InputFiles.vue?vue&type=script&lang=js&
- /* harmony default export */ var EditsFields_InputFilesvue_type_script_lang_js_ = (InputFilesvue_type_script_lang_js_); 
-// EXTERNAL MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
-var componentNormalizer = __webpack_require__("2877");
-
-// CONCATENATED MODULE: ./src/App/EditsFields/InputFiles.vue
-
-
-
-
-
-/* normalize component */
-
-var component = Object(componentNormalizer["a" /* default */])(
-  EditsFields_InputFilesvue_type_script_lang_js_,
-  render,
-  staticRenderFns,
-  false,
-  null,
-  "335e1928",
-  null
-  
-)
-
-/* harmony default export */ var InputFiles = __webpack_exports__["default"] = (component.exports);
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _config_config_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../config/config.js */ \"./src/App/config/config.js\");\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n\n/* harmony default export */ __webpack_exports__[\"default\"] = ({\n  name: \"AddEditForm\",\n  props: {//\n  },\n  components: {//\n  },\n  data: function data() {\n    return {\n      form: {\n        forms: [],\n        description: \"\",\n        name: \"\"\n      }\n    };\n  },\n  mounted: function mounted() {//\n  },\n  watch: {//\n  },\n  computed: {//\n  },\n  methods: {\n    handleOk: function handleOk(bvModalEvt) {\n      // Prevent modal from closing\n      bvModalEvt.preventDefault(); // Trigger submit handler\n\n      this.handleSubmit();\n    },\n    handleSubmit: function handleSubmit(event) {\n      var _this = this;\n\n      event.preventDefault();\n      _config_config_js__WEBPACK_IMPORTED_MODULE_0__[\"default\"].prepareDatasToSave(this.form).then(function (val) {\n        _config_config_js__WEBPACK_IMPORTED_MODULE_0__[\"default\"].saveForm(val).then(function () {\n          _this.$nextTick(function () {\n            _this.$bvModal.hide(\"add-edit-form\");\n          });\n        });\n      });\n    }\n  }\n});\n\n//# sourceURL=webpack://appForm/./src/App/ConfigsForms/AddEditForm.vue?./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options");
 
 /***/ }),
 
-/***/ "d3ee":
+/***/ "./node_modules/cache-loader/dist/cjs.js?{\"cacheDirectory\":\"node_modules/.cache/vue-loader\",\"cacheIdentifier\":\"00572b12-vue-loader-template\"}!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/cache-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./src/App/ConfigsForms/AddEditForm.vue?vue&type=template&id=fe0279f6&scoped=true&lang=html&":
+/*!********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"00572b12-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/ConfigsForms/AddEditForm.vue?vue&type=template&id=fe0279f6&scoped=true&lang=html& ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"render\", function() { return render; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"staticRenderFns\", function() { return staticRenderFns; });\nvar render = function() {\n  var _vm = this\n  var _h = _vm.$createElement\n  var _c = _vm._self._c || _h\n  return _c(\n    \"div\",\n    [\n      _c(\n        \"b-modal\",\n        {\n          ref: \"modal\",\n          attrs: {\n            id: \"add-edit-form\",\n            title: \"Create your form page\",\n            \"hide-footer\": \"\"\n          },\n          on: { ok: _vm.handleOk }\n        },\n        [\n          _c(\"h1\", [_vm._v(\"kksa8888\")]),\n          _c(\n            \"form\",\n            { ref: \"form\", on: { submit: _vm.handleSubmit } },\n            [\n              _c(\n                \"b-row\",\n                [\n                  _c(\n                    \"b-col\",\n                    { attrs: { cols: \"8\" } },\n                    [\n                      _c(\n                        \"b-form-group\",\n                        { attrs: { label: \"name\", \"label-for\": \"name-input\" } },\n                        [\n                          _c(\"b-form-input\", {\n                            attrs: { required: \"\" },\n                            model: {\n                              value: _vm.form.name,\n                              callback: function($$v) {\n                                _vm.$set(_vm.form, \"name\", $$v)\n                              },\n                              expression: \"form.name\"\n                            }\n                          })\n                        ],\n                        1\n                      )\n                    ],\n                    1\n                  ),\n                  _c(\n                    \"b-col\",\n                    { attrs: { cols: \"8\" } },\n                    [\n                      _c(\n                        \"b-form-group\",\n                        {\n                          attrs: {\n                            label: \"Description\",\n                            \"label-for\": \"description-input\"\n                          }\n                        },\n                        [\n                          _c(\"b-form-textarea\", {\n                            attrs: { required: \"\" },\n                            model: {\n                              value: _vm.form.description,\n                              callback: function($$v) {\n                                _vm.$set(_vm.form, \"description\", $$v)\n                              },\n                              expression: \"form.description\"\n                            }\n                          })\n                        ],\n                        1\n                      )\n                    ],\n                    1\n                  )\n                ],\n                1\n              ),\n              _c(\"b-row\", { attrs: { \"align-h\": \"end\" } }, [\n                _c(\n                  \"div\",\n                  { staticClass: \"mr-3\" },\n                  [\n                    _c(\n                      \"b-button\",\n                      {\n                        staticClass: \"mr-2\",\n                        attrs: { type: \"submit\", variant: \"primary\" }\n                      },\n                      [_vm._v(\"Ajouter\")]\n                    )\n                  ],\n                  1\n                )\n              ])\n            ],\n            1\n          )\n        ]\n      )\n    ],\n    1\n  )\n}\nvar staticRenderFns = []\nrender._withStripped = true\n\n\n\n//# sourceURL=webpack://appForm/./src/App/ConfigsForms/AddEditForm.vue?./node_modules/cache-loader/dist/cjs.js?%7B%22cacheDirectory%22:%22node_modules/.cache/vue-loader%22,%22cacheIdentifier%22:%2200572b12-vue-loader-template%22%7D!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"203ace7c-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/EditsFields/compositeHeaderField.vue?vue&type=template&id=366ceb9e&scoped=true&lang=html&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('b-form-group',{attrs:{"label":"Label","invalid-feedback":"Name is required"}},[_c('b-input-group',[_c('b-form-input',{attrs:{"required":""},on:{"input":_vm.input},model:{value:(_vm.field.label),callback:function ($$v) {_vm.$set(_vm.field, "label", $$v)},expression:"field.label"}}),_c('b-form-input',{attrs:{"required":"","readonly":_vm.readonly},on:{"dblclick":_vm.toogleReadOnly},model:{value:(_vm.field.name),callback:function ($$v) {_vm.$set(_vm.field, "name", $$v)},expression:"field.name"}})],1)],1)],1)}
-var staticRenderFns = []
+/***/ }),
 
+/***/ "./src/App/ConfigsForms/AddEditForm.vue":
+/*!**********************************************!*\
+  !*** ./src/App/ConfigsForms/AddEditForm.vue ***!
+  \**********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-// CONCATENATED MODULE: ./src/App/EditsFields/compositeHeaderField.vue?vue&type=template&id=366ceb9e&scoped=true&lang=html&
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _AddEditForm_vue_vue_type_template_id_fe0279f6_scoped_true_lang_html___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AddEditForm.vue?vue&type=template&id=fe0279f6&scoped=true&lang=html& */ \"./src/App/ConfigsForms/AddEditForm.vue?vue&type=template&id=fe0279f6&scoped=true&lang=html&\");\n/* harmony import */ var _AddEditForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AddEditForm.vue?vue&type=script&lang=js& */ \"./src/App/ConfigsForms/AddEditForm.vue?vue&type=script&lang=js&\");\n/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ \"./node_modules/vue-loader/lib/runtime/componentNormalizer.js\");\n\n\n\n\n\n/* normalize component */\n\nvar component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__[\"default\"])(\n  _AddEditForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[\"default\"],\n  _AddEditForm_vue_vue_type_template_id_fe0279f6_scoped_true_lang_html___WEBPACK_IMPORTED_MODULE_0__[\"render\"],\n  _AddEditForm_vue_vue_type_template_id_fe0279f6_scoped_true_lang_html___WEBPACK_IMPORTED_MODULE_0__[\"staticRenderFns\"],\n  false,\n  null,\n  \"fe0279f6\",\n  null\n  \n)\n\n/* hot reload */\nif (false) { var api; }\ncomponent.options.__file = \"src/App/ConfigsForms/AddEditForm.vue\"\n/* harmony default export */ __webpack_exports__[\"default\"] = (component.exports);\n\n//# sourceURL=webpack://appForm/./src/App/ConfigsForms/AddEditForm.vue?");
 
-// EXTERNAL MODULE: ./node_modules/core-js/modules/es.function.name.js
-var es_function_name = __webpack_require__("b0c0");
+/***/ }),
 
-// EXTERNAL MODULE: ./node_modules/snake-case/dist.es2015/index.js + 5 modules
-var dist_es2015 = __webpack_require__("a4d6");
+/***/ "./src/App/ConfigsForms/AddEditForm.vue?vue&type=script&lang=js&":
+/*!***********************************************************************!*\
+  !*** ./src/App/ConfigsForms/AddEditForm.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/EditsFields/compositeHeaderField.vue?vue&type=script&lang=js&
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _node_modules_cache_loader_dist_cjs_js_ref_12_0_node_modules_babel_loader_lib_index_js_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AddEditForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/cache-loader/dist/cjs.js??ref--12-0!../../../node_modules/babel-loader/lib!../../../node_modules/cache-loader/dist/cjs.js??ref--0-0!../../../node_modules/vue-loader/lib??vue-loader-options!./AddEditForm.vue?vue&type=script&lang=js& */ \"./node_modules/cache-loader/dist/cjs.js?!./node_modules/babel-loader/lib/index.js!./node_modules/cache-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./src/App/ConfigsForms/AddEditForm.vue?vue&type=script&lang=js&\");\n/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__[\"default\"] = (_node_modules_cache_loader_dist_cjs_js_ref_12_0_node_modules_babel_loader_lib_index_js_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AddEditForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__[\"default\"]); \n\n//# sourceURL=webpack://appForm/./src/App/ConfigsForms/AddEditForm.vue?");
 
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+/***/ }),
 
-/* harmony default export */ var compositeHeaderFieldvue_type_script_lang_js_ = ({
-  name: "compositeHeaderField",
-  props: {
-    field: {
-      type: Object,
-      required: true
-    }
-  },
-  components: {//
-  },
-  data: function data() {
-    return {
-      readonly: true
-    };
-  },
-  mounted: function mounted() {//
-  },
-  watch: {//
-  },
-  computed: {//
-  },
-  methods: {
-    input: function input() {
-      if (this.readonly && this.field.name.length <= 32) {
-        this.field.name = Object(dist_es2015["a" /* snakeCase */])(this.field.label);
-      }
-    },
-    toogleReadOnly: function toogleReadOnly() {
-      if (this.readonly) this.readonly = false;else this.readonly = true;
-    }
-  }
-});
-// CONCATENATED MODULE: ./src/App/EditsFields/compositeHeaderField.vue?vue&type=script&lang=js&
- /* harmony default export */ var EditsFields_compositeHeaderFieldvue_type_script_lang_js_ = (compositeHeaderFieldvue_type_script_lang_js_); 
-// EXTERNAL MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
-var componentNormalizer = __webpack_require__("2877");
+/***/ "./src/App/ConfigsForms/AddEditForm.vue?vue&type=template&id=fe0279f6&scoped=true&lang=html&":
+/*!***************************************************************************************************!*\
+  !*** ./src/App/ConfigsForms/AddEditForm.vue?vue&type=template&id=fe0279f6&scoped=true&lang=html& ***!
+  \***************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-// CONCATENATED MODULE: ./src/App/EditsFields/compositeHeaderField.vue
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _node_modules_cache_loader_dist_cjs_js_cacheDirectory_node_modules_cache_vue_loader_cacheIdentifier_00572b12_vue_loader_template_node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AddEditForm_vue_vue_type_template_id_fe0279f6_scoped_true_lang_html___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/cache-loader/dist/cjs.js?{\"cacheDirectory\":\"node_modules/.cache/vue-loader\",\"cacheIdentifier\":\"00572b12-vue-loader-template\"}!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/cache-loader/dist/cjs.js??ref--0-0!../../../node_modules/vue-loader/lib??vue-loader-options!./AddEditForm.vue?vue&type=template&id=fe0279f6&scoped=true&lang=html& */ \"./node_modules/cache-loader/dist/cjs.js?{\\\"cacheDirectory\\\":\\\"node_modules/.cache/vue-loader\\\",\\\"cacheIdentifier\\\":\\\"00572b12-vue-loader-template\\\"}!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/cache-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./src/App/ConfigsForms/AddEditForm.vue?vue&type=template&id=fe0279f6&scoped=true&lang=html&\");\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"render\", function() { return _node_modules_cache_loader_dist_cjs_js_cacheDirectory_node_modules_cache_vue_loader_cacheIdentifier_00572b12_vue_loader_template_node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AddEditForm_vue_vue_type_template_id_fe0279f6_scoped_true_lang_html___WEBPACK_IMPORTED_MODULE_0__[\"render\"]; });\n\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"staticRenderFns\", function() { return _node_modules_cache_loader_dist_cjs_js_cacheDirectory_node_modules_cache_vue_loader_cacheIdentifier_00572b12_vue_loader_template_node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AddEditForm_vue_vue_type_template_id_fe0279f6_scoped_true_lang_html___WEBPACK_IMPORTED_MODULE_0__[\"staticRenderFns\"]; });\n\n\n\n//# sourceURL=webpack://appForm/./src/App/ConfigsForms/AddEditForm.vue?");
 
+/***/ }),
 
+/***/ "./src/App/Utilities.js":
+/*!******************************!*\
+  !*** ./src/App/Utilities.js ***!
+  \******************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var core_js_modules_es_object_to_string_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/es.object.to-string.js */ \"./node_modules/core-js/modules/es.object.to-string.js\");\n/* harmony import */ var core_js_modules_es_object_to_string_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_object_to_string_js__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var core_js_modules_es_symbol_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! core-js/modules/es.symbol.js */ \"./node_modules/core-js/modules/es.symbol.js\");\n/* harmony import */ var core_js_modules_es_symbol_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_symbol_js__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var core_js_modules_es_symbol_description_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! core-js/modules/es.symbol.description.js */ \"./node_modules/core-js/modules/es.symbol.description.js\");\n/* harmony import */ var core_js_modules_es_symbol_description_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_symbol_description_js__WEBPACK_IMPORTED_MODULE_2__);\n/* harmony import */ var core_js_modules_es_function_name_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! core-js/modules/es.function.name.js */ \"./node_modules/core-js/modules/es.function.name.js\");\n/* harmony import */ var core_js_modules_es_function_name_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_function_name_js__WEBPACK_IMPORTED_MODULE_3__);\n\n\n\n\nvar Utilities = {\n  /**\n   * Prepare les données pour la sauvagarde.\n   */\n  saveSteps: function saveSteps(datas) {\n    return new Promise(function (resolv) {\n      //console.log(\"fdate : \", datas);\n      var forms = \"\";\n\n      if (datas.forms) {\n        forms = JSON.stringify(datas.forms);\n      }\n\n      var result = [];\n\n      if (datas != \"\") {\n        //edition de la table contents\n        var table1 = {\n          table: \"appformmanager_fomrs\",\n          fields: {\n            forms: forms,\n            description: datas.description,\n            name: datas.name\n          },\n          action: \"update\"\n        };\n\n        if (datas.id) {\n          table1.where = [{\n            column: \"id\",\n            value: datas.id\n          }];\n        }\n\n        result.push(table1);\n      }\n\n      resolv(result);\n    });\n  },\n  field: function field() {\n    return {\n      type: \"\",\n      title: \"\",\n      label: \"\",\n      name: \"\",\n      value: null,\n      imgUrl: \"\",\n      require: \"\",\n      options: [],\n      states: []\n    };\n  },\n  resetField: function resetField(field) {\n    var defaultField = this.field();\n\n    for (var i in field) {\n      field[i] = defaultField[i];\n    }\n  },\n  typeOptions: function typeOptions() {\n    return [{\n      value: null,\n      text: \"Please select an option\"\n    }, {\n      value: \"radio\",\n      text: \"Radio\"\n    }, {\n      value: \"text\",\n      text: \"text\"\n    }, {\n      value: \"select\",\n      text: \"Select\"\n    }, {\n      value: \"number\",\n      text: \"Number\"\n    }, {\n      value: \"checkbox\",\n      text: \"Checkbox\"\n    }, {\n      value: \"increment\",\n      text: \"Spin Button\"\n    }, {\n      value: \"markuptitle\",\n      text: \"Markup Title\"\n    }, {\n      value: \"markupimage\",\n      text: \"Markup Image\"\n    }, {\n      value: \"checkboximg\",\n      text: \"Checkbox Image\"\n    }, {\n      value: \"codepostal\",\n      text: \"Code Postal input\"\n    }, {\n      value: \"radiodesc\",\n      text: \"Radio with Description\"\n    }, {\n      value: \"numberup\",\n      text: \"Number label up\"\n    }, {\n      value: \"file\",\n      text: \"Ajout de fichiers\"\n    }, {\n      value: \"recapitulatif\",\n      text: \"Recapitulatif du montant\"\n    }, {\n      value: \"userlogin\",\n      text: \"Connexion utilisateur\"\n    }];\n  }\n};\n/* harmony default export */ __webpack_exports__[\"default\"] = (Utilities);\n\n//# sourceURL=webpack://appForm/./src/App/Utilities.js?");
 
+/***/ }),
 
-/* normalize component */
+/***/ "./src/App/config/config.js":
+/*!**********************************!*\
+  !*** ./src/App/config/config.js ***!
+  \**********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-var component = Object(componentNormalizer["a" /* default */])(
-  EditsFields_compositeHeaderFieldvue_type_script_lang_js_,
-  render,
-  staticRenderFns,
-  false,
-  null,
-  "366ceb9e",
-  null
-  
-)
-
-/* harmony default export */ var compositeHeaderField = __webpack_exports__["a"] = (component.exports);
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var core_js_modules_es_array_includes_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/es.array.includes.js */ \"./node_modules/core-js/modules/es.array.includes.js\");\n/* harmony import */ var core_js_modules_es_array_includes_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_includes_js__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var core_js_modules_es_string_includes_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! core-js/modules/es.string.includes.js */ \"./node_modules/core-js/modules/es.string.includes.js\");\n/* harmony import */ var core_js_modules_es_string_includes_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_string_includes_js__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var core_js_modules_es_object_to_string_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! core-js/modules/es.object.to-string.js */ \"./node_modules/core-js/modules/es.object.to-string.js\");\n/* harmony import */ var core_js_modules_es_object_to_string_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_object_to_string_js__WEBPACK_IMPORTED_MODULE_2__);\n/* harmony import */ var wbuutilities__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! wbuutilities */ \"../wbuutilities/index.js\");\n/* harmony import */ var _Utilities_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../Utilities.js */ \"./src/App/Utilities.js\");\n/* harmony import */ var bootstrap_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! bootstrap-vue */ \"./node_modules/bootstrap-vue/esm/index.js\");\n/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vue */ \"vue\");\n/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_6__);\n\n\n\n\n\n\n\nvue__WEBPACK_IMPORTED_MODULE_6___default.a.use(bootstrap_vue__WEBPACK_IMPORTED_MODULE_5__[\"BVToastPlugin\"]);\nvar vm = new vue__WEBPACK_IMPORTED_MODULE_6___default.a(); //console.log(\"Module Vue :  \", vm, \"\\n $bvToast : \", vm.$bvToast);\n\nwbuutilities__WEBPACK_IMPORTED_MODULE_3__[\"AjaxToastBootStrap\"].$bvToast = vm.$bvToast;\n/* harmony default export */ __webpack_exports__[\"default\"] = ({\n  baseURl: window.location.host.includes(\"localhost\") ? \"http://lesroisdelareno.kksa\" : window.location.host,\n\n  /**\n   * Permet d'ajouter et d'editer un formulaire.\n   */\n  saveForm: function saveForm(datas) {\n    return wbuutilities__WEBPACK_IMPORTED_MODULE_3__[\"AjaxToastBootStrap\"].post(this.baseURl + \"/query-ajax/insert-update\", datas, {});\n  },\n  prepareDatasToSave: function prepareDatasToSave(datas) {\n    return _Utilities_js__WEBPACK_IMPORTED_MODULE_4__[\"default\"].saveSteps(datas);\n  },\n\n  /**\n   * Prepare les données pour la sauvagarde.\n   */\n  saveStepsDatas: function saveStepsDatas(datas, price) {\n    var uid = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;\n    var status = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 0;\n    return new Promise(function (resolv) {\n      //console.log(\"fdate : \", datas);\n      var forms = \"\";\n\n      if (datas.forms) {\n        forms = JSON.stringify(datas.forms);\n      }\n\n      var result = [];\n\n      if (datas != \"\") {\n        //edition de la table contents\n        var table1 = {\n          table: \"appformmanager_datas\",\n          fields: {\n            datas: forms,\n            appformmanager_forms: datas.id,\n            uid: uid,\n            price: price,\n            status: status\n          },\n          action: \"update\"\n        };\n        /*\n        if (datas.id) {\n          table1.where = [\n            {\n              column: \"id\",\n              value: datas.id,\n            },\n          ];\n        }\n        /**/\n\n        result.push(table1);\n      }\n\n      resolv(result);\n    });\n  }\n});\n\n//# sourceURL=webpack://appForm/./src/App/config/config.js?");
 
 /***/ })
 
 }]);
-//# sourceMappingURL=appForm.umd.18.js.map

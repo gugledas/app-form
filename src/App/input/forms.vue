@@ -36,7 +36,7 @@
             </button>
           </b-col>
           <b-col cols="6">
-            <button class="next-bouton" @click="Save">
+            <button class="next-bouton" @click="SaveByUser">
               <b-icon icon="server"></b-icon>
               Me rappeller
             </button>
@@ -53,6 +53,7 @@ import { ValidationObserver } from "vee-validate";
 import DisplayFields from "../displayFields.vue";
 import getStatusValidation from "../EditsFields/getStatusValidation.vue";
 import { mapGetters, mapState } from "vuex";
+import config from "../config/config.js";
 export default {
   name: "forms",
   props: {
@@ -78,8 +79,8 @@ export default {
     //
   },
   computed: {
-    ...mapState(["mode", "stepsIndex", "stepsIndexs", "StatusStepsIndexs"]),
-    ...mapGetters(["formDatas"]),
+    ...mapState(["mode", "stepsIndex", "StatusStepsIndexs", "price"]),
+    ...mapGetters(["formDatas", "form"]),
     stepsState() {
       var state = false;
       if (this.$store.getters.form.forms.length - 1 > this.level) {
@@ -99,6 +100,13 @@ export default {
       //this.$store.state.stepsIndex--;
     },
     Save() {
+      config.saveStepsDatas(this.form, this.price).then((val) => {
+        config.saveForm(val).then(() => {
+          //
+        });
+      });
+    },
+    SaveByUser() {
       //
     },
   },

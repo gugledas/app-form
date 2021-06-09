@@ -233,12 +233,6 @@ export default new Vuex.Store({
         await commit("STEPS_INDEX", new_index);
         commit("ADD_STEPS_INDEXS", new_index);
         // on verifie si on est sur la derniere etape,
-        console.log(
-          "state.form.forms.length : ",
-          getters.form.forms.length,
-          " :: ",
-          new_index
-        );
         if (getters.form.forms.length === new_index + 1) {
           commit("SET_STATUS_STEPS_INDEX", false);
         }

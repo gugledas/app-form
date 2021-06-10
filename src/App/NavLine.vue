@@ -22,19 +22,24 @@
 import { mapGetters, mapState } from "vuex";
 
 export default {
-  props: {},
+  props: { taille: { require: true } },
   components: {},
   data() {
     return {
       value: 1,
     };
   },
-  watch: {},
+  watch: {
+    taille() {},
+  },
   mounted() {
     var step = localStorage.getItem("step");
-    console.log("object,", step);
-    if (step !== null && step.length) {
+    var id = localStorage.getItem("id");
+
+    if (id !== null && step.length && id == this.taille) {
       this.$store.state.stepsIndex = Number(step);
+    } else {
+      this.$store.state.stepsIndex = 0;
     }
   },
   computed: {
@@ -53,8 +58,9 @@ export default {
   methods: {
     loadSteps(i) {
       this.$store.state.stepsIndex = i;
-      console.log("object,", i);
+
       localStorage.setItem("step", i);
+      localStorage.setItem("id", this.taille);
     },
   },
 };

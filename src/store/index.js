@@ -34,6 +34,10 @@ export default new Vuex.Store({
     },
     /**/
     /**
+     * Contient la liste des formulaire soumis recuperer de la BD.
+     */
+    traitementItems: [],
+    /**
      * Contient la liste des formulaire recupere de la BD.
      */
     items: [],
@@ -41,6 +45,10 @@ export default new Vuex.Store({
      * Contient l'id du formulaire selectionné.
      */
     formId: null,
+    /**
+     * Contient l'id du formulaire selectionné.
+     */
+    traitementId: null,
     /**
      * Permet de determiner le status des champs sur une etape
      */
@@ -56,6 +64,29 @@ export default new Vuex.Store({
     price: 0,
   },
   getters: {
+    /**
+     * Contient la liste des différents formulaire soumis d'un type de formulaire.
+     */
+    traitementFormItems: (state) => {
+      const items = [];
+      var allitems = state.traitementItems;
+      if (allitems.length && state.traitementId !== null) {
+        for (let i = 0; i < allitems.length; i++) {
+          if (allitems[i].appformmanager_forms == state.traitementId) {
+            const form = allitems[i];
+            var TypeDonnee = typeof form.datas;
+            if (form.datas && form.datas !== "" && TypeDonnee === "string") {
+              form.datas = JSON.parse(form.datas);
+            } else if (form.datas === "") {
+              form.datas = [];
+            }
+            items.push(form);
+          }
+        }
+      }
+      return items;
+    },
+
     /**
      * Contient le formulaire selectionné par le client.
      */
@@ -161,14 +192,21 @@ export default new Vuex.Store({
     SET_ITEMS(state, payload) {
       state.items = payload;
     },
+    SET_TRAITEMENT_ITEMS(state, payload) {
+      state.traitementItems = payload;
+    },
     SET_FORM_ID(state, payload) {
       state.formId = payload;
+    },
+    SET_TRAIT_ID(state, payload) {
+      state.traitementId = payload;
     },
     SET_FORM(state) {
       const form = state.items[state.formId];
       form.forms = JSON.parse(form.forms);
       state.form = form;
     },
+
     STEPS_INDEX(state, i) {
       state.stepsIndex = i;
     },
@@ -249,6 +287,9 @@ export default new Vuex.Store({
     setFormId({ commit }, payload) {
       commit("SET_FORM_ID", payload);
     },
+    setTraitId({ commit }, payload) {
+      commit("SET_TRAIT_ID", payload);
+    },
     /**
      * Recupere les formulaires en BD.
      */
@@ -259,6 +300,22 @@ export default new Vuex.Store({
         .then((reponse) => {
           console.log("get loadStepsDatas: ", reponse);
           commit("SET_ITEMS", reponse.data);
+        })
+        .catch((error) => {
+          console.log("get error ", error);
+        });
+    },
+
+    /**
+     * Recupere les formulaires soumis en BD.
+     */
+    loadTraitementDatas({ commit }) {
+      var datas = "select * from `appformmanager_datas`";
+      axios
+        .post("http://lesroisdelareno.kksa" + "/query-ajax/select", datas)
+        .then((reponse) => {
+          console.log("get traitement Items: ", reponse);
+          commit("SET_TRAITEMENT_ITEMS", reponse.data);
         })
         .catch((error) => {
           console.log("get error ", error);

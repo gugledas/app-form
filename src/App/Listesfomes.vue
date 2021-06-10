@@ -10,22 +10,30 @@
     </b-button>
     <b-table :items="items" :fields="fields">
       <template #cell(action)="data">
-        <b-button
-          size="sm"
-          variant="outline-primary"
-          class="mr-2"
-          @click="voirForm(data.index)"
-        >
-          voir
-        </b-button>
+        <b-button-group class="">
+          <b-button
+            size="sm"
+            variant="outline-primary"
+            @click="voirForm(data.index)"
+          >
+            voir
+          </b-button>
 
-        <b-button
-          size="sm"
-          variant="outline-warning"
-          @click="updateForm(data.index)"
-        >
-          MAJ
-        </b-button>
+          <b-button
+            size="sm"
+            variant="outline-warning"
+            @click="updateForm(data.index)"
+          >
+            MAJ
+          </b-button>
+          <b-button
+            size="sm"
+            variant="outline-success"
+            @click="showResult(data.item.id)"
+          >
+            Result
+          </b-button>
+        </b-button-group>
       </template>
     </b-table>
     <AddEditForm></AddEditForm>
@@ -74,6 +82,9 @@ export default {
     },
     voirForm(id) {
       this.$router.push({ path: `/estimation-devis/${id}` });
+    },
+    showResult(id) {
+      this.$router.push({ path: `/traitement/${id}` });
     },
   },
 };

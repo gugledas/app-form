@@ -3,10 +3,9 @@ export default {
   /**
    * Selectionne la prochaine etape valide.
    */
-  selectNextState(state, getters, i) {
+  selectNextState(forms, i) {
     const j = i + 1;
-    console.log("selectNextState : ", state, "\n", getters, "\n", i);
-    this.forms = getters.form.forms;
+    this.forms = forms;
     for (const k in this.forms) {
       let kk = parseInt(k);
       if (kk >= j) {
@@ -19,6 +18,29 @@ export default {
         }
       }
     }
+    return j;
+  },
+  /**
+   * Selectionne la prochaine etape valide du formulaire soumis.
+   */
+  selectNextTrait(state, getters, i) {
+    const j = i + 1;
+    // console.log("selectNextState : ", state, "\n", getters, "\n", i);
+    this.forms = getters;
+    for (const k in this.forms) {
+      let kk = parseInt(k);
+      console.log("kk ", k);
+      if (kk >= j) {
+        const form = this.forms[k];
+        if (this.validateState(form.states)) {
+          console.log("etape valide: ", k);
+          return kk;
+        } else {
+          console.log("etape non valide : ", k);
+        }
+      }
+    }
+    // console.log("forms ", this.forms);
     return j;
   },
   validateState(states) {

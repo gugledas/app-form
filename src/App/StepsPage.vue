@@ -9,7 +9,7 @@
       <b-row align-h="center">
         <transition name="fade">
           <b-col class="" cols="12" lg="9" v-if="formDatas && formDatas.info">
-            <nav-line></nav-line>
+            <nav-line :taille="id"></nav-line>
             <pages :level="stepsIndex"></pages>
           </b-col>
         </transition>

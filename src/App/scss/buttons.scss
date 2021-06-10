@@ -8,5 +8,13 @@ $b-custom-control-indicator-size-lg: 2rem;
 .btn {
   &:hover {
     color: #353535;
+
+    &.btn-outline-primary {
+      color: #FFF;
+    }
+
+    &.btn-outline-success {
+      color: #FFF;
+    }
   }
 }

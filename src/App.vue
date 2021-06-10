@@ -12,7 +12,6 @@ export default {
   name: "App",
   mounted() {
     this.$store.dispatch("loadStepsDatas");
-    this.$store.dispatch("loadTraitementDatas");
   },
 };
 </script>

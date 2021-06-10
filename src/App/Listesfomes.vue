@@ -1,39 +1,31 @@
 <template lang="html">
   <div>
-    <b-button
-      size="sm"
-      variant="outline-info"
-      @click="addForm()"
-      v-b-modal.add-edit-form
-    >
-      +
-    </b-button>
+    <b-button variant="outline-info" v-b-modal.add-edit-form> + </b-button>
     <b-table :items="items" :fields="fields">
       <template #cell(action)="data">
-        <b-button-group class="">
-          <b-button
-            size="sm"
-            variant="outline-primary"
-            @click="voirForm(data.index)"
-          >
-            voir
-          </b-button>
+        <div class="p-relative">
+          <b-button-group class="boutton-absolute">
+            <b-button variant="outline-primary" @click="voirForm(data.index)">
+              <b-icon icon="eye"></b-icon>
+            </b-button>
 
-          <b-button
-            size="sm"
-            variant="outline-warning"
-            @click="updateForm(data.index)"
-          >
-            MAJ
-          </b-button>
-          <b-button
-            size="sm"
-            variant="outline-success"
-            @click="showResult(data.item.id)"
-          >
-            Result
-          </b-button>
-        </b-button-group>
+            <b-button variant="outline-warning" @click="updateForm(data.index)">
+              <b-icon icon="pencil"></b-icon>
+            </b-button>
+            <b-button
+              variant="outline-success"
+              @click="showResult(data.item.id)"
+            >
+              <b-icon icon="server"></b-icon>
+            </b-button>
+            <b-button
+              variant="outline-danger"
+              @click="deleteForm(data.item.id)"
+            >
+              <b-icon icon="trash"></b-icon>
+            </b-button>
+          </b-button-group>
+        </div>
       </template>
     </b-table>
     <AddEditForm></AddEditForm>
@@ -42,7 +34,7 @@
 
 <script>
 import { mapState } from "vuex";
-
+import config from "./config/config.js";
 export default {
   name: "Listesfomes",
   props: {},
@@ -67,6 +59,7 @@ export default {
         {
           label: "#Action",
           key: "action",
+          thClass: ["th-action"],
         },
       ],
     };
@@ -85,6 +78,11 @@ export default {
     },
     showResult(id) {
       this.$router.push({ path: `/traitement/${id}` });
+    },
+    deleteForm(id) {
+      config.deleteForm(id).then(() => {
+        window.location.reload();
+      });
     },
   },
 };

@@ -2,8 +2,26 @@
 @use '@braid/vue-formulate/themes/snow/snow.scss';
 @use './variables.scss' as *; //@use './field.scss'; //
 
+.super-hover {
+  z-index: 99999;
+}
+
+.p-relative {
+  position: relative;
+}
+
 .app-form {
-  font-size: 1.8rem;
+  font-size     : 1.8rem;
+  padding-top   : 5rem;
+  padding-bottom: 5rem;
+  min-height    : 300px;
+
+  table {
+    .th-action {
+      width: 170px;
+    }
+  }
+  //
   @import "./buttons.scss";
   @import "./custom-control.scss";
   @import './field.scss';
@@ -16,7 +34,7 @@
 
   .boutton-absolute {
     position        : absolute;
-    left            : calc(100% + 30px);
+    left            : 0;
     top             : 0;
     right           : auto;
     border          : 1px solid #dee2e6;
@@ -27,6 +45,22 @@
       border-radius: 0;
       border       : none;
       background   : transparent !important;
+
+      &:hover {
+        color: #000;
+      }
+    }
+  }
+
+  td {
+    .boutton-absolute {
+      border-bottom: 0;
+    }
+  }
+
+  .full-block {
+    .boutton-absolute {
+      left: calc(100% + 30px);
     }
   }
 

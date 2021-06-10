@@ -108,4 +108,7 @@ export default {
       });
     });
   },
+  deleteForm(id) {
+    config.deleteForm(id);
+  },
 };

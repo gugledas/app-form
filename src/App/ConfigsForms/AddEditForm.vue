@@ -7,7 +7,6 @@
       @ok="handleOk"
       hide-footer
     >
-      <h1>kksa8888</h1>
       <form ref="form" @submit="handleSubmit">
         <b-row>
           <b-col cols="8">
@@ -79,6 +78,7 @@ export default {
         config.saveForm(val).then(() => {
           this.$nextTick(() => {
             this.$bvModal.hide("add-edit-form");
+            window.location.reload();
           });
         });
       });

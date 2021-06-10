@@ -104,7 +104,7 @@
       </b-row>
     </b-container>
 
-    <b-row class="m-0" v-if="this.$store.state.mode">
+    <b-row class="m-0" v-if="mode">
       <b-col cols="4">
         <b-card class="mt-3 text-left d-none-0" header="Price">
           <pre class="text-left">{{ price }}</pre>
@@ -159,7 +159,7 @@ export default {
     this.$store.dispatch("setFormId", this.id);
   },
   computed: {
-    ...mapState(["stepsIndex", "allStepsDatas", "fields", "price"]),
+    ...mapState(["stepsIndex", "allStepsDatas", "fields", "price", "mode"]),
     ...mapGetters(["form", "formDatas"]),
     currentSteps() {
       var local = localStorage.getItem("allo");

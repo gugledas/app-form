@@ -63,4 +63,24 @@ export default {
       resolv(result);
     });
   },
+  deleteForm(id) {
+    const result = [];
+    var table1 = {
+      table: "appformmanager_fomrs",
+      fields: {},
+      action: "delete",
+      where: [
+        {
+          column: "id",
+          value: id,
+        },
+      ],
+    };
+    result.push(table1);
+    return AjaxToastBootStrap.post(
+      this.baseURl + "/query-ajax/insert-update",
+      result,
+      {}
+    );
+  },
 };

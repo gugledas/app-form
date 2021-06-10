@@ -34,6 +34,7 @@
       size="lg"
       :title="'Résultat du formulaire'"
       scrollable
+      class="super-hover"
     >
       <b-row align-h="center" v-if="traitementFormItems.length">
         <b-col sm="12" v-for="(steps, i) in validSteps" :key="i"
@@ -99,10 +100,12 @@ export default {
         },
       ],
       showModal: false,
-      currentIndex: 0,
+      currentIndex: null,
     };
   },
-  mounted() {},
+  mounted() {
+    //
+  },
   watch: {},
   computed: {
     ...mapState(["items"]),
@@ -110,7 +113,7 @@ export default {
     validSteps() {
       var all = [];
       var forms;
-      if (this.traitementFormItems.length) {
+      if (this.traitementFormItems.length && this.currentIndex !== null) {
         forms = this.traitementFormItems[this.currentIndex].datas;
         all.push(forms[0]);
         for (let i = 0; i < forms.length; i++) {
@@ -121,7 +124,6 @@ export default {
           }
         }
       }
-
       return all;
     },
   },

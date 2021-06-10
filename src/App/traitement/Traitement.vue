@@ -42,7 +42,9 @@ export default {
     },
   },
   mounted() {
-    this.$store.dispatch("setTraitId", this.id);
+    this.$store.dispatch("loadTraitementDatas", this.id).then(() => {
+      this.$store.dispatch("setTraitId", this.id);
+    });
   },
   computed: {
     ...mapState(["traitementId"]),

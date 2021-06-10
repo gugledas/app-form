@@ -353,17 +353,23 @@ export default new Vuex.Store({
     /**
      * Recupere les formulaires soumis en BD.
      */
-    loadTraitementDatas({ commit }) {
-      var datas = "select * from `appformmanager_datas`";
-      axios
-        .post("http://lesroisdelareno.kksa" + "/query-ajax/select", datas)
-        .then((reponse) => {
-          console.log("get traitement Items: ", reponse);
-          commit("SET_TRAITEMENT_ITEMS", reponse.data);
-        })
-        .catch((error) => {
-          console.log("get error ", error);
-        });
+    loadTraitementDatas({ commit }, id) {
+      return new Promise((resolv, reject) => {
+        var datas =
+          " select * from `appformmanager_datas` where `appformmanager_forms` = " +
+          id;
+        axios
+          .post("http://lesroisdelareno.kksa" + "/query-ajax/select", datas)
+          .then((reponse) => {
+            console.log("get traitement Items: ", reponse);
+            commit("SET_TRAITEMENT_ITEMS", reponse.data);
+            resolv(reponse.data);
+          })
+          .catch((error) => {
+            console.log("get error ", error);
+            reject(error);
+          });
+      });
     },
     /**
      * Permet de modifier la structure du formulaire.
@@ -420,17 +426,6 @@ export default new Vuex.Store({
           });
         //
       }
-      /**/
-      /*
-      drupalUtilities
-        .get("/node/10?_format=json")
-        .then((resp) => {
-          console.log("drupalUtilities : ", resp);
-        })
-        .catch((error) => {
-          console.log("error GET drupalUtilities : ", error);
-        });
-      /**/
     },
     saveDatas({ state, getters }, uid = 0) {
       utilities.saveDatas(state, getters, uid);

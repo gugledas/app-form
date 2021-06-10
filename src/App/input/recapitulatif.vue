@@ -4,7 +4,7 @@
       <div class="row-content">
         <b-row class="row-content__row">
           <b-col sm="6" class="mb-3">
-            <label class="label d-flex">
+            <label class="label d-flex align-items-center">
               <span class="price-info label">{{ field.label }} :</span>
               <span class="price-info price">{{ price }}</span>
               <span class="price-info currency">€</span>

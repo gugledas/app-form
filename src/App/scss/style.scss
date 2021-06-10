@@ -4,9 +4,15 @@
 
 .app-form {
   font-size: 1.8rem;
-  @import "./custom-control.scss";
   @import "./buttons.scss";
+  @import "./custom-control.scss";
   @import './field.scss';
+
+  .label {
+    color      : inherit;
+    font-weight: inherit;
+    font-size  : inherit;
+  }
 
   .boutton-absolute {
     position        : absolute;

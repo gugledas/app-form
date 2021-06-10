@@ -1,6 +1,10 @@
 <template lang="html">
   <div>
-    <form ref="form_userlogin" @submit.stop.prevent="handleSubmit">
+    <form
+      ref="form_userlogin"
+      @submit.stop.prevent="handleSubmit"
+      class="form-userlogin"
+    >
       <ValidationProvider
         v-slot="v"
         rules="required"
@@ -159,7 +163,11 @@ export default {
   },
 };
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss">
+.form-userlogin legend {
+  border: none;
+}
+</style>
 
 <!--
  //nom du fichier en pascal.

@@ -1,6 +1,9 @@
-@use "wbu-atomique/scss/bootstrap_init.scss" as *;
+@import "wbu-atomique/scss/bootstrap_init.scss";
+@import "bootstrap-vue/src/_variables.scss";
 $btn-font-size: 1.4rem;
+$b-custom-control-indicator-size-lg: 2rem;
 @import 'bootstrap/scss/_buttons.scss';
+@import 'bootstrap-vue/src/components/form-radio/_form-radio.scss';
 
 .btn {
   &:hover {

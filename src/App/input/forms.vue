@@ -204,6 +204,12 @@ export default {
         color: #fff;
         border: none;
         transition: opacity 0.5s ease, background-color 0.5s ease;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        svg {
+          margin-right: 1.4rem;
+        }
 
         &--active {
           opacity: 1;

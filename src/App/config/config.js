@@ -10,7 +10,7 @@ AjaxToastBootStrap.$bvToast = vm.$bvToast;
 export default {
   baseURl: window.location.host.includes("localhost")
     ? "http://lesroisdelareno.kksa"
-    : window.location.host,
+    : window.location.origin,
   /**
    * Permet d'ajouter et d'editer un formulaire.
    */

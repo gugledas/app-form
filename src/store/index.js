@@ -243,14 +243,14 @@ export default new Vuex.Store({
     /**
      * Elle definit la logique permettant de passer à une autre etape.
      */
-    async stepsIndex({ commit, state, getters }, i) {
+    async stepsIndex({ commit, getters }, i) {
       //on determine le cout de l'etape:
       const price = await utilities.getPriceStape(getters);
       if (price > 0) {
         commit("AJOUT_PRIX_STEPS", price);
       }
       //
-      const new_index = await utilities.selectNextState(state, getters, i);
+      const new_index = await utilities.selectNextState(getters.form.forms, i);
       if (new_index) {
         await commit("STEPS_INDEX", new_index);
         commit("ADD_STEPS_INDEXS", new_index);
@@ -335,26 +335,34 @@ export default new Vuex.Store({
     /**
      * Enregistre les données et cree le compte utilisateur.
      */
-    async saveDatasUser({ commit, state }) {
+    async saveDatasUser({ commit, state, getters }) {
       //on valide les données utilisateur,
       console.log(commit, state);
       const statusName = await state.userlogin.name.ref.validate();
       const statusTelephone = await state.userlogin.telephone.ref.validate();
       const statusEmail = await state.userlogin.email.ref.validate();
-      console.log(" :: ", statusEmail);
+      console.log("email validation : ", state.userlogin.email.ref);
       if (statusName.valid && statusTelephone.valid && statusEmail.valid) {
-        // Creation de l'utilisateur.
+        const datas = {
+          name: [{ value: state.userlogin.name.value }],
+          mail: [{ value: state.userlogin.email.value }],
+          //status: [{ value: true }],
+        };
+        drupalUtilities
+          .post("/user/register?_format=json", datas)
+          .then((resp) => {
+            console.log("drupalUtilities : ", resp);
+            if (resp.data) {
+              var uid = resp.data.uid[0].value;
+              utilities.saveDatas(state, getters, uid);
+            }
+          })
+          .catch((error) => {
+            console.log("error GET drupalUtilities : ", error);
+            state.userlogin.email.ref.setErrors(["Cet email existe deja"]);
+          });
+        //
       }
-
-      const datas = { name: "kksa" };
-      drupalUtilities
-        .post("/user/register?_format=json", datas)
-        .then((resp) => {
-          console.log("drupalUtilities : ", resp);
-        })
-        .catch((error) => {
-          console.log("error GET drupalUtilities : ", error);
-        });
       /**/
       /*
       drupalUtilities
@@ -365,7 +373,10 @@ export default new Vuex.Store({
         .catch((error) => {
           console.log("error GET drupalUtilities : ", error);
         });
-        /**/
+      /**/
+    },
+    saveDatas({ state, getters }, uid = 0) {
+      utilities.saveDatas(state, getters, uid);
     },
   },
   modules: {},

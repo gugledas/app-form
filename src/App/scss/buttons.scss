@@ -1,0 +1,9 @@
+@use "wbu-atomique/scss/bootstrap_init.scss" as *;
+$btn-font-size: 1.4rem;
+@import 'bootstrap/scss/_buttons.scss';
+
+.btn {
+  &:hover {
+    color: #353535;
+  }
+}

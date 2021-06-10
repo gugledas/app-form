@@ -53,7 +53,7 @@ import { ValidationObserver } from "vee-validate";
 import DisplayFields from "../displayFields.vue";
 import getStatusValidation from "../EditsFields/getStatusValidation.vue";
 import { mapGetters, mapState } from "vuex";
-import config from "../config/config.js";
+
 export default {
   name: "forms",
   props: {
@@ -100,11 +100,7 @@ export default {
       //this.$store.state.stepsIndex--;
     },
     Save() {
-      config.saveStepsDatas(this.form, this.price).then((val) => {
-        config.saveForm(val).then(() => {
-          //
-        });
-      });
+      this.$store.dispatch("saveDatas");
     },
     SaveByUser() {
       this.$store.dispatch("saveDatasUser");
@@ -174,7 +170,7 @@ export default {
   .button-travaux {
     color: $primary_color;
     font-weight: 700;
-    font-size: 0.8rem;
+    font-size: 1.4rem;
     border-bottom: 2px solid $primary_color;
     padding-bottom: 2px;
     cursor: pointer;

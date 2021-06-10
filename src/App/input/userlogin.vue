@@ -12,6 +12,7 @@
           <b-form-input
             v-model="userlogin.name.value"
             type="text"
+            @input="input($event, 'name')"
           ></b-form-input>
         </b-form-group>
         <div class="text-danger">
@@ -25,6 +26,7 @@
         <b-form-input
           v-model="userlogin.prenom.value"
           type="text"
+          @input="input($event, 'prenom')"
         ></b-form-input>
       </b-form-group>
       <!-- -->
@@ -39,6 +41,7 @@
           <b-form-input
             v-model="userlogin.telephone.value"
             type="text"
+            @input="input($event, 'telephone')"
           ></b-form-input>
         </b-form-group>
         <div class="text-danger">
@@ -59,6 +62,7 @@
           <b-form-input
             v-model="userlogin.email.value"
             type="email"
+            @input="input($event, 'email')"
           ></b-form-input>
         </b-form-group>
         <div class="text-danger">
@@ -99,6 +103,7 @@ export default {
   },
   mounted() {
     this.setRefs();
+    this.initValue();
   },
   watch: {
     //
@@ -132,6 +137,24 @@ export default {
       this.userlogin.name.ref = this.$refs.userlogin_name;
       this.userlogin.telephone.ref = this.$refs.userlogin_tel;
       this.userlogin.email.ref = this.$refs.userlogin_email;
+    },
+    input(value, field) {
+      this.field.value[field].value = value;
+    },
+    initValue() {
+      if (!this.field.value) {
+        this.$set(this.field, "value", {
+          name: { value: "", label: "Nom" },
+          prenom: { value: "", label: "Prenom" },
+          telephone: { value: "", label: "Telephone" },
+          email: { value: "", label: "Email" },
+        });
+      } else if (this.field.value.name) {
+        this.userlogin.name.value = this.field.value.name.value;
+        this.userlogin.prenom.value = this.field.value.prenom.value;
+        this.userlogin.telephone.value = this.field.value.telephone.value;
+        this.userlogin.email.value = this.field.value.email.value;
+      }
     },
   },
 };

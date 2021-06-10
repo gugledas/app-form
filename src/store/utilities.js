@@ -1,12 +1,14 @@
+import config from "../App/config/config.js";
 export default {
   forms: [],
   /**
    * Selectionne la prochaine etape valide.
+   * @param forms array etape du formualire;
+   * @param i indice de letape encours.
    */
-  selectNextState(state, getters, i) {
+  selectNextState(forms, i) {
     var j = i + 1;
-    console.log("selectNextState : ", state, "\n", getters, "\n", i);
-    this.forms = getters.form.forms;
+    this.forms = forms;
     for (const k in this.forms) {
       let kk = parseInt(k);
       if (kk >= j) {
@@ -97,5 +99,12 @@ export default {
         return price;
       }
     }
+  },
+  saveDatas(state, getters, uid = 0) {
+    config.saveStepsDatas(getters.form, state.price, uid).then((val) => {
+      config.saveForm(val).then(() => {
+        //
+      });
+    });
   },
 };

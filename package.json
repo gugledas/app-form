@@ -6,8 +6,8 @@
     "serve": "vue-cli-service serve --open",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "appFormDev": "vue-cli-service build --mode development --dest files --target lib --name appForm 'src/main.js'",
-    "appFormProd": "vue-cli-service build --mode production --dest files --target lib --name appForm 'src/main.js'"
+    "appFormDev": "vue-cli-service build --mode development  --dest files --target lib --name appForm 'src/main-prod.js'",
+    "appFormProd": "vue-cli-service build --mode production  --dest files --target lib --name appForm 'src/main-prod.js'"
   },
   "dependencies": {
     "@braid/vue-formulate": "^2.5.2",
@@ -16,6 +16,7 @@
     "axios": "^0.21.1",
     "bootstrap-vue": "^2.17.3",
     "core-js": "^3.6.5",
+    "drupal-vuejs": "file:../drupal-vuejs",
     "filepond": "^4.27.3",
     "filepond-plugin-file-encode": "^2.1.10",
     "filepond-plugin-file-validate-type": "^1.2.6",
@@ -29,6 +30,7 @@
     "vue-router": "^3.5.1",
     "vue-upload-drop-images": "^1.0.5",
     "vuex": "^3.4.0",
+    "wbu-atomique": "file:../wbu-atomique",
     "wbuutilities": "file:../wbuutilities"
   },
   "devDependencies": {

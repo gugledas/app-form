@@ -45,7 +45,7 @@ export default {
   data() {
     return {
       editor: ClassicEditor,
-      editorData: "<p>Content of the editor.</p>",
+      editorData: "",
       editorConfig: {
         // The configuration of the editor.
       },

@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import utilities from "./utilities.js";
+import { drupalUtilities } from "drupal-vuejs";
 
 Vue.use(Vuex);
 import axios from "axios";
@@ -62,6 +63,32 @@ export default new Vuex.Store({
      * Contient le prix calculer progressivement en function de l'action utilisateur(suivant,back).
      */
     price: 0,
+    /**
+     * Contient le status du formulaire suivant.
+     true: form activé.
+     */
+    StatusStepsIndexs: true,
+    /**
+     * Stockque les infos liée à l'utilisateur.
+     */
+    userlogin: {
+      name: {
+        value: "",
+        ref: "",
+      },
+      prenom: {
+        value: "",
+        ref: "",
+      },
+      telephone: {
+        value: "",
+        ref: "",
+      },
+      email: {
+        value: "",
+        ref: "",
+      },
+    },
   },
   getters: {
     /**
@@ -218,6 +245,7 @@ export default new Vuex.Store({
       state.stepsIndexs = value;
     },
     ADD_STEPS_INDEXS(state, value) {
+      console.log("state.stepsIndexs : ", state.stepsIndexs, "\n :: ", value);
       state.stepsIndexs.push(value);
     },
     REMOVE_STEPS_INDEXS(state) {
@@ -231,10 +259,13 @@ export default new Vuex.Store({
       state.price += prix;
     },
     /**
-     * retire le prix de l'etape.
+     * Retire le prix de l'etape.
      */
     REMOVE_PRIX_STEPS(state, prix) {
       state.price -= prix;
+    },
+    SET_STATUS_STEPS_INDEX(state, val) {
+      state.StatusStepsIndexs = val;
     },
   },
   actions: {
@@ -250,21 +281,34 @@ export default new Vuex.Store({
     /**
      * Elle definit la logique permettant de passer à une autre etape.
      */
-    async stepsIndex({ commit, state, getters }, i) {
+    async stepsIndex({ commit, getters }, i) {
       //on determine le cout de l'etape:
       const price = await utilities.getPriceStape(getters);
       if (price > 0) {
         commit("AJOUT_PRIX_STEPS", price);
       }
-      const new_index = await utilities.selectNextState(state, getters, i);
-      commit("STEPS_INDEX", new_index);
-      commit("ADD_STEPS_INDEXS", new_index);
+      //
+      const new_index = await utilities.selectNextState(getters.form.forms, i);
+      if (new_index) {
+        await commit("STEPS_INDEX", new_index);
+        commit("ADD_STEPS_INDEXS", new_index);
+        // on verifie si on est sur la derniere etape,
+        if (getters.form.forms.length === new_index + 1) {
+          commit("SET_STATUS_STEPS_INDEX", false);
+        }
+      } else {
+        commit("SET_STATUS_STEPS_INDEX", false);
+      }
     },
     async stepsBack({ commit, state, getters }) {
       await commit("REMOVE_STEPS_INDEXS");
       let new_index = state.stepsIndexs[state.stepsIndexs.length - 1];
       if (!new_index) new_index = 0;
       await commit("STEPS_INDEX", new_index);
+      //activation du bouton submit
+      if (!state.StatusStepsIndexs) {
+        commit("SET_STATUS_STEPS_INDEX", true);
+      }
       //remove price states
       const price = await utilities.getPriceStape(getters);
       if (price > 0) {
@@ -327,11 +371,69 @@ export default new Vuex.Store({
     setItems({ commit }, payload) {
       commit("SET_ITEMS", payload);
     },
+    /**
+     *  --
+     */
     setFormDatasValidate({ commit }, payload) {
       commit("SET_FORM_DATAS_VALIDATE", payload);
     },
+    /**
+     *  --
+     */
     setStepsIndexs({ commit }, payload) {
       commit("SET_STEPS_INDEXS", payload);
+    },
+    /**
+     *  --
+     */
+    setStatusStepsIndex({ commit }, payload) {
+      commit("SET_STATUS_STEPS_INDEX", payload);
+    },
+    /**
+     * Enregistre les données et cree le compte utilisateur.
+     */
+    async saveDatasUser({ commit, state, getters }) {
+      //on valide les données utilisateur,
+      console.log(commit, state);
+      const statusName = await state.userlogin.name.ref.validate();
+      const statusTelephone = await state.userlogin.telephone.ref.validate();
+      const statusEmail = await state.userlogin.email.ref.validate();
+      console.log("email validation : ", state.userlogin.email.ref);
+      if (statusName.valid && statusTelephone.valid && statusEmail.valid) {
+        const datas = {
+          name: [{ value: state.userlogin.name.value }],
+          mail: [{ value: state.userlogin.email.value }],
+          //status: [{ value: true }],
+        };
+        drupalUtilities
+          .post("/user/register?_format=json", datas)
+          .then((resp) => {
+            console.log("drupalUtilities : ", resp);
+            if (resp.data) {
+              var uid = resp.data.uid[0].value;
+              utilities.saveDatas(state, getters, uid);
+            }
+          })
+          .catch((error) => {
+            console.log("error GET drupalUtilities : ", error);
+            state.userlogin.email.ref.setErrors(["Cet email existe deja"]);
+          });
+        //
+      }
+      /**/
+      /*
+      drupalUtilities
+        .get("/node/10?_format=json")
+        .then((resp) => {
+          console.log("drupalUtilities : ", resp);
+        })
+        .catch((error) => {
+          console.log("error GET drupalUtilities : ", error);
+        });
+      /**/
+    },
+    saveDatas({ state, getters }, uid = 0) {
+      utilities.saveDatas(state, getters, uid);
     },
   },
   modules: {},

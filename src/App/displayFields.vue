@@ -12,18 +12,17 @@
           </div> -->
 
     <div>
-      <form ref="form" @submit.stop.prevent="handleSubmit">
-        <!-- fields value: {{ formDatas.fields[id].value }}-- fields selected:{{
+      <!-- fields value: {{ formDatas.fields[id].value }}-- fields selected:{{
           formDatas.fields[id].selected
         }} -->
-        <!-- affiche sur le cas du type codepostal -->
-        <b-row align-h="center" v-if="type == 'codepostal'">
-          <b-col class="autocomplete">
-            <autocomplete :value="formDatas.fields[id]"></autocomplete>
-          </b-col>
-        </b-row>
-        <!-- affiche pour le cas du type checkbox image -->
-        <!--
+      <!-- affiche sur le cas du type codepostal -->
+      <b-row align-h="center" v-if="type == 'codepostal'">
+        <b-col class="autocomplete">
+          <autocomplete :value="formDatas.fields[id]"></autocomplete>
+        </b-col>
+      </b-row>
+      <!-- affiche pour le cas du type checkbox image -->
+      <!--
         <b-row align-h="center" class="m-0" v-if="type == 'checkboximg'">
           <div
             v-for="(img, i) in formDatas.fields[id].options"
@@ -38,77 +37,80 @@
           </div>
         </b-row>
       -->
-        <ImageCheck
-          :field="formDatas.fields[id]"
-          v-if="type == 'checkboximg'"
-        ></ImageCheck>
+      <ImageCheck
+        :field="formDatas.fields[id]"
+        v-if="type == 'checkboximg'"
+      ></ImageCheck>
 
-        <!-- affiche sur le cas du type number -->
-        <label-row
-          v-if="type == 'text' || type == 'number'"
-          :field="formDatas.fields[id]"
-        ></label-row>
+      <!-- affiche sur le cas du type number -->
+      <label-row
+        v-if="type == 'text' || type == 'number'"
+        :field="formDatas.fields[id]"
+      ></label-row>
 
-        <!-- affiche sur le cas du type markup label up -->
+      <!-- affiche sur le cas du type markup label up -->
 
-        <label-up
-          v-if="type == 'numberup'"
-          :field="formDatas.fields[id]"
-        ></label-up>
-        <!-- affiche sur le cas du type increment number -->
-        <b-row align-h="center" v-if="type == 'increment'">
-          <increment-number :id="id"></increment-number>
-        </b-row>
+      <label-up
+        v-if="type == 'numberup'"
+        :field="formDatas.fields[id]"
+      ></label-up>
+      <!-- affiche sur le cas du type increment number -->
+      <b-row align-h="center" v-if="type == 'increment'">
+        <increment-number :id="id"></increment-number>
+      </b-row>
 
-        <!-- affiche sur le cas du type markup title && image -->
+      <!-- affiche sur le cas du type markup title && image -->
 
-        <markup-title
-          v-if="type == 'markuptitle'"
-          :field="formDatas.fields[id]"
-        ></markup-title>
-        <markup-image
-          v-if="type == 'markupimage'"
-          :field="formDatas.fields[id]"
-        ></markup-image>
+      <markup-title
+        v-if="type == 'markuptitle'"
+        :field="formDatas.fields[id]"
+      ></markup-title>
+      <markup-image
+        v-if="type == 'markupimage'"
+        :field="formDatas.fields[id]"
+      ></markup-image>
 
-        <!-- affiche pour le cas du type radio -->
+      <!-- affiche pour le cas du type radio -->
 
-        <radio v-if="type == 'radio'" :field="formDatas.fields[id]"></radio>
+      <radio v-if="type == 'radio'" :field="formDatas.fields[id]"></radio>
 
-        <!-- affiche pour le cas du type input -->
+      <!-- affiche pour le cas du type input -->
 
-        <InputText
-          :field="formDatas.fields[id]"
-          v-if="type == 'input'"
-        ></InputText>
+      <InputText
+        :field="formDatas.fields[id]"
+        v-if="type == 'input'"
+      ></InputText>
 
-        <!-- affiche pour le cas du type select -->
+      <!-- affiche pour le cas du type select -->
 
-        <select-display
-          v-if="type == 'select'"
-          :field="formDatas.fields[id]"
-        ></select-display>
+      <select-display
+        v-if="type == 'select'"
+        :field="formDatas.fields[id]"
+      ></select-display>
 
-        <!-- affiche pour le cas du type checkbox -->
+      <!-- affiche pour le cas du type checkbox -->
 
-        <checkbox
-          v-if="type == 'checkbox'"
-          :field="formDatas.fields[id]"
-        ></checkbox>
+      <checkbox
+        v-if="type == 'checkbox'"
+        :field="formDatas.fields[id]"
+      ></checkbox>
 
-        <!-- affiche pour le cas du type radio with description -->
+      <!-- affiche pour le cas du type radio with description -->
 
-        <radio-desc v-if="type == 'radiodesc'" :id="id"></radio-desc>
+      <radio-desc v-if="type == 'radiodesc'" :id="id"></radio-desc>
 
-        <!-- -->
-        <files :field="formDatas.fields[id]" v-if="type == 'file'"></files>
-        <!-- -->
-        <recapitulatif
-          :field="formDatas.fields[id]"
-          v-if="type == 'recapitulatif'"
-        ></recapitulatif>
-        <!-- -->
-      </form>
+      <!-- -->
+      <files :field="formDatas.fields[id]" v-if="type == 'file'"></files>
+      <!-- -->
+      <recapitulatif
+        :field="formDatas.fields[id]"
+        v-if="type == 'recapitulatif'"
+      ></recapitulatif>
+      <!-- -->
+      <userlogin
+        :field="formDatas.fields[id]"
+        v-if="type == 'userlogin'"
+      ></userlogin>
 
       <div v-if="this.$store.state.mode" class="boutton-absolute d-flex">
         <b-button
@@ -166,6 +168,7 @@ export default {
     files: () => import("./EditsFields/files.vue.vue"),
     LabelUp: () => import("./input/LabelUp.vue"),
     recapitulatif: () => import("./input/recapitulatif.vue"),
+    userlogin: () => import("./input/userlogin.vue"),
   },
   props: {
     type: {
@@ -217,23 +220,6 @@ export default {
         }
       }
       //this.fields = this.formDatas.fields[this.id];
-    },
-    resetModal() {
-      //this.type = null;
-    },
-    handleOk(event) {
-      event.preventDefault();
-      this.handleSubmit();
-    },
-    handleSubmit(event) {
-      event.preventDefault();
-      this.isOpen = !this.isOpen;
-      // Push the name to submitted names
-      this.$emit("input_to_add", this.fields);
-      // Hide the modal manually
-      this.$nextTick(() => {
-        this.$bvModal.hide("modal-prevent-closing");
-      });
     },
   },
 };

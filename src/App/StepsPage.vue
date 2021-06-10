@@ -25,20 +25,20 @@
               Configuration
             </b-button>
 
-            <b-button squared variant="info" size="sm" @click="clearFormDatas">
+            <b-button squared variant="info" @click="clearFormDatas">
               <b-icon
                 icon="plus"
                 style="font-size: 2.5rem"
                 class="mr-2"
               ></b-icon>
-              Add new Steps
+              Ajouter une etape
             </b-button>
 
-            <b-button squared size="sm" variant="dark" @click="resetValue">
+            <b-button squared variant="dark" @click="resetValue">
               Reset value
             </b-button>
-            <b-button squared variant="success" size="sm" @click="saveToLocal">
-              Save
+            <b-button squared variant="success" @click="saveToLocal">
+              Enregistrer
             </b-button>
             <b-modal
               id="modal-prevent-closing"
@@ -215,33 +215,11 @@ export default {
       }
     },
     saveToLocal() {
-      //var self = this;
-      //var datas = this.form;
       config.prepareDatasToSave(this.form).then((val) => {
         config.saveForm(val).then(() => {
           //
         });
       });
-      /*
-      utilities.saveSteps(datas).then((reponse) => {
-        var forms = JSON.stringify(reponse[0].fields);
-        localStorage.setItem("allo", JSON.stringify(forms));
-        console.log("savesteps: ", reponse);
-
-        axios
-          .post(
-            "http://lesroisdelareno.kksa" + "/query-ajax/insert-update",
-            reponse
-          )
-          .then(function (response) {
-            console.log("post response ", response);
-            self.$store.dispatch("setFormId", self.id);
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-      });
-      /**/
     },
 
     back() {
@@ -323,10 +301,7 @@ export default {
   font-weight: 600;
 }
 .block-button {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-evenly;
+  display: block;
   button {
     margin: 5px;
   }

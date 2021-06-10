@@ -10,7 +10,7 @@ AjaxToastBootStrap.$bvToast = vm.$bvToast;
 export default {
   baseURl: window.location.host.includes("localhost")
     ? "http://lesroisdelareno.kksa"
-    : window.location.host,
+    : window.location.origin,
   /**
    * Permet d'ajouter et d'editer un formulaire.
    */
@@ -23,5 +23,44 @@ export default {
   },
   prepareDatasToSave(datas) {
     return Utilities.saveSteps(datas);
+  },
+  /**
+   * Prepare les données pour la sauvagarde.
+   */
+  saveStepsDatas: function (datas, price, uid = 0, status = 0) {
+    return new Promise((resolv) => {
+      //console.log("fdate : ", datas);
+      var forms = "";
+      if (datas.forms) {
+        forms = JSON.stringify(datas.forms);
+      }
+      var result = [];
+      if (datas != "") {
+        //edition de la table contents
+        var table1 = {
+          table: "appformmanager_datas",
+          fields: {
+            datas: forms,
+            appformmanager_forms: datas.id,
+            uid: uid,
+            price: price,
+            status: status,
+          },
+          action: "update",
+        };
+        /*
+        if (datas.id) {
+          table1.where = [
+            {
+              column: "id",
+              value: datas.id,
+            },
+          ];
+        }
+        /**/
+        result.push(table1);
+      }
+      resolv(result);
+    });
   },
 };

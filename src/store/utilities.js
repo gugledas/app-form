@@ -1,14 +1,18 @@
+import config from "../App/config/config.js";
 export default {
   forms: [],
   /**
    * Selectionne la prochaine etape valide.
+   * @param forms array etape du formualire;
+   * @param i indice de letape encours.
    */
   selectNextState(forms, i) {
-    const j = i + 1;
+    var j = i + 1;
     this.forms = forms;
     for (const k in this.forms) {
       let kk = parseInt(k);
       if (kk >= j) {
+        j = null;
         const form = this.forms[k];
         if (this.validateState(form.states)) {
           console.log("etape valide : ", k);
@@ -20,29 +24,7 @@ export default {
     }
     return j;
   },
-  /**
-   * Selectionne la prochaine etape valide du formulaire soumis.
-   */
-  selectNextTrait(state, getters, i) {
-    const j = i + 1;
-    // console.log("selectNextState : ", state, "\n", getters, "\n", i);
-    this.forms = getters;
-    for (const k in this.forms) {
-      let kk = parseInt(k);
-      console.log("kk ", k);
-      if (kk >= j) {
-        const form = this.forms[k];
-        if (this.validateState(form.states)) {
-          console.log("etape valide: ", k);
-          return kk;
-        } else {
-          console.log("etape non valide : ", k);
-        }
-      }
-    }
-    // console.log("forms ", this.forms);
-    return j;
-  },
+
   validateState(states) {
     if (!states) return true;
     for (const k in this.forms) {
@@ -118,5 +100,12 @@ export default {
         return price;
       }
     }
+  },
+  saveDatas(state, getters, uid = 0) {
+    config.saveStepsDatas(getters.form, state.price, uid).then((val) => {
+      config.saveForm(val).then(() => {
+        //
+      });
+    });
   },
 };

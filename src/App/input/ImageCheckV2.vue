@@ -11,8 +11,9 @@
           class="d-block"
           :name="field.name"
         >
-          <b-row align-h="center" class="m-0">
-            <div
+          <b-row class="w-100">
+            <b-col
+              sm="6"
               v-for="(img, i) in field.options"
               :key="i"
               @click="getImage(i)"
@@ -32,7 +33,7 @@
                   <span>{{ img.label }}</span>
                 </div>
               </div>
-            </div>
+            </b-col>
           </b-row>
           <!--error-->
           <div class="text-danger">

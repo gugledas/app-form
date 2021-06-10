@@ -1,44 +1,56 @@
+@use "wbu-atomique/scss/atome/typography/_default.scss";
 @use '@braid/vue-formulate/themes/snow/snow.scss';
-@use './variables.scss' as *;
-@use './field.scss'; //
+@use './variables.scss' as *; //@use './field.scss'; //
 
-.boutton-absolute {
-  position        : absolute;
-  left            : calc(100% + 30px);
-  top             : 0;
-  right           : auto;
-  border          : 1px solid #dee2e6;
-  background-color: #f8f9fa;
-  display         : flex;
+.app-form {
+  font-size: 1.8rem;
+  @import "./buttons.scss";
+  @import "./custom-control.scss";
+  @import './field.scss';
 
-  .btn {
-    border-radius: 0;
-    border       : none;
+  .label {
+    color      : inherit;
+    font-weight: inherit;
+    font-size  : inherit;
   }
-}
 
-.min-height {
-  min-height: 50px;
-}
-//animation transition fade
+  .boutton-absolute {
+    position        : absolute;
+    left            : calc(100% + 30px);
+    top             : 0;
+    right           : auto;
+    border          : 1px solid #dee2e6;
+    background-color: #f8f9fa;
+    display         : flex;
 
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.2s;
-}
-/* .fade-leave-active below version 2.1.8 */
-.fade-enter,
-.fade-leave-to {
-  opacity: 0;
-}
-// StepsPage.vue
+    .btn {
+      border-radius: 0;
+      border       : none;
+      background   : transparent !important;
+    }
+  }
 
-.full-block {
-  height          : auto;
-  background-color: #FFF;
-  padding         : 1rem;
-}
+  .min-height {
+    min-height: 50px;
+  }
+  //animation transition fade
+  .fade-enter-active,
+  .fade-leave-active {
+    transition: opacity 0.2s;
+  }
+  /* .fade-leave-active below version 2.1.8 */
+  .fade-enter,
+  .fade-leave-to {
+    opacity: 0;
+  }
+  // StepsPage.vue
+  .full-block {
+    height          : auto;
+    background-color: #FFF;
+    padding         : 1rem;
+  }
 
-hr {
-  margin-bottom: $margin-bouton;
+  hr {
+    margin-bottom: $margin-bouton;
+  }
 }

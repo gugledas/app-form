@@ -10,7 +10,7 @@
         <b-button
           variant="outline-info"
           @click="addFormField"
-          size="sm"
+          size="md"
           v-b-tooltip.hover.v-info
           title="Ajouter un champs"
         >
@@ -19,7 +19,7 @@
         <b-button
           variant="outline-success"
           @click="configSteps"
-          size="sm"
+          size="md"
           v-b-tooltip.hover.v-success
           title="Editer le formulaire"
         >
@@ -29,7 +29,7 @@
         <b-button
           variant="outline-danger"
           @click="deleteSteps"
-          size="sm"
+          size="md"
           v-b-tooltip.hover.v-danger
           title="Suprimer le formulaire"
         >
@@ -136,5 +136,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss"></style>

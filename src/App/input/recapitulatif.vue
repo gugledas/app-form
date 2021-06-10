@@ -4,12 +4,18 @@
       <div class="row-content">
         <b-row class="row-content__row">
           <b-col sm="6" class="mb-3">
-            <label class="label d-flex">
-              <span>{{ field.label }} :</span> <span>{{ price }}</span>
-              <span>€</span>
+            <label class="label d-flex align-items-center">
+              <span class="price-info label">{{ field.label }} :</span>
+              <span class="price-info price">{{ price }}</span>
+              <span class="price-info currency">€</span>
             </label>
           </b-col>
-          <b-col sm="12" v-html="field.value" class="input-field"> </b-col>
+          <b-col
+            sm="12"
+            v-html="field.value"
+            class="text-description input-field"
+          >
+          </b-col>
         </b-row>
       </div>
     </transition>
@@ -27,7 +33,7 @@ export default {
     },
   },
   components: {
-    ...mapState(["price"]),
+    //
   },
   data() {
     return {
@@ -41,7 +47,7 @@ export default {
     //
   },
   computed: {
-    //
+    ...mapState(["price"]),
   },
   methods: {
     //
@@ -49,7 +55,18 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.price-info {
+  white-space: nowrap;
+  margin-right: 1rem;
+  &.price {
+    margin-right: 0.5rem;
+  }
+}
+.text-description {
+  font-size: 80%;
+}
+</style>
 
 <!--
  //nom du fichier en pascal.

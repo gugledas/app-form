@@ -13,8 +13,7 @@
       >
         <display-fields :type="field.type" :id="i"></display-fields>
       </div>
-
-      <b-col cols="12" class="form-nav-bouton">
+      <b-col cols="12" class="form-nav-bouton" v-if="StatusStepsIndexs">
         <button
           class="next-bouton"
           :class="
@@ -23,9 +22,26 @@
               : 'next-bouton--disable'
           "
           @click="suivant"
+          :disabled="stepsState && !v.invalid ? false : true"
         >
           Suivant
         </button>
+      </b-col>
+      <b-col cols="12" v-if="!StatusStepsIndexs" class="form-nav-bouton">
+        <b-row>
+          <b-col cols="6">
+            <button class="next-bouton" @click="Save">
+              <b-icon icon="server"></b-icon>
+              Enregistrer
+            </button>
+          </b-col>
+          <b-col cols="6">
+            <button class="next-bouton" @click="SaveByUser">
+              <b-icon icon="server"></b-icon>
+              Me rappeller
+            </button>
+          </b-col>
+        </b-row>
       </b-col>
     </b-row>
     <getStatusValidation :validation-observer="v"></getStatusValidation>
@@ -37,6 +53,7 @@ import { ValidationObserver } from "vee-validate";
 import DisplayFields from "../displayFields.vue";
 import getStatusValidation from "../EditsFields/getStatusValidation.vue";
 import { mapGetters, mapState } from "vuex";
+
 export default {
   name: "forms",
   props: {
@@ -62,14 +79,13 @@ export default {
     //
   },
   computed: {
-    ...mapState(["mode", "stepsIndex", "stepsIndexs"]),
-    ...mapGetters(["formDatas"]),
+    ...mapState(["mode", "stepsIndex", "StatusStepsIndexs", "price"]),
+    ...mapGetters(["formDatas", "form"]),
     stepsState() {
-      var state = null;
+      var state = false;
       if (this.$store.getters.form.forms.length - 1 > this.level) {
         state = true;
       }
-      //console.log(" StepsState : ");
       return state;
     },
   },
@@ -82,6 +98,12 @@ export default {
     back() {
       this.$store.dispatch("stepsBack");
       //this.$store.state.stepsIndex--;
+    },
+    Save() {
+      this.$store.dispatch("saveDatas");
+    },
+    SaveByUser() {
+      this.$store.dispatch("saveDatasUser");
     },
   },
 };
@@ -148,7 +170,7 @@ export default {
   .button-travaux {
     color: $primary_color;
     font-weight: 700;
-    font-size: 0.8rem;
+    font-size: 1.4rem;
     border-bottom: 2px solid $primary_color;
     padding-bottom: 2px;
     cursor: pointer;
@@ -182,6 +204,12 @@ export default {
         color: #fff;
         border: none;
         transition: opacity 0.5s ease, background-color 0.5s ease;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        svg {
+          margin-right: 1.4rem;
+        }
 
         &--active {
           opacity: 1;

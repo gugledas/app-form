@@ -1,16 +1,5 @@
 <template>
   <div class="choice-section min-height">
-    <!-- stepsState: {{ stepsState }} -->
-    <!-- <div class="help-container">
-            <div class="help-block">
-              <p class="help-block__title">Aide</p>
-              <p class="help-block__content">
-                La mitoyenneté de votre logement va permettre de définir la
-                bonne solution en matière d’isolation thermique.
-              </p>
-            </div>
-          </div> -->
-
     <div>
       <!-- fields value: {{ formDatas.fields[id].value }}-- fields selected:{{
           formDatas.fields[id].selected

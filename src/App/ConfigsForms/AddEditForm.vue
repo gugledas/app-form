@@ -26,9 +26,9 @@
 
         <b-row align-h="end">
           <div class="mr-3">
-            <b-button type="submit" variant="primary" class="mr-2"
-              >Ajouter</b-button
-            >
+            <b-button type="submit" variant="primary" class="mr-2">
+              Ajouter
+            </b-button>
           </div>
         </b-row>
       </form>

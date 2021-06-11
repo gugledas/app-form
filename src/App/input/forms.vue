@@ -13,6 +13,17 @@
       >
         <display-fields :type="field.type" :id="i"></display-fields>
       </div>
+      <div
+        class="help-container"
+        v-if="formDatas.info.headerTitle && formDatas.info.description"
+      >
+        <div class="help-block">
+          <p class="help-block__title">{{ formDatas.info.headerTitle }}</p>
+          <p class="help-block__content">
+            {{ formDatas.info.description }}
+          </p>
+        </div>
+      </div>
       <b-col cols="12" class="form-nav-bouton" v-if="StatusStepsIndexs">
         <button
           class="next-bouton"

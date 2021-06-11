@@ -1,20 +1,21 @@
 <template>
   <div>
-    <b-container class="bv-example-row bg-light p-5" fluid="lg">
+    <b-container class="bv-example-row p-5" fluid="lg">
       <div>
         <h5 class="titre mb-3 shadow-sm p-2">
           Gestion du formulaire: <span class="form-title">{{ form.name }}</span>
         </h5>
       </div>
       <b-row align-h="center">
-        <transition name="fade">
-          <b-col class="" cols="12" lg="9" v-if="formDatas && formDatas.info">
-            <nav-line :taille="id"></nav-line>
-            <pages :level="stepsIndex"></pages>
-          </b-col>
-        </transition>
-
-        <b-col class="" cols="12" lg="3" v-if="$store.state.mode">
+        <b-col class="" cols="12" lg="10" v-if="formDatas && formDatas.info">
+          <transition name="fade">
+            <div>
+              <nav-line :taille="id"></nav-line>
+              <pages :level="stepsIndex"></pages>
+            </div>
+          </transition>
+        </b-col>
+        <b-col class="" cols="12" lg="2" v-if="$store.state.mode">
           <div class="block-button">
             <b-button
               variant="light"
@@ -116,6 +117,7 @@
         </b-card>
       </b-col>
     </b-row>
+    <!-- -->
   </div>
 </template>
 
@@ -295,7 +297,6 @@ export default {
 </script>
 <style lang="scss">
 .form-title {
-  font-size: 1.05rem;
   letter-spacing: 2px;
   margin-left: 10px;
   font-weight: 600;

@@ -18,6 +18,12 @@ const routes = [
     component: () => import("../App/StepsPage.vue"),
   },
   {
+    path: "/estimation-devis/:id",
+    name: "Estimation devis",
+    props: true,
+    component: () => import("../App/userpage.vue"),
+  },
+  {
     path: "/traitement/:id",
     name: "Traitement du résultat",
     props: true,

@@ -3,7 +3,9 @@
     <div class="choice-section text-right">
       <b-row align-h="end">
         <b-col>
-          <p class="button-travaux">{{ formDatas.info.headerTitle }}</p>
+          <p class="button-travaux">
+            <a href="/node/52">Tous les travaux</a>
+          </p>
         </b-col>
       </b-row>
       <b-button-group class="boutton-absolute" v-if="mode">

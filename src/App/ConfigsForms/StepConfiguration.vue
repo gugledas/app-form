@@ -13,18 +13,6 @@
       @reset="resetModal"
       @hidden="resetModal"
     >
-      <b-form-group
-        label="Header title"
-        label-for="header-title-input"
-        invalid-feedback="the header title is required"
-      >
-        <b-form-input
-          id="header-title-input"
-          v-model="formDatas.info.headerTitle"
-          required
-        ></b-form-input>
-      </b-form-group>
-
       <b-form-group label="Titre" invalid-feedback="Name is required">
         <b-input-group>
           <b-form-input
@@ -40,6 +28,18 @@
             :state="state_name"
           ></b-form-input>
         </b-input-group>
+      </b-form-group>
+      <b-form-group
+        label="Titre texte d'aide"
+        invalid-feedback="the header title is required"
+      >
+        <b-form-input v-model="formDatas.info.headerTitle"></b-form-input>
+      </b-form-group>
+      <b-form-group
+        label="Texte d'aide"
+        invalid-feedback="the header title is required"
+      >
+        <b-form-input v-model="formDatas.info.description"></b-form-input>
       </b-form-group>
       <ValidationFields :currentFormDatas="formDatas"></ValidationFields>
       <hr />

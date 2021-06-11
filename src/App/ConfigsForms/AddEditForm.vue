@@ -3,7 +3,7 @@
     <b-modal
       id="add-edit-form"
       ref="modal"
-      title="Create your form page"
+      title="Creer un nouveau formulaire"
       @ok="handleOk"
       hide-footer
     >
@@ -23,7 +23,6 @@
             </b-form-group>
           </b-col>
         </b-row>
-
         <b-row align-h="end">
           <div class="mr-3">
             <b-button type="submit" variant="primary" class="mr-2">

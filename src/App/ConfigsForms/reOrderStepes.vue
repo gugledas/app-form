@@ -3,7 +3,7 @@
     <b-modal
       id="re-order-stepes"
       ref="modal"
-      title="Create your form page"
+      title="Re-ordonner les etapes | cloner"
       hide-footer
       size="lg"
     >
@@ -76,7 +76,7 @@ export default {
     //
   },
   computed: {
-    ...mapGetters(["form", "formDatas"]),
+    ...mapGetters(["form"]),
   },
   methods: {
     moveToDown(i) {

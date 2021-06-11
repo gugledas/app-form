@@ -29,7 +29,7 @@
 
         <b-form-group label="label" label-for="input-option-label">
           <b-form-input
-            v-model="inputOptions.label"
+            v-model="inputOptions.text"
             placeholder="Enter label"
             required
           ></b-form-input>
@@ -159,7 +159,7 @@ export default {
       value: 1,
       //Object of type checkbox
       inputOptions: {
-        label: "",
+        text: "",
         value: "",
         img: "",
         description: "",

@@ -3,73 +3,74 @@
     <b-modal
       id="clone-current-stepe"
       ref="modal"
-      title="Re-ordonner les etapes | cloner"
+      title="Cloner"
       hide-footer
       size="lg"
     >
-    <form
-      ref="forme"
-      @submit="handleSubmit"
-      @reset="resetModal"
-      @hidden="resetModal"
-      v-if="watchFormDatas"
-    >
-      <b-form-group label="Titre" invalid-feedback="Name is required">
-        <b-input-group>
-          <b-form-input
-            v-model="formDatas.info.title"
-            @input="input"
-            required
-          ></b-form-input>
-          <b-form-input
-            required
-            v-model="formDatas.info.name"
-            :readonly="readonly"
-            @dblclick="toogleReadOnly"
-            :state="state_name"
-          ></b-form-input>
-        </b-input-group>
-      </b-form-group>
-      <b-form-group
-        label="Titre texte d'aide"
-        invalid-feedback="the header title is required"
+      <form
+        ref="forme"
+        @submit="handleSubmit"
+        v-if="watchFormDatas && CurrentForm.info"
       >
-        <b-form-input v-model="formDatas.info.headerTitle"></b-form-input>
-      </b-form-group>
-      <b-form-group
-        label="Texte d'aide"
-        invalid-feedback="the header title is required"
-      >
-        <b-form-input v-model="formDatas.info.description"></b-form-input>
-      </b-form-group>
-      <ValidationEtapes :currentFormDatas="formDatas"></ValidationEtapes>
-      <hr />
-      <b-row align-h="end">
-        <div class="mr-3">
-          <b-button type="submit" variant="outline-info" size="sm">
-            <b-icon icon="plus"></b-icon> Mettre à jour
-          </b-button>
-        </div>
-      </b-row>
-    </form>
+        <b-form-group label="Titre" invalid-feedback="Name is required">
+          <b-input-group>
+            <b-form-input
+              v-model="CurrentForm.info.title"
+              @input="input"
+              required
+            ></b-form-input>
+            <b-form-input
+              required
+              v-model="CurrentForm.info.name"
+              :readonly="readonly"
+              @dblclick="toogleReadOnly"
+              :state="state_name"
+            ></b-form-input>
+          </b-input-group>
+        </b-form-group>
+        <b-form-group
+          label="Titre texte d'aide"
+          invalid-feedback="the header title is required"
+        >
+          <b-form-input v-model="CurrentForm.info.headerTitle"></b-form-input>
+        </b-form-group>
+        <b-form-group
+          label="Texte d'aide"
+          invalid-feedback="the header title is required"
+        >
+          <b-form-input v-model="CurrentForm.info.description"></b-form-input>
+        </b-form-group>
+        <ValidationEtapes :currentFormDatas="CurrentForm"></ValidationEtapes>
+        <hr />
+        <b-row align-h="end">
+          <div class="mr-3">
+            <b-button type="submit" variant="outline-info" size="sm">
+              <b-icon icon="plus"></b-icon> Cloner
+            </b-button>
+          </div>
+        </b-row>
+      </form>
     </b-modal>
   </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
-import Utilities from "../Utilities.js";
+import { snakeCase } from "snake-case";
+import ValidationEtapes from "./ValidationEtapes.vue";
 export default {
   name: "reOrderStepes",
   props: {
     //
   },
   components: {
-    //
+    ValidationEtapes,
   },
   data() {
     return {
-      CurrentForm:{},
+      CurrentForm: {},
+      readonly: true,
+      state_name: true,
     };
   },
   mounted() {
@@ -80,32 +81,55 @@ export default {
   },
   computed: {
     ...mapGetters(["form", "formDatas"]),
-    watchFormDatas(){
-      if(this.formDatas.fields){
+    watchFormDatas() {
+      if (this.formDatas.fields) {
         this.getCurrentForm(JSON.stringify(this.formDatas));
         return this.formDatas.fields.length;
       }
       return null;
-    }
+    },
+    ListNameforms() {
+      const lists = [];
+      for (const i in this.form.forms) {
+        lists.push(this.form.forms[i].info.name);
+      }
+      return lists;
+    },
   },
   methods: {
-    moveToDown(i) {
-      const idN = i + 1;
-      Utilities.array_move(this.form.forms, i, idN);
+    handleOk(bvModalEvt) {
+      // Prevent modal from closing
+      bvModalEvt.preventDefault();
+      // Trigger submit handler
+      this.handleSubmit();
     },
-    modeToUp(i) {
-      const idP = i - 1;
-      Utilities.array_move(this.form.forms, i, idP);
+    handleSubmit(event) {
+      event.preventDefault();
+      this.form.forms.push(this.CurrentForm);
+      this.$bvModal.hide("clone-current-stepe");
     },
-    getNameStep(stape_name) {
-      for (const i in this.form.forms) {
-        if (this.form.forms[i].info.name === stape_name)
-          return this.form.forms[i].info.title;
+    input() {
+      if (
+        this.readonly &&
+        (this.CurrentForm.info.name.length <= 32 ||
+          this.CurrentForm.info.title.length <= 32)
+      ) {
+        const valName = snakeCase(this.CurrentForm.info.title);
+        if (this.ListNameforms.includes(valName)) {
+          this.state_name = false;
+        } else {
+          this.state_name = true;
+        }
+        this.CurrentForm.info.name = valName;
       }
     },
-    getCurrentForm(currentForm){
-      this.CurrentForm= JSON.parse(currentForm);
-    }
+    toogleReadOnly() {
+      if (this.readonly) this.readonly = false;
+      else this.readonly = true;
+    },
+    getCurrentForm(currentForm) {
+      this.CurrentForm = JSON.parse(currentForm);
+    },
   },
 };
 </script>

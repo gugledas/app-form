@@ -37,7 +37,7 @@
           <b-icon icon="trash"></b-icon>
         </b-button>
         <b-button
-          variant="outline-danger"
+          variant="outline-secondary"
           v-b-modal.clone-current-stepe
           size="md"
           v-b-tooltip.hover.v-secondary
@@ -57,6 +57,7 @@
         :nouveau="true"
       ></add-form-field>
       <StepConfiguration ref="StepConfiguration"></StepConfiguration>
+      <cloneCurrentStepe />
     </div>
   </div>
 </template>
@@ -70,6 +71,7 @@ export default {
   components: {
     AddFormField: () => import("./AddFormField.vue"),
     StepConfiguration: () => import("./ConfigsForms/StepConfiguration.vue"),
+    cloneCurrentStepe: () => import("./ConfigsForms/cloneCurrentStepe.vue"),
     forms,
   },
   props: {

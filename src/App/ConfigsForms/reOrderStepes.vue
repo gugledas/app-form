@@ -3,7 +3,7 @@
     <b-modal
       id="re-order-stepes"
       ref="modal"
-      title="Re-ordonner les etapes | cloner"
+      title="Re-ordonner les etapes"
       hide-footer
       size="lg"
     >

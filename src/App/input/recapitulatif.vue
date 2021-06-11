@@ -10,12 +10,7 @@
               <span class="price-info currency">€</span>
             </label>
           </b-col>
-          <b-col
-            sm="12"
-            v-html="field.value"
-            class="text-description input-field"
-          >
-          </b-col>
+          <b-col sm="12" v-html="field.value" class="text-description"> </b-col>
         </b-row>
       </div>
     </transition>

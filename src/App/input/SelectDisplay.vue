@@ -1,36 +1,30 @@
 <template lang="html">
-  <b-row>
-    <div class="row-input">
-      <div class="row-input__row">
-        <b-row>
-          <b-col sm="6">
-            <label class="label"> {{ field.label }} </label>
-          </b-col>
-          <b-col sm="6" class="input-field">
-            <ValidationProvider v-slot="v" :rules="field.require">
-              <b-form-select
-                v-model="field.value"
-                type="text"
-                placeholder=""
-                :options="field.options"
-                class="input-field__input"
-              >
-              </b-form-select>
-              <div class="text-danger">
-                <small
-                  v-for="(error, ii) in v.errors"
-                  :key="ii"
-                  class="d-block"
-                >
-                  {{ error }}
-                </small>
-              </div>
-            </ValidationProvider>
-          </b-col>
-        </b-row>
-      </div>
+  <div class="row-input">
+    <div class="row-input__row">
+      <b-row align-v="center">
+        <b-col sm="6">
+          <label class="label"> {{ field.label }} </label>
+        </b-col>
+        <b-col sm="6" class="input-field">
+          <ValidationProvider v-slot="v" :rules="field.require">
+            <b-form-select
+              v-model="field.value"
+              type="text"
+              placeholder=""
+              :options="field.options"
+              class="input-field__input form-control"
+            >
+            </b-form-select>
+            <div class="text-danger">
+              <small v-for="(error, ii) in v.errors" :key="ii" class="d-block">
+                {{ error }}
+              </small>
+            </div>
+          </ValidationProvider>
+        </b-col>
+      </b-row>
     </div>
-  </b-row>
+  </div>
 </template>
 
 <script>

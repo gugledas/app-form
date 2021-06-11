@@ -81,7 +81,7 @@ export default {
     border-left: 1px solid rgb(237, 237, 237);
     border-radius: 0;
     &--dark {
-      background: teal;
+      background: teal !important;
     }
   }
 }

@@ -65,9 +65,10 @@ export default {
 .number-markup__input {
   display: flex;
   justify-content: center;
-  flex-flow: wrap column;
+  flex-flow: wrap row;
+  align-items: center;
   .label {
-    font-size: 1.1rem;
+    font-size: inherit;
   }
   .input-field {
     display: flex;

@@ -9,18 +9,24 @@
               <b-icon icon="eye"></b-icon>
             </b-button>
 
-            <b-button variant="outline-warning" @click="updateForm(data.index)">
+            <b-button
+              variant="outline-warning"
+              @click="updateForm(data.index)"
+              v-if="$store.state.mode"
+            >
               <b-icon icon="pencil"></b-icon>
             </b-button>
             <b-button
               variant="outline-success"
               @click="showResult(data.item.id)"
+              v-if="$store.state.mode"
             >
               <b-icon icon="server"></b-icon>
             </b-button>
             <b-button
               variant="outline-danger"
               @click="deleteForm(data.item.id)"
+              v-if="$store.state.mode"
             >
               <b-icon icon="trash"></b-icon>
             </b-button>

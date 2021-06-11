@@ -1,63 +1,193 @@
 ((typeof self !== 'undefined' ? self : this)["webpackJsonpappForm"] = (typeof self !== 'undefined' ? self : this)["webpackJsonpappForm"] || []).push([[22],{
 
-/***/ "./node_modules/cache-loader/dist/cjs.js?!./node_modules/babel-loader/lib/index.js!./node_modules/cache-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./src/App/Autocomplete.vue?vue&type=script&lang=js&":
-/*!**************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/Autocomplete.vue?vue&type=script&lang=js& ***!
-  \**************************************************************************************************************************************************************************************************************************************************/
-/*! exports provided: default */
+/***/ "15e7":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var core_js_modules_es_function_name_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/es.function.name.js */ \"./node_modules/core-js/modules/es.function.name.js\");\n/* harmony import */ var core_js_modules_es_function_name_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_function_name_js__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var core_js_modules_es_array_concat_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! core-js/modules/es.array.concat.js */ \"./node_modules/core-js/modules/es.array.concat.js\");\n/* harmony import */ var core_js_modules_es_array_concat_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_concat_js__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var vue_multiselect__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-multiselect */ \"./node_modules/vue-multiselect/dist/vue-multiselect.min.js\");\n/* harmony import */ var vue_multiselect__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_multiselect__WEBPACK_IMPORTED_MODULE_2__);\n\n\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n\n/* harmony default export */ __webpack_exports__[\"default\"] = ({\n  props: {\n    value: {\n      type: Object,\n      default: function _default() {\n        return {\n          value: \"\"\n        };\n      }\n    }\n  },\n  components: {\n    Multiselect: vue_multiselect__WEBPACK_IMPORTED_MODULE_2___default.a\n  },\n  data: function data() {\n    return {\n      options: [{\n        name: \"Vue.js\",\n        language: \"JavaScript\"\n      }, {\n        name: \"Rails\",\n        language: \"Ruby\"\n      }, {\n        name: \"Sinatra\",\n        language: \"Ruby\"\n      }, {\n        name: \"Laravel\",\n        language: \"PHP\"\n      }, {\n        name: \"Phoenix\",\n        language: \"Elixir\"\n      }, {\n        name: \"Sinatra\",\n        language: \"Ruby\"\n      }, {\n        name: \"Laravel\",\n        language: \"PHP\"\n      }, {\n        name: \"Phoenix\",\n        language: \"Elixir\"\n      }]\n    };\n  },\n  methods: {\n    nameWithLang: function nameWithLang(_ref) {\n      var name = _ref.name,\n          language = _ref.language;\n      return \"\".concat(name, \" \\u2014 [\").concat(language, \"]\");\n    }\n  }\n});\n\n//# sourceURL=webpack://appForm/./src/App/Autocomplete.vue?./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options");
+// ESM COMPAT FLAG
+__webpack_require__.r(__webpack_exports__);
+
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"6bacc4e8-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/EditsFields/InputFiles.vue?vue&type=template&id=335e1928&scoped=true&lang=html&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('b-row',{staticClass:"mb-3"},[_c('b-col',{attrs:{"sm":"12"}},[_c('compositeHeaderField',{attrs:{"field":_vm.field}})],1)],1)],1)}
+var staticRenderFns = []
+
+
+// CONCATENATED MODULE: ./src/App/EditsFields/InputFiles.vue?vue&type=template&id=335e1928&scoped=true&lang=html&
+
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.function.name.js
+var es_function_name = __webpack_require__("b0c0");
+
+// EXTERNAL MODULE: ./src/App/EditsFields/compositeHeaderField.vue + 4 modules
+var compositeHeaderField = __webpack_require__("d3ee");
+
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/EditsFields/InputFiles.vue?vue&type=script&lang=js&
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ var InputFilesvue_type_script_lang_js_ = ({
+  name: "InputFiles",
+  props: {
+    field: {
+      type: Object,
+      required: true,
+      validator: function validator(val) {
+        return val.label === undefined || val.value === undefined || val.name === undefined || val.require === undefined ? false : true;
+      }
+    }
+  },
+  components: {
+    compositeHeaderField: compositeHeaderField["a" /* default */]
+  },
+  data: function data() {
+    return {//
+    };
+  },
+  mounted: function mounted() {//
+  },
+  watch: {//
+  },
+  computed: {//
+  },
+  methods: {//
+  }
+});
+// CONCATENATED MODULE: ./src/App/EditsFields/InputFiles.vue?vue&type=script&lang=js&
+ /* harmony default export */ var EditsFields_InputFilesvue_type_script_lang_js_ = (InputFilesvue_type_script_lang_js_); 
+// EXTERNAL MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
+var componentNormalizer = __webpack_require__("2877");
+
+// CONCATENATED MODULE: ./src/App/EditsFields/InputFiles.vue
+
+
+
+
+
+/* normalize component */
+
+var component = Object(componentNormalizer["a" /* default */])(
+  EditsFields_InputFilesvue_type_script_lang_js_,
+  render,
+  staticRenderFns,
+  false,
+  null,
+  "335e1928",
+  null
+  
+)
+
+/* harmony default export */ var InputFiles = __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./node_modules/cache-loader/dist/cjs.js?{\"cacheDirectory\":\"node_modules/.cache/vue-loader\",\"cacheIdentifier\":\"51eff220-vue-loader-template\"}!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/cache-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./src/App/Autocomplete.vue?vue&type=template&id=1a38ca2f&":
-/*!**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"51eff220-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/Autocomplete.vue?vue&type=template&id=1a38ca2f& ***!
-  \**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
+/***/ "d3ee":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"render\", function() { return render; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"staticRenderFns\", function() { return staticRenderFns; });\nvar render = function() {\n  var _vm = this\n  var _h = _vm.$createElement\n  var _c = _vm._self._c || _h\n  return _c(\"div\", [\n    _c(\n      \"div\",\n      [\n        _c(\n          \"multiselect\",\n          {\n            attrs: {\n              options: _vm.options,\n              \"custom-label\": _vm.nameWithLang,\n              placeholder: \"\",\n              label: \"name\",\n              \"track-by\": \"name\",\n              \"show-no-results\": false,\n              showLabels: false\n            },\n            model: {\n              value: _vm.value.value,\n              callback: function($$v) {\n                _vm.$set(_vm.value, \"value\", $$v)\n              },\n              expression: \"value.value\"\n            }\n          },\n          [\n            _c(\"template\", { slot: \"noResult\" }, [\n              _c(\"span\", { staticClass: \"option__titl d-none\" }, [\n                _vm._v(\"no body\")\n              ])\n            ]),\n            _c(\"template\", { slot: \"placeholder\" }, [\n              _c(\"span\", { staticClass: \"option__title\" }, [\n                _vm._v(\"Code postal ou nom de la vialle\")\n              ])\n            ]),\n            _c(\"template\", { slot: \"noOptions\" }, [\n              _c(\"span\", { staticClass: \"option__title\" }, [_vm._v(\"aea\")])\n            ])\n          ],\n          2\n        )\n      ],\n      1\n    )\n  ])\n}\nvar staticRenderFns = []\nrender._withStripped = true\n\n\n\n//# sourceURL=webpack://appForm/./src/App/Autocomplete.vue?./node_modules/cache-loader/dist/cjs.js?%7B%22cacheDirectory%22:%22node_modules/.cache/vue-loader%22,%22cacheIdentifier%22:%2251eff220-vue-loader-template%22%7D!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options");
 
-/***/ }),
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"6bacc4e8-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/EditsFields/compositeHeaderField.vue?vue&type=template&id=366ceb9e&scoped=true&lang=html&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('b-form-group',{attrs:{"label":"Label","invalid-feedback":"Name is required"}},[_c('b-input-group',[_c('b-form-input',{attrs:{"required":""},on:{"input":_vm.input},model:{value:(_vm.field.label),callback:function ($$v) {_vm.$set(_vm.field, "label", $$v)},expression:"field.label"}}),_c('b-form-input',{attrs:{"required":"","readonly":_vm.readonly},on:{"dblclick":_vm.toogleReadOnly},model:{value:(_vm.field.name),callback:function ($$v) {_vm.$set(_vm.field, "name", $$v)},expression:"field.name"}})],1)],1)],1)}
+var staticRenderFns = []
 
-/***/ "./src/App/Autocomplete.vue":
-/*!**********************************!*\
-  !*** ./src/App/Autocomplete.vue ***!
-  \**********************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _Autocomplete_vue_vue_type_template_id_1a38ca2f___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Autocomplete.vue?vue&type=template&id=1a38ca2f& */ \"./src/App/Autocomplete.vue?vue&type=template&id=1a38ca2f&\");\n/* harmony import */ var _Autocomplete_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Autocomplete.vue?vue&type=script&lang=js& */ \"./src/App/Autocomplete.vue?vue&type=script&lang=js&\");\n/* empty/unused harmony star reexport *//* harmony import */ var vue_multiselect_dist_vue_multiselect_min_css_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-multiselect/dist/vue-multiselect.min.css?vue&type=style&index=0&lang=css& */ \"./node_modules/vue-multiselect/dist/vue-multiselect.min.css?vue&type=style&index=0&lang=css&\");\n/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ \"./node_modules/vue-loader/lib/runtime/componentNormalizer.js\");\n\n\n\n\n\n\n/* normalize component */\n\nvar component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__[\"default\"])(\n  _Autocomplete_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[\"default\"],\n  _Autocomplete_vue_vue_type_template_id_1a38ca2f___WEBPACK_IMPORTED_MODULE_0__[\"render\"],\n  _Autocomplete_vue_vue_type_template_id_1a38ca2f___WEBPACK_IMPORTED_MODULE_0__[\"staticRenderFns\"],\n  false,\n  null,\n  null,\n  null\n  \n)\n\n/* hot reload */\nif (false) { var api; }\ncomponent.options.__file = \"src/App/Autocomplete.vue\"\n/* harmony default export */ __webpack_exports__[\"default\"] = (component.exports);\n\n//# sourceURL=webpack://appForm/./src/App/Autocomplete.vue?");
+// CONCATENATED MODULE: ./src/App/EditsFields/compositeHeaderField.vue?vue&type=template&id=366ceb9e&scoped=true&lang=html&
 
-/***/ }),
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.function.name.js
+var es_function_name = __webpack_require__("b0c0");
 
-/***/ "./src/App/Autocomplete.vue?vue&type=script&lang=js&":
-/*!***********************************************************!*\
-  !*** ./src/App/Autocomplete.vue?vue&type=script&lang=js& ***!
-  \***********************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+// EXTERNAL MODULE: ./node_modules/snake-case/dist.es2015/index.js + 5 modules
+var dist_es2015 = __webpack_require__("a4d6");
 
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _node_modules_cache_loader_dist_cjs_js_ref_12_0_node_modules_babel_loader_lib_index_js_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Autocomplete_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../node_modules/cache-loader/dist/cjs.js??ref--12-0!../../node_modules/babel-loader/lib!../../node_modules/cache-loader/dist/cjs.js??ref--0-0!../../node_modules/vue-loader/lib??vue-loader-options!./Autocomplete.vue?vue&type=script&lang=js& */ \"./node_modules/cache-loader/dist/cjs.js?!./node_modules/babel-loader/lib/index.js!./node_modules/cache-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./src/App/Autocomplete.vue?vue&type=script&lang=js&\");\n/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__[\"default\"] = (_node_modules_cache_loader_dist_cjs_js_ref_12_0_node_modules_babel_loader_lib_index_js_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Autocomplete_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__[\"default\"]); \n\n//# sourceURL=webpack://appForm/./src/App/Autocomplete.vue?");
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/EditsFields/compositeHeaderField.vue?vue&type=script&lang=js&
 
-/***/ }),
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
-/***/ "./src/App/Autocomplete.vue?vue&type=template&id=1a38ca2f&":
-/*!*****************************************************************!*\
-  !*** ./src/App/Autocomplete.vue?vue&type=template&id=1a38ca2f& ***!
-  \*****************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/* harmony default export */ var compositeHeaderFieldvue_type_script_lang_js_ = ({
+  name: "compositeHeaderField",
+  props: {
+    field: {
+      type: Object,
+      required: true
+    }
+  },
+  components: {//
+  },
+  data: function data() {
+    return {
+      readonly: true
+    };
+  },
+  mounted: function mounted() {//
+  },
+  watch: {//
+  },
+  computed: {//
+  },
+  methods: {
+    input: function input() {
+      if (this.readonly && this.field.name.length <= 32) {
+        this.field.name = Object(dist_es2015["a" /* snakeCase */])(this.field.label);
+      }
+    },
+    toogleReadOnly: function toogleReadOnly() {
+      if (this.readonly) this.readonly = false;else this.readonly = true;
+    }
+  }
+});
+// CONCATENATED MODULE: ./src/App/EditsFields/compositeHeaderField.vue?vue&type=script&lang=js&
+ /* harmony default export */ var EditsFields_compositeHeaderFieldvue_type_script_lang_js_ = (compositeHeaderFieldvue_type_script_lang_js_); 
+// EXTERNAL MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
+var componentNormalizer = __webpack_require__("2877");
 
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _node_modules_cache_loader_dist_cjs_js_cacheDirectory_node_modules_cache_vue_loader_cacheIdentifier_51eff220_vue_loader_template_node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Autocomplete_vue_vue_type_template_id_1a38ca2f___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../node_modules/cache-loader/dist/cjs.js?{\"cacheDirectory\":\"node_modules/.cache/vue-loader\",\"cacheIdentifier\":\"51eff220-vue-loader-template\"}!../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../node_modules/cache-loader/dist/cjs.js??ref--0-0!../../node_modules/vue-loader/lib??vue-loader-options!./Autocomplete.vue?vue&type=template&id=1a38ca2f& */ \"./node_modules/cache-loader/dist/cjs.js?{\\\"cacheDirectory\\\":\\\"node_modules/.cache/vue-loader\\\",\\\"cacheIdentifier\\\":\\\"51eff220-vue-loader-template\\\"}!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/cache-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./src/App/Autocomplete.vue?vue&type=template&id=1a38ca2f&\");\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"render\", function() { return _node_modules_cache_loader_dist_cjs_js_cacheDirectory_node_modules_cache_vue_loader_cacheIdentifier_51eff220_vue_loader_template_node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Autocomplete_vue_vue_type_template_id_1a38ca2f___WEBPACK_IMPORTED_MODULE_0__[\"render\"]; });\n\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"staticRenderFns\", function() { return _node_modules_cache_loader_dist_cjs_js_cacheDirectory_node_modules_cache_vue_loader_cacheIdentifier_51eff220_vue_loader_template_node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Autocomplete_vue_vue_type_template_id_1a38ca2f___WEBPACK_IMPORTED_MODULE_0__[\"staticRenderFns\"]; });\n\n\n\n//# sourceURL=webpack://appForm/./src/App/Autocomplete.vue?");
+// CONCATENATED MODULE: ./src/App/EditsFields/compositeHeaderField.vue
+
+
+
+
+
+/* normalize component */
+
+var component = Object(componentNormalizer["a" /* default */])(
+  EditsFields_compositeHeaderFieldvue_type_script_lang_js_,
+  render,
+  staticRenderFns,
+  false,
+  null,
+  "366ceb9e",
+  null
+  
+)
+
+/* harmony default export */ var compositeHeaderField = __webpack_exports__["a"] = (component.exports);
 
 /***/ })
 
 }]);
+//# sourceMappingURL=appForm.umd.22.js.map

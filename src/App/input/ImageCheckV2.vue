@@ -29,8 +29,11 @@
                 >
                   <img :srcset="baseUrl + img.img" />
                 </div>
-                <div class="ChoiceButton_label">
+                <div class="ChoiceButton_label mb-2">
                   <span>{{ img.label }}</span>
+                </div>
+                <div class="ChoiceButton_label mb-2">
+                  <span>{{ img.description }}</span>
                 </div>
               </div>
             </b-col>

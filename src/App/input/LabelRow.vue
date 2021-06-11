@@ -130,16 +130,13 @@ export default {
     justify-content: space-around;
     flex-direction: row;
     align-items: center;
-    .label {
-      font-size: 1.2em;
-      //padding: 0 80px 0 0;
-    }
+
     .input-field {
       display: flex;
       justify-content: center;
       align-items: center;
       &__input {
-        width: 131px;
+        width: 100%;
         height: 50px;
         text-align: center;
       }

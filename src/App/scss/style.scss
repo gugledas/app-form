@@ -26,10 +26,18 @@
   @import "./custom-control.scss";
   @import './field.scss';
 
+  .form-control {
+    height: 50px;
+  }
+
   .label {
-    color      : inherit;
-    font-weight: inherit;
-    font-size  : inherit;
+    color        : inherit;
+    font-weight  : inherit;
+    font-size    : inherit;
+    white-space  : inherit;
+    display      : inline-block;
+    margin-bottom: 0.5rem;
+    font-size    : 1.9Rem;
   }
 
   .boutton-absolute {
@@ -87,5 +95,10 @@
 
   hr {
     margin-bottom: $margin-bouton;
+  }
+
+  .b-form-spinbutton {
+    width    : auto !important;
+    min-width: 18rem;
   }
 }

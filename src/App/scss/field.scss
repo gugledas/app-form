@@ -61,12 +61,17 @@
     margin-top: 0.9rem;
 
     .multiselect__tags {
-      min-height   : 64px;
-      padding      : 20px 40px 0 8px;
-      border-radius: 5px;
+      min-height   : 50px;
+      padding      : 1.4rem;
+      border-radius: 2px;
       border       : 1px solid $primary_color;
+
+      .multiselect__single {
+        margin-bottom: 0;
+      }
     }
 
+    .multiselect__input,
     .multiselect__select {
       display: none;
     }

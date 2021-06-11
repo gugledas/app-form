@@ -7,7 +7,9 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "appFormDev": "vue-cli-service build --mode development  --dest files --target lib --name appForm 'src/main-prod.js'",
-    "appFormProd": "vue-cli-service build --mode production  --dest files --target lib --name appForm 'src/main-prod.js'"
+    "appFormProd": "vue-cli-service build --mode production  --dest files --target lib --name appForm 'src/main-prod.js'",
+    "appFormConfigDev": "vue-cli-service build --mode development  --dest appadmin --target lib --name appForm 'src/main.js'",
+    "appFormConfigProd": "vue-cli-service build --mode production  --dest appadmin --target lib --name appForm 'src/main.js'"
   },
   "dependencies": {
     "@braid/vue-formulate": "^2.5.2",

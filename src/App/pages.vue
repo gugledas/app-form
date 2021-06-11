@@ -27,13 +27,21 @@
         >
           <b-icon icon="pencil"></b-icon>
         </b-button>
-
         <b-button
           variant="outline-danger"
           @click="deleteSteps"
           size="md"
           v-b-tooltip.hover.v-danger
           title="Suprimer le formulaire"
+        >
+          <b-icon icon="trash"></b-icon>
+        </b-button>
+        <b-button
+          variant="outline-danger"
+          v-b-modal.clone-current-stepe
+          size="md"
+          v-b-tooltip.hover.v-danger
+          title="cloner l'etape"
         >
           <b-icon icon="trash"></b-icon>
         </b-button>
@@ -125,7 +133,6 @@ export default {
     configSteps() {
       this.$refs.StepConfiguration.openPopUp();
     },
-
     getImage(il) {
       for (var i = 0; i < this.imageCheck.length; i++) {
         if (i == il) {

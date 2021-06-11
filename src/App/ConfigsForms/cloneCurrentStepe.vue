@@ -12,6 +12,7 @@
       @submit="handleSubmit"
       @reset="resetModal"
       @hidden="resetModal"
+      v-if="watchFormDatas"
     >
       <b-form-group label="Titre" invalid-feedback="Name is required">
         <b-input-group>
@@ -67,7 +68,9 @@ export default {
     //
   },
   data() {
-    return {};
+    return {
+      CurrentForm:{},
+    };
   },
   mounted() {
     //
@@ -77,8 +80,12 @@ export default {
   },
   computed: {
     ...mapGetters(["form", "formDatas"]),
-    currentForm(){
-      return JSON.stringify(this.formDatas);
+    watchFormDatas(){
+      if(this.formDatas.fields){
+        this.getCurrentForm(this.formDatas);
+        return this.formDatas.fields.length;
+      }
+      return null;
     }
   },
   methods: {
@@ -96,8 +103,8 @@ export default {
           return this.form.forms[i].info.title;
       }
     },
-    getCurrentForm(){
-      return this.currentForm;
+    getCurrentForm(currentForm){
+      return JSON.parse(currentForm);
     }
   },
 };

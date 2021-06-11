@@ -41,7 +41,7 @@
       >
         <b-form-input v-model="formDatas.info.description"></b-form-input>
       </b-form-group>
-      <ValidationFields :currentFormDatas="formDatas"></ValidationFields>
+      <ValidationEtapes :currentFormDatas="formDatas"></ValidationEtapes>
       <hr />
       <b-row align-h="end">
         <div class="mr-3">
@@ -57,7 +57,7 @@
 <script>
 import { mapGetters, mapState } from "vuex";
 import { snakeCase } from "snake-case";
-import ValidationFields from "./ValidationEtapes.vue";
+import ValidationEtapes from "./ValidationEtapes.vue";
 export default {
   name: "StepConfiguration",
   props: {
@@ -67,7 +67,7 @@ export default {
     },
   },
   components: {
-    ValidationFields,
+    ValidationEtapes,
   },
   data() {
     return {

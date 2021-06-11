@@ -64,7 +64,14 @@ const validationRessource = {
               )
                 return formDatasValidate[field.name].valid;
               else if (state.operator === "egal") {
-                console.log(state.value, " :: ", field.value);
+                /*
+                console.log(
+                  "Valeur requise : ",
+                  state.value,
+                  " :: Valeur du parent",
+                  field.value
+                );
+                /**/
                 if (field.value) {
                   return field.value.includes(state.value) ? true : false;
                 } else {
@@ -83,7 +90,7 @@ const validationRessource = {
    */
   listesEtapes(form, formDatas, etapes = []) {
     if (form && form.forms.length > 1) {
-      console.log("listesEtapes ");
+      //console.log("listesEtapes ");
       for (const i in form.forms) {
         const currentForm = form.forms[i];
         if (currentForm.info.name !== "") {
@@ -118,7 +125,7 @@ class ValidationInstance {
         form.forms
       );
       if (currentForm !== undefined) {
-        console.log("listeDesChamps ", currentForm);
+        //console.log("listeDesChamps ", currentForm);
         for (const i in currentForm.fields) {
           const field = currentForm.fields[i];
           if (condition.name == field.name && field.options.length) {

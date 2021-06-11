@@ -92,11 +92,11 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/
 /******/
 /******/ 		// mini-css-extract-plugin CSS loading
-/******/ 		var cssChunks = {"1":1,"2":1,"4":1,"5":1,"6":1,"7":1,"8":1,"9":1,"10":1,"11":1,"12":1,"13":1,"14":1,"15":1,"16":1,"17":1,"18":1,"19":1};
+/******/ 		var cssChunks = {"1":1,"2":1,"4":1,"5":1,"6":1,"7":1,"8":1,"9":1,"10":1,"11":1,"12":1,"13":1,"14":1,"15":1,"16":1,"17":1,"18":1};
 /******/ 		if(installedCssChunks[chunkId]) promises.push(installedCssChunks[chunkId]);
 /******/ 		else if(installedCssChunks[chunkId] !== 0 && cssChunks[chunkId]) {
 /******/ 			promises.push(installedCssChunks[chunkId] = new Promise(function(resolve, reject) {
-/******/ 				var href = "css/" + ({}[chunkId]||chunkId) + "." + {"0":"31d6cfe0","1":"4a3f507a","2":"9b304df1","4":"f86645ca","5":"cce5e554","6":"e9e3d0cf","7":"14d5566a","8":"95156767","9":"5e6d7f30","10":"3520e411","11":"de8c7989","12":"d9265796","13":"6cc6ea7d","14":"c7537b55","15":"c913b197","16":"47fe03ac","17":"5d56c67d","18":"49670caa","19":"4110c5be","20":"31d6cfe0","21":"31d6cfe0","22":"31d6cfe0","23":"31d6cfe0","24":"31d6cfe0","25":"31d6cfe0","26":"31d6cfe0","27":"31d6cfe0","28":"31d6cfe0","29":"31d6cfe0","30":"31d6cfe0","31":"31d6cfe0","32":"31d6cfe0","33":"31d6cfe0","34":"31d6cfe0","35":"31d6cfe0"}[chunkId] + ".css";
+/******/ 				var href = "css/" + ({}[chunkId]||chunkId) + "." + {"0":"31d6cfe0","1":"4a3f507a","2":"9b304df1","4":"f86645ca","5":"cce5e554","6":"e9e3d0cf","7":"d1f7c951","8":"820cf6f9","9":"14d5566a","10":"5e6d7f30","11":"72f395dd","12":"de8c7989","13":"d9265796","14":"c913b197","15":"47fe03ac","16":"5d56c67d","17":"49670caa","18":"4110c5be","19":"31d6cfe0","20":"31d6cfe0","21":"31d6cfe0","22":"31d6cfe0","23":"31d6cfe0","24":"31d6cfe0","25":"31d6cfe0","26":"31d6cfe0","27":"31d6cfe0","28":"31d6cfe0","29":"31d6cfe0","30":"31d6cfe0","31":"31d6cfe0","32":"31d6cfe0","33":"31d6cfe0","34":"31d6cfe0"}[chunkId] + ".css";
 /******/ 				var fullhref = __webpack_require__.p + href;
 /******/ 				var existingLinkTags = document.getElementsByTagName("link");
 /******/ 				for(var i = 0; i < existingLinkTags.length; i++) {
@@ -3998,6 +3998,9 @@ exports.Wormhole = wormhole;
 /* harmony import */ var core_js_modules_es_symbol_description_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_symbol_description_js__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var core_js_modules_es_function_name_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__("b0c0");
 /* harmony import */ var core_js_modules_es_function_name_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_function_name_js__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var core_js_modules_es_array_splice_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__("a434");
+/* harmony import */ var core_js_modules_es_array_splice_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_splice_js__WEBPACK_IMPORTED_MODULE_5__);
+
 
 
 
@@ -4113,6 +4116,25 @@ var Utilities = {
       value: "userlogin",
       text: "Connexion utilisateur"
     }];
+  },
+  array_move: function array_move(arr, old_index, new_index) {
+    while (old_index < 0) {
+      old_index += arr.length;
+    }
+
+    while (new_index < 0) {
+      new_index += arr.length;
+    }
+
+    if (new_index >= arr.length) {
+      var k = new_index - arr.length + 1;
+
+      while (k--) {
+        arr.push(undefined);
+      }
+    }
+
+    arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
   }
 };
 /* harmony default export */ __webpack_exports__["a"] = (Utilities);
@@ -66762,7 +66784,7 @@ var config = __webpack_require__("f158");
   props: {},
   components: {
     AddEditForm: function AddEditForm() {
-      return __webpack_require__.e(/* import() */ 28).then(__webpack_require__.bind(null, "d2d6"));
+      return __webpack_require__.e(/* import() */ 27).then(__webpack_require__.bind(null, "d2d6"));
     }
   },
   data: function data() {
@@ -66861,14 +66883,14 @@ var routes = [{
   name: "Estimation devis",
   props: true,
   component: function component() {
-    return Promise.all(/* import() */[__webpack_require__.e(1), __webpack_require__.e(2), __webpack_require__.e(35)]).then(__webpack_require__.bind(null, "7817"));
+    return Promise.all(/* import() */[__webpack_require__.e(1), __webpack_require__.e(2), __webpack_require__.e(34)]).then(__webpack_require__.bind(null, "7817"));
   }
 }, {
   path: "/traitement/:id",
   name: "Traitement du résultat",
   props: true,
   component: function component() {
-    return __webpack_require__.e(/* import() */ 16).then(__webpack_require__.bind(null, "379c"));
+    return __webpack_require__.e(/* import() */ 15).then(__webpack_require__.bind(null, "379c"));
   }
 }];
 var router = new vue_router_esm({
@@ -66997,7 +67019,7 @@ $export($export.S, 'Array', { isArray: __webpack_require__("bc48") });
     return j;
   },
   validateState: function validateState(states) {
-    if (!states) return true;
+    if (!states || states.length === 0) return true;
 
     for (var k in this.forms) {
       var form = this.forms[k];

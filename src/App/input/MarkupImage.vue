@@ -1,10 +1,16 @@
 <template>
-  <div class="number-markup__img">
-    <img :src="img_url_format" />
-  </div>
+  <transition v-if="validationField" name="fade">
+    <div class="number-markup__img">
+      <img :src="img_url_format" />
+    </div>
+  </transition>
 </template>
 
 <script>
+import { mapGetters, mapState } from "vuex";
+//import { ValidationProvider } from "vee-validate";
+import { validationRessource as Validation } from "../config/validation.js";
+import "../EditsFields/vee-validate-custom.js";
 import config from "../config/config.js";
 export default {
   props: {
@@ -19,6 +25,19 @@ export default {
     };
   },
   computed: {
+    ...mapGetters(["formDatas"]),
+    ...mapState(["formDatasValidate"]),
+    validationField() {
+      if (this.field.states.length) {
+        var status = Validation.computedValidation(
+          this.formDatas,
+          this.field,
+          this.formDatasValidate
+        );
+        if (status !== undefined) return status;
+      }
+      return true;
+    },
     img_url_format() {
       if (this.field.imgUrl && this.field.imgUrl !== undefined)
         return config.baseURl + this.field.imgUrl;

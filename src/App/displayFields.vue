@@ -122,6 +122,26 @@
           title="Supprimer ce champs"
           ><b-icon icon="trash" font-scale="1" class=""></b-icon
         ></b-button>
+
+        <b-button
+          class="border-0"
+          size="sm"
+          variant="outline-secondary"
+          @click="modeToUp"
+          v-b-tooltip.hover.v-secondary
+          title="Deplacer vers le haut"
+          ><b-icon icon="arrow-bar-up" font-scale="1" class=""></b-icon
+        ></b-button>
+
+        <b-button
+          class="border-0"
+          size="sm"
+          variant="outline-secondary"
+          @click="moveToDown"
+          v-b-tooltip.hover.v-secondary
+          title="Deplacer vers le bas"
+          ><b-icon icon="arrow-bar-down" font-scale="1" class=""></b-icon
+        ></b-button>
       </div>
     </div>
 
@@ -208,6 +228,14 @@ export default {
         }
       }
       //this.fields = this.formDatas.fields[this.id];
+    },
+    moveToDown() {
+      const idN = this.id + 1;
+      Utilities.array_move(this.formDatas.fields, this.id, idN);
+    },
+    modeToUp() {
+      const idP = this.id - 1;
+      Utilities.array_move(this.formDatas.fields, this.id, idP);
     },
   },
 };

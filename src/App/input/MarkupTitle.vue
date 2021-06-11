@@ -1,10 +1,18 @@
 <template>
-  <div class="text-left">
-    <h3 class="question-title">{{ field.label }}</h3>
+  <div>
+    <transition v-if="validationField" name="fade">
+      <div class="text-left">
+        <h3 class="question-title">{{ field.label }}</h3>
+      </div>
+    </transition>
   </div>
 </template>
 
 <script>
+import { mapGetters, mapState } from "vuex";
+//import { ValidationProvider } from "vee-validate";
+import { validationRessource as Validation } from "../config/validation.js";
+import "../EditsFields/vee-validate-custom.js";
 export default {
   props: {
     field: {
@@ -16,6 +24,21 @@ export default {
     return {
       text: "Quelles sont les caractéristiques de votre logement ?",
     };
+  },
+  computed: {
+    ...mapGetters(["formDatas"]),
+    ...mapState(["formDatasValidate"]),
+    validationField() {
+      if (this.field.states.length) {
+        var status = Validation.computedValidation(
+          this.formDatas,
+          this.field,
+          this.formDatasValidate
+        );
+        if (status !== undefined) return status;
+      }
+      return true;
+    },
   },
   methods: {
     labelUpValue(datas) {

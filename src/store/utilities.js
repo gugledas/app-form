@@ -26,7 +26,7 @@ export default {
   },
 
   validateState(states) {
-    if (!states) return true;
+    if (!states || states.length === 0) return true;
     for (const k in this.forms) {
       const form = this.forms[k];
       for (const s in states) {

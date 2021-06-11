@@ -1,48 +1,52 @@
 <template>
-  <transition v-show="validationField" name="fade">
-    <b-row>
-      <b-col cols="12" class="text-left"
-        ><p class="page-label">{{ field.label }}</p></b-col
-      >
-      <ValidationProvider
-        v-slot="v"
-        :rules="field.require"
-        class="col-12 p-0"
-        :name="field.name"
-      >
-        <b-form-checkbox-group
-          v-model="selected"
-          :name="field.name"
-          @change="changeValue"
+  <div>
+    <transition v-if="validationField" name="fade">
+      <b-row>
+        <b-col cols="12" class="text-left"
+          ><p class="page-label">{{ field.label }}</p></b-col
         >
-          <b-col cols="12" v-for="(item, i) in field.options" :key="i">
-            <div class="input-list">
-              <b-col
-                sm="11"
-                class="input-list__label d-flex align-items-start flex-column"
-              >
-                <label class="m-0 w-100" :for="`checkbox-a${field.name}${i}`">{{
-                  item.text
-                }}</label>
-              </b-col>
-              <b-col class="input-list__input">
-                <b-form-checkbox
-                  :id="`checkbox-a${field.name}${i}`"
-                  size="lg"
-                  :value="item.value"
-                ></b-form-checkbox>
-              </b-col>
-            </div>
-          </b-col>
-        </b-form-checkbox-group>
-        <div class="text-danger">
-          <small v-for="(error, ii) in v.errors" :key="ii" class="d-block">
-            {{ error }}
-          </small>
-        </div>
-      </ValidationProvider>
-    </b-row>
-  </transition>
+        <ValidationProvider
+          v-slot="v"
+          :rules="field.require"
+          class="col-12 p-0"
+          :name="field.name"
+        >
+          <b-form-checkbox-group
+            v-model="selected"
+            :name="field.name"
+            @change="changeValue"
+          >
+            <b-col cols="12" v-for="(item, i) in field.options" :key="i">
+              <div class="input-list">
+                <b-col
+                  sm="11"
+                  class="input-list__label d-flex align-items-start flex-column"
+                >
+                  <label
+                    class="m-0 w-100"
+                    :for="`checkbox-a${field.name}${i}`"
+                    >{{ item.text }}</label
+                  >
+                </b-col>
+                <b-col class="input-list__input">
+                  <b-form-checkbox
+                    :id="`checkbox-a${field.name}${i}`"
+                    size="lg"
+                    :value="item.value"
+                  ></b-form-checkbox>
+                </b-col>
+              </div>
+            </b-col>
+          </b-form-checkbox-group>
+          <div class="text-danger">
+            <small v-for="(error, ii) in v.errors" :key="ii" class="d-block">
+              {{ error }}
+            </small>
+          </div>
+        </ValidationProvider>
+      </b-row>
+    </transition>
+  </div>
 </template>
 
 <script>

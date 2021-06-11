@@ -20,27 +20,45 @@
             <b-button
               variant="light"
               squared
-              class="shadow-sm"
+              class="shadow-md d-block w-100"
               v-b-modal.modal-prevent-closing
             >
               Configuration
             </b-button>
 
-            <b-button squared variant="info" @click="clearFormDatas">
-              <b-icon
-                icon="plus"
-                style="font-size: 2.5rem"
-                class="mr-2"
-              ></b-icon>
+            <b-button
+              squared
+              variant="light"
+              @click="clearFormDatas"
+              class="shadow-md d-block w-100"
+            >
               Ajouter une etape
             </b-button>
-
-            <b-button squared variant="dark" @click="resetValue">
+            <b-button
+              squared
+              variant="light"
+              v-b-modal.re-order-stepes
+              class="shadow-md d-block w-100"
+            >
+              Re-ordonner les etapes
+            </b-button>
+            <b-button
+              squared
+              variant="secondary"
+              @click="resetValue"
+              class="shadow-md d-block w-100"
+            >
               Reset value
             </b-button>
-            <b-button squared variant="success" @click="saveToLocal">
+            <b-button
+              squared
+              variant="success"
+              @click="saveToLocal"
+              class="shadow-md d-block w-100"
+            >
               Enregistrer
             </b-button>
+
             <b-modal
               id="modal-prevent-closing"
               ref="modal"
@@ -92,28 +110,29 @@
                 <b-row align-h="end">
                   <div class="mr-3">
                     <b-button class="mr-2">export</b-button>
-
-                    <b-button type="submit" variant="primary" class="mr-2"
-                      >Mise à jour</b-button
-                    >
-                  </div></b-row
-                >
+                    <b-button type="submit" variant="primary" class="mr-2">
+                      Mise à jour
+                    </b-button>
+                  </div>
+                </b-row>
               </form>
             </b-modal>
           </div>
         </b-col>
       </b-row>
     </b-container>
+    <!-- -->
+    <reOrderStepes />
 
     <b-row class="m-0" v-if="mode">
       <b-col cols="4">
         <b-card class="mt-3 text-left d-none-0" header="Price">
-          <pre class="text-left">{{ price }}</pre>
+          <pre class="text-left"> {{ price }} </pre>
         </b-card>
       </b-col>
       <b-col cols="4">
         <b-card class="mt-3 text-left" header="formDatas:">
-          <pre class="text-left">{{ formDatas }}</pre>
+          <pre class="text-left"> {{ formDatas }} </pre>
         </b-card>
       </b-col>
     </b-row>
@@ -129,9 +148,9 @@ import NavLine from "./NavLine.vue";
 import { mapState, mapGetters } from "vuex";
 
 import pages from "./pages.vue";
-//import pages from "./pages2.vue";
+import reOrderStepes from "./ConfigsForms/reOrderStepes.vue";
 export default {
-  components: { pages, NavLine },
+  components: { pages, NavLine, reOrderStepes },
   props: {
     id: {
       type: String,

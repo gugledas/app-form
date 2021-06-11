@@ -23,7 +23,6 @@
 </template>
 
 <script>
-import compositeHeaderField from "./compositeHeaderField.vue";
 import ValidationFields from "./ValidationFields.vue";
 export default {
   name: "InputText",
@@ -43,7 +42,7 @@ export default {
   },
   components: {
     ValidationFields,
-    compositeHeaderField,
+    compositeHeaderField: () => import("./compositeHeaderField.vue"),
   },
   data() {
     return {

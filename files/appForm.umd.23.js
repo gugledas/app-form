@@ -1,18 +1,18 @@
-((typeof self !== 'undefined' ? self : this)["webpackJsonpappForm"] = (typeof self !== 'undefined' ? self : this)["webpackJsonpappForm"] || []).push([[23],{
+((typeof self !== 'undefined' ? self : this)["webpackJsonpappForm"] = (typeof self !== 'undefined' ? self : this)["webpackJsonpappForm"] || []).push([[23,0],{
 
-/***/ "4790":
+/***/ "15e7":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 // ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"6bacc4e8-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/EditsFields/InputText.vue?vue&type=template&id=666470af&scoped=true&lang=html&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('b-row',{staticClass:"mb-3"},[_c('b-col',{attrs:{"sm":"12"}},[_c('compositeHeaderField',{attrs:{"field":_vm.field}})],1),_c('b-col',{attrs:{"sm":"12"}},[_c('b-form-group',{attrs:{"label":"Valeur par defaut"}},[_c('b-form-input',{attrs:{"type":_vm.type},model:{value:(_vm.field.value),callback:function ($$v) {_vm.$set(_vm.field, "value", $$v)},expression:"field.value"}})],1)],1),_c('b-col',{attrs:{"sm":"12"}},[_c('b-form-group',{attrs:{"label":"Prefixe | suffixe"}},[_c('b-input-group',[_c('b-form-input',{model:{value:(_vm.prefixe),callback:function ($$v) {_vm.prefixe=$$v},expression:"prefixe"}}),_c('b-form-input',{model:{value:(_vm.suffixe),callback:function ($$v) {_vm.suffixe=$$v},expression:"suffixe"}})],1)],1)],1)],1),_c('ValidationFields',{attrs:{"field":_vm.field}})],1)}
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"6bacc4e8-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/EditsFields/InputFiles.vue?vue&type=template&id=335e1928&scoped=true&lang=html&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('b-row',{staticClass:"mb-3"},[_c('b-col',{attrs:{"sm":"12"}},[_c('compositeHeaderField',{attrs:{"field":_vm.field}})],1)],1)],1)}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/App/EditsFields/InputText.vue?vue&type=template&id=666470af&scoped=true&lang=html&
+// CONCATENATED MODULE: ./src/App/EditsFields/InputFiles.vue?vue&type=template&id=335e1928&scoped=true&lang=html&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.function.name.js
 var es_function_name = __webpack_require__("b0c0");
@@ -20,10 +20,7 @@ var es_function_name = __webpack_require__("b0c0");
 // EXTERNAL MODULE: ./src/App/EditsFields/compositeHeaderField.vue + 4 modules
 var compositeHeaderField = __webpack_require__("d3ee");
 
-// EXTERNAL MODULE: ./src/App/EditsFields/ValidationFields.vue + 10 modules
-var ValidationFields = __webpack_require__("0931");
-
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/EditsFields/InputText.vue?vue&type=script&lang=js&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/EditsFields/InputFiles.vue?vue&type=script&lang=js&
 
 //
 //
@@ -35,24 +32,9 @@ var ValidationFields = __webpack_require__("0931");
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
-
-/* harmony default export */ var InputTextvue_type_script_lang_js_ = ({
-  name: "InputText",
+/* harmony default export */ var InputFilesvue_type_script_lang_js_ = ({
+  name: "InputFiles",
   props: {
     field: {
       type: Object,
@@ -63,37 +45,27 @@ var ValidationFields = __webpack_require__("0931");
     }
   },
   components: {
-    ValidationFields: ValidationFields["a" /* default */],
-    compositeHeaderField: compositeHeaderField["a" /* default */]
+    compositeHeaderField: compositeHeaderField["default"]
   },
   data: function data() {
-    return {
-      prefixe: "",
-      suffixe: ""
+    return {//
     };
   },
   mounted: function mounted() {//
   },
   watch: {//
   },
-  computed: {
-    type: function type() {
-      if (this.field.type === "text" || this.field.type === "number") {
-        return this.field.type;
-      } else {
-        return "text";
-      }
-    }
+  computed: {//
   },
-  methods: {//,
+  methods: {//
   }
 });
-// CONCATENATED MODULE: ./src/App/EditsFields/InputText.vue?vue&type=script&lang=js&
- /* harmony default export */ var EditsFields_InputTextvue_type_script_lang_js_ = (InputTextvue_type_script_lang_js_); 
+// CONCATENATED MODULE: ./src/App/EditsFields/InputFiles.vue?vue&type=script&lang=js&
+ /* harmony default export */ var EditsFields_InputFilesvue_type_script_lang_js_ = (InputFilesvue_type_script_lang_js_); 
 // EXTERNAL MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
 var componentNormalizer = __webpack_require__("2877");
 
-// CONCATENATED MODULE: ./src/App/EditsFields/InputText.vue
+// CONCATENATED MODULE: ./src/App/EditsFields/InputFiles.vue
 
 
 
@@ -102,17 +74,17 @@ var componentNormalizer = __webpack_require__("2877");
 /* normalize component */
 
 var component = Object(componentNormalizer["a" /* default */])(
-  EditsFields_InputTextvue_type_script_lang_js_,
+  EditsFields_InputFilesvue_type_script_lang_js_,
   render,
   staticRenderFns,
   false,
   null,
-  "666470af",
+  "335e1928",
   null
   
 )
 
-/* harmony default export */ var InputText = __webpack_exports__["default"] = (component.exports);
+/* harmony default export */ var InputFiles = __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
@@ -120,6 +92,8 @@ var component = Object(componentNormalizer["a" /* default */])(
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+// ESM COMPAT FLAG
+__webpack_require__.r(__webpack_exports__);
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"6bacc4e8-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/EditsFields/compositeHeaderField.vue?vue&type=template&id=366ceb9e&scoped=true&lang=html&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('b-form-group',{attrs:{"label":"Label","invalid-feedback":"Name is required"}},[_c('b-input-group',[_c('b-form-input',{attrs:{"required":""},on:{"input":_vm.input},model:{value:(_vm.field.label),callback:function ($$v) {_vm.$set(_vm.field, "label", $$v)},expression:"field.label"}}),_c('b-form-input',{attrs:{"required":"","readonly":_vm.readonly},on:{"dblclick":_vm.toogleReadOnly},model:{value:(_vm.field.name),callback:function ($$v) {_vm.$set(_vm.field, "name", $$v)},expression:"field.name"}})],1)],1)],1)}
@@ -213,7 +187,7 @@ var component = Object(componentNormalizer["a" /* default */])(
   
 )
 
-/* harmony default export */ var compositeHeaderField = __webpack_exports__["a"] = (component.exports);
+/* harmony default export */ var compositeHeaderField = __webpack_exports__["default"] = (component.exports);
 
 /***/ })
 

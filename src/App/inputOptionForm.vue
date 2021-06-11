@@ -59,8 +59,6 @@
 
 <script>
 import { mapGetters } from "vuex";
-import FormCheckbox from "./formulaire/FormCheckbox.vue";
-//import FormInput from "./formulaire/FormInput.vue";
 import FormRadioDesc from "./formulaire/FormRadioDesc.vue";
 import FormSelect from "./formulaire/FormSelect.vue";
 import FormRadio from "./formulaire/FormRadio";
@@ -69,8 +67,7 @@ import FormNumberUp from "./formulaire/FormNumberUp.vue";
 import Utilities from "./Utilities.js";
 export default {
   components: {
-    FormCheckbox,
-    //FormInput,
+    FormCheckbox: () => import("./formulaire/FormCheckbox.vue"),
     FormSelect,
     FormRadioDesc,
     FormRadio,

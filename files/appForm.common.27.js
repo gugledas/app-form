@@ -7,55 +7,59 @@
 // ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"6bacc4e8-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/Autocomplete.vue?vue&type=template&id=45e7990a&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('div',[_c('multiselect',{attrs:{"options":_vm.options,"custom-label":_vm.nameWithLang,"placeholder":"","label":"name","track-by":"name","show-no-results":false,"showLabels":false},model:{value:(_vm.value.value),callback:function ($$v) {_vm.$set(_vm.value, "value", $$v)},expression:"value.value"}},[_c('template',{slot:"noResult"},[_c('span',{staticClass:"option__titl d-none"},[_vm._v("no body")])]),_c('template',{slot:"placeholder"},[_c('span',{staticClass:"option__title"},[_vm._v("Code postal ou nom de la vialle")])]),_c('template',{slot:"noOptions"},[_c('span',{staticClass:"option__title"},[_vm._v("aea")])])],2)],1)])}
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"6bacc4e8-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/Autocomplete.vue?vue&type=template&id=78649ed9&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('div',[_c('multiselect',{attrs:{"options":_vm.options,"custom-label":_vm.nameWithLang,"placeholder":"","label":"text","track-by":"text","show-no-results":false,"showLabels":false,"loading":_vm.isLoading},on:{"search-change":_vm.asyncFind},model:{value:(_vm.value.value),callback:function ($$v) {_vm.$set(_vm.value, "value", $$v)},expression:"value.value"}},[_c('template',{slot:"noResult"},[_c('span',{staticClass:"option__titl d-none"},[_vm._v(" Aucun contenu ")])]),_c('template',{slot:"placeholder"},[_c('span',{staticClass:"option__title"},[_vm._v(" Code postal ou nom de la vialle ")])]),_c('template',{slot:"noOptions"},[_c('span',{staticClass:"option__title"},[_vm._v("aea")])])],2)],1)])}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/App/Autocomplete.vue?vue&type=template&id=45e7990a&
-
-// EXTERNAL MODULE: ./node_modules/core-js/modules/es.function.name.js
-var es_function_name = __webpack_require__("b0c0");
-
-// EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.concat.js
-var es_array_concat = __webpack_require__("99af");
+// CONCATENATED MODULE: ./src/App/Autocomplete.vue?vue&type=template&id=78649ed9&
 
 // EXTERNAL MODULE: ./node_modules/vue-multiselect/dist/vue-multiselect.min.js
 var vue_multiselect_min = __webpack_require__("8e5f");
 var vue_multiselect_min_default = /*#__PURE__*/__webpack_require__.n(vue_multiselect_min);
 
+// EXTERNAL MODULE: ../drupal-vuejs/index.js + 6 modules
+var drupal_vuejs = __webpack_require__("e674");
+
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/Autocomplete.vue?vue&type=script&lang=js&
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ var Autocompletevue_type_script_lang_js_ = ({
   props: {
@@ -73,38 +77,31 @@ var vue_multiselect_min_default = /*#__PURE__*/__webpack_require__.n(vue_multise
   },
   data: function data() {
     return {
-      options: [{
-        name: "Vue.js",
-        language: "JavaScript"
-      }, {
-        name: "Rails",
-        language: "Ruby"
-      }, {
-        name: "Sinatra",
-        language: "Ruby"
-      }, {
-        name: "Laravel",
-        language: "PHP"
-      }, {
-        name: "Phoenix",
-        language: "Elixir"
-      }, {
-        name: "Sinatra",
-        language: "Ruby"
-      }, {
-        name: "Laravel",
-        language: "PHP"
-      }, {
-        name: "Phoenix",
-        language: "Elixir"
-      }]
+      isLoading: false,
+      options: []
     };
   },
   methods: {
     nameWithLang: function nameWithLang(_ref) {
-      var name = _ref.name,
-          language = _ref.language;
-      return "".concat(name, " \u2014 [").concat(language, "]");
+      var text = _ref.text;
+      //return `${text} — [${value}]`;
+      return "".concat(text);
+    },
+    asyncFind: function asyncFind(search) {
+      var _this = this;
+
+      console.log("search : ", search);
+
+      if (search.length > 2) {
+        var terms = new drupal_vuejs["b" /* termsTaxo */]("departements");
+        console.log("find");
+        this.isLoading = true;
+        terms.getSearch(search).then(function () {
+          _this.options = terms.getOptions();
+          _this.isLoading = false;
+          console.log("this.options : ", _this.options);
+        });
+      }
     }
   }
 });

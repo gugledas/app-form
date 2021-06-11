@@ -64,6 +64,7 @@ const validationRessource = {
               )
                 return formDatasValidate[field.name].valid;
               else if (state.operator === "egal") {
+                console.log(state.value, " :: ", field.value);
                 if (field.value) {
                   return field.value.includes(state.value) ? true : false;
                 } else {

@@ -63,13 +63,13 @@
 
       <radio v-if="type == 'radio'" :field="formDatas.fields[id]"></radio>
 
-      <!-- affiche pour le cas du type input -->
+      <!-- affiche pour le cas du type input
 
       <InputText
         :field="formDatas.fields[id]"
         v-if="type == 'input'"
       ></InputText>
-
+      -->
       <!-- affiche pour le cas du type select -->
 
       <select-display
@@ -141,11 +141,10 @@ import Utilities from "./Utilities.js";
 
 export default {
   components: {
+    AddFormField,
     ImageCheck: () => import("./input/ImageCheckV2.vue"),
     IncrementNumber: () => import("./IncrementNumber.vue"),
-
-    AddFormField,
-    InputText: () => import("./input/InputText.vue"),
+    //InputText: () => import("./input/InputText.vue"),
     autocomplete: () => import("./Autocomplete"),
     Radio: () => import("./input/Radio.vue"),
     RadioDesc: () => import("./input/RadioDesc"),

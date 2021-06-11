@@ -2,17 +2,15 @@
   <div>
     <b-form-group label="Label" invalid-feedback="Name is required">
       <b-input-group>
-        <b-form-input
-          v-model="field.label"
-          @input="input"
-          required
-        ></b-form-input>
+        <b-form-input v-model="field.label" @input="input" required>
+        </b-form-input>
         <b-form-input
           required
           v-model="field.name"
           :readonly="readonly"
           @dblclick="toogleReadOnly"
-        ></b-form-input>
+        >
+        </b-form-input>
       </b-input-group>
     </b-form-group>
   </div>
@@ -47,7 +45,10 @@ export default {
   },
   methods: {
     input() {
-      if (this.readonly && this.field.name.length <= 32) {
+      if (
+        this.readonly &&
+        (this.field.label.length <= 32 || this.field.name.length <= 32)
+      ) {
         this.field.name = snakeCase(this.field.label);
       }
     },

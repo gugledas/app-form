@@ -2,17 +2,7 @@
   <div>
     <b-row class="p-2">
       <b-col sm="12">
-        <b-form-group label="Label" invalid-feedback="Name is required">
-          <b-input-group>
-            <b-form-input v-model="fields.label" @input="input"></b-form-input>
-            <b-form-input
-              required
-              v-model="fields.name"
-              :readonly="readonly"
-              @dblclick="toogleReadOnly"
-            ></b-form-input>
-          </b-input-group>
-        </b-form-group>
+        <compositeHeaderField :field="fields"></compositeHeaderField>
       </b-col>
       <b-col cols="8">
         <b-form-group label="value">
@@ -53,7 +43,7 @@
               ></b-form-input>
             </b-input-group>
           </b-form-group>
-          <b-form-group label="Cout">
+          <b-form-group label="Cout €">
             <b-form-input
               v-model="inputOptions.cout"
               placeholder="Enter label"
@@ -111,6 +101,8 @@ export default {
   components: {
     ValidationFields,
     OptionTable,
+    compositeHeaderField: () =>
+      import("../EditsFields/compositeHeaderField.vue"),
   },
   data() {
     return {

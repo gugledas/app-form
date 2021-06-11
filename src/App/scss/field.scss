@@ -66,14 +66,10 @@
       border-radius: 2px;
       border       : 1px solid $primary_color;
 
+      .multiselect__input,
       .multiselect__single {
         margin-bottom: 0;
       }
-    }
-
-    .multiselect__input,
-    .multiselect__select {
-      display: none;
     }
 
     .multiselect__option--highlight {

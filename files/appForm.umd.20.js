@@ -776,12 +776,12 @@ var double = {
 // ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"6bacc4e8-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/input/Radio.vue?vue&type=template&id=11f75042&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[(_vm.validationField)?_c('transition',{attrs:{"name":"fade"}},[_c('b-row',[_c('b-col',{staticClass:"text-left",attrs:{"cols":"12"}},[_c('p',{staticClass:"page-label"},[_vm._v(_vm._s(_vm.field.label))])]),_c('ValidationProvider',{staticClass:"col-12 p-0",attrs:{"rules":_vm.field.require,"name":_vm.field.name},scopedSlots:_vm._u([{key:"default",fn:function(v){return [_vm._l((_vm.field.options),function(item,i){return _c('b-col',{key:i,attrs:{"cols":"12"}},[_c('div',{staticClass:"input-list"},[_c('b-col',{staticClass:"input-list__label",attrs:{"sm":"11"}},[_c('label',{staticClass:"m-0 d-block w-100",attrs:{"for":("input-radio-a" + (_vm.field.name) + i)}},[_vm._v(_vm._s(item.text))])]),_c('b-col',{staticClass:"input-list__input"},[_c('b-form-radio',{attrs:{"name":_vm.field.name,"size":"lg","id":("input-radio-a" + (_vm.field.name) + i),"value":item.value},model:{value:(_vm.field.value),callback:function ($$v) {_vm.$set(_vm.field, "value", $$v)},expression:"field.value"}})],1)],1)])}),_c('div',{staticClass:"text-danger"},_vm._l((v.errors),function(error,ii){return _c('small',{key:ii,staticClass:"d-block"},[_vm._v(" "+_vm._s(error)+" ")])}),0)]}}],null,false,2974732906)})],1)],1):_vm._e()],1)}
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"6bacc4e8-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/input/Radio.vue?vue&type=template&id=3a9c0241&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:!_vm.validationField && _vm.mode ? 'mb-5' : ''},[(_vm.validationField)?_c('transition',{attrs:{"name":"fade"}},[_c('b-row',{staticClass:"choice-section min-height"},[_c('b-col',{staticClass:"text-left",attrs:{"cols":"12"}},[_c('p',{staticClass:"page-label"},[_vm._v(_vm._s(_vm.field.label))])]),_c('ValidationProvider',{staticClass:"col-12 p-0",attrs:{"rules":_vm.field.require,"name":_vm.field.name},scopedSlots:_vm._u([{key:"default",fn:function(v){return [_vm._l((_vm.field.options),function(item,i){return _c('b-col',{key:i,attrs:{"cols":"12"}},[_c('div',{staticClass:"input-list"},[_c('b-col',{staticClass:"input-list__label",attrs:{"sm":"11"}},[_c('label',{staticClass:"m-0 d-block w-100",attrs:{"for":("input-radio-a" + (_vm.field.name) + i)}},[_vm._v(_vm._s(item.text))])]),_c('b-col',{staticClass:"input-list__input"},[_c('b-form-radio',{attrs:{"name":_vm.field.name,"size":"lg","id":("input-radio-a" + (_vm.field.name) + i),"value":item.value},model:{value:(_vm.field.value),callback:function ($$v) {_vm.$set(_vm.field, "value", $$v)},expression:"field.value"}})],1)],1)])}),_c('div',{staticClass:"text-danger"},_vm._l((v.errors),function(error,ii){return _c('small',{key:ii,staticClass:"d-block"},[_vm._v(" "+_vm._s(error)+" ")])}),0)]}}],null,false,2974732906)})],1)],1):_vm._e()],1)}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/App/input/Radio.vue?vue&type=template&id=11f75042&
+// CONCATENATED MODULE: ./src/App/input/Radio.vue?vue&type=template&id=3a9c0241&
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/objectSpread2.js + 1 modules
 var objectSpread2 = __webpack_require__("5530");
@@ -864,7 +864,7 @@ var vee_validate_custom = __webpack_require__("b6d1");
     };
   },
   watch: {},
-  computed: Object(objectSpread2["a" /* default */])(Object(objectSpread2["a" /* default */])(Object(objectSpread2["a" /* default */])({}, Object(vuex_esm["b" /* mapGetters */])(["formDatas"])), Object(vuex_esm["c" /* mapState */])(["formDatasValidate"])), {}, {
+  computed: Object(objectSpread2["a" /* default */])(Object(objectSpread2["a" /* default */])(Object(objectSpread2["a" /* default */])({}, Object(vuex_esm["b" /* mapGetters */])(["formDatas"])), Object(vuex_esm["c" /* mapState */])(["formDatasValidate", "mode"])), {}, {
     validationField: function validationField() {
       if (this.field.states.length) {
         var status = validation["b" /* validationRessource */].computedValidation(this.formDatas, this.field, this.formDatasValidate);

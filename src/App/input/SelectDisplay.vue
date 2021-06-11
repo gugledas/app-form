@@ -1,38 +1,40 @@
 <template lang="html">
-  <div class="row-input">
-    <div class="row-input__row">
+  <div class="row-input" :class="!validationField && mode ? 'mb-5' : ''">
+    <div class="row-input__row" :class="validationField ? '' : 'mb-5'">
       <transition v-if="validationField" name="fade">
-        <b-row align-v="center">
-          <b-col sm="6">
-            <label class="label"> {{ field.label }} </label>
-          </b-col>
-          <b-col sm="6" class="input-field">
-            <ValidationProvider
-              v-slot="v"
-              :rules="field.require"
-              :name="field.name"
-            >
-              <b-form-select
-                v-model="field.value"
-                type="text"
-                placeholder=""
-                :options="field.options"
-                class="input-field__input form-control"
+        <div class="choice-section min-height">
+          <b-row align-v="center">
+            <b-col sm="6">
+              <label class="label"> {{ field.label }} </label>
+            </b-col>
+            <b-col sm="6" class="input-field">
+              <ValidationProvider
+                v-slot="v"
+                :rules="field.require"
                 :name="field.name"
               >
-              </b-form-select>
-              <div class="text-danger">
-                <small
-                  v-for="(error, ii) in v.errors"
-                  :key="ii"
-                  class="d-block"
+                <b-form-select
+                  v-model="field.value"
+                  type="text"
+                  placeholder=""
+                  :options="field.options"
+                  class="input-field__input form-control"
+                  :name="field.name"
                 >
-                  {{ error }}
-                </small>
-              </div>
-            </ValidationProvider>
-          </b-col>
-        </b-row>
+                </b-form-select>
+                <div class="text-danger">
+                  <small
+                    v-for="(error, ii) in v.errors"
+                    :key="ii"
+                    class="d-block"
+                  >
+                    {{ error }}
+                  </small>
+                </div>
+              </ValidationProvider>
+            </b-col>
+          </b-row>
+        </div>
       </transition>
     </div>
   </div>
@@ -68,7 +70,7 @@ export default {
   },
   computed: {
     ...mapGetters(["formDatas"]),
-    ...mapState(["formDatasValidate"]),
+    ...mapState(["formDatasValidate", "mode"]),
     validationField() {
       if (this.field.states.length) {
         var status = Validation.computedValidation(

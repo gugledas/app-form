@@ -1,8 +1,7 @@
 <template lang="html">
-  <b-row align-h="center">
-
+  <b-row align-h="center" :class="!validationField && mode ? 'mb-5' : ''">
     <transition v-if="validationField" name="fade">
-      <div class="row-input">
+      <div class="row-input choice-section min-height">
         <div class="row-input__row">
           <b-col sm="6">
             <label class="label"> {{ field.label }} </label>
@@ -64,7 +63,7 @@ export default {
   },
   computed: {
     ...mapGetters(["formDatas"]),
-    ...mapState(["formDatasValidate"]),
+    ...mapState(["formDatasValidate","mode"]),
     validationField() {
       if (this.field.states.length) {
         var status = Validation.computedValidation(

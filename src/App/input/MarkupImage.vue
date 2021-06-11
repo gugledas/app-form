@@ -1,9 +1,11 @@
 <template>
-  <transition v-if="validationField" name="fade">
-    <div class="number-markup__img">
-      <img :src="img_url_format" />
-    </div>
-  </transition>
+  <div :class="!validationField && mode ? 'mb-5' : ''">
+    <transition v-if="validationField" name="fade">
+      <div class="number-markup__img choice-section min-height">
+        <img :src="img_url_format" />
+      </div>
+    </transition>
+  </div>
 </template>
 
 <script>
@@ -26,7 +28,7 @@ export default {
   },
   computed: {
     ...mapGetters(["formDatas"]),
-    ...mapState(["formDatasValidate"]),
+    ...mapState(["formDatasValidate", "mode"]),
     validationField() {
       if (this.field.states.length) {
         var status = Validation.computedValidation(

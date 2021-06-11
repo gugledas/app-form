@@ -1,7 +1,7 @@
 <template lang="html">
-  <div>
-    <transition name="fade">
-      <div class="row-content">
+  <div :class="!validationField && mode ? 'mb-5' : ''">
+    <transition v-if="validationField" name="fade">
+      <div class="row-content choice-section min-height">
         <b-row class="row-content__row">
           <b-col sm="6" class="mb-3">
             <label class="label d-flex align-items-center">
@@ -19,6 +19,9 @@
 
 <script>
 import { mapState } from "vuex";
+//import { ValidationProvider } from "vee-validate";
+//import { validationRessource as Validation } from "../config/validation.js";
+import "../EditsFields/vee-validate-custom.js";
 export default {
   name: "recapitulatif",
   props: {
@@ -42,7 +45,10 @@ export default {
     //
   },
   computed: {
-    ...mapState(["price"]),
+    ...mapState(["price", "mode"]),
+    validationField() {
+      return true;
+    },
   },
   methods: {
     //

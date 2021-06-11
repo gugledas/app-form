@@ -6,11 +6,7 @@
           <img src="../../../public/long-arrow-alt-left-solid.svg" alt="" />
         </div>
       </b-col>
-      <div
-        v-for="(field, i) in formDatas.fields"
-        :key="i"
-        class="col-12 p-0 mb-5"
-      >
+      <div v-for="(field, i) in formDatas.fields" :key="i" class="col-12">
         <display-fields :type="field.type" :id="i"></display-fields>
       </div>
       <div

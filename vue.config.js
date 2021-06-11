@@ -1,4 +1,4 @@
-// const envMode = process.env.NODE_ENV !== "production";
+const envMode = process.env.NODE_ENV !== "production";
 module.exports = {
   lintOnSave: true,
   chainWebpack: (config) => {
@@ -15,7 +15,7 @@ module.exports = {
   //pour construire une app avec plusieurs pages.
   //pages:undefined,
   css: {
-    sourceMap: true,
+    sourceMap: envMode ? true : false,
     /*
     loaderOptions: {
       css: {

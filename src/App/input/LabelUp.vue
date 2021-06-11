@@ -1,9 +1,13 @@
 <template>
-  <div>
-    <div class="number-markup__input">
-      <label class="label">{{ field.label }}</label>
-
-      <ValidationProvider v-slot="v" :rules="field.require">
+  <div :class="!validationField && mode ? 'mb-5' : ''">
+    <div class="number-markup__input choice-section min-height">
+      <ValidationProvider
+        v-slot="v"
+        v-if="validationField"
+        :rules="field.require"
+        :name="field.name"
+      >
+        <label class="label">{{ field.label }}</label>
         <div class="input-field">
           <b-form-input
             v-model="field.value"
@@ -28,18 +32,10 @@
 </template>
 
 <script>
-//
-import { ValidationProvider, extend } from "vee-validate";
-import { required, email } from "vee-validate/dist/rules";
-//
-// No message specified.
-extend("email", email);
-
-// Override the default message.
-extend("required", {
-  ...required,
-  message: "Ce champs est requis",
-});
+import { mapGetters, mapState } from "vuex";
+import { ValidationProvider } from "vee-validate";
+import { validationRessource as Validation } from "../config/validation.js";
+import "../EditsFields/vee-validate-custom.js";
 
 export default {
   props: {
@@ -57,6 +53,21 @@ export default {
     };
   },
   watch: {},
+  computed: {
+    ...mapGetters(["formDatas"]),
+    ...mapState(["formDatasValidate", "mode"]),
+    validationField() {
+      if (this.field.states.length) {
+        var status = Validation.computedValidation(
+          this.formDatas,
+          this.field,
+          this.formDatasValidate
+        );
+        if (status !== undefined) return status;
+      }
+      return true;
+    },
+  },
   methods: {},
 };
 </script>

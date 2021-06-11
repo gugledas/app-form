@@ -1,82 +1,84 @@
 <template lang="html">
-  <div>
-    <form
-      ref="form_userlogin"
-      @submit.stop.prevent="handleSubmit"
-      class="form-userlogin"
-    >
-      <ValidationProvider
-        v-slot="v"
-        rules="required"
-        class="d-block"
-        name="Nom"
-        ref="userlogin_name"
+  <div :class="!validationField && mode ? 'mb-5' : ''">
+    <transition v-if="validationField" name="fade">
+      <form
+        ref="form_userlogin"
+        @submit.stop.prevent="handleSubmit"
+        class="form-userlogin choice-section min-height"
       >
-        <b-form-group label="Nom">
+        <ValidationProvider
+          v-slot="v"
+          rules="required"
+          class="d-block"
+          name="Nom"
+          ref="userlogin_name"
+        >
+          <b-form-group label="Nom">
+            <b-form-input
+              v-model="userlogin.name.value"
+              type="text"
+              @input="input($event, 'name')"
+            ></b-form-input>
+          </b-form-group>
+          <div class="text-danger">
+            <small v-for="(error, ii) in v.errors" :key="ii" class="d-block">
+              {{ error }}
+            </small>
+          </div>
+        </ValidationProvider>
+        <!-- -->
+        <b-form-group label="Prenom">
           <b-form-input
-            v-model="userlogin.name.value"
+            v-model="userlogin.prenom.value"
             type="text"
-            @input="input($event, 'name')"
+            @input="input($event, 'prenom')"
           ></b-form-input>
         </b-form-group>
-        <div class="text-danger">
-          <small v-for="(error, ii) in v.errors" :key="ii" class="d-block">
-            {{ error }}
-          </small>
-        </div>
-      </ValidationProvider>
-      <!-- -->
-      <b-form-group label="Prenom">
-        <b-form-input
-          v-model="userlogin.prenom.value"
-          type="text"
-          @input="input($event, 'prenom')"
-        ></b-form-input>
-      </b-form-group>
-      <!-- -->
-      <ValidationProvider
-        v-slot="v"
-        rules="required"
-        class="d-block"
-        name="Telephone"
-        ref="userlogin_tel"
-      >
-        <b-form-group label="Telephone">
-          <b-form-input
-            v-model="userlogin.telephone.value"
-            type="text"
-            @input="input($event, 'telephone')"
-          ></b-form-input>
-        </b-form-group>
-        <div class="text-danger">
-          <small v-for="(error, ii) in v.errors" :key="ii" class="d-block">
-            {{ error }}
-          </small>
-        </div>
-      </ValidationProvider>
-      <!-- -->
-      <ValidationProvider
-        v-slot="v"
-        rules="required|email"
-        class="d-block"
-        name="Email"
-        ref="userlogin_email"
-      >
-        <b-form-group label="Email">
-          <b-form-input
-            v-model="userlogin.email.value"
-            type="email"
-            @input="input($event, 'email')"
-          ></b-form-input>
-        </b-form-group>
-        <div class="text-danger">
-          <small v-for="(error, ii) in v.errors" :key="ii" class="d-block">
-            {{ error }}
-          </small>
-        </div>
-      </ValidationProvider>
-      <!-- -->
-    </form>
+        <!-- -->
+        <ValidationProvider
+          v-slot="v"
+          rules="required"
+          class="d-block"
+          name="Telephone"
+          ref="userlogin_tel"
+        >
+          <b-form-group label="Telephone">
+            <b-form-input
+              v-model="userlogin.telephone.value"
+              type="text"
+              @input="input($event, 'telephone')"
+            ></b-form-input>
+          </b-form-group>
+          <div class="text-danger">
+            <small v-for="(error, ii) in v.errors" :key="ii" class="d-block">
+              {{ error }}
+            </small>
+          </div>
+        </ValidationProvider>
+        <!-- -->
+        <ValidationProvider
+          v-slot="v"
+          rules="required|email"
+          class="d-block"
+          name="Email"
+          ref="userlogin_email"
+        >
+          <b-form-group label="Email">
+            <b-form-input
+              v-model="userlogin.email.value"
+              type="email"
+              @input="input($event, 'email')"
+            ></b-form-input>
+          </b-form-group>
+          <div class="text-danger">
+            <small v-for="(error, ii) in v.errors" :key="ii" class="d-block">
+              {{ error }}
+            </small>
+          </div>
+        </ValidationProvider>
+        <!-- -->
+      </form>
+    </transition>
   </div>
 </template>
 
@@ -113,7 +115,7 @@ export default {
     //
   },
   computed: {
-    ...mapState(["userlogin"]),
+    ...mapState(["userlogin", "mode"]),
     MajRefs() {
       if (this.userlogin) {
         this.setRefs();

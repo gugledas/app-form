@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div :class="!validationField && mode ? 'mb-5' : ''">
     <transition v-if="validationField" name="fade">
-      <div class="text-left">
+      <div class="text-left choice-section min-height">
         <h3 class="question-title">{{ field.label }}</h3>
       </div>
     </transition>
@@ -27,7 +27,7 @@ export default {
   },
   computed: {
     ...mapGetters(["formDatas"]),
-    ...mapState(["formDatasValidate"]),
+    ...mapState(["formDatasValidate", "mode"]),
     validationField() {
       if (this.field.states.length) {
         var status = Validation.computedValidation(

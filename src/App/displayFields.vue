@@ -1,13 +1,13 @@
 <template>
-  <div class="choice-section min-height">
+  <div>
     <div>
       <!-- fields value: {{ formDatas.fields[id].value }}-- fields selected:{{
           formDatas.fields[id].selected
         }} -->
       <!-- affiche sur le cas du type codepostal -->
       <b-row align-h="center" v-if="type == 'codepostal'">
-        <b-col class="autocomplete">
-          <autocomplete :value="formDatas.fields[id]"></autocomplete>
+        <b-col>
+          <autocomplete :field="formDatas.fields[id]"></autocomplete>
         </b-col>
       </b-row>
       <!-- affiche pour le cas du type checkbox image -->
@@ -86,7 +86,10 @@
 
       <!-- affiche pour le cas du type radio with description -->
 
-      <radio-desc v-if="type == 'radiodesc'" :id="id"></radio-desc>
+      <radio-desc
+        v-if="type == 'radiodesc'"
+        :field="formDatas.fields[id]"
+      ></radio-desc>
 
       <!-- -->
       <files :field="formDatas.fields[id]" v-if="type == 'file'"></files>
@@ -165,7 +168,7 @@ export default {
     ImageCheck: () => import("./input/ImageCheckV2.vue"),
     IncrementNumber: () => import("./IncrementNumber.vue"),
     //InputText: () => import("./input/InputText.vue"),
-    autocomplete: () => import("./Autocomplete"),
+    autocomplete: () => import("./input/Autocomplete"),
     Radio: () => import("./input/Radio.vue"),
     RadioDesc: () => import("./input/RadioDesc"),
     Checkbox: () => import("./input/Checkbox.vue"),

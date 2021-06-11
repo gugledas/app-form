@@ -30,7 +30,7 @@
                 formview.states && formview.states.length > 0 ? 'ml-5' : '',
               ]"
             >
-              {{ formview.info.title }}
+              {{ i }} : {{ formview.info.title }}
               <div v-if="formview.states && formview.states.length > 0">
                 <div v-for="(state, y) in formview.states" :key="y">
                   <small> {{ getNameStep(state.state_name) }} </small>

@@ -41,8 +41,12 @@ export default {
               if (field.name === state.name) {
                 // action à verifier
                 if (state.operator === "egal") {
-                  console.log("state :: ", state.value, "\n", field.value);
-                  return field.value.includes(state.value) ? true : false;
+                  //console.log("state :: ", state.value, "\n", field.value);
+                  if (field.value) {
+                    return field.value.includes(state.value) ? true : false;
+                  } else {
+                    return false;
+                  }
                 }
               }
             }

@@ -44,14 +44,14 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/
 /******/ 	// object to store loaded CSS chunks
 /******/ 	var installedCssChunks = {
-/******/ 		3: 0
+/******/ 		1: 0
 /******/ 	}
 /******/
 /******/ 	// object to store loaded and loading chunks
 /******/ 	// undefined = chunk not loaded, null = chunk preloaded/prefetched
 /******/ 	// Promise = chunk loading, 0 = chunk loaded
 /******/ 	var installedChunks = {
-/******/ 		3: 0
+/******/ 		1: 0
 /******/ 	};
 /******/
 /******/
@@ -92,11 +92,11 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/
 /******/
 /******/ 		// mini-css-extract-plugin CSS loading
-/******/ 		var cssChunks = {"1":1,"2":1,"4":1,"5":1,"6":1,"7":1,"8":1,"9":1,"10":1,"11":1,"12":1,"13":1,"14":1,"15":1,"16":1,"17":1,"18":1};
+/******/ 		var cssChunks = {"2":1,"3":1,"4":1,"5":1,"6":1,"7":1,"8":1,"9":1,"10":1,"11":1,"12":1,"13":1,"14":1,"15":1,"16":1};
 /******/ 		if(installedCssChunks[chunkId]) promises.push(installedCssChunks[chunkId]);
 /******/ 		else if(installedCssChunks[chunkId] !== 0 && cssChunks[chunkId]) {
 /******/ 			promises.push(installedCssChunks[chunkId] = new Promise(function(resolve, reject) {
-/******/ 				var href = "css/" + ({}[chunkId]||chunkId) + "." + {"0":"31d6cfe0","1":"2d029869","2":"ff1bd2c5","4":"61e966bc","5":"b2742065","6":"63248bb6","7":"dd3fcea7","8":"e5f1a246","9":"bc2e9aa0","10":"8f85aa7a","11":"4bdbbebb","12":"4bdbbebb","13":"ac5b10c9","14":"42efe657","15":"3def3390","16":"3500c7e5","17":"2f36306f","18":"44ac9b6b","19":"31d6cfe0","20":"31d6cfe0","21":"31d6cfe0","22":"31d6cfe0","23":"31d6cfe0","24":"31d6cfe0","25":"31d6cfe0","26":"31d6cfe0","27":"31d6cfe0","28":"31d6cfe0","29":"31d6cfe0","30":"31d6cfe0","31":"31d6cfe0","32":"31d6cfe0","33":"31d6cfe0"}[chunkId] + ".css";
+/******/ 				var href = "css/" + ({}[chunkId]||chunkId) + "." + {"0":"31d6cfe0","2":"2d029869","3":"d6751ac2","4":"61e966bc","5":"b2742065","6":"63248bb6","7":"dd3fcea7","8":"e5f1a246","9":"bc2e9aa0","10":"8f85aa7a","11":"4bdbbebb","12":"4bdbbebb","13":"ac5b10c9","14":"42efe657","15":"3def3390","16":"44ac9b6b","17":"31d6cfe0","18":"31d6cfe0","19":"31d6cfe0","20":"31d6cfe0","21":"31d6cfe0","22":"31d6cfe0","23":"31d6cfe0","24":"31d6cfe0","25":"31d6cfe0","26":"31d6cfe0","27":"31d6cfe0","28":"31d6cfe0","29":"31d6cfe0","30":"31d6cfe0","31":"31d6cfe0"}[chunkId] + ".css";
 /******/ 				var fullhref = __webpack_require__.p + href;
 /******/ 				var existingLinkTags = document.getElementsByTagName("link");
 /******/ 				for(var i = 0; i < existingLinkTags.length; i++) {
@@ -63106,9 +63106,146 @@ var es_function_name = __webpack_require__("b0c0");
 // EXTERNAL MODULE: ./node_modules/vuex/dist/vuex.esm.js
 var vuex_esm = __webpack_require__("2f62");
 
-// EXTERNAL MODULE: ./src/store/utilities.js
-var utilities = __webpack_require__("fd71");
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.includes.js
+var es_array_includes = __webpack_require__("caad");
 
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.string.includes.js
+var es_string_includes = __webpack_require__("2532");
+
+// EXTERNAL MODULE: ./src/App/config/config.js
+var config = __webpack_require__("f158");
+
+// CONCATENATED MODULE: ./src/store/utilities.js
+
+
+
+
+/* harmony default export */ var utilities = ({
+  forms: [],
+
+  /**
+   * Selectionne la prochaine etape valide.
+   * @param forms array etape du formualire;
+   * @param i indice de letape encours.
+   */
+  selectNextState: function selectNextState(forms, i) {
+    var j = i + 1;
+    this.forms = forms;
+
+    for (var k in this.forms) {
+      var kk = parseInt(k);
+
+      if (kk >= j) {
+        j = null;
+        var form = this.forms[k];
+
+        if (this.validateState(form.states)) {
+          console.log("etape valide : ", k);
+          return kk;
+        } else {
+          console.log("etape non valide : ", k);
+        }
+      }
+    }
+
+    return j;
+  },
+  validateState: function validateState(states) {
+    if (!states || states.length === 0) return true;
+
+    for (var k in this.forms) {
+      var form = this.forms[k];
+
+      for (var s in states) {
+        var state = states[s];
+
+        if (state.action === "visible") {
+          // Identification de l'etape;
+          if (form.info.name === state.state_name) {
+            // Recherche du champs.
+            for (var f in form.fields) {
+              var field = form.fields[f]; // Identification du champs.
+
+              if (field.name === state.name) {
+                // action à verifier
+                if (state.operator === "egal") {
+                  //console.log("state :: ", state.value, "\n", field.value);
+                  if (field.value) {
+                    return field.value.includes(state.value) ? true : false;
+                  } else {
+                    return false;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  getPriceStape: function getPriceStape(getters) {
+    for (var i in getters.formDatas.fields) {
+      var currentfield = getters.formDatas.fields[i]; //On parcourt les champs afin de determiner s'ils ont un cout.
+
+      if (currentfield.prix && currentfield.prix.action === "prix_utilisables") {
+        var coutDeBase = currentfield.prix.cout;
+
+        if (!currentfield.prix.components.length) {
+          return coutDeBase;
+        } // On determine le cout final en fonction des relations definits;
+
+
+        var price = 0;
+
+        for (var c in currentfield.prix.components) {
+          var component = currentfield.prix.components[c];
+
+          for (var s in getters.form.forms) {
+            var form = getters.form.forms[s]; //on determine le formulaire utilisé.
+
+            if (form.info.name == component.state_name) {
+              for (var f in form.fields) {
+                var field = form.fields[f]; //on determine le champs utilisé
+
+                if (field.name == component.name) {
+                  // On verifie si cest le meme champs.
+                  if (component.name == currentfield.name) {
+                    price += coutDeBase * currentfield.value;
+                  } // On verifie si les options sont definits.
+                  else if (component.value) {
+                      for (var o in field.options) {
+                        var option = field.options[o];
+
+                        if (option.value === component.value) {
+                          if (option.cout) {
+                            price += currentfield.value * option.cout;
+                          }
+                        }
+                      }
+                    } else {
+                      price += currentfield.value * field.prix.cout;
+                    }
+                }
+              }
+            }
+          }
+        }
+
+        return price;
+      }
+    }
+  },
+  saveDatas: function saveDatas(state, getters) {
+    var uid = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+    config["a" /* default */].saveStepsDatas(getters.form, state.price, uid).then(function (val) {
+      config["a" /* default */].saveForm(val).then(function () {//
+      });
+    });
+  },
+  deleteForm: function deleteForm(id) {
+    config["a" /* default */].deleteForm(id);
+  }
+});
 // EXTERNAL MODULE: ../drupal-vuejs/index.js + 6 modules
 var drupal_vuejs = __webpack_require__("e674");
 
@@ -63444,7 +63581,7 @@ external_commonjs_vue_commonjs2_vue_root_Vue_default.a.use(vuex_esm["a" /* defau
               case 0:
                 commit = _ref3.commit, getters = _ref3.getters;
                 _context.next = 3;
-                return utilities["a" /* default */].getPriceStape(getters);
+                return utilities.getPriceStape(getters);
 
               case 3:
                 price = _context.sent;
@@ -63455,7 +63592,7 @@ external_commonjs_vue_commonjs2_vue_root_Vue_default.a.use(vuex_esm["a" /* defau
 
 
                 _context.next = 7;
-                return utilities["a" /* default */].selectNextState(getters.form.forms, i);
+                return utilities.selectNextState(getters.form.forms, i);
 
               case 7:
                 new_index = _context.sent;
@@ -63514,7 +63651,7 @@ external_commonjs_vue_commonjs2_vue_root_Vue_default.a.use(vuex_esm["a" /* defau
 
 
                 _context2.next = 10;
-                return utilities["a" /* default */].getPriceStape(getters);
+                return utilities.getPriceStape(getters);
 
               case 10:
                 price = _context2.sent;
@@ -63666,7 +63803,7 @@ external_commonjs_vue_commonjs2_vue_root_Vue_default.a.use(vuex_esm["a" /* defau
 
                     if (resp.data) {
                       var uid = resp.data.uid[0].value;
-                      utilities["a" /* default */].saveDatas(state, getters, uid);
+                      utilities.saveDatas(state, getters, uid);
                     }
                   }).catch(function (error) {
                     console.log("error GET drupalUtilities : ", error);
@@ -63686,7 +63823,7 @@ external_commonjs_vue_commonjs2_vue_root_Vue_default.a.use(vuex_esm["a" /* defau
       var state = _ref18.state,
           getters = _ref18.getters;
       var uid = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-      utilities["a" /* default */].saveDatas(state, getters, uid);
+      utilities.saveDatas(state, getters, uid);
     }
   },
   modules: {}
@@ -66727,9 +66864,6 @@ var Listesfomesvue_type_template_id_61ee311a_lang_html_staticRenderFns = []
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/objectSpread2.js + 1 modules
 var objectSpread2 = __webpack_require__("5530");
 
-// EXTERNAL MODULE: ./src/App/config/config.js
-var config = __webpack_require__("f158");
-
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/Listesfomes.vue?vue&type=script&lang=js&
 
 
@@ -66784,7 +66918,7 @@ var config = __webpack_require__("f158");
   props: {},
   components: {
     AddEditForm: function AddEditForm() {
-      return __webpack_require__.e(/* import() */ 28).then(__webpack_require__.bind(null, "d2d6"));
+      return __webpack_require__.e(/* import() */ 26).then(__webpack_require__.bind(null, "d2d6"));
     }
   },
   data: function data() {
@@ -66856,7 +66990,7 @@ var Listesfomes_component = Object(componentNormalizer["a" /* default */])(
 // EXTERNAL MODULE: ./src/App/scss/style.scss
 var style = __webpack_require__("0c81");
 
-// CONCATENATED MODULE: ./src/router/index.js
+// CONCATENATED MODULE: ./src/router/routeUser.js
 
 
 
@@ -66872,42 +67006,27 @@ var routes = [{
   name: "Listes de formulaire",
   component: Listesfomes
 }, {
-  path: "/edit-form/:id",
-  name: "Edition du formulaire",
-  props: true,
-  component: function component() {
-    return Promise.all(/* import() */[__webpack_require__.e(1), __webpack_require__.e(2)]).then(__webpack_require__.bind(null, "ca0f"));
-  }
-}, {
   path: "/estimation-devis/:id",
   name: "Edition du formulaire",
   props: true,
   component: function component() {
-    return Promise.all(/* import() */[__webpack_require__.e(1), __webpack_require__.e(2)]).then(__webpack_require__.bind(null, "ca0f"));
-  }
-}, {
-  path: "/traitement/:id",
-  name: "Traitement du résultat",
-  props: true,
-  component: function component() {
-    return __webpack_require__.e(/* import() */ 16).then(__webpack_require__.bind(null, "379c"));
+    return Promise.all(/* import() */[__webpack_require__.e(2), __webpack_require__.e(3)]).then(__webpack_require__.bind(null, "7817"));
   }
 }, {
   path: "/*",
   redirect: "/"
 }];
 var router = new vue_router_esm({
-  //mode: "history",
-  //base: process.env.BASE_URL,
   mode: "hash",
   routes: routes
 });
-/* harmony default export */ var src_router = (router);
+/* harmony default export */ var routeUser = (router);
 // CONCATENATED MODULE: ./src/main-prod.js
 
 
 
 
+ //on importe uniquement bootstrap-vue.css;
 
 
 
@@ -66920,7 +67039,7 @@ external_commonjs_vue_commonjs2_vue_root_Vue_default.a.use(esm["a" /* BootstrapV
 external_commonjs_vue_commonjs2_vue_root_Vue_default.a.use(icons_plugin["a" /* IconsPlugin */]);
 new external_commonjs_vue_commonjs2_vue_root_Vue_default.a({
   store: store,
-  router: src_router,
+  router: routeUser,
   render: function render(h) {
     return h(App);
   },
@@ -66973,150 +67092,6 @@ var $export = __webpack_require__("0d63");
 
 $export($export.S, 'Array', { isArray: __webpack_require__("bc48") });
 
-
-/***/ }),
-
-/***/ "fd71":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var core_js_modules_es_function_name_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("b0c0");
-/* harmony import */ var core_js_modules_es_function_name_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_function_name_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var core_js_modules_es_array_includes_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("caad");
-/* harmony import */ var core_js_modules_es_array_includes_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_includes_js__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var core_js_modules_es_string_includes_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__("2532");
-/* harmony import */ var core_js_modules_es_string_includes_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_string_includes_js__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _App_config_config_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__("f158");
-
-
-
-
-/* harmony default export */ __webpack_exports__["a"] = ({
-  forms: [],
-
-  /**
-   * Selectionne la prochaine etape valide.
-   * @param forms array etape du formualire;
-   * @param i indice de letape encours.
-   */
-  selectNextState: function selectNextState(forms, i) {
-    var j = i + 1;
-    this.forms = forms;
-
-    for (var k in this.forms) {
-      var kk = parseInt(k);
-
-      if (kk >= j) {
-        j = null;
-        var form = this.forms[k];
-
-        if (this.validateState(form.states)) {
-          console.log("etape valide : ", k);
-          return kk;
-        } else {
-          console.log("etape non valide : ", k);
-        }
-      }
-    }
-
-    return j;
-  },
-  validateState: function validateState(states) {
-    if (!states || states.length === 0) return true;
-
-    for (var k in this.forms) {
-      var form = this.forms[k];
-
-      for (var s in states) {
-        var state = states[s];
-
-        if (state.action === "visible") {
-          // Identification de l'etape;
-          if (form.info.name === state.state_name) {
-            // Recherche du champs.
-            for (var f in form.fields) {
-              var field = form.fields[f]; // Identification du champs.
-
-              if (field.name === state.name) {
-                // action à verifier
-                if (state.operator === "egal") {
-                  //console.log("state :: ", state.value, "\n", field.value);
-                  if (field.value) {
-                    return field.value.includes(state.value) ? true : false;
-                  } else {
-                    return false;
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  },
-  getPriceStape: function getPriceStape(getters) {
-    for (var i in getters.formDatas.fields) {
-      var currentfield = getters.formDatas.fields[i]; //On parcourt les champs afin de determiner s'ils ont un cout.
-
-      if (currentfield.prix && currentfield.prix.action === "prix_utilisables") {
-        var coutDeBase = currentfield.prix.cout;
-
-        if (!currentfield.prix.components.length) {
-          return coutDeBase;
-        } // On determine le cout final en fonction des relations definits;
-
-
-        var price = 0;
-
-        for (var c in currentfield.prix.components) {
-          var component = currentfield.prix.components[c];
-
-          for (var s in getters.form.forms) {
-            var form = getters.form.forms[s]; //on determine le formulaire utilisé.
-
-            if (form.info.name == component.state_name) {
-              for (var f in form.fields) {
-                var field = form.fields[f]; //on determine le champs utilisé
-
-                if (field.name == component.name) {
-                  // On verifie si cest le meme champs.
-                  if (component.name == currentfield.name) {
-                    price += coutDeBase * currentfield.value;
-                  } // On verifie si les options sont definits.
-                  else if (component.value) {
-                      for (var o in field.options) {
-                        var option = field.options[o];
-
-                        if (option.value === component.value) {
-                          if (option.cout) {
-                            price += currentfield.value * option.cout;
-                          }
-                        }
-                      }
-                    } else {
-                      price += currentfield.value * field.prix.cout;
-                    }
-                }
-              }
-            }
-          }
-        }
-
-        return price;
-      }
-    }
-  },
-  saveDatas: function saveDatas(state, getters) {
-    var uid = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
-    _App_config_config_js__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"].saveStepsDatas(getters.form, state.price, uid).then(function (val) {
-      _App_config_config_js__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"].saveForm(val).then(function () {//
-      });
-    });
-  },
-  deleteForm: function deleteForm(id) {
-    _App_config_config_js__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"].deleteForm(id);
-  }
-});
 
 /***/ }),
 

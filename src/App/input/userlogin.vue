@@ -123,6 +123,9 @@ export default {
       }
       return false;
     },
+    validationField() {
+      return true;
+    },
   },
   methods: {
     handleOk(event) {

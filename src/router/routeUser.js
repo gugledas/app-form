@@ -11,24 +11,11 @@ const routes = [
     name: "Listes de formulaire",
     component: Listesfomes,
   },
-
-  {
-    path: "/edit-form/:id",
-    name: "Edition du formulaire",
-    props: true,
-    component: () => import("../App/StepsPage.vue"),
-  },
   {
     path: "/estimation-devis/:id",
     name: "Edition du formulaire",
     props: true,
     component: () => import("../App/userpage.vue"),
-  },
-  {
-    path: "/traitement/:id",
-    name: "Traitement du résultat",
-    props: true,
-    component: () => import("../App/traitement/Traitement.vue"),
   },
   {
     path: "/*",
@@ -37,8 +24,6 @@ const routes = [
 ];
 
 const router = new VueRouter({
-  //mode: "history",
-  //base: process.env.BASE_URL,
   mode: "hash",
   routes,
 });

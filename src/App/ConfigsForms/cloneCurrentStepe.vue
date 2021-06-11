@@ -82,7 +82,7 @@ export default {
     ...mapGetters(["form", "formDatas"]),
     watchFormDatas(){
       if(this.formDatas.fields){
-        this.getCurrentForm(this.formDatas);
+        this.getCurrentForm(JSON.stringify(this.formDatas));
         return this.formDatas.fields.length;
       }
       return null;
@@ -104,7 +104,7 @@ export default {
       }
     },
     getCurrentForm(currentForm){
-      return JSON.parse(currentForm);
+      this.CurrentForm= JSON.parse(currentForm);
     }
   },
 };

@@ -40,10 +40,10 @@
           variant="outline-danger"
           v-b-modal.clone-current-stepe
           size="md"
-          v-b-tooltip.hover.v-danger
+          v-b-tooltip.hover.v-secondary
           title="cloner l'etape"
         >
-          <b-icon icon="trash"></b-icon>
+          <b-icon icon="clipboard-plus"></b-icon>
         </b-button>
       </b-button-group>
     </div>

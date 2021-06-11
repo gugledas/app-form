@@ -11,6 +11,7 @@ const routes = [
     name: "Listes de formulaire",
     component: Listesfomes,
   },
+
   {
     path: "/edit-form/:id",
     name: "Edition du formulaire",
@@ -19,15 +20,19 @@ const routes = [
   },
   {
     path: "/estimation-devis/:id",
-    name: "Estimation devis",
+    name: "Edition du formulaire",
     props: true,
-    component: () => import("../App/userpage.vue"),
+    component: () => import("../App/StepsPage.vue"),
   },
   {
     path: "/traitement/:id",
     name: "Traitement du résultat",
     props: true,
     component: () => import("../App/traitement/Traitement.vue"),
+  },
+  {
+    path: "/*",
+    redirect: "/",
   },
 ];
 

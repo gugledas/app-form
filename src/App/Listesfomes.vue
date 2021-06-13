@@ -5,7 +5,12 @@
       <template #cell(action)="data">
         <div class="p-relative">
           <b-button-group class="boutton-absolute">
-            <b-button variant="outline-primary" @click="voirForm(data.index)">
+            <b-button
+              variant="outline-primary"
+              @click="voirForm(data.index)"
+              v-b-tooltip.hover.v-primary
+              title="Voir"
+            >
               <b-icon icon="eye"></b-icon>
             </b-button>
 
@@ -13,6 +18,8 @@
               variant="outline-warning"
               @click="updateForm(data.index)"
               v-if="$store.state.mode"
+              v-b-tooltip.hover.v-warning
+              title="Modifier"
             >
               <b-icon icon="pencil"></b-icon>
             </b-button>
@@ -20,6 +27,8 @@
               variant="outline-success"
               @click="showResult(data.item.id)"
               v-if="$store.state.mode"
+              v-b-tooltip.hover.v-success
+              title="Voir les soumissions"
             >
               <b-icon icon="server"></b-icon>
             </b-button>
@@ -27,6 +36,8 @@
               variant="outline-danger"
               @click="deleteForm(data.item.id)"
               v-if="$store.state.mode"
+              v-b-tooltip.hover.v-danger
+              title="Supprimer le formulaire "
             >
               <b-icon icon="trash"></b-icon>
             </b-button>
@@ -86,9 +97,33 @@ export default {
       this.$router.push({ path: `/traitement/${id}` });
     },
     deleteForm(id) {
-      config.deleteForm(id).then(() => {
-        window.location.reload();
-      });
+      this.$bvModal
+        .msgBoxConfirm(
+          "Confirmer la suppression, NB : cette action est irreverssible.",
+          {
+            title: "Attention",
+            size: "sm",
+            buttonSize: "sm",
+            okVariant: "danger",
+            okTitle: "Supprimer",
+            cancelTitle: "Annuler",
+            footerClass: "p-2",
+            hideHeaderClose: false,
+            centered: true,
+          }
+        )
+        .then((value) => {
+          if (value) {
+            config.deleteForm(id).then(() => {
+              window.location.reload();
+            });
+          }
+        });
+      /*
+        .catch((err) => {
+          console.log("refus : ", err);
+        });
+        /**/
     },
   },
 };

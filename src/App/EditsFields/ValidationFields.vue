@@ -238,12 +238,6 @@ export default {
 .content-action {
   width: calc(100% - 80px);
 }
-.svg-content {
-  svg {
-    min-width: 40px;
-    font-size: 1rem !important;
-  }
-}
 </style>
 
 <!--

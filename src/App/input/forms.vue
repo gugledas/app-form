@@ -132,7 +132,7 @@ export default {
   position: absolute;
   // left: calc(260px + 50%);
   right: 15px;
-  top: 263px;
+  top: 15%;
   max-width: 163px;
   background-color: rgba(164, 207, 208, 0.3);
   padding: 10px;

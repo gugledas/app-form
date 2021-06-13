@@ -1,84 +1,130 @@
 ((typeof self !== 'undefined' ? self : this)["webpackJsonpappForm"] = (typeof self !== 'undefined' ? self : this)["webpackJsonpappForm"] || []).push([[33],{
 
-/***/ "7817":
+/***/ "3b12":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 // ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"6bacc4e8-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/userpage.vue?vue&type=template&id=009bad0a&scoped=true&lang=html&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('b-container',{staticClass:"bv-example-row p-5",attrs:{"fluid":"lg"}},[_c('div',[_c('b-row',{attrs:{"align-h":"center"}},[_c('b-col',{attrs:{"sm":"10"}},[_c('h5',{staticClass:"titre mb-3 shadow-sm p-2"},[_vm._v(" Estimation de devis : "),_c('span',{staticClass:"form-title"},[_vm._v(_vm._s(_vm.form.name))])])])],1),_c('b-row',{attrs:{"align-h":"center"}},[_c('transition',{attrs:{"name":"fade"}},[(_vm.formDatas && _vm.formDatas.info)?_c('b-col',{attrs:{"cols":"12","lg":"10"}},[_c('pages',{attrs:{"level":_vm.stepsIndex}})],1):_vm._e()],1)],1)],1)])}
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"6bacc4e8-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/formulaire/FormMarkup.vue?vue&type=template&id=87b97b96&scoped=true&lang=html&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('b-row',{staticClass:"mb-3"},[_c('b-col',{attrs:{"sm":"12"}},[_c('b-form-group',{attrs:{"label":"Label","invalid-feedback":"Name is required"}},[_c('b-input-group',[_c('b-form-input',{attrs:{"required":""},on:{"input":_vm.input},model:{value:(_vm.fields.label),callback:function ($$v) {_vm.$set(_vm.fields, "label", $$v)},expression:"fields.label"}}),_c('b-form-input',{attrs:{"required":"","readonly":_vm.readonly},on:{"dblclick":_vm.toogleReadOnly},model:{value:(_vm.fields.name),callback:function ($$v) {_vm.$set(_vm.fields, "name", $$v)},expression:"fields.name"}})],1)],1)],1),(_vm.fields.type == 'markupimage')?_c('b-col',{attrs:{"sm":"12"}},[_c('b-form-group',{attrs:{"label":"Url de l'image"}},[_c('b-form-input',{attrs:{"id":"image-url"},model:{value:(_vm.fields.imgUrl),callback:function ($$v) {_vm.$set(_vm.fields, "imgUrl", $$v)},expression:"fields.imgUrl"}})],1),_c('manageImages',{on:{"ev_manage_images_img":function($event){return _vm.ev_manage_images_img($event)}}})],1):_vm._e()],1),_c('ValidationFields',{attrs:{"field":_vm.fields}})],1)}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/App/userpage.vue?vue&type=template&id=009bad0a&scoped=true&lang=html&
+// CONCATENATED MODULE: ./src/App/formulaire/FormMarkup.vue?vue&type=template&id=87b97b96&scoped=true&lang=html&
 
-// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/objectSpread2.js + 1 modules
-var objectSpread2 = __webpack_require__("5530");
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.function.name.js
+var es_function_name = __webpack_require__("b0c0");
 
-// EXTERNAL MODULE: ./node_modules/vuex/dist/vuex.esm.js
-var vuex_esm = __webpack_require__("2f62");
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.number.constructor.js
+var es_number_constructor = __webpack_require__("a9e3");
 
-// EXTERNAL MODULE: ./src/App/pages.vue + 19 modules
-var pages = __webpack_require__("0b91");
+// EXTERNAL MODULE: ./node_modules/snake-case/dist.es2015/index.js + 5 modules
+var dist_es2015 = __webpack_require__("a4d6");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/userpage.vue?vue&type=script&lang=js&
+// EXTERNAL MODULE: ./src/App/EditsFields/ValidationFields.vue + 10 modules
+var ValidationFields = __webpack_require__("0931");
 
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+// EXTERNAL MODULE: ./src/App/EditsFields/manage-images.vue + 4 modules
+var manage_images = __webpack_require__("910d");
+
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/formulaire/FormMarkup.vue?vue&type=script&lang=js&
 
 
-/* harmony default export */ var userpagevue_type_script_lang_js_ = ({
-  name: "userpage",
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ var FormMarkupvue_type_script_lang_js_ = ({
+  name: "FormMarkup",
   props: {
-    id: {
-      type: String,
-      required: true
+    title: {
+      type: Boolean,
+      default: true
+    },
+    fields: {
+      type: Object,
+      required: true,
+      validator: function validator(val) {
+        return val.label === undefined || val.value === undefined || val.name === undefined || val.require === undefined ? false : true;
+      }
     }
   },
   components: {
-    pages: pages["a" /* default */]
+    ValidationFields: ValidationFields["a" /* default */],
+    manageImages: manage_images["a" /* default */]
   },
   data: function data() {
-    return {//
+    return {
+      readonly: true,
+      value: ""
     };
   },
-  mounted: function mounted() {
-    this.$store.dispatch("setFormId", this.id);
+  mounted: function mounted() {//
   },
   watch: {//
   },
-  computed: Object(objectSpread2["a" /* default */])(Object(objectSpread2["a" /* default */])({}, Object(vuex_esm["c" /* mapState */])(["stepsIndex", "allStepsDatas", "fields", "price"])), Object(vuex_esm["b" /* mapGetters */])(["form", "formDatas"])),
-  methods: {//
+  computed: {},
+  methods: {
+    ev_manage_images_img: function ev_manage_images_img(data) {
+      if (data.url) {
+        this.fields.imgUrl = data.url;
+      }
+    },
+    inputValue: function inputValue() {
+      if (this.value.length) {
+        return this.fields.value = Number(this.value);
+      }
+    },
+    input: function input() {
+      if (this.readonly && this.fields.name.length <= 32) {
+        this.fields.name = Object(dist_es2015["a" /* snakeCase */])(this.fields.label);
+      }
+    },
+    toogleReadOnly: function toogleReadOnly() {
+      if (this.readonly) this.readonly = false;else this.readonly = true;
+    }
   }
 });
-// CONCATENATED MODULE: ./src/App/userpage.vue?vue&type=script&lang=js&
- /* harmony default export */ var App_userpagevue_type_script_lang_js_ = (userpagevue_type_script_lang_js_); 
+// CONCATENATED MODULE: ./src/App/formulaire/FormMarkup.vue?vue&type=script&lang=js&
+ /* harmony default export */ var formulaire_FormMarkupvue_type_script_lang_js_ = (FormMarkupvue_type_script_lang_js_); 
 // EXTERNAL MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
 var componentNormalizer = __webpack_require__("2877");
 
-// CONCATENATED MODULE: ./src/App/userpage.vue
+// CONCATENATED MODULE: ./src/App/formulaire/FormMarkup.vue
 
 
 
@@ -87,17 +133,17 @@ var componentNormalizer = __webpack_require__("2877");
 /* normalize component */
 
 var component = Object(componentNormalizer["a" /* default */])(
-  App_userpagevue_type_script_lang_js_,
+  formulaire_FormMarkupvue_type_script_lang_js_,
   render,
   staticRenderFns,
   false,
   null,
-  "009bad0a",
+  "87b97b96",
   null
   
 )
 
-/* harmony default export */ var userpage = __webpack_exports__["default"] = (component.exports);
+/* harmony default export */ var FormMarkup = __webpack_exports__["default"] = (component.exports);
 
 /***/ })
 

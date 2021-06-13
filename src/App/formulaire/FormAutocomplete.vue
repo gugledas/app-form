@@ -18,15 +18,6 @@
           </b-input-group>
         </b-form-group>
       </b-col>
-      <b-col sm="12">
-        <b-form-group label="Valeur par defaut" label-for="autocomple-value">
-          <b-form-input
-            v-model="fields.value"
-            id="autocomple-value"
-            @input="inputValue"
-          ></b-form-input>
-        </b-form-group>
-      </b-col>
     </b-row>
     <ValidationFields :field="fields"></ValidationFields>
   </div>

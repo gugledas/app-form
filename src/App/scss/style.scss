@@ -1,6 +1,7 @@
 @use "wbu-atomique/scss/atome/typography/_default.scss";
 @use '@braid/vue-formulate/themes/snow/snow.scss';
 @use './variables.scss' as *; //@use './field.scss'; //
+@use "wbu-atomique/scss/defaut/model/custom_bp.scss" as *;
 
 .super-hover {
   z-index: 99999;
@@ -15,6 +16,18 @@
   padding-top   : 5rem;
   padding-bottom: 5rem;
   min-height    : 300px;
+
+  .svg-content {
+    svg {
+      min-width: 40px;
+      font-size: 1.4rem !important;
+    }
+  }
+
+  .decrement {
+    font-size  : 1.8rem;
+    line-height: 1;
+  }
 
   table {
     .th-action {
@@ -49,6 +62,7 @@
     border          : 1px solid #dee2e6;
     background-color: #f8f9fa;
     display         : flex;
+    z-index         : 10;
 
     .btn {
       border-radius: 0;
@@ -69,7 +83,10 @@
 
   .full-block {
     .boutton-absolute {
-      left: calc(100% + 30px);
+      left: 0;
+      @include media-min('MD') {
+        left: calc(100% + 30px);
+      }
     }
   }
 

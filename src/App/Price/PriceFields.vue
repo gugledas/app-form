@@ -21,6 +21,7 @@
         label-size="sm"
         label-cols="4"
         class="mb-3"
+        v-if="!typeSelection"
       >
         <b-form-input
           required
@@ -38,50 +39,62 @@
         <div
           v-for="(component, i) in field.prix.components"
           :key="i"
-          class="border p-2"
+          class="border p-2 d-flex align-items-center"
         >
-          <!-- -->
-          <b-form-group
-            label="si l'etape "
-            label-for="input-lazy"
-            label-size="sm"
-            label-cols="4"
-          >
-            <b-form-select
-              v-model="component.state_name"
-              :options="listeDesEtapes"
-              size="sm"
-            ></b-form-select>
-          </b-form-group>
-          <!-- -->
-          <b-form-group
-            label="si champs "
-            label-for="input-lazy"
-            label-size="sm"
-            label-cols="4"
-            v-if="component.state_name !== ''"
-          >
-            <b-form-select
-              v-model="component.name"
-              :options="listeDesChamps(component)"
-              size="sm"
-            ></b-form-select>
-          </b-form-group>
+          <div>
+            <!-- -->
+            <b-form-group
+              label="si l'etape "
+              label-for="input-lazy"
+              label-size="sm"
+              label-cols="4"
+            >
+              <b-form-select
+                v-model="component.state_name"
+                :options="listeDesEtapes"
+                size="sm"
+              ></b-form-select>
+            </b-form-group>
+            <!-- -->
+            <b-form-group
+              label="si champs "
+              label-for="input-lazy"
+              label-size="sm"
+              label-cols="4"
+              v-if="component.state_name !== ''"
+            >
+              <b-form-select
+                v-model="component.name"
+                :options="listeDesChamps(component)"
+                size="sm"
+              ></b-form-select>
+            </b-form-group>
 
-          <!-- -->
-          <b-form-group
-            label="si options "
-            label-for="input-lazy"
-            label-size="sm"
-            label-cols="4"
-            v-if="component.name !== ''"
-          >
-            <b-form-select
-              v-model="component.value"
-              :options="component.options"
-              size="sm"
-            ></b-form-select>
-          </b-form-group>
+            <!-- -->
+            <!--
+            <b-form-group
+              label="si options "
+              label-for="input-lazy"
+              label-size="sm"
+              label-cols="4"
+              v-if="component.name !== ''"
+            >
+              <b-form-select
+                v-model="component.value"
+                :options="component.options"
+                size="sm"
+              ></b-form-select>
+            </b-form-group>
+          --></div>
+          <div class="svg-content px-2">
+            <b-button
+              variant="transparent"
+              class="m-0 p-0"
+              @click="deleteState(i)"
+            >
+              <b-icon icon="trash" class="px-2" variant="danger"></b-icon>
+            </b-button>
+          </div>
         </div>
       </div>
     </div>
@@ -90,6 +103,7 @@
 
 <script>
 import Price from "../config/price.js";
+import config from "../config/config.js";
 import {
   validationRessource as Validation,
   ValidationInstance,
@@ -124,6 +138,12 @@ export default {
       Validation.listesEtapes(this.form, this.formDatas, etapes);
       return etapes;
     },
+    typeSelection() {
+      if (config.typeSelection.includes(this.field.type)) {
+        return true;
+      }
+      return false;
+    },
   },
   methods: {
     /**
@@ -151,8 +171,11 @@ export default {
       const fields = [];
       const ValidationInst = new ValidationInstance();
       ValidationInst.listeDesChamps(component, this.form, fields);
-      component.options = ValidationInst.StepeValidationOptions;
+      //component.options = ValidationInst.StepeValidationOptions;
       return fields;
+    },
+    deleteState(i) {
+      this.field.prix.components.splice(i, 1);
     },
   },
 };

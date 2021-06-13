@@ -12,6 +12,10 @@ export default {
   optionsAction() {
     return [
       {
+        text: "Selectionner une action",
+        value: "",
+      },
+      {
         text: "prix_utilisables",
         value: "prix_utilisables",
       },

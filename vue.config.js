@@ -1,4 +1,4 @@
-const envMode = process.env.NODE_ENV !== "production";
+const envModeDev = process.env.NODE_ENV !== "production";
 module.exports = {
   lintOnSave: true,
   chainWebpack: (config) => {
@@ -7,15 +7,15 @@ module.exports = {
     });
   },
   //------------https://cli.vuejs.org/config--------------//
-  publicPath: "/",
-  outputDir: "dist",
-  assetsDir: "",
+  //publicPath: "/",
+  //outputDir: "dist",
+  assetsDir: envModeDev ? "" : "./",
   //Pour desactiver la generation des fichiers avec des valeurs aleatoires.
   //filenameHashing: true,
   //pour construire une app avec plusieurs pages.
   //pages:undefined,
   css: {
-    sourceMap: envMode ? true : false,
+    sourceMap: envModeDev ? true : false,
     /*
     loaderOptions: {
       css: {

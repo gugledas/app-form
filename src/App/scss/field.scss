@@ -1,7 +1,11 @@
+@use "wbu-atomique/scss/defaut/model/custom_bp.scss" as *;
 @use "./variables.scss" as *;
 
 .choice-section {
-  max-width    : 480px;
+  max-width    : 380px;
+  @include media-min('MD') {
+    max-width: 480px;
+  }
   margin-top   : 0;
   width        : 100%;
   margin-left  : auto;
@@ -68,6 +72,7 @@
       border       : 1px solid $primary_color;
 
       .multiselect__input,
+      .multiselect__placeholder,
       .multiselect__single {
         margin-bottom: 0;
       }

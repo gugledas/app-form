@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-container class="bv-example-row p-5" fluid="lg">
+    <b-container class="p-md-5" fluid="lg">
       <div>
         <h5 class="titre mb-3 shadow-sm p-2">
           Gestion du formulaire: <span class="form-title">{{ form.name }}</span>
@@ -109,7 +109,7 @@
                 <hr class="my-3" />
                 <b-row align-h="end">
                   <div class="mr-3">
-                    <b-button class="mr-2">export</b-button>
+                    <b-button class="mr-2"> export </b-button>
                     <b-button type="submit" variant="primary" class="mr-2">
                       Mise à jour
                     </b-button>
@@ -286,9 +286,23 @@ export default {
       //this.$store.dispatch("resetFormDatas");
     },
     resetValue() {
-      this.$store.getters.formDatas.selected = "";
-      this.$store.getters.formDatas.value = [];
-      console.log("prev");
+      var TypeString = [
+        "radio",
+        "text",
+        "select",
+        "number",
+        "radiodesc",
+        "codepostal",
+      ];
+      var TypeArray = ["checkbox"];
+      for (const i in this.formDatas.fields) {
+        const field = this.formDatas.fields[i];
+        if (TypeString.includes(field.type)) {
+          field.value = null;
+        } else if (TypeArray.includes(field.type)) {
+          field.value = [];
+        }
+      }
     },
     resetModal() {
       //   this.formDatas.info.title = "";

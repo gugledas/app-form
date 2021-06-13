@@ -2,6 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import utilities from "./utilities.js";
 import { drupalUtilities } from "drupal-vuejs";
+import config from "../App/config/config.js";
 
 Vue.use(Vuex);
 import axios from "axios";
@@ -283,7 +284,10 @@ export default new Vuex.Store({
      */
     async stepsIndex({ commit, getters }, i) {
       //on determine le cout de l'etape:
-      const price = await utilities.getPriceStape(getters);
+      const price = await utilities.getPriceStape(
+        getters.formDatas,
+        getters.form.forms
+      );
       if (price > 0) {
         commit("AJOUT_PRIX_STEPS", price);
       }
@@ -310,7 +314,10 @@ export default new Vuex.Store({
         commit("SET_STATUS_STEPS_INDEX", true);
       }
       //remove price states
-      const price = await utilities.getPriceStape(getters);
+      const price = await utilities.getPriceStape(
+        getters.formDatas,
+        getters.form.forms
+      );
       if (price > 0) {
         commit("REMOVE_PRIX_STEPS", price);
       }
@@ -340,7 +347,7 @@ export default new Vuex.Store({
     loadStepsDatas({ commit }) {
       var datas = "select * from `appformmanager_fomrs`";
       axios
-        .post("http://lesroisdelareno.kksa" + "/query-ajax/select", datas)
+        .post(config.baseURl + "/query-ajax/select", datas)
         .then((reponse) => {
           console.log("get loadStepsDatas: ", reponse);
           commit("SET_ITEMS", reponse.data);
@@ -359,7 +366,7 @@ export default new Vuex.Store({
           " select * from `appformmanager_datas` where `appformmanager_forms` = " +
           id;
         axios
-          .post("http://lesroisdelareno.kksa" + "/query-ajax/select", datas)
+          .post(config.baseURl + "/query-ajax/select", datas)
           .then((reponse) => {
             console.log("get traitement Items: ", reponse);
             commit("SET_TRAITEMENT_ITEMS", reponse.data);

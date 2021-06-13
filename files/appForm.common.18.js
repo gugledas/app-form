@@ -4,7 +4,7 @@
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* unused harmony export alpha */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return alpha; });
 /* unused harmony export alpha_dash */
 /* unused harmony export alpha_num */
 /* unused harmony export alpha_spaces */
@@ -13,7 +13,7 @@
 /* unused harmony export digits */
 /* unused harmony export dimensions */
 /* unused harmony export double */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return email; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return email; });
 /* unused harmony export excluded */
 /* unused harmony export ext */
 /* unused harmony export image */
@@ -26,10 +26,10 @@
 /* unused harmony export mimes */
 /* unused harmony export min */
 /* unused harmony export min_value */
-/* unused harmony export numeric */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return numeric; });
 /* unused harmony export oneOf */
 /* unused harmony export regex */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return required; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return required; });
 /* unused harmony export required_if */
 /* unused harmony export size */
 /**
@@ -776,12 +776,12 @@ var double = {
 // ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"6bacc4e8-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/input/Radio.vue?vue&type=template&id=3a9c0241&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:!_vm.validationField && _vm.mode ? 'mb-5' : ''},[(_vm.validationField)?_c('transition',{attrs:{"name":"fade"}},[_c('b-row',{staticClass:"choice-section min-height"},[_c('b-col',{staticClass:"text-left",attrs:{"cols":"12"}},[_c('p',{staticClass:"page-label"},[_vm._v(_vm._s(_vm.field.label))])]),_c('ValidationProvider',{staticClass:"col-12 p-0",attrs:{"rules":_vm.field.require,"name":_vm.field.name},scopedSlots:_vm._u([{key:"default",fn:function(v){return [_vm._l((_vm.field.options),function(item,i){return _c('b-col',{key:i,attrs:{"cols":"12"}},[_c('div',{staticClass:"input-list"},[_c('b-col',{staticClass:"input-list__label",attrs:{"sm":"11"}},[_c('label',{staticClass:"m-0 d-block w-100",attrs:{"for":("input-radio-a" + (_vm.field.name) + i)}},[_vm._v(_vm._s(item.text))])]),_c('b-col',{staticClass:"input-list__input"},[_c('b-form-radio',{attrs:{"name":_vm.field.name,"size":"lg","id":("input-radio-a" + (_vm.field.name) + i),"value":item.value},model:{value:(_vm.field.value),callback:function ($$v) {_vm.$set(_vm.field, "value", $$v)},expression:"field.value"}})],1)],1)])}),_c('div',{staticClass:"text-danger"},_vm._l((v.errors),function(error,ii){return _c('small',{key:ii,staticClass:"d-block"},[_vm._v(" "+_vm._s(error)+" ")])}),0)]}}],null,false,2974732906)})],1)],1):_vm._e()],1)}
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"6bacc4e8-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/input/Radio.vue?vue&type=template&id=a13d71d2&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:!_vm.validationField && _vm.mode ? 'mb-5' : ''},[(_vm.validationField)?_c('transition',{attrs:{"name":"fade"}},[_c('b-row',{staticClass:"choice-section min-height"},[(!_vm.field.label_hidden === true)?_c('b-col',{staticClass:"text-left",attrs:{"cols":"12"}},[_c('p',{staticClass:"page-label"},[_vm._v(_vm._s(_vm.field.label))])]):_vm._e(),_c('ValidationProvider',{staticClass:"col-12 p-0",attrs:{"rules":_vm.field.require,"name":_vm.field.name},scopedSlots:_vm._u([{key:"default",fn:function(v){return [_vm._l((_vm.field.options),function(item,i){return _c('b-col',{key:i,attrs:{"cols":"12"}},[_c('div',{staticClass:"input-list"},[_c('b-col',{staticClass:"input-list__label",attrs:{"sm":"11"}},[_c('label',{staticClass:"m-0 d-block w-100",attrs:{"for":("input-radio-a" + (_vm.field.name) + i)}},[_vm._v(_vm._s(item.text))])]),_c('b-col',{staticClass:"input-list__input"},[_c('b-form-radio',{attrs:{"name":_vm.field.name,"size":"lg","id":("input-radio-a" + (_vm.field.name) + i),"value":item.value},model:{value:(_vm.field.value),callback:function ($$v) {_vm.$set(_vm.field, "value", $$v)},expression:"field.value"}})],1)],1)])}),_c('div',{staticClass:"text-danger"},_vm._l((v.errors),function(error,ii){return _c('small',{key:ii,staticClass:"d-block"},[_vm._v(" "+_vm._s(error)+" ")])}),0)]}}],null,false,2974732906)})],1)],1):_vm._e()],1)}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/App/input/Radio.vue?vue&type=template&id=3a9c0241&
+// CONCATENATED MODULE: ./src/App/input/Radio.vue?vue&type=template&id=a13d71d2&
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/objectSpread2.js + 1 modules
 var objectSpread2 = __webpack_require__("5530");
@@ -915,11 +915,13 @@ var component = Object(componentNormalizer["a" /* default */])(
 
  // No message specified.
 
-Object(vee_validate__WEBPACK_IMPORTED_MODULE_1__[/* extend */ "c"])("email", vee_validate_dist_rules__WEBPACK_IMPORTED_MODULE_2__[/* email */ "a"]); // Override the default message.
+Object(vee_validate__WEBPACK_IMPORTED_MODULE_1__[/* extend */ "c"])("email", vee_validate_dist_rules__WEBPACK_IMPORTED_MODULE_2__[/* email */ "b"]); // Override the default message.
 
-Object(vee_validate__WEBPACK_IMPORTED_MODULE_1__[/* extend */ "c"])("required", Object(_siteweb_AppVuejs_app_form_node_modules_babel_runtime_helpers_esm_objectSpread2__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"])(Object(_siteweb_AppVuejs_app_form_node_modules_babel_runtime_helpers_esm_objectSpread2__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"])({}, vee_validate_dist_rules__WEBPACK_IMPORTED_MODULE_2__[/* required */ "b"]), {}, {
+Object(vee_validate__WEBPACK_IMPORTED_MODULE_1__[/* extend */ "c"])("required", Object(_siteweb_AppVuejs_app_form_node_modules_babel_runtime_helpers_esm_objectSpread2__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"])(Object(_siteweb_AppVuejs_app_form_node_modules_babel_runtime_helpers_esm_objectSpread2__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"])({}, vee_validate_dist_rules__WEBPACK_IMPORTED_MODULE_2__[/* required */ "d"]), {}, {
   message: "Ce champs est requis"
-})); //export default extend;
+}));
+Object(vee_validate__WEBPACK_IMPORTED_MODULE_1__[/* extend */ "c"])("alpha", vee_validate_dist_rules__WEBPACK_IMPORTED_MODULE_2__[/* alpha */ "a"]);
+Object(vee_validate__WEBPACK_IMPORTED_MODULE_1__[/* extend */ "c"])("alpha", vee_validate_dist_rules__WEBPACK_IMPORTED_MODULE_2__[/* numeric */ "c"]); //export default extend;
 
 /***/ })
 

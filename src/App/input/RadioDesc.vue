@@ -9,7 +9,11 @@
           :name="field.name"
         >
           <b-row>
-            <b-col cols="12" class="text-left">
+            <b-col
+              cols="12"
+              class="text-left"
+              v-if="!field.label_hidden === true"
+            >
               <p class="page-label">{{ field.label }}</p>
             </b-col>
             <b-col cols="12" v-for="(item, i) in field.options" :key="i">

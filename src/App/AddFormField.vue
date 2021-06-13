@@ -17,7 +17,7 @@
       <b-row>
         <b-col cols="7">
           <b-form-group
-            label="Sélectionner un type"
+            label="Sélectionner un type de champs"
             label-for="type-input"
             invalid-feedback="type is required"
           >

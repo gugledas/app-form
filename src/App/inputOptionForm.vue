@@ -51,9 +51,6 @@
     <!-- if is  Number label up  and Number label Inline-->
 
     <form-number-up v-if="type == 'numberup'" :fields="fields"></form-number-up>
-
-    fields:
-    <pre>{{ fields }}--{{ optionsToPush }}</pre>
   </div>
 </template>
 

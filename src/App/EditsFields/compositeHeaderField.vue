@@ -13,6 +13,14 @@
         </b-form-input>
       </b-input-group>
     </b-form-group>
+    <b-form-group
+      label="Cacher le label"
+      label-cols="6"
+      label-cols-md="2"
+      label-cols-sm="3"
+    >
+      <b-form-checkbox size="lg" v-model="field.label_hidden"></b-form-checkbox>
+    </b-form-group>
   </div>
 </template>
 

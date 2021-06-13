@@ -4,7 +4,7 @@
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* unused harmony export alpha */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return alpha; });
 /* unused harmony export alpha_dash */
 /* unused harmony export alpha_num */
 /* unused harmony export alpha_spaces */
@@ -13,7 +13,7 @@
 /* unused harmony export digits */
 /* unused harmony export dimensions */
 /* unused harmony export double */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return email; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return email; });
 /* unused harmony export excluded */
 /* unused harmony export ext */
 /* unused harmony export image */
@@ -26,10 +26,10 @@
 /* unused harmony export mimes */
 /* unused harmony export min */
 /* unused harmony export min_value */
-/* unused harmony export numeric */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return numeric; });
 /* unused harmony export oneOf */
 /* unused harmony export regex */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return required; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return required; });
 /* unused harmony export required_if */
 /* unused harmony export size */
 /**
@@ -769,19 +769,22 @@ var double = {
 
 /***/ }),
 
-/***/ "8bfb":
+/***/ "7f81":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 // ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"6bacc4e8-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/input/Radio.vue?vue&type=template&id=11f75042&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[(_vm.validationField)?_c('transition',{attrs:{"name":"fade"}},[_c('b-row',[_c('b-col',{staticClass:"text-left",attrs:{"cols":"12"}},[_c('p',{staticClass:"page-label"},[_vm._v(_vm._s(_vm.field.label))])]),_c('ValidationProvider',{staticClass:"col-12 p-0",attrs:{"rules":_vm.field.require,"name":_vm.field.name},scopedSlots:_vm._u([{key:"default",fn:function(v){return [_vm._l((_vm.field.options),function(item,i){return _c('b-col',{key:i,attrs:{"cols":"12"}},[_c('div',{staticClass:"input-list"},[_c('b-col',{staticClass:"input-list__label",attrs:{"sm":"11"}},[_c('label',{staticClass:"m-0 d-block w-100",attrs:{"for":("input-radio-a" + (_vm.field.name) + i)}},[_vm._v(_vm._s(item.text))])]),_c('b-col',{staticClass:"input-list__input"},[_c('b-form-radio',{attrs:{"name":_vm.field.name,"size":"lg","id":("input-radio-a" + (_vm.field.name) + i),"value":item.value},model:{value:(_vm.field.value),callback:function ($$v) {_vm.$set(_vm.field, "value", $$v)},expression:"field.value"}})],1)],1)])}),_c('div',{staticClass:"text-danger"},_vm._l((v.errors),function(error,ii){return _c('small',{key:ii,staticClass:"d-block"},[_vm._v(" "+_vm._s(error)+" ")])}),0)]}}],null,false,2974732906)})],1)],1):_vm._e()],1)}
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"6bacc4e8-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/input/Checkbox.vue?vue&type=template&id=3e71b964&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:!_vm.validationField && _vm.mode ? 'mb-5' : ''},[(_vm.validationField)?_c('transition',{attrs:{"name":"fade"}},[_c('div',{staticClass:"choice-section min-height"},[_c('b-row',[(!_vm.field.label_hidden === true)?_c('b-col',{staticClass:"text-left",attrs:{"cols":"12"}},[_c('p',{staticClass:"page-label"},[_vm._v(_vm._s(_vm.field.label))])]):_vm._e(),_c('ValidationProvider',{staticClass:"col-12 p-0",attrs:{"rules":_vm.field.require,"name":_vm.field.name},scopedSlots:_vm._u([{key:"default",fn:function(v){return [_c('b-form-checkbox-group',{attrs:{"name":_vm.field.name},on:{"change":_vm.changeValue},model:{value:(_vm.selected),callback:function ($$v) {_vm.selected=$$v},expression:"selected"}},_vm._l((_vm.field.options),function(item,i){return _c('b-col',{key:i,attrs:{"cols":"12"}},[_c('div',{staticClass:"input-list"},[_c('b-col',{staticClass:"\n                    input-list__label\n                    d-flex\n                    align-items-start\n                    flex-column\n                  ",attrs:{"sm":"11"}},[_c('label',{staticClass:"m-0 w-100",attrs:{"for":("checkbox-a" + (_vm.field.name) + i)}},[_vm._v(_vm._s(item.text))])]),_c('b-col',{staticClass:"input-list__input"},[_c('b-form-checkbox',{attrs:{"id":("checkbox-a" + (_vm.field.name) + i),"size":"lg","value":item.value}})],1)],1)])}),1),_c('div',{staticClass:"text-danger"},_vm._l((v.errors),function(error,ii){return _c('small',{key:ii,staticClass:"d-block"},[_vm._v(" "+_vm._s(error)+" ")])}),0)]}}],null,false,1501846938)})],1)],1)]):_vm._e()],1)}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/App/input/Radio.vue?vue&type=template&id=11f75042&
+// CONCATENATED MODULE: ./src/App/input/Checkbox.vue?vue&type=template&id=3e71b964&
+
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/typeof.js
+var esm_typeof = __webpack_require__("53ca");
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/objectSpread2.js + 1 modules
 var objectSpread2 = __webpack_require__("5530");
@@ -798,57 +801,76 @@ var validation = __webpack_require__("e412");
 // EXTERNAL MODULE: ./src/App/EditsFields/vee-validate-custom.js
 var vee_validate_custom = __webpack_require__("b6d1");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/input/Radio.vue?vue&type=script&lang=js&
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/input/Checkbox.vue?vue&type=script&lang=js&
 
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
-/* harmony default export */ var Radiovue_type_script_lang_js_ = ({
+
+
+/* harmony default export */ var Checkboxvue_type_script_lang_js_ = ({
   props: {
     field: {
       type: Object,
@@ -860,13 +882,16 @@ var vee_validate_custom = __webpack_require__("b6d1");
   },
   data: function data() {
     return {
-      value: 1
+      selected: []
     };
   },
+  mounted: function mounted() {
+    this.retrieveValue();
+  },
   watch: {},
-  computed: Object(objectSpread2["a" /* default */])(Object(objectSpread2["a" /* default */])(Object(objectSpread2["a" /* default */])({}, Object(vuex_esm["b" /* mapGetters */])(["formDatas"])), Object(vuex_esm["c" /* mapState */])(["formDatasValidate"])), {}, {
+  computed: Object(objectSpread2["a" /* default */])(Object(objectSpread2["a" /* default */])(Object(objectSpread2["a" /* default */])({}, Object(vuex_esm["b" /* mapGetters */])(["formDatas"])), Object(vuex_esm["c" /* mapState */])(["formDatasValidate", "mode"])), {}, {
     validationField: function validationField() {
-      if (this.field.states.length) {
+      if (this.field.states && this.field.states.length) {
         var status = validation["b" /* validationRessource */].computedValidation(this.formDatas, this.field, this.formDatasValidate);
         if (status !== undefined) return status;
       }
@@ -874,14 +899,27 @@ var vee_validate_custom = __webpack_require__("b6d1");
       return true;
     }
   }),
-  methods: {}
+  methods: {
+    retrieveValue: function retrieveValue() {
+      var type_data = Object(esm_typeof["a" /* default */])(this.field.value);
+
+      if (type_data === "object" && this.field.value && this.field.value.length !== undefined) {
+        this.selected = this.field.value;
+      } else if (this.field.value) {
+        this.selected.push(this.field.value);
+      }
+    },
+    changeValue: function changeValue(val) {
+      this.field.value = val;
+    }
+  }
 });
-// CONCATENATED MODULE: ./src/App/input/Radio.vue?vue&type=script&lang=js&
- /* harmony default export */ var input_Radiovue_type_script_lang_js_ = (Radiovue_type_script_lang_js_); 
+// CONCATENATED MODULE: ./src/App/input/Checkbox.vue?vue&type=script&lang=js&
+ /* harmony default export */ var input_Checkboxvue_type_script_lang_js_ = (Checkboxvue_type_script_lang_js_); 
 // EXTERNAL MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
 var componentNormalizer = __webpack_require__("2877");
 
-// CONCATENATED MODULE: ./src/App/input/Radio.vue
+// CONCATENATED MODULE: ./src/App/input/Checkbox.vue
 
 
 
@@ -890,7 +928,7 @@ var componentNormalizer = __webpack_require__("2877");
 /* normalize component */
 
 var component = Object(componentNormalizer["a" /* default */])(
-  input_Radiovue_type_script_lang_js_,
+  input_Checkboxvue_type_script_lang_js_,
   render,
   staticRenderFns,
   false,
@@ -900,7 +938,7 @@ var component = Object(componentNormalizer["a" /* default */])(
   
 )
 
-/* harmony default export */ var Radio = __webpack_exports__["default"] = (component.exports);
+/* harmony default export */ var Checkbox = __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
@@ -915,11 +953,13 @@ var component = Object(componentNormalizer["a" /* default */])(
 
  // No message specified.
 
-Object(vee_validate__WEBPACK_IMPORTED_MODULE_1__[/* extend */ "c"])("email", vee_validate_dist_rules__WEBPACK_IMPORTED_MODULE_2__[/* email */ "a"]); // Override the default message.
+Object(vee_validate__WEBPACK_IMPORTED_MODULE_1__[/* extend */ "c"])("email", vee_validate_dist_rules__WEBPACK_IMPORTED_MODULE_2__[/* email */ "b"]); // Override the default message.
 
-Object(vee_validate__WEBPACK_IMPORTED_MODULE_1__[/* extend */ "c"])("required", Object(_siteweb_AppVuejs_app_form_node_modules_babel_runtime_helpers_esm_objectSpread2__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"])(Object(_siteweb_AppVuejs_app_form_node_modules_babel_runtime_helpers_esm_objectSpread2__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"])({}, vee_validate_dist_rules__WEBPACK_IMPORTED_MODULE_2__[/* required */ "b"]), {}, {
+Object(vee_validate__WEBPACK_IMPORTED_MODULE_1__[/* extend */ "c"])("required", Object(_siteweb_AppVuejs_app_form_node_modules_babel_runtime_helpers_esm_objectSpread2__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"])(Object(_siteweb_AppVuejs_app_form_node_modules_babel_runtime_helpers_esm_objectSpread2__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"])({}, vee_validate_dist_rules__WEBPACK_IMPORTED_MODULE_2__[/* required */ "d"]), {}, {
   message: "Ce champs est requis"
-})); //export default extend;
+}));
+Object(vee_validate__WEBPACK_IMPORTED_MODULE_1__[/* extend */ "c"])("alpha", vee_validate_dist_rules__WEBPACK_IMPORTED_MODULE_2__[/* alpha */ "a"]);
+Object(vee_validate__WEBPACK_IMPORTED_MODULE_1__[/* extend */ "c"])("alpha", vee_validate_dist_rules__WEBPACK_IMPORTED_MODULE_2__[/* numeric */ "c"]); //export default extend;
 
 /***/ })
 

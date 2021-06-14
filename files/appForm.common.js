@@ -55381,19 +55381,6 @@ external_commonjs_vue_commonjs2_vue_root_Vue_default.a.use(vuex_esm["a" /* defau
     field: {},
 
     /**
-     * Contient le formulaire selectionné par le client.
-     */
-
-    /*
-    form: {
-      id: "",
-      forms: "",
-      description: "",
-      name: "",
-    },
-    /**/
-
-    /**
      * Contient la liste des formulaire soumis recuperer de la BD.
      */
     traitementItems: [],
@@ -55491,20 +55478,22 @@ external_commonjs_vue_commonjs2_vue_root_Vue_default.a.use(vuex_esm["a" /* defau
      */
     form: function form(state) {
       if (state.items.length && state.formId !== null) {
-        var form = state.items[state.formId];
+        for (var i in state.items) {
+          if (state.items[i].id === state.formId) {
+            var form = state.items[i];
 
-        var TypeDonnee = Object(esm_typeof["a" /* default */])(form.forms);
+            var TypeDonnee = Object(esm_typeof["a" /* default */])(form.forms);
 
-        if (form.forms && form.forms !== "" && TypeDonnee === "string") {
-          form.forms = JSON.parse(form.forms);
-        } else if (form.forms === "") {
-          form.forms = [];
+            if (form.forms && form.forms !== "" && TypeDonnee === "string") {
+              form.forms = JSON.parse(form.forms);
+            } else if (form.forms === "") {
+              form.forms = [];
+            }
+
+            return form;
+          }
         }
-
-        return form;
-      }
-
-      return {
+      } else return {
         id: "",
         forms: "",
         description: "",
@@ -55607,9 +55596,14 @@ external_commonjs_vue_commonjs2_vue_root_Vue_default.a.use(vuex_esm["a" /* defau
       state.traitementId = payload;
     },
     SET_FORM: function SET_FORM(state) {
-      var form = state.items[state.formId];
-      form.forms = JSON.parse(form.forms);
-      state.form = form;
+      for (var i in state.items) {
+        if (state.items[i].id === state.formId) {
+          var form = state.items[i];
+          form.forms = JSON.parse(form.forms);
+          state.form = form;
+          break;
+        }
+      }
     },
     STEPS_INDEX: function STEPS_INDEX(state, i) {
       state.stepsIndex = i;
@@ -58939,12 +58933,12 @@ if (inBrowser && window.Vue) {
 
 /* harmony default export */ var vue_router_esm = (VueRouter);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"6bacc4e8-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/Listesfomes.vue?vue&type=template&id=4652a97c&lang=html&
-var Listesfomesvue_type_template_id_4652a97c_lang_html_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('b-button',{directives:[{name:"b-modal",rawName:"v-b-modal.add-edit-form",modifiers:{"add-edit-form":true}}],attrs:{"variant":"outline-info"}},[_vm._v(" + ")]),_c('b-table',{attrs:{"items":_vm.items,"fields":_vm.fields},scopedSlots:_vm._u([{key:"cell(action)",fn:function(data){return [_c('div',{staticClass:"p-relative"},[_c('b-button-group',{staticClass:"boutton-absolute"},[_c('b-button',{directives:[{name:"b-tooltip",rawName:"v-b-tooltip.hover.v-primary",modifiers:{"hover":true,"v-primary":true}}],attrs:{"variant":"outline-primary","title":"Voir"},on:{"click":function($event){return _vm.voirForm(data.index)}}},[_c('b-icon',{attrs:{"icon":"eye"}})],1),(_vm.$store.state.mode)?_c('b-button',{directives:[{name:"b-tooltip",rawName:"v-b-tooltip.hover.v-warning",modifiers:{"hover":true,"v-warning":true}}],attrs:{"variant":"outline-warning","title":"Modifier"},on:{"click":function($event){return _vm.updateForm(data.index)}}},[_c('b-icon',{attrs:{"icon":"pencil"}})],1):_vm._e(),(_vm.$store.state.mode)?_c('b-button',{directives:[{name:"b-tooltip",rawName:"v-b-tooltip.hover.v-success",modifiers:{"hover":true,"v-success":true}}],attrs:{"variant":"outline-success","title":"Voir les soumissions"},on:{"click":function($event){return _vm.showResult(data.item.id)}}},[_c('b-icon',{attrs:{"icon":"server"}})],1):_vm._e(),(_vm.$store.state.mode)?_c('b-button',{directives:[{name:"b-tooltip",rawName:"v-b-tooltip.hover.v-danger",modifiers:{"hover":true,"v-danger":true}}],attrs:{"variant":"outline-danger","title":"Supprimer le formulaire "},on:{"click":function($event){return _vm.deleteForm(data.item.id)}}},[_c('b-icon',{attrs:{"icon":"trash"}})],1):_vm._e()],1)],1)]}}])}),_c('AddEditForm')],1)}
-var Listesfomesvue_type_template_id_4652a97c_lang_html_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"6bacc4e8-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/Listesfomes.vue?vue&type=template&id=12c6d8c2&lang=html&
+var Listesfomesvue_type_template_id_12c6d8c2_lang_html_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('b-button',{directives:[{name:"b-modal",rawName:"v-b-modal.add-edit-form",modifiers:{"add-edit-form":true}}],attrs:{"variant":"outline-info"}},[_vm._v(" + ")]),_c('b-table',{attrs:{"items":_vm.items,"fields":_vm.fields},scopedSlots:_vm._u([{key:"cell(action)",fn:function(data){return [_c('div',{staticClass:"p-relative"},[_c('b-button-group',{staticClass:"boutton-absolute"},[_c('b-button',{directives:[{name:"b-tooltip",rawName:"v-b-tooltip.hover.v-primary",modifiers:{"hover":true,"v-primary":true}}],attrs:{"variant":"outline-primary","title":"Voir"},on:{"click":function($event){return _vm.voirForm(data.item.id)}}},[_c('b-icon',{attrs:{"icon":"eye"}})],1),(_vm.$store.state.mode)?_c('b-button',{directives:[{name:"b-tooltip",rawName:"v-b-tooltip.hover.v-warning",modifiers:{"hover":true,"v-warning":true}}],attrs:{"variant":"outline-warning","title":"Modifier"},on:{"click":function($event){return _vm.updateForm(data.item.id)}}},[_c('b-icon',{attrs:{"icon":"pencil"}})],1):_vm._e(),(_vm.$store.state.mode)?_c('b-button',{directives:[{name:"b-tooltip",rawName:"v-b-tooltip.hover.v-success",modifiers:{"hover":true,"v-success":true}}],attrs:{"variant":"outline-success","title":"Voir les soumissions"},on:{"click":function($event){return _vm.showResult(data.item.id)}}},[_c('b-icon',{attrs:{"icon":"server"}})],1):_vm._e(),(_vm.$store.state.mode)?_c('b-button',{directives:[{name:"b-tooltip",rawName:"v-b-tooltip.hover.v-danger",modifiers:{"hover":true,"v-danger":true}}],attrs:{"variant":"outline-danger","title":"Supprimer le formulaire "},on:{"click":function($event){return _vm.deleteForm(data.item.id)}}},[_c('b-icon',{attrs:{"icon":"trash"}})],1):_vm._e()],1)],1)]}}])}),_c('AddEditForm')],1)}
+var Listesfomesvue_type_template_id_12c6d8c2_lang_html_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/App/Listesfomes.vue?vue&type=template&id=4652a97c&lang=html&
+// CONCATENATED MODULE: ./src/App/Listesfomes.vue?vue&type=template&id=12c6d8c2&lang=html&
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/objectSpread2.js + 1 modules
 var objectSpread2 = __webpack_require__("5530");
@@ -59092,8 +59086,8 @@ var objectSpread2 = __webpack_require__("5530");
 
 var Listesfomes_component = Object(componentNormalizer["a" /* default */])(
   App_Listesfomesvue_type_script_lang_js_,
-  Listesfomesvue_type_template_id_4652a97c_lang_html_render,
-  Listesfomesvue_type_template_id_4652a97c_lang_html_staticRenderFns,
+  Listesfomesvue_type_template_id_12c6d8c2_lang_html_render,
+  Listesfomesvue_type_template_id_12c6d8c2_lang_html_staticRenderFns,
   false,
   null,
   null,

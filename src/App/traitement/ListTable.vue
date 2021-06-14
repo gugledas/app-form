@@ -66,12 +66,6 @@
         ></b-col>
       </b-row>
     </b-modal>
-    <pre>
-      {{ liste_fields_display }}
-    </pre>
-    <pre>
-      {{ traitementFormItemsDisplay }}
-    </pre>
   </div>
 </template>
 

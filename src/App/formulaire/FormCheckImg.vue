@@ -80,8 +80,22 @@
 
         <b-form-group
           :id="`option-label${i}`"
-          label="label"
+          label="Label"
           label-for="input-option-label"
+        >
+          <b-form-input
+            v-model="item.text"
+            :id="`option-label${i}`"
+            placeholder="Enter label"
+            required
+          ></b-form-input>
+        </b-form-group>
+
+        <b-form-group
+          :id="`option-label${i}`"
+          label="(text not use)"
+          label-for="input-option-label"
+          description="Ce champs doit etre supprimer, il sert juste d'indication, afin de regler un bug de remplissage."
         >
           <b-form-input
             v-model="item.label"

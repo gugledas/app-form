@@ -96,7 +96,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 		if(installedCssChunks[chunkId]) promises.push(installedCssChunks[chunkId]);
 /******/ 		else if(installedCssChunks[chunkId] !== 0 && cssChunks[chunkId]) {
 /******/ 			promises.push(installedCssChunks[chunkId] = new Promise(function(resolve, reject) {
-/******/ 				var href = "css/" + ({}[chunkId]||chunkId) + "." + {"0":"31d6cfe0","1":"2d029869","2":"888d2b30","4":"179987f4","5":"61e966bc","6":"b2742065","7":"63248bb6","8":"dd3fcea7","9":"e5f1a246","10":"bc2e9aa0","11":"8f85aa7a","12":"4bdbbebb","13":"4bdbbebb","14":"ac5b10c9","15":"42efe657","16":"3def3390","17":"3500c7e5","18":"2f36306f","19":"44ac9b6b","20":"31d6cfe0","21":"31d6cfe0","22":"31d6cfe0","23":"31d6cfe0","24":"31d6cfe0","25":"31d6cfe0","26":"31d6cfe0","27":"31d6cfe0","28":"31d6cfe0","29":"31d6cfe0","30":"31d6cfe0","31":"31d6cfe0","32":"31d6cfe0","33":"31d6cfe0","34":"31d6cfe0","35":"31d6cfe0"}[chunkId] + ".css";
+/******/ 				var href = "css/" + ({}[chunkId]||chunkId) + "." + {"0":"31d6cfe0","1":"2d029869","2":"bb3f7f76","4":"179987f4","5":"61e966bc","6":"b2742065","7":"63248bb6","8":"dd3fcea7","9":"e5f1a246","10":"bc2e9aa0","11":"8f85aa7a","12":"4bdbbebb","13":"4bdbbebb","14":"ac5b10c9","15":"42efe657","16":"3def3390","17":"3500c7e5","18":"2f36306f","19":"44ac9b6b","20":"31d6cfe0","21":"31d6cfe0","22":"31d6cfe0","23":"31d6cfe0","24":"31d6cfe0","25":"31d6cfe0","26":"31d6cfe0","27":"31d6cfe0","28":"31d6cfe0","29":"31d6cfe0","30":"31d6cfe0","31":"31d6cfe0","32":"31d6cfe0","33":"31d6cfe0","34":"31d6cfe0","35":"31d6cfe0"}[chunkId] + ".css";
 /******/ 				var fullhref = __webpack_require__.p + href;
 /******/ 				var existingLinkTags = document.getElementsByTagName("link");
 /******/ 				for(var i = 0; i < existingLinkTags.length; i++) {
@@ -47065,7 +47065,6 @@ var InstAxios = axios_default.a.create({
 var basicRequest = {
   axiosInstance: InstAxios,
   post: function post(url, datas, configs) {
-    console.log("configs :: last :: ", configs);
     return new Promise(function (resolv, reject) {
       InstAxios.post(url, datas, configs).then(function (reponse) {
         resolv({
@@ -62466,6 +62465,7 @@ var vm = new vue__WEBPACK_IMPORTED_MODULE_7___default.a(); //console.log("Module
 wbuutilities__WEBPACK_IMPORTED_MODULE_4__[/* AjaxToastBootStrap */ "b"].$bvToast = vm.$bvToast;
 /* harmony default export */ __webpack_exports__["a"] = ({
   baseURl: window.location.host.includes("localhost") ? "http://lesroisdelareno.kksa" : window.location.origin,
+  typeSelection: ["radio", "select", "checkbox"],
 
   /**
    * Permet d'ajouter et d'editer un formulaire.
@@ -63463,7 +63463,7 @@ external_commonjs_vue_commonjs2_vue_root_Vue_default.a.use(vuex_esm["a" /* defau
               case 0:
                 commit = _ref3.commit, getters = _ref3.getters;
                 _context.next = 3;
-                return utilities["a" /* default */].getPriceStape(getters);
+                return utilities["a" /* default */].getPriceStape(getters.formDatas, getters.form.forms);
 
               case 3:
                 price = _context.sent;
@@ -63533,7 +63533,7 @@ external_commonjs_vue_commonjs2_vue_root_Vue_default.a.use(vuex_esm["a" /* defau
 
 
                 _context2.next = 10;
-                return utilities["a" /* default */].getPriceStape(getters);
+                return utilities["a" /* default */].getPriceStape(getters.formDatas, getters.form.forms);
 
               case 10:
                 price = _context2.sent;
@@ -66736,12 +66736,12 @@ if (inBrowser && window.Vue) {
 
 /* harmony default export */ var vue_router_esm = (VueRouter);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"6bacc4e8-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/Listesfomes.vue?vue&type=template&id=61ee311a&lang=html&
-var Listesfomesvue_type_template_id_61ee311a_lang_html_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('b-button',{directives:[{name:"b-modal",rawName:"v-b-modal.add-edit-form",modifiers:{"add-edit-form":true}}],attrs:{"variant":"outline-info"}},[_vm._v(" + ")]),_c('b-table',{attrs:{"items":_vm.items,"fields":_vm.fields},scopedSlots:_vm._u([{key:"cell(action)",fn:function(data){return [_c('div',{staticClass:"p-relative"},[_c('b-button-group',{staticClass:"boutton-absolute"},[_c('b-button',{attrs:{"variant":"outline-primary"},on:{"click":function($event){return _vm.voirForm(data.index)}}},[_c('b-icon',{attrs:{"icon":"eye"}})],1),(_vm.$store.state.mode)?_c('b-button',{attrs:{"variant":"outline-warning"},on:{"click":function($event){return _vm.updateForm(data.index)}}},[_c('b-icon',{attrs:{"icon":"pencil"}})],1):_vm._e(),(_vm.$store.state.mode)?_c('b-button',{attrs:{"variant":"outline-success"},on:{"click":function($event){return _vm.showResult(data.item.id)}}},[_c('b-icon',{attrs:{"icon":"server"}})],1):_vm._e(),(_vm.$store.state.mode)?_c('b-button',{attrs:{"variant":"outline-danger"},on:{"click":function($event){return _vm.deleteForm(data.item.id)}}},[_c('b-icon',{attrs:{"icon":"trash"}})],1):_vm._e()],1)],1)]}}])}),_c('AddEditForm')],1)}
-var Listesfomesvue_type_template_id_61ee311a_lang_html_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"6bacc4e8-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/Listesfomes.vue?vue&type=template&id=4652a97c&lang=html&
+var Listesfomesvue_type_template_id_4652a97c_lang_html_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('b-button',{directives:[{name:"b-modal",rawName:"v-b-modal.add-edit-form",modifiers:{"add-edit-form":true}}],attrs:{"variant":"outline-info"}},[_vm._v(" + ")]),_c('b-table',{attrs:{"items":_vm.items,"fields":_vm.fields},scopedSlots:_vm._u([{key:"cell(action)",fn:function(data){return [_c('div',{staticClass:"p-relative"},[_c('b-button-group',{staticClass:"boutton-absolute"},[_c('b-button',{directives:[{name:"b-tooltip",rawName:"v-b-tooltip.hover.v-primary",modifiers:{"hover":true,"v-primary":true}}],attrs:{"variant":"outline-primary","title":"Voir"},on:{"click":function($event){return _vm.voirForm(data.index)}}},[_c('b-icon',{attrs:{"icon":"eye"}})],1),(_vm.$store.state.mode)?_c('b-button',{directives:[{name:"b-tooltip",rawName:"v-b-tooltip.hover.v-warning",modifiers:{"hover":true,"v-warning":true}}],attrs:{"variant":"outline-warning","title":"Modifier"},on:{"click":function($event){return _vm.updateForm(data.index)}}},[_c('b-icon',{attrs:{"icon":"pencil"}})],1):_vm._e(),(_vm.$store.state.mode)?_c('b-button',{directives:[{name:"b-tooltip",rawName:"v-b-tooltip.hover.v-success",modifiers:{"hover":true,"v-success":true}}],attrs:{"variant":"outline-success","title":"Voir les soumissions"},on:{"click":function($event){return _vm.showResult(data.item.id)}}},[_c('b-icon',{attrs:{"icon":"server"}})],1):_vm._e(),(_vm.$store.state.mode)?_c('b-button',{directives:[{name:"b-tooltip",rawName:"v-b-tooltip.hover.v-danger",modifiers:{"hover":true,"v-danger":true}}],attrs:{"variant":"outline-danger","title":"Supprimer le formulaire "},on:{"click":function($event){return _vm.deleteForm(data.item.id)}}},[_c('b-icon',{attrs:{"icon":"trash"}})],1):_vm._e()],1)],1)]}}])}),_c('AddEditForm')],1)}
+var Listesfomesvue_type_template_id_4652a97c_lang_html_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/App/Listesfomes.vue?vue&type=template&id=61ee311a&lang=html&
+// CONCATENATED MODULE: ./src/App/Listesfomes.vue?vue&type=template&id=4652a97c&lang=html&
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/objectSpread2.js + 1 modules
 var objectSpread2 = __webpack_require__("5530");
@@ -66753,6 +66753,17 @@ var objectSpread2 = __webpack_require__("5530");
 
 
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -66841,9 +66852,28 @@ var objectSpread2 = __webpack_require__("5530");
       });
     },
     deleteForm: function deleteForm(id) {
-      config["a" /* default */].deleteForm(id).then(function () {
-        window.location.reload();
+      this.$bvModal.msgBoxConfirm("Confirmer la suppression, NB : cette action est irreverssible.", {
+        title: "Attention",
+        size: "sm",
+        buttonSize: "sm",
+        okVariant: "danger",
+        okTitle: "Supprimer",
+        cancelTitle: "Annuler",
+        footerClass: "p-2",
+        hideHeaderClose: false,
+        centered: true
+      }).then(function (value) {
+        if (value) {
+          config["a" /* default */].deleteForm(id).then(function () {
+            window.location.reload();
+          });
+        }
       });
+      /*
+        .catch((err) => {
+          console.log("refus : ", err);
+        });
+        /**/
     }
   }
 });
@@ -66859,8 +66889,8 @@ var objectSpread2 = __webpack_require__("5530");
 
 var Listesfomes_component = Object(componentNormalizer["a" /* default */])(
   App_Listesfomesvue_type_script_lang_js_,
-  Listesfomesvue_type_template_id_61ee311a_lang_html_render,
-  Listesfomesvue_type_template_id_61ee311a_lang_html_staticRenderFns,
+  Listesfomesvue_type_template_id_4652a97c_lang_html_render,
+  Listesfomesvue_type_template_id_4652a97c_lang_html_staticRenderFns,
   false,
   null,
   null,
@@ -66989,13 +67019,32 @@ $export($export.S, 'Array', { isArray: __webpack_require__("bc48") });
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var core_js_modules_es_function_name_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("b0c0");
-/* harmony import */ var core_js_modules_es_function_name_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_function_name_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var core_js_modules_es_array_includes_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("caad");
-/* harmony import */ var core_js_modules_es_array_includes_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_includes_js__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var core_js_modules_es_string_includes_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__("2532");
-/* harmony import */ var core_js_modules_es_string_includes_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_string_includes_js__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _App_config_config_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__("f158");
+/* harmony import */ var _siteweb_AppVuejs_app_form_node_modules_babel_runtime_helpers_esm_typeof__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("53ca");
+/* harmony import */ var _siteweb_AppVuejs_app_form_node_modules_babel_runtime_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("1da1");
+/* harmony import */ var regenerator_runtime_runtime_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__("96cf");
+/* harmony import */ var regenerator_runtime_runtime_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(regenerator_runtime_runtime_js__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var core_js_modules_es_function_name_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__("b0c0");
+/* harmony import */ var core_js_modules_es_function_name_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_function_name_js__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var core_js_modules_es_array_includes_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__("caad");
+/* harmony import */ var core_js_modules_es_array_includes_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_includes_js__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var core_js_modules_es_string_includes_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__("2532");
+/* harmony import */ var core_js_modules_es_string_includes_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_string_includes_js__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var core_js_modules_es_array_iterator_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__("e260");
+/* harmony import */ var core_js_modules_es_array_iterator_js__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_iterator_js__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var core_js_modules_es_object_to_string_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__("d3b7");
+/* harmony import */ var core_js_modules_es_object_to_string_js__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_object_to_string_js__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var core_js_modules_web_dom_collections_iterator_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__("ddb0");
+/* harmony import */ var core_js_modules_web_dom_collections_iterator_js__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_iterator_js__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var core_js_modules_es_promise_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__("e6cf");
+/* harmony import */ var core_js_modules_es_promise_js__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_promise_js__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var _App_config_config_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__("f158");
+
+
+
+
+
+
+
 
 
 
@@ -67063,12 +67112,197 @@ $export($export.S, 'Array', { isArray: __webpack_require__("bc48") });
       }
     }
   },
-  getPriceStape: function getPriceStape(getters) {
+
+  /**
+   * Permet de recuperer le prix pour une etape.
+   */
+  getPriceStape: function getPriceStape(formDatas, forms) {
+    var _this = this;
+
+    return Object(_siteweb_AppVuejs_app_form_node_modules_babel_runtime_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"])( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+      var price, i, price2;
+      return regeneratorRuntime.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              price = 0; //on parcout les champs de l'etape, afin de determiner le cout associé à chaque champs.
+
+              _context.t0 = regeneratorRuntime.keys(formDatas.fields);
+
+            case 2:
+              if ((_context.t1 = _context.t0()).done) {
+                _context.next = 15;
+                break;
+              }
+
+              i = _context.t1.value;
+              _context.t2 = price;
+              _context.next = 7;
+              return _this.getPriceForField(formDatas.fields[i]);
+
+            case 7:
+              price = _context.t2 += _context.sent;
+
+              if (!(formDatas.fields[i].prix && formDatas.fields[i].prix.components.length)) {
+                _context.next = 13;
+                break;
+              }
+
+              _context.next = 11;
+              return _this.getPriceFieldInState(forms, formDatas.fields[i]);
+
+            case 11:
+              price2 = _context.sent;
+
+              if (price2) {
+                price += price2 * price;
+              }
+
+            case 13:
+              _context.next = 2;
+              break;
+
+            case 15:
+              return _context.abrupt("return", price);
+
+            case 16:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }))();
+  },
+
+  /**
+   * il faut s'assurer au prealable que field.prix.components est definit
+   */
+  getPriceFieldInState: function getPriceFieldInState(forms, field) {
+    var _arguments = arguments,
+        _this2 = this;
+
+    return Object(_siteweb_AppVuejs_app_form_node_modules_babel_runtime_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"])( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
+      var priceFinal;
+      return regeneratorRuntime.wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              priceFinal = _arguments.length > 2 && _arguments[2] !== undefined ? _arguments[2] : 0;
+              return _context2.abrupt("return", new Promise(function (resolvParent) {
+                //on parcout les options de prix.
+                var getFieldInState = function getFieldInState() {
+                  return new Promise(function (resolv) {
+                    for (var c in field.prix.components) {
+                      var component = field.prix.components[c];
+
+                      for (var s in forms) {
+                        var form = forms[s]; // on verifie que cest la bonne etape.
+
+                        // on verifie que cest la bonne etape.
+                        if (form.info.name == component.state_name) {
+                          // On parcourt les champs;
+                          for (var f in form.fields) {
+                            var fieldState = form.fields[f]; // On s'assure que c'est le champs qui a ete selectionné par l'utilisateur.
+
+                            // On s'assure que c'est le champs qui a ete selectionné par l'utilisateur.
+                            if (fieldState.name == component.name) {
+                              resolv(fieldState);
+                              break;
+                            }
+                          }
+
+                          break;
+                        }
+                      }
+
+                      var j = parseInt(c) + 1;
+
+                      if (j === field.prix.components.length) {
+                        resolv(false);
+                      }
+                    }
+                  });
+                };
+
+                getFieldInState().then(function (fieldState) {
+                  if (fieldState) _this2.getPriceForField(fieldState, true).then(function (priceField) {
+                    priceFinal += priceField;
+                    resolvParent(priceFinal);
+                  });else resolvParent(priceFinal);
+                }); //
+              }));
+
+            case 2:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2);
+    }))();
+  },
+
+  /**
+   * Retorune toujours un entier.
+   */
+  getPriceForField: function getPriceForField(field) {
+    var use = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+    var priceFinal = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+    return new Promise(function (resolvParent) {
+      var execution = function execution() {
+        var price = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+        return new Promise(function (resolv) {
+          if (field.prix && (field.prix.action === "prix_utilisables" || use)) {
+            var typeDatas = Object(_siteweb_AppVuejs_app_form_node_modules_babel_runtime_helpers_esm_typeof__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"])(field.value); // Cas des champs type selection.
+
+
+            if (_App_config_config_js__WEBPACK_IMPORTED_MODULE_10__[/* default */ "a"].typeSelection.includes(field.type)) {
+              alert(field.type);
+
+              for (var fp in field.options) {
+                if (typeDatas === Object) {
+                  if (field.value.includes(field.options[fp].value) && field.options[fp].cout) {
+                    price += parseInt(field.options[fp].cout);
+                  }
+                } else if (field.options[fp].value === field.value) {
+                  price += parseInt(field.options[fp].cout);
+                  break;
+                }
+              }
+            } // Cas des champs text et number.
+            else if (field.prix.cout && field.value !== null && field.value !== "") {
+                if (!isNaN(field.value)) {
+                  price += parseInt(field.prix.cout) * parseInt(field.value);
+                } else {
+                  price += parseInt(field.prix.cout);
+                }
+              }
+
+            resolv(price);
+          } else {
+            resolv(price);
+          }
+        });
+      };
+
+      execution().then(function (priceField) {
+        console.log(field.name, " :: ", priceField, " :: ", field.value, "\n\n");
+
+        if (!isNaN(priceField)) {
+          priceFinal += priceField;
+        } else {
+          console.log("%c error du processus de calcul : " + field.name, "background: #222; color: #F00; font-size:15px;");
+        }
+
+        resolvParent(priceFinal);
+      });
+    });
+  },
+  getPriceStape__: function getPriceStape__(getters) {
     for (var i in getters.formDatas.fields) {
       var currentfield = getters.formDatas.fields[i]; //On parcourt les champs afin de determiner s'ils ont un cout.
 
       if (currentfield.prix && currentfield.prix.action === "prix_utilisables") {
-        var coutDeBase = currentfield.prix.cout;
+        var coutDeBase = parseInt(currentfield.prix.cout);
 
         if (!currentfield.prix.components.length) {
           return coutDeBase;
@@ -67078,18 +67312,40 @@ $export($export.S, 'Array', { isArray: __webpack_require__("bc48") });
         var price = 0;
 
         for (var c in currentfield.prix.components) {
-          var component = currentfield.prix.components[c];
+          var component = currentfield.prix.components[c]; //on parcourt les etapes.
 
           for (var s in getters.form.forms) {
-            var form = getters.form.forms[s]; //on determine le formulaire utilisé.
+            var form = getters.form.forms[s]; // on verifie que cest la bonne etape.
 
             if (form.info.name == component.state_name) {
+              // on parcourt les champs;
               for (var f in form.fields) {
-                var field = form.fields[f]; //on determine le champs utilisé
+                var field = form.fields[f]; //on s'assure que c'est le champs qui a ete selectionné par l'utilisateur.
 
                 if (field.name == component.name) {
-                  // On verifie si cest le meme champs.
-                  if (component.name == currentfield.name) {
+                  // On verifie si le champs est le meme et different d'un champs de type selection.
+                  // voir l'example 1;
+                  if (_App_config_config_js__WEBPACK_IMPORTED_MODULE_10__[/* default */ "a"].typeSelection.includes(field.type)) {
+                    if (component.value) {
+                      for (var ot in field.options) {
+                        var optionOt = field.options[ot];
+                        /*
+                        alert(
+                          optionOt.value +
+                            " :: " +
+                            component.value +
+                            " ==> cout : " +
+                            optionOt.cout
+                        );
+                        /**/
+
+                        if (optionOt.value === component.value && optionOt.cout && optionOt.cout !== "") {
+                          price += parseInt(optionOt.cout);
+                          break;
+                        }
+                      }
+                    }
+                  } else if (component.name == currentfield.name) {
                     price += coutDeBase * currentfield.value;
                   } // On verifie si les options sont definits.
                   else if (component.value) {
@@ -67099,6 +67355,7 @@ $export($export.S, 'Array', { isArray: __webpack_require__("bc48") });
                         if (option.value === component.value) {
                           if (option.cout) {
                             price += currentfield.value * option.cout;
+                            alert(price);
                           }
                         }
                       }
@@ -67107,6 +67364,8 @@ $export($export.S, 'Array', { isArray: __webpack_require__("bc48") });
                     }
                 }
               }
+
+              break;
             }
           }
         }
@@ -67117,13 +67376,13 @@ $export($export.S, 'Array', { isArray: __webpack_require__("bc48") });
   },
   saveDatas: function saveDatas(state, getters) {
     var uid = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
-    _App_config_config_js__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"].saveStepsDatas(getters.form, state.price, uid).then(function (val) {
-      _App_config_config_js__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"].saveForm(val).then(function () {//
+    _App_config_config_js__WEBPACK_IMPORTED_MODULE_10__[/* default */ "a"].saveStepsDatas(getters.form, state.price, uid).then(function (val) {
+      _App_config_config_js__WEBPACK_IMPORTED_MODULE_10__[/* default */ "a"].saveForm(val).then(function () {//
       });
     });
   },
   deleteForm: function deleteForm(id) {
-    _App_config_config_js__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"].deleteForm(id);
+    _App_config_config_js__WEBPACK_IMPORTED_MODULE_10__[/* default */ "a"].deleteForm(id);
   }
 });
 

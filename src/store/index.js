@@ -23,18 +23,6 @@ export default new Vuex.Store({
     //formDatas: {},
     fields: {},
     field: {},
-
-    /**
-     * Contient le formulaire selectionné par le client.
-     */
-    /*
-    form: {
-      id: "",
-      forms: "",
-      description: "",
-      name: "",
-    },
-    /**/
     /**
      * Contient la liste des formulaire soumis recuperer de la BD.
      */
@@ -120,21 +108,25 @@ export default new Vuex.Store({
      */
     form: (state) => {
       if (state.items.length && state.formId !== null) {
-        const form = state.items[state.formId];
-        var TypeDonnee = typeof form.forms;
-        if (form.forms && form.forms !== "" && TypeDonnee === "string") {
-          form.forms = JSON.parse(form.forms);
-        } else if (form.forms === "") {
-          form.forms = [];
+        for (const i in state.items) {
+          if (state.items[i].id === state.formId) {
+            const form = state.items[i];
+            var TypeDonnee = typeof form.forms;
+            if (form.forms && form.forms !== "" && TypeDonnee === "string") {
+              form.forms = JSON.parse(form.forms);
+            } else if (form.forms === "") {
+              form.forms = [];
+            }
+            return form;
+          }
         }
-        return form;
-      }
-      return {
-        id: "",
-        forms: "",
-        description: "",
-        name: "",
-      };
+      } else
+        return {
+          id: "",
+          forms: "",
+          description: "",
+          name: "",
+        };
     },
     /**
      * Contient l'information d'une etape du formulaire selectionné.
@@ -230,11 +222,15 @@ export default new Vuex.Store({
       state.traitementId = payload;
     },
     SET_FORM(state) {
-      const form = state.items[state.formId];
-      form.forms = JSON.parse(form.forms);
-      state.form = form;
+      for (const i in state.items) {
+        if (state.items[i].id === state.formId) {
+          const form = state.items[i];
+          form.forms = JSON.parse(form.forms);
+          state.form = form;
+          break;
+        }
+      }
     },
-
     STEPS_INDEX(state, i) {
       state.stepsIndex = i;
     },

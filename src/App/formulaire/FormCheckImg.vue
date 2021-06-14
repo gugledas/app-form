@@ -1,6 +1,8 @@
 <template>
   <b-row class="p-2">
     <b-col sm="12">
+      <compositeHeaderField :field="fields"></compositeHeaderField>
+      <!--
       <b-form-group label="Label" invalid-feedback="Name is required">
         <b-input-group>
           <b-form-input v-model="fields.label" @input="input"></b-form-input>
@@ -12,6 +14,7 @@
           ></b-form-input>
         </b-input-group>
       </b-form-group>
+    -->
     </b-col>
 
     <!-- form option -->
@@ -138,7 +141,6 @@
 </template>
 
 <script>
-import { snakeCase } from "snake-case";
 import ValidationFields from "../EditsFields/ValidationFields";
 import manageImages from "../EditsFields/manage-images.vue";
 //import OptionTable from "../OptionTable.vue";
@@ -153,6 +155,8 @@ export default {
     ValidationFields,
     manageImages,
     //OptionTable,
+    compositeHeaderField: () =>
+      import("../EditsFields/compositeHeaderField.vue"),
   },
   data() {
     return {
@@ -165,7 +169,6 @@ export default {
         description: "",
         isActive: false,
       },
-      readonly: true,
     };
   },
   watch: {},
@@ -211,15 +214,6 @@ export default {
       this.$nextTick(() => {
         this.show = true;
       });
-    },
-    input() {
-      if (this.readonly && this.fields.name.length <= 32) {
-        this.fields.name = snakeCase(this.fields.label);
-      }
-    },
-    toogleReadOnly() {
-      if (this.readonly) this.readonly = false;
-      else this.readonly = true;
     },
     ev_manage_images_img(data, inputOptions) {
       if (data.url) {

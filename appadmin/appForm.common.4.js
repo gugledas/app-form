@@ -43,18 +43,21 @@
 // ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"6bacc4e8-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/StepsPage.vue?vue&type=template&id=0dde1b9a&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('b-container',{staticClass:"p-md-5",attrs:{"fluid":"lg"}},[_c('div',[_c('h5',{staticClass:"titre mb-3 shadow-sm p-2"},[_vm._v(" Gestion du formulaire: "),_c('span',{staticClass:"form-title"},[_vm._v(_vm._s(_vm.form.name))])])]),_c('b-row',{attrs:{"align-h":"center"}},[(_vm.formDatas && _vm.formDatas.info)?_c('b-col',{attrs:{"cols":"12","lg":"10"}},[_c('transition',{attrs:{"name":"fade"}},[_c('div',[_c('nav-line',{attrs:{"taille":_vm.id}}),_c('pages',{attrs:{"level":_vm.stepsIndex}})],1)])],1):_vm._e(),(_vm.$store.state.mode)?_c('b-col',{attrs:{"cols":"12","lg":"2"}},[_c('div',{staticClass:"block-button"},[_c('b-button',{directives:[{name:"b-modal",rawName:"v-b-modal.modal-prevent-closing",modifiers:{"modal-prevent-closing":true}}],staticClass:"shadow-md d-block w-100",attrs:{"variant":"light","squared":""}},[_vm._v(" Configuration ")]),_c('b-button',{staticClass:"shadow-md d-block w-100",attrs:{"squared":"","variant":"light"},on:{"click":_vm.clearFormDatas}},[_vm._v(" Ajouter une etape ")]),_c('b-button',{directives:[{name:"b-modal",rawName:"v-b-modal.re-order-stepes",modifiers:{"re-order-stepes":true}}],staticClass:"shadow-md d-block w-100",attrs:{"squared":"","variant":"light"}},[_vm._v(" Re-ordonner les etapes ")]),_c('b-button',{staticClass:"shadow-md d-block w-100",attrs:{"squared":"","variant":"secondary"},on:{"click":_vm.resetValue}},[_vm._v(" Reset value ")]),_c('b-button',{staticClass:"shadow-md d-block w-100",attrs:{"squared":"","variant":"success"},on:{"click":_vm.saveToLocal}},[_vm._v(" Enregistrer ")]),_c('b-modal',{ref:"modal",attrs:{"id":"modal-prevent-closing","title":"Edition du formulaire","hide-footer":""},on:{"show":_vm.resetModal,"hidden":_vm.resetModal,"ok":_vm.handleOk}},[(_vm.formDatas && _vm.formDatas.info)?_c('form',{ref:"form",on:{"submit":_vm.handleSubmit,"reset":_vm.resetModal}},[_c('b-row',[_c('b-col',{attrs:{"cols":"8"}},[_c('b-form-group',{attrs:{"label":"name","label-for":"name-input"}},[_c('b-form-input',{attrs:{"id":"db-input","required":""},model:{value:(_vm.form.name),callback:function ($$v) {_vm.$set(_vm.form, "name", $$v)},expression:"form.name"}})],1)],1),_c('b-col',{attrs:{"cols":"8"}},[_c('b-form-group',{attrs:{"label":"Id","label-for":"description-input"}},[_c('b-form-input',{attrs:{"id":"desc-input-id"},model:{value:(_vm.form.id),callback:function ($$v) {_vm.$set(_vm.form, "id", $$v)},expression:"form.id"}})],1)],1),_c('b-col',{attrs:{"cols":"8"}},[_c('b-form-group',{attrs:{"label":"Description","label-for":"description-input"}},[_c('b-form-textarea',{attrs:{"id":"desc-input","required":""},model:{value:(_vm.form.description),callback:function ($$v) {_vm.$set(_vm.form, "description", $$v)},expression:"form.description"}})],1)],1)],1),_c('hr',{staticClass:"my-3"}),_c('b-row',{attrs:{"align-h":"end"}},[_c('div',{staticClass:"mr-3"},[_c('b-button',{staticClass:"mr-2"},[_vm._v("export")]),_c('b-button',{staticClass:"mr-2",attrs:{"type":"submit","variant":"primary"}},[_vm._v(" Mise à jour ")])],1)])],1):_vm._e()])],1)]):_vm._e()],1)],1),_c('reOrderStepes')],1)}
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"6bacc4e8-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/StepsPage.vue?vue&type=template&id=49d28be2&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('b-container',{staticClass:"p-md-5",attrs:{"fluid":"lg"}},[_c('div',[_c('h5',{staticClass:"titre mb-3 shadow-sm p-2"},[_vm._v(" Gestion du formulaire: "),_c('span',{staticClass:"form-title"},[_vm._v(_vm._s(_vm.form.name))])])]),_c('b-row',{attrs:{"align-h":"center"}},[(_vm.formDatas && _vm.formDatas.info)?_c('b-col',{attrs:{"cols":"12","lg":"10"}},[_c('transition',{attrs:{"name":"fade"}},[_c('div',[_c('nav-line',{attrs:{"taille":_vm.id}}),_c('pages',{attrs:{"level":_vm.stepsIndex}})],1)])],1):_vm._e(),(_vm.$store.state.mode)?_c('b-col',{attrs:{"cols":"12","lg":"2"}},[_c('div',{staticClass:"block-button"},[_c('b-button',{directives:[{name:"b-modal",rawName:"v-b-modal.modal-prevent-closing",modifiers:{"modal-prevent-closing":true}}],staticClass:"shadow-md d-block w-100",attrs:{"variant":"light","squared":""}},[_vm._v(" Configuration ")]),_c('b-button',{staticClass:"shadow-md d-block w-100",attrs:{"squared":"","variant":"light"},on:{"click":_vm.clearFormDatas}},[_vm._v(" Ajouter une etape ")]),_c('b-button',{directives:[{name:"b-modal",rawName:"v-b-modal.re-order-stepes",modifiers:{"re-order-stepes":true}}],staticClass:"shadow-md d-block w-100",attrs:{"squared":"","variant":"light"}},[_vm._v(" Re-ordonner les etapes ")]),_c('b-button',{staticClass:"shadow-md d-block w-100",attrs:{"squared":"","variant":"secondary"},on:{"click":_vm.resetValue}},[_vm._v(" Reset value ")]),_c('b-button',{staticClass:"shadow-md d-block w-100",attrs:{"squared":"","variant":"success"},on:{"click":_vm.saveToLocal}},[_vm._v(" Enregistrer ")]),_c('b-modal',{ref:"modal",attrs:{"id":"modal-prevent-closing","title":"Edition du formulaire","hide-footer":""},on:{"show":_vm.resetModal,"hidden":_vm.resetModal,"ok":_vm.handleOk}},[(_vm.formDatas && _vm.formDatas.info)?_c('form',{ref:"form",on:{"submit":_vm.handleSubmit,"reset":_vm.resetModal}},[_c('b-row',[_c('b-col',{attrs:{"cols":"8"}},[_c('b-form-group',{attrs:{"label":"name","label-for":"name-input"}},[_c('b-form-input',{attrs:{"id":"db-input","required":""},model:{value:(_vm.form.name),callback:function ($$v) {_vm.$set(_vm.form, "name", $$v)},expression:"form.name"}})],1)],1),_c('b-col',{attrs:{"cols":"8"}},[_c('b-form-group',{attrs:{"label":"Id","label-for":"description-input"}},[_c('b-form-input',{attrs:{"id":"desc-input-id"},model:{value:(_vm.form.id),callback:function ($$v) {_vm.$set(_vm.form, "id", $$v)},expression:"form.id"}})],1)],1),_c('b-col',{attrs:{"cols":"8"}},[_c('b-form-group',{attrs:{"label":"Description","label-for":"description-input"}},[_c('b-form-textarea',{attrs:{"id":"desc-input","required":""},model:{value:(_vm.form.description),callback:function ($$v) {_vm.$set(_vm.form, "description", $$v)},expression:"form.description"}})],1)],1)],1),_c('hr',{staticClass:"my-3"}),_c('b-row',{attrs:{"align-h":"end"}},[_c('div',{staticClass:"mr-3"},[_c('b-button',{staticClass:"mr-2"},[_vm._v(" export ")]),_c('b-button',{staticClass:"mr-2",attrs:{"type":"submit","variant":"primary"}},[_vm._v(" Mise à jour ")])],1)])],1):_vm._e()])],1)]):_vm._e()],1)],1),_c('reOrderStepes')],1)}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/App/StepsPage.vue?vue&type=template&id=0dde1b9a&
+// CONCATENATED MODULE: ./src/App/StepsPage.vue?vue&type=template&id=49d28be2&
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/objectSpread2.js + 1 modules
 var objectSpread2 = __webpack_require__("5530");
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.splice.js
 var es_array_splice = __webpack_require__("a434");
+
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.includes.js
+var es_array_includes = __webpack_require__("caad");
 
 // EXTERNAL MODULE: ./src/App/config/config.js
 var config = __webpack_require__("f158");
@@ -303,6 +306,7 @@ var reOrderStepes_component = Object(componentNormalizer["a" /* default */])(
 
 /* harmony default export */ var reOrderStepes = (reOrderStepes_component.exports);
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/StepsPage.vue?vue&type=script&lang=js&
+
 
 
 //
@@ -585,9 +589,18 @@ var reOrderStepes_component = Object(componentNormalizer["a" /* default */])(
       this.$store.state.stepsIndex = this.form.forms.length - 1; //this.$store.dispatch("resetFormDatas");
     },
     resetValue: function resetValue() {
-      this.$store.getters.formDatas.selected = "";
-      this.$store.getters.formDatas.value = [];
-      console.log("prev");
+      var TypeString = ["radio", "text", "select", "number", "radiodesc", "codepostal"];
+      var TypeArray = ["checkbox"];
+
+      for (var i in this.formDatas.fields) {
+        var field = this.formDatas.fields[i];
+
+        if (TypeString.includes(field.type)) {
+          field.value = null;
+        } else if (TypeArray.includes(field.type)) {
+          field.value = [];
+        }
+      }
     },
     resetModal: function resetModal() {//   this.formDatas.info.title = "";
       //   this.titleState = null;

@@ -2,6 +2,8 @@
   <div>
     <b-row class="mb-3">
       <b-col sm="12">
+        <compositeHeaderField :field="fields"></compositeHeaderField>
+        <!--
         <b-form-group label="Label" invalid-feedback="Name is required">
           <b-input-group>
             <b-form-input
@@ -17,6 +19,7 @@
             ></b-form-input>
           </b-input-group>
         </b-form-group>
+      -->
       </b-col>
     </b-row>
     <ValidationFields :field="fields"></ValidationFields>
@@ -24,7 +27,6 @@
 </template>
 
 <script>
-import { snakeCase } from "snake-case";
 import ValidationFields from "../EditsFields/ValidationFields";
 export default {
   name: "InputText",
@@ -45,6 +47,8 @@ export default {
 
   components: {
     ValidationFields,
+    compositeHeaderField: () =>
+      import("../EditsFields/compositeHeaderField.vue"),
   },
   data() {
     return {
@@ -64,15 +68,6 @@ export default {
       if (this.value.length) {
         return (this.fields.value = this.value);
       }
-    },
-    input() {
-      if (this.readonly && this.fields.name.length <= 32) {
-        this.fields.name = snakeCase(this.fields.label);
-      }
-    },
-    toogleReadOnly() {
-      if (this.readonly) this.readonly = false;
-      else this.readonly = true;
     },
   },
 };

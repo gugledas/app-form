@@ -7,7 +7,7 @@
           <b-button-group class="boutton-absolute">
             <b-button
               variant="outline-primary"
-              @click="voirForm(data.index)"
+              @click="voirForm(data.item.id)"
               v-b-tooltip.hover.v-primary
               title="Voir"
             >
@@ -16,7 +16,7 @@
 
             <b-button
               variant="outline-warning"
-              @click="updateForm(data.index)"
+              @click="updateForm(data.item.id)"
               v-if="$store.state.mode"
               v-b-tooltip.hover.v-warning
               title="Modifier"

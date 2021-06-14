@@ -3,13 +3,16 @@
     <b-container class="bv-example-row bg-light p-5" fluid="lg">
       <div>
         <h5 class="titre mb-3 shadow-sm p-2">
-          Traitement
-          <span class="form-title">{{ traitementFormItems.id }}</span>
+          Traitement :
+          <span class="form-title">{{ form.name }}</span>
         </h5>
       </div>
       <b-row align-h="center">
         <b-col class="" cols="12">
-          <list-table></list-table>
+          <list-table
+            :liste_fields_check="ListeFieldsCheck"
+            :liste_fields_display="ListeFieldsDisplay"
+          ></list-table>
         </b-col>
       </b-row>
     </b-container>
@@ -44,11 +47,51 @@ export default {
   mounted() {
     this.$store.dispatch("loadTraitementDatas", this.id).then(() => {
       this.$store.dispatch("setTraitId", this.id);
+      this.$store.dispatch("setFormId", this.id);
     });
   },
   computed: {
     ...mapState(["traitementId"]),
-    ...mapGetters(["traitementFormItems"]),
+    ...mapGetters(["traitementFormItems", "form"]),
+    ListeFieldsDisplay() {
+      const fieldsDisplay = [
+        {
+          label: "Id",
+          key: "id",
+        },
+        {
+          label: "Status du formulaire",
+          key: "status",
+        },
+        {
+          label: "Price",
+          key: "price",
+        },
+        {
+          label: "#Action",
+          key: "action",
+        },
+      ];
+      for (const i in this.form.forms) {
+        const form = this.form.forms[i];
+        // console.log("etate : ", form.info.name, "\n\n");
+        for (const f in form.fields) {
+          const field = form.fields[f];
+          // console.log(field);
+          if (field.display_field) {
+            fieldsDisplay.push({ label: field.label, key: field.name });
+          }
+        }
+      }
+      return fieldsDisplay;
+    },
+    ListeFieldsCheck() {
+      const lists = [];
+      for (const i in this.ListeFieldsDisplay) {
+        lists.push(this.ListeFieldsDisplay[i].key);
+      }
+      return lists;
+    },
   },
   methods: {
     deleteSteps(datas) {
@@ -125,7 +168,6 @@ export default {
 </script>
 <style lang="scss">
 .form-title {
-  font-size: 1.05rem;
   letter-spacing: 2px;
   margin-left: 10px;
   font-weight: 600;

@@ -1,8 +1,8 @@
 <template lang="html">
   <div>
     <b-table
-      :items="traitementFormItems"
-      :fields="fields"
+      :items="traitementFormItemsDisplay"
+      :fields="liste_fields_display"
       :outlined="true"
       :hover="true"
       head-variant="dark"
@@ -66,6 +66,12 @@
         ></b-col>
       </b-row>
     </b-modal>
+    <pre>
+      {{ liste_fields_display }}
+    </pre>
+    <pre>
+      {{ traitementFormItemsDisplay }}
+    </pre>
   </div>
 </template>
 
@@ -75,30 +81,25 @@ import Utilities from "../../store/utilities";
 
 export default {
   name: "Listesfomes",
-  props: {},
+  props: {
+    liste_fields_check: {
+      type: Array,
+      default: function () {
+        return [];
+      },
+    },
+    liste_fields_display: {
+      type: Array,
+      default: function () {
+        return [];
+      },
+    },
+  },
   components: {
     typeDisplays: () => import("./affichage/typeDisplays.vue"),
   },
   data() {
     return {
-      fields: [
-        {
-          label: "Id",
-          key: "id",
-        },
-        {
-          label: "Status du formulaire",
-          key: "name",
-        },
-        {
-          label: "Price",
-          key: "price",
-        },
-        {
-          label: "#Action",
-          key: "action",
-        },
-      ],
       showModal: false,
       currentIndex: null,
     };
@@ -125,6 +126,30 @@ export default {
         }
       }
       return all;
+    },
+    traitementFormItemsDisplay() {
+      const lists = [];
+      for (const i in this.traitementFormItems) {
+        const rowData = this.traitementFormItems[i];
+        const row = {
+          id: rowData.id,
+          status: rowData.status,
+          created: rowData.created,
+          price: rowData.price,
+        };
+        for (const s in rowData.datas) {
+          const stape = rowData.datas[s];
+          for (const f in stape.fields) {
+            const field = stape.fields[f];
+            //console.log("field.name : ", field.name);
+            if (this.liste_fields_check.includes(field.name)) {
+              row[field.name] = field.value;
+            }
+          }
+        }
+        lists.push(row);
+      }
+      return lists;
     },
   },
   methods: {

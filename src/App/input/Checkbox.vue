@@ -17,7 +17,7 @@
             :name="field.name"
           >
             <b-form-checkbox-group
-              v-model="selected"
+              v-model="field.value"
               :name="field.name"
               @change="changeValue"
             >
@@ -80,9 +80,7 @@ export default {
       selected: [],
     };
   },
-  mounted() {
-    this.retrieveValue();
-  },
+  mounted() {},
   watch: {},
   computed: {
     ...mapGetters(["formDatas"]),
@@ -100,18 +98,6 @@ export default {
     },
   },
   methods: {
-    retrieveValue() {
-      var type_data = typeof this.field.value;
-      if (
-        type_data === "object" &&
-        this.field.value &&
-        this.field.value.length !== undefined
-      ) {
-        this.selected = this.field.value;
-      } else if (this.field.value) {
-        this.selected.push(this.field.value);
-      }
-    },
     changeValue(val) {
       this.field.value = val;
     },

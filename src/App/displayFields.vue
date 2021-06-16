@@ -81,7 +81,7 @@
 
       <checkbox
         v-if="type == 'checkbox'"
-        :field="formDatas.fields[id]"
+        :field="confirmStructureField(formDatas.fields[id])"
       ></checkbox>
 
       <!-- affiche pour le cas du type radio with description -->
@@ -206,6 +206,21 @@ export default {
     ...mapGetters(["formDatas"]),
   },
   methods: {
+    confirmStructureField(field) {
+      if (field.type === "checkbox") {
+        var selected = [];
+        var type_data = typeof field.value;
+        if (type_data !== "object") {
+          if (field.value && field.value !== "") {
+            selected.push(field.value);
+            field.value = selected;
+          } else {
+            field.value = [];
+          }
+        }
+      }
+      return field;
+    },
     getImage(il) {
       var le = this.formDatas.fields[this.id].options;
       console.log("le", le);

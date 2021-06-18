@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-container class="bv-example-row bg-light p-5" fluid="lg">
+    <b-container class="bv-example-row bg-light p-4" fluid="lg">
       <div>
         <h5 class="titre mb-3 shadow-sm p-2">
           Traitement :
@@ -70,6 +70,7 @@ export default {
         {
           label: "#Action",
           key: "action",
+          stickyColumn: true,
         },
       ];
       for (const i in this.form.forms) {

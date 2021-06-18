@@ -84,4 +84,27 @@ export default {
       {}
     );
   },
+  deleteFormTraitement(id, status) {
+    const result = [];
+    console.log("ress", id, status);
+    var table1 = {
+      table: "appformmanager_datas",
+      fields: {
+        status: status,
+      },
+      action: "update",
+      where: [
+        {
+          column: "id",
+          value: id,
+        },
+      ],
+    };
+    result.push(table1);
+    return AjaxToastBootStrap.post(
+      this.baseURl + "/query-ajax/insert-update",
+      result,
+      {}
+    );
+  },
 };

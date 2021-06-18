@@ -2,8 +2,8 @@
   <div>
     <div class="simple-champ">
       <div class="label-title">{{ fields.label }}</div>
-      <div class="label-title" v-if="val.length">
-        <div class="label-title" v-for="(item, i) in val" :key="i">
+      <div class="label-title flex-wrap" v-if="val.length">
+        <div class="label-title col-12" v-for="(item, i) in val" :key="i">
           <strong>{{ item }}</strong>
         </div>
       </div>
@@ -22,31 +22,45 @@ export default {
   components: {},
   data() {
     return {
-      val: [],
+      vale: [],
     };
   },
-  watch: {},
-  mounted() {
-    var option = this.fields.options;
-    var val = this.fields.value;
-    if (val != null && val != undefined) {
-      if (option.length) {
-        this.formatValue();
-      }
-    }
+  watch: {
+    // fields: {
+    //   handle() {
+    //     this.formatValue();
+    //     console.log("all");
+    //   },
+    //   deep: true,
+    // },
   },
-  computed: {},
-  methods: {
-    formatValue() {
+  mounted() {
+    // var option = this.fields.options;
+    // var val = this.fields.value;
+    // if (val != null && val != undefined) {
+    //   if (option.length) {
+    //     this.formatValue();
+    //   }
+    // }
+  },
+  computed: {
+    val() {
       var option = this.fields.options;
       var val = this.fields.value;
+      var typeValue = typeof val;
+      var valeur = [];
       for (let i = 0; i < option.length; i++) {
-        if (option[i].value == val) {
-          this.val.push(option[i].text);
+        if (typeValue == "object") {
+          if (val.includes(option[i].value)) valeur.push(option[i].text);
         }
       }
+      if (option.length && typeValue == "string" && val.length)
+        valeur.push(val);
+      if (this.fields.options.length < 1 && val !== null) valeur.push(val);
+      return valeur;
     },
   },
+  methods: {},
 };
 </script>
 

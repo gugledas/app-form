@@ -15,10 +15,10 @@ export default {
         j = null;
         const form = this.forms[k];
         if (this.validateState(form.states)) {
-          console.log("etape valide : ", k);
+          //console.log("etape valide : ", k);
           return kk;
         } else {
-          console.log("etape non valide : ", k);
+          //console.log("etape non valide : ", k);
         }
       }
     }

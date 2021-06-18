@@ -268,10 +268,14 @@ export default {
     }
   },
   saveDatas(state, getters, uid = 0) {
-    config.saveStepsDatas(getters.form, state.price, uid).then((val) => {
-      config.saveForm(val).then(() => {
-        //
-      });
+    return new Promise((resolv) => {
+      config
+        .saveStepsDatas(state.idSoumission, getters.form, state.price, uid)
+        .then((val) => {
+          config.saveForm(val).then((response) => {
+            resolv(response);
+          });
+        });
     });
   },
   deleteForm(id) {

@@ -4,14 +4,26 @@
       <div class="label-title">{{ fields.label }}</div>
       <div class="label-title flex-wrap" v-if="val.length">
         <div class="label-title col-12" v-for="(item, i) in val" :key="i">
-          <strong>{{ item }}</strong>
+          <img
+            v-if="item.img"
+            :srcset="baseURl + item.img"
+            :alt="item.test"
+            width="60px"
+            height="45px"
+            class="mr-2"
+          />
+          <strong v-if="fields.type != 'checkboximg'">{{ item }}</strong>
+          <strong v-if="fields.type == 'checkboximg'">{{ item.text }}</strong>
         </div>
       </div>
     </div>
+    <!-- {{ val }} <br />
+    {{ fields }} -->
   </div>
 </template>
 
 <script>
+import config from "../../config/config.js";
 export default {
   props: {
     fields: {
@@ -23,6 +35,7 @@ export default {
   data() {
     return {
       vale: [],
+      baseURl: config.baseURl,
     };
   },
   watch: {
@@ -51,11 +64,18 @@ export default {
       var valeur = [];
       for (let i = 0; i < option.length; i++) {
         if (typeValue == "object") {
-          if (val.includes(option[i].value)) valeur.push(option[i].text);
+          if (val.includes(option[i].value)) {
+            valeur.push(option[i].text);
+          }
         }
       }
-      if (option.length && typeValue == "string" && val.length)
-        valeur.push(val);
+      if (option.length && typeValue == "string" && val.length) {
+        if (this.fields.type === "checkboximg") {
+          for (let item of option) {
+            if (item.value == val) valeur.push(item);
+          }
+        } else valeur.push(val);
+      }
       if (this.fields.options.length < 1 && val !== null) valeur.push(val);
       return valeur;
     },

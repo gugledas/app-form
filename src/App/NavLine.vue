@@ -71,6 +71,7 @@ export default {
   width: 100%;
   //height: 15px;
   display: flex;
+  overflow: scroll;
   &__nav {
     display: block;
     font-size: 8px;

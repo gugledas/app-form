@@ -62,9 +62,9 @@
       <b-col v-if="fields.options.length"
         ><b-card no-body class="mb-1" v-if="true">
           <b-card-header header-tag="header" class="p-1" role="tab">
-            <b-button block v-b-toggle.accordion-option variant="dark"
-              >See options</b-button
-            >
+            <b-button block v-b-toggle.accordion-option variant="dark">
+              See options
+            </b-button>
           </b-card-header>
           <b-collapse
             id="accordion-option"

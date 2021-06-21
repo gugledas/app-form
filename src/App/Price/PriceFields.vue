@@ -36,18 +36,48 @@
             + Ajouter une condition
           </b-button>
         </div>
+        <div class="mb-3">
+          <b-form-group
+            label="Logique de calcul complexe"
+            label-cols="6"
+            label-cols-md="6"
+            label-cols-sm="3"
+          >
+            <b-form-checkbox
+              size="lg"
+              v-model="field.prix.complex_logique"
+            ></b-form-checkbox>
+          </b-form-group>
+        </div>
+        <div class="mb-3">
+          <!-- -->
+          <b-form-group
+            label="Logique complexe"
+            label-size="sm"
+            label-cols="4"
+            v-if="field.prix.complex_logique"
+          >
+            <b-form-textarea
+              v-model="field.prix.datas_logique"
+              placeholder=""
+              rows="10"
+            ></b-form-textarea>
+          </b-form-group>
+        </div>
         <div
           v-for="(component, i) in field.prix.components"
           :key="i"
-          class="border p-2 d-flex align-items-center"
+          class="border p-2 d-flex align-items-center w-100"
         >
-          <div>
+          <div class="w-100">
+            <!-- -->
+
             <!-- -->
             <b-form-group
               label="si l'etape "
-              label-for="input-lazy"
               label-size="sm"
               label-cols="4"
+              v-if="!field.prix.complex_logique"
             >
               <b-form-select
                 v-model="component.state_name"
@@ -58,10 +88,9 @@
             <!-- -->
             <b-form-group
               label="si champs "
-              label-for="input-lazy"
               label-size="sm"
               label-cols="4"
-              v-if="component.state_name !== ''"
+              v-if="component.state_name !== '' && !field.prix.complex_logique"
             >
               <b-form-select
                 v-model="component.name"
@@ -69,23 +98,7 @@
                 size="sm"
               ></b-form-select>
             </b-form-group>
-
-            <!-- -->
-            <!--
-            <b-form-group
-              label="si options "
-              label-for="input-lazy"
-              label-size="sm"
-              label-cols="4"
-              v-if="component.name !== ''"
-            >
-              <b-form-select
-                v-model="component.value"
-                :options="component.options"
-                size="sm"
-              ></b-form-select>
-            </b-form-group>
-          --></div>
+          </div>
           <div class="svg-content px-2">
             <b-button
               variant="transparent"

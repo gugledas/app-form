@@ -20,7 +20,7 @@ const routes = [
   },
   {
     path: "/estimation-devis/:id",
-    name: "Edition du formulaire",
+    name: "Estimation du devis",
     props: true,
     component: () => import("../App/userpage.vue"),
   },

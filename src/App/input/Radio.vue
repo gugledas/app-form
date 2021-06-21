@@ -17,8 +17,9 @@
                 <label
                   class="m-0 d-block w-100"
                   :for="`input-radio-a${field.name}${i}`"
-                  >{{ item.text }}</label
                 >
+                  {{ formatTemplateString(item.text) }}
+                </label>
               </b-col>
               <b-col class="input-list__input">
                 <b-form-radio
@@ -47,6 +48,7 @@ import { mapGetters, mapState } from "vuex";
 import { ValidationProvider } from "vee-validate";
 import { validationRessource as Validation } from "../config/validation.js";
 import "../EditsFields/vee-validate-custom.js";
+import { validationRessource as validation } from "../config/validation.js";
 
 export default {
   props: {
@@ -61,6 +63,7 @@ export default {
   data() {
     return {
       value: 1,
+      nombre_de_personne_dans_le_logeme: 7,
     };
   },
   watch: {},
@@ -79,7 +82,31 @@ export default {
       return true;
     },
   },
-  methods: {},
+  methods: {
+    formatTemplateString(string) {
+      return this.formatString(string);
+      //return string;
+    },
+    formatString(str) {
+      var regex = /\{\{(.*?)\}\}/g;
+      let found;
+      var int = 0;
+      while ((found = regex.exec(str)) !== null && int < 10) {
+        int++;
+        var attr = found[1].trim(" ");
+        //console.log("string : ", eval(attr));
+        str = str.replace(found[0], eval(attr));
+      }
+      return str;
+    },
+    getFieldValueByName(name) {
+      const field = validation.getFieldByName(name, this.formDatas.fields);
+      //console.log("field getFieldValueByName : ", field);
+      if (field && field.value) {
+        return field.value;
+      }
+    },
+  },
 };
 </script>
 

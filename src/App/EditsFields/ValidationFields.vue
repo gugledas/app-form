@@ -92,7 +92,11 @@
                   label-for="input-lazy"
                   label-size="sm"
                   label-cols="4"
-                  v-if="condition.operator === 'egal'"
+                  v-if="
+                    condition.name !== '' &&
+                    condition.operator === 'egal' &&
+                    selectionType.includes(getTypeField(condition.name))
+                  "
                 >
                   <b-form-select
                     v-model="condition.value"
@@ -100,6 +104,23 @@
                     size="sm"
                   ></b-form-select>
                 </b-form-group>
+                <!-- -->
+                <b-form-group
+                  label="Valeur"
+                  label-for="input-lazy"
+                  label-size="sm"
+                  label-cols="4"
+                  v-if="
+                    condition.name !== '' &&
+                    (condition.operator === 'egal' ||
+                      condition.operator === '>') &&
+                    !selectionType.includes(getTypeField(condition.name))
+                  "
+                >
+                  <b-form-input v-model="condition.value" required>
+                  </b-form-input>
+                </b-form-group>
+                <!-- -->
               </div>
               <div class="svg-content">
                 <b-button
@@ -139,6 +160,7 @@
 import { validationRessource as Validation } from "../config/validation.js";
 import PriceFields from "../Price/PriceFields.vue";
 import { mapGetters } from "vuex";
+import config from "../config/config.js";
 export default {
   name: "ValidationFields",
   props: {
@@ -178,6 +200,7 @@ export default {
       selected: [],
       listsOperators: Validation.listsOperators(),
       optionsAction: Validation.Action(),
+      selectionType: config.typeSelection,
     };
   },
   mounted() {
@@ -191,7 +214,17 @@ export default {
   computed: {
     ...mapGetters(["formDatas"]),
     listeChamps() {
-      const typeValide = ["text", "number", "radio", "checkbox", "select"];
+      const typeValide = [
+        "text",
+        "number",
+        "radio",
+        "checkbox",
+        "select",
+        "increment",
+        "checkboximg",
+        "codepostal",
+        "radiodesc",
+      ];
       const fields = [];
       if (this.formDatas && this.formDatas.fields.length > 1) {
         for (const i in this.formDatas.fields) {
@@ -215,7 +248,7 @@ export default {
       this.field.states.push(Validation.conditions());
     },
     deleteState(i) {
-      console.log("i : ", i);
+      //console.log("i : ", i);
       this.field.states.splice(i, 1);
     },
     listsOptionsCondition(condition) {
@@ -229,6 +262,18 @@ export default {
       } else {
         return [];
       }
+    },
+    /**
+     * Retourne le type de champs.
+     */
+    getTypeField(name) {
+      for (const i in this.formDatas.fields) {
+        const field = this.formDatas.fields[i];
+        if (field.name == name) {
+          return field.type;
+        }
+      }
+      return null;
     },
   },
 };

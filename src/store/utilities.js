@@ -1,4 +1,5 @@
 import config from "../App/config/config.js";
+
 export default {
   forms: [],
   /**
@@ -55,32 +56,57 @@ export default {
       }
     }
   },
+  getFieldInForms(state_name, field_name) {
+    for (const i in this.forms) {
+      const form = this.forms[i];
+      if (form.info.name === state_name) {
+        for (const f in form.fields) {
+          const field = form.fields[f];
+          if (field.name === field_name) {
+            return field;
+          }
+        }
+      }
+    }
+  },
   /**
    * Permet de recuperer le prix pour une etape.
+   * deux methode de calcul sont definit, une methode UI et une methode code.
    */
   async getPriceStape(formDatas, forms) {
+    var self = this;
     var price = 0;
+    this.forms = forms;
     //on parcout les champs de l'etape, afin de determiner le cout associé à chaque champs.
     for (const i in formDatas.fields) {
-      price += await this.getPriceForField(formDatas.fields[i]);
-      // si cest un champs composé.
-      if (
-        formDatas.fields[i].prix &&
-        formDatas.fields[i].prix.components.length
-      ) {
-        var price2 = await this.getPriceFieldInState(
-          forms,
-          formDatas.fields[i]
-        );
-        if (price2) {
-          price += price2 * price;
+      const field = formDatas.fields[i];
+      if (field.prix) {
+        if (
+          field.prix.complex_logique === undefined ||
+          !field.prix.complex_logique
+        ) {
+          price += await this.getPriceForField(field);
+          // si cest un champs composé.
+          if (field.prix && field.prix.components.length) {
+            var price2 = await this.getPriceFieldInState(forms, field);
+            if (price2) {
+              price += price2 * price;
+            }
+          }
+        } else if (field.prix.complex_logique) {
+          if (field.none__) {
+            self;
+          }
+          const datas_logique = await eval(field.prix.datas_logique);
+          console.log(" Field.prix : ", datas_logique);
+          price += parseInt(datas_logique);
         }
       }
     }
     return price;
   },
   /**
-   * il faut s'assurer au prealable que field.prix.components est definit
+   * Il faut s'assurer au prealable que field.prix.components est definit.
    */
   async getPriceFieldInState(forms, field, priceFinal = 0) {
     return new Promise((resolvParent) => {
@@ -120,7 +146,6 @@ export default {
           });
         else resolvParent(priceFinal);
       });
-
       //
     });
   },
@@ -135,7 +160,6 @@ export default {
             var typeDatas = typeof field.value;
             // Cas des champs type selection.
             if (config.typeSelection.includes(field.type)) {
-              alert(field.type);
               for (const fp in field.options) {
                 if (typeDatas === Object) {
                   if (
@@ -188,85 +212,7 @@ export default {
       });
     });
   },
-  getPriceStape__(getters) {
-    for (const i in getters.formDatas.fields) {
-      const currentfield = getters.formDatas.fields[i];
-      //On parcourt les champs afin de determiner s'ils ont un cout.
-      if (
-        currentfield.prix &&
-        currentfield.prix.action === "prix_utilisables"
-      ) {
-        const coutDeBase = parseInt(currentfield.prix.cout);
-        if (!currentfield.prix.components.length) {
-          return coutDeBase;
-        }
 
-        // On determine le cout final en fonction des relations definits;
-        var price = 0;
-        for (const c in currentfield.prix.components) {
-          const component = currentfield.prix.components[c];
-          //on parcourt les etapes.
-          for (const s in getters.form.forms) {
-            const form = getters.form.forms[s];
-            // on verifie que cest la bonne etape.
-            if (form.info.name == component.state_name) {
-              // on parcourt les champs;
-              for (const f in form.fields) {
-                const field = form.fields[f];
-                //on s'assure que c'est le champs qui a ete selectionné par l'utilisateur.
-                if (field.name == component.name) {
-                  // On verifie si le champs est le meme et different d'un champs de type selection.
-                  // voir l'example 1;
-                  if (config.typeSelection.includes(field.type)) {
-                    if (component.value) {
-                      for (const ot in field.options) {
-                        const optionOt = field.options[ot];
-                        /*
-                        alert(
-                          optionOt.value +
-                            " :: " +
-                            component.value +
-                            " ==> cout : " +
-                            optionOt.cout
-                        );
-                        /**/
-                        if (
-                          optionOt.value === component.value &&
-                          optionOt.cout &&
-                          optionOt.cout !== ""
-                        ) {
-                          price += parseInt(optionOt.cout);
-                          break;
-                        }
-                      }
-                    }
-                  } else if (component.name == currentfield.name) {
-                    price += coutDeBase * currentfield.value;
-                  }
-                  // On verifie si les options sont definits.
-                  else if (component.value) {
-                    for (const o in field.options) {
-                      const option = field.options[o];
-                      if (option.value === component.value) {
-                        if (option.cout) {
-                          price += currentfield.value * option.cout;
-                          alert(price);
-                        }
-                      }
-                    }
-                  } else {
-                    price += currentfield.value * field.prix.cout;
-                  }
-                }
-              }
-              break;
-            }
-          }
-        }
-        return price;
-      }
-    }
-  },
   saveDatas(state, getters, uid = 0) {
     config.saveStepsDatas(getters.form, state.price, uid).then((val) => {
       config.saveForm(val).then(() => {

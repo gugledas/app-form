@@ -45,7 +45,7 @@
       ></label-up>
       <!-- affiche sur le cas du type increment number -->
       <b-row align-h="center" v-if="type == 'increment'">
-        <increment-number :id="id"></increment-number>
+        <increment-number :field="formDatas.fields[id]"></increment-number>
       </b-row>
 
       <!-- affiche sur le cas du type markup title && image -->
@@ -145,6 +145,16 @@
           title="Deplacer vers le bas"
           ><b-icon icon="arrow-bar-down" font-scale="1" class=""></b-icon
         ></b-button>
+        <b-button
+          class="border-0"
+          size="sm"
+          variant="outline-secondary"
+          @click="cloneField"
+          v-b-tooltip.hover.v-secondary
+          title="Cloner ce champs"
+        >
+          <b-icon icon="clipboard-plus" font-scale="1" class=""></b-icon>
+        </b-button>
       </div>
     </div>
 
@@ -166,7 +176,7 @@ export default {
   components: {
     AddFormField,
     ImageCheck: () => import("./input/ImageCheckV2.vue"),
-    IncrementNumber: () => import("./IncrementNumber.vue"),
+    IncrementNumber: () => import("./input/IncrementNumber.vue"),
     //InputText: () => import("./input/InputText.vue"),
     autocomplete: () => import("./input/Autocomplete"),
     Radio: () => import("./input/Radio.vue"),
@@ -254,6 +264,11 @@ export default {
     modeToUp() {
       const idP = this.id - 1;
       Utilities.array_move(this.formDatas.fields, this.id, idP);
+    },
+    cloneField() {
+      //console.log("this.formDatas.fields : ", this.formDatas.fields[this.id]);
+      const field = JSON.stringify(this.formDatas.fields[this.id]);
+      this.formDatas.fields.push(JSON.parse(field));
     },
   },
 };

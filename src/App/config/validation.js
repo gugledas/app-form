@@ -1,3 +1,4 @@
+import config from "./config.js";
 const validationRessource = {
   conditions() {
     return {
@@ -26,6 +27,10 @@ const validationRessource = {
         text: "la valeur du champs est egal à",
         value: "egal",
       },
+      {
+        text: "la valeur du champs est superieur à",
+        value: ">",
+      },
     ];
   },
   Action(val = "Ce champs") {
@@ -41,6 +46,7 @@ const validationRessource = {
     ];
   },
   /**
+   * Validation des champs.
    * Retourne false, pour desactiver.
    */
   computedValidation: function (formDatas, currentField, formDatasValidate) {
@@ -49,6 +55,7 @@ const validationRessource = {
       if (field.name !== currentField.name) {
         for (const j in currentField.states) {
           const state = currentField.states[j];
+
           // si le champs n'est pas definit on retourne false;
           if (formDatasValidate[state.name] === undefined) return false;
           if (field.name === state.name) {
@@ -73,7 +80,24 @@ const validationRessource = {
                 );
                 /**/
                 if (field.value) {
-                  return field.value.includes(state.value) ? true : false;
+                  if (
+                    config.typeSelection.includes(field.type) &&
+                    field.value.includes
+                  ) {
+                    return field.value.includes(state.value) ? true : false;
+                  } else {
+                    const x = new String(field.value);
+                    const y = new String(state.value);
+                    return x.localeCompare(y) === 0 ? true : false;
+                  }
+                } else {
+                  return false;
+                }
+              } else if (state.operator === ">") {
+                if (field.value) {
+                  const x = parseInt(field.value);
+                  const y = parseInt(state.value);
+                  return y < x ? true : false;
                 } else {
                   return false;
                 }
@@ -107,6 +131,13 @@ const validationRessource = {
       const form = forms[i];
       if (form.info.name === state_name) {
         return form;
+      }
+    }
+  },
+  getFieldByName(name, fields) {
+    for (const i in fields) {
+      if (fields[i].name === name) {
+        return fields[i];
       }
     }
   },

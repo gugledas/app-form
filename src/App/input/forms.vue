@@ -100,6 +100,9 @@ export default {
     suivant() {
       if (this.stepsState) {
         this.$store.dispatch("stepsIndex", this.stepsIndex);
+        if (!this.mode) {
+          this.Save();
+        }
       }
     },
     back() {

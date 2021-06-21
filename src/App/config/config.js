@@ -28,7 +28,7 @@ export default {
   /**
    * Prepare les données pour la sauvagarde.
    */
-  saveStepsDatas: function (datas, price, uid = 0, status = 0) {
+  saveStepsDatas: function (id, datas, price, uid = 0, status = 0) {
     return new Promise((resolv) => {
       //console.log("fdate : ", datas);
       var forms = "";
@@ -49,8 +49,8 @@ export default {
           },
           action: "update",
         };
-        /*
-        if (datas.id) {
+
+        if (id !== null && id != "1") {
           table1.where = [
             {
               column: "id",
@@ -58,7 +58,7 @@ export default {
             },
           ];
         }
-        /**/
+
         result.push(table1);
       }
       resolv(result);
@@ -70,6 +70,29 @@ export default {
       table: "appformmanager_fomrs",
       fields: {},
       action: "delete",
+      where: [
+        {
+          column: "id",
+          value: id,
+        },
+      ],
+    };
+    result.push(table1);
+    return AjaxToastBootStrap.post(
+      this.baseURl + "/query-ajax/insert-update",
+      result,
+      {}
+    );
+  },
+  deleteFormTraitement(id, status) {
+    const result = [];
+    console.log("ress", id, status);
+    var table1 = {
+      table: "appformmanager_datas",
+      fields: {
+        status: status,
+      },
+      action: "update",
       where: [
         {
           column: "id",

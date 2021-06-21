@@ -14,6 +14,11 @@ export default new Vuex.Store({
      */
     mode: true,
     /**
+     * contient l'id de la donnée a mettre à jour dans la table "appformmanager_datas". Elle est rempli
+     * au premier clic  de l'utilisateur sur le bouton suivant
+     */
+    idSoumission: null,
+    /**
      * contient les etapes d'un formulaire
      */
     allStepsDatas: [],
@@ -128,6 +133,7 @@ export default new Vuex.Store({
           name: "",
         };
     },
+
     /**
      * Contient l'information d'une etape du formulaire selectionné.
      * par defaut, etape 0;
@@ -217,6 +223,7 @@ export default new Vuex.Store({
     },
     SET_FORM_ID(state, payload) {
       state.formId = payload;
+      state.idSoumission = null;
     },
     SET_TRAIT_ID(state, payload) {
       state.traitementId = payload;
@@ -263,6 +270,9 @@ export default new Vuex.Store({
     },
     SET_STATUS_STEPS_INDEX(state, val) {
       state.StatusStepsIndexs = val;
+    },
+    SET_ID_SOUMISSION(state, val) {
+      state.idSoumission = val;
     },
   },
   actions: {
@@ -430,8 +440,13 @@ export default new Vuex.Store({
         //
       }
     },
-    saveDatas({ state, getters }, uid = 0) {
-      utilities.saveDatas(state, getters, uid);
+    saveDatas({ commit, state, getters }, uid = 0) {
+      utilities.saveDatas(state, getters, uid).then((response) => {
+        console.log("données stocké du store", response);
+        if (state.idSoumission === null) {
+          commit("SET_ID_SOUMISSION", response.data[0].result);
+        }
+      });
     },
   },
   modules: {},

@@ -16,10 +16,10 @@ export default {
         j = null;
         const form = this.forms[k];
         if (this.validateState(form.states)) {
-          console.log("etape valide : ", k);
+          //console.log("etape valide : ", k);
           return kk;
         } else {
-          console.log("etape non valide : ", k);
+          //console.log("etape non valide : ", k);
         }
       }
     }
@@ -214,10 +214,14 @@ export default {
   },
 
   saveDatas(state, getters, uid = 0) {
-    config.saveStepsDatas(getters.form, state.price, uid).then((val) => {
-      config.saveForm(val).then(() => {
-        //
-      });
+    return new Promise((resolv) => {
+      config
+        .saveStepsDatas(state.idSoumission, getters.form, state.price, uid)
+        .then((val) => {
+          config.saveForm(val).then((response) => {
+            resolv(response);
+          });
+        });
     });
   },
   deleteForm(id) {

@@ -6,7 +6,18 @@
       :outlined="true"
       :hover="true"
       head-variant="dark"
+      responsive
+      sticky-header="350px"
+      class="traitement"
     >
+      <template #cell(status)="data">
+        <div>
+          <h5 class="status">
+            {{ data.item.status == 1 ? "Traité" : "non traité" }}
+          </h5>
+        </div>
+      </template>
+
       <template #cell(action)="data">
         <b-button-group class="">
           <b-button
@@ -16,11 +27,18 @@
           >
             voir
           </b-button>
-
           <b-button
             size="sm"
             variant="outline-success"
-            @click="showResult(data.index)"
+            @click="showResult(data.item)"
+          >
+            Editer
+          </b-button>
+
+          <b-button
+            size="sm"
+            variant="outline-warning"
+            @click="formTraiter(data.item)"
           >
             Traiter
           </b-button>
@@ -38,7 +56,7 @@
     >
       <b-row align-h="center" v-if="traitementFormItems.length">
         <b-col sm="12" v-for="(steps, i) in validSteps" :key="i"
-          ><b-card no-body class="mb-1">
+          ><b-card no-body class="mb-1" v-if="steps !== undefined">
             <b-card-header header-tag="header" class="p-1" role="tab">
               <b-button block variant="dark" disabled>{{
                 steps.info.title
@@ -72,6 +90,7 @@
 <script>
 import { mapState, mapGetters } from "vuex";
 import Utilities from "../../store/utilities";
+import config from "../config/config";
 
 export default {
   name: "Listesfomes",
@@ -155,6 +174,37 @@ export default {
     showResult(id) {
       console.log("id", id);
     },
+    formTraiter(id) {
+      var status = "";
+      if (id.status == "0") {
+        status = "1";
+      } else status = "0";
+      this.$bvModal
+        .msgBoxConfirm("Confirmez-vous avoir l'action", {
+          title: "Alerte",
+          size: "sm",
+          buttonSize: "sm",
+          okVariant: "success",
+          okTitle: "Traiter",
+          cancelTitle: "Annuler",
+          footerClass: "p-2",
+          hideHeaderClose: false,
+          centered: true,
+        })
+        .then((value) => {
+          if (value) {
+            console.log("refus : ", id);
+            config.deleteFormTraitement(id.id, status).then(() => {
+              window.location.reload();
+            });
+          }
+        });
+      /*
+        .catch((err) => {
+          console.log("refus : ", err);
+        });
+        /**/
+    },
   },
 };
 </script>
@@ -170,3 +220,12 @@ export default {
  //methods
  - variable en PascalCase
 -->
+<style lang="scss">
+.traitement {
+  .status {
+    font-size: 0.7em;
+    text-transform: uppercase;
+    font-weight: bold;
+  }
+}
+</style>

@@ -123,11 +123,6 @@
     </b-container>
     <!-- -->
     <reOrderStepes />
-    <<<<<<< HEAD
-    <!--
-=======
-
->>>>>>> a85b088ceb15d21e5568996148881bf456880928
     <b-row class="m-0" v-if="mode">
       <b-col cols="4">
         <b-card class="mt-3 text-left d-none-0" header="Price">
@@ -140,9 +135,6 @@
         </b-card>
       </b-col>
     </b-row>
-<<<<<<< HEAD
-    -->
-    ======= >>>>>>> a85b088ceb15d21e5568996148881bf456880928
   </div>
 </template>
 

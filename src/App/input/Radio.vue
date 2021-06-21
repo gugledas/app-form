@@ -83,22 +83,29 @@ export default {
     },
   },
   methods: {
+    /**
+     * -
+     */
     formatTemplateString(string) {
       return this.formatString(string);
       //return string;
     },
+    /**
+     * -
+     */
     formatString(str) {
       var regex = /\{\{(.*?)\}\}/g;
-      let found;
-      var int = 0;
-      while ((found = regex.exec(str)) !== null && int < 10) {
-        int++;
-        var attr = found[1].trim(" ");
-        //console.log("string : ", eval(attr));
-        str = str.replace(found[0], eval(attr));
+      var strFinal = str;
+      var monTableau;
+      while ((monTableau = regex.exec(str)) !== null) {
+        var msg = monTableau[1].trim(" ");
+        strFinal = strFinal.replace(monTableau[0], eval(msg));
       }
-      return str;
+      return strFinal;
     },
+    /**
+     * -
+     */
     getFieldValueByName(name) {
       const field = validation.getFieldByName(name, this.formDatas.fields);
       //console.log("field getFieldValueByName : ", field);

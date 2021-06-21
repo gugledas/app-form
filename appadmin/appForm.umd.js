@@ -92,11 +92,11 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/
 /******/
 /******/ 		// mini-css-extract-plugin CSS loading
-/******/ 		var cssChunks = {"1":1,"2":1,"5":1,"6":1,"7":1,"8":1,"9":1,"10":1,"11":1,"12":1,"13":1,"14":1,"15":1,"16":1,"17":1,"18":1,"19":1,"20":1};
+/******/ 		var cssChunks = {"1":1,"2":1,"4":1,"6":1,"7":1,"8":1,"9":1,"10":1,"11":1,"12":1,"13":1,"14":1,"15":1,"16":1,"17":1,"18":1,"19":1,"20":1};
 /******/ 		if(installedCssChunks[chunkId]) promises.push(installedCssChunks[chunkId]);
 /******/ 		else if(installedCssChunks[chunkId] !== 0 && cssChunks[chunkId]) {
 /******/ 			promises.push(installedCssChunks[chunkId] = new Promise(function(resolve, reject) {
-/******/ 				var href = "css/" + ({}[chunkId]||chunkId) + "." + {"0":"31d6cfe0","1":"2d029869","2":"66425ef2","4":"31d6cfe0","5":"179987f4","6":"61e966bc","7":"3def3390","8":"b2742065","9":"63248bb6","10":"dd3fcea7","11":"e5f1a246","12":"bc2e9aa0","13":"8f85aa7a","14":"4bdbbebb","15":"4bdbbebb","16":"ac5b10c9","17":"42efe657","18":"b7fff06e","19":"2f36306f","20":"44ac9b6b","21":"31d6cfe0","22":"31d6cfe0","23":"31d6cfe0","24":"31d6cfe0","25":"31d6cfe0","26":"31d6cfe0","27":"31d6cfe0","28":"31d6cfe0","29":"31d6cfe0","30":"31d6cfe0","31":"31d6cfe0","32":"31d6cfe0","33":"31d6cfe0","34":"31d6cfe0","35":"31d6cfe0"}[chunkId] + ".css";
+/******/ 				var href = "css/" + ({}[chunkId]||chunkId) + "." + {"0":"31d6cfe0","1":"2d029869","2":"66425ef2","4":"2f36306f","5":"31d6cfe0","6":"9deb3556","7":"6bffc4c6","8":"61e966bc","9":"3def3390","10":"b2742065","11":"63248bb6","12":"dd3fcea7","13":"e5f1a246","14":"bc2e9aa0","15":"8f85aa7a","16":"4bdbbebb","17":"4bdbbebb","18":"ac5b10c9","19":"42efe657","20":"44ac9b6b","21":"31d6cfe0","22":"31d6cfe0","23":"31d6cfe0","24":"31d6cfe0","25":"31d6cfe0","26":"31d6cfe0","27":"31d6cfe0","28":"31d6cfe0","29":"31d6cfe0","30":"31d6cfe0","31":"31d6cfe0","32":"31d6cfe0","33":"31d6cfe0","34":"31d6cfe0","35":"31d6cfe0"}[chunkId] + ".css";
 /******/ 				var fullhref = __webpack_require__.p + href;
 /******/ 				var existingLinkTags = document.getElementsByTagName("link");
 /******/ 				for(var i = 0; i < existingLinkTags.length; i++) {
@@ -62480,9 +62480,9 @@ wbuutilities__WEBPACK_IMPORTED_MODULE_4__[/* AjaxToastBootStrap */ "b"].$bvToast
   /**
    * Prepare les données pour la sauvagarde.
    */
-  saveStepsDatas: function saveStepsDatas(datas, price) {
-    var uid = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
-    var status = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 0;
+  saveStepsDatas: function saveStepsDatas(id, datas, price) {
+    var uid = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 0;
+    var status = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 0;
     return new Promise(function (resolv) {
       //console.log("fdate : ", datas);
       var forms = "";
@@ -62506,16 +62506,13 @@ wbuutilities__WEBPACK_IMPORTED_MODULE_4__[/* AjaxToastBootStrap */ "b"].$bvToast
           },
           action: "update"
         };
-        /*
-        if (datas.id) {
-          table1.where = [
-            {
-              column: "id",
-              value: datas.id,
-            },
-          ];
+
+        if (id !== null && id != "1") {
+          table1.where = [{
+            column: "id",
+            value: datas.id
+          }];
         }
-        /**/
 
         result.push(table1);
       }
@@ -62529,6 +62526,23 @@ wbuutilities__WEBPACK_IMPORTED_MODULE_4__[/* AjaxToastBootStrap */ "b"].$bvToast
       table: "appformmanager_fomrs",
       fields: {},
       action: "delete",
+      where: [{
+        column: "id",
+        value: id
+      }]
+    };
+    result.push(table1);
+    return wbuutilities__WEBPACK_IMPORTED_MODULE_4__[/* AjaxToastBootStrap */ "b"].post(this.baseURl + "/query-ajax/insert-update", result, {});
+  },
+  deleteFormTraitement: function deleteFormTraitement(id, status) {
+    var result = [];
+    console.log("ress", id, status);
+    var table1 = {
+      table: "appformmanager_datas",
+      fields: {
+        status: status
+      },
+      action: "update",
       where: [{
         column: "id",
         value: id
@@ -63160,6 +63174,12 @@ external_commonjs_vue_commonjs2_vue_root_Vue_default.a.use(vuex_esm["a" /* defau
     mode: true,
 
     /**
+     * contient l'id de la donnée a mettre à jour dans la table "appformmanager_datas". Elle est rempli
+     * au premier clic  de l'utilisateur sur le bouton suivant
+     */
+    idSoumission: null,
+
+    /**
      * contient les etapes d'un formulaire
      */
     allStepsDatas: [],
@@ -63382,6 +63402,7 @@ external_commonjs_vue_commonjs2_vue_root_Vue_default.a.use(vuex_esm["a" /* defau
     },
     SET_FORM_ID: function SET_FORM_ID(state, payload) {
       state.formId = payload;
+      state.idSoumission = null;
     },
     SET_TRAIT_ID: function SET_TRAIT_ID(state, payload) {
       state.traitementId = payload;
@@ -63430,6 +63451,9 @@ external_commonjs_vue_commonjs2_vue_root_Vue_default.a.use(vuex_esm["a" /* defau
     },
     SET_STATUS_STEPS_INDEX: function SET_STATUS_STEPS_INDEX(state, val) {
       state.StatusStepsIndexs = val;
+    },
+    SET_ID_SOUMISSION: function SET_ID_SOUMISSION(state, val) {
+      state.idSoumission = val;
     }
   },
   actions: {
@@ -63696,10 +63720,17 @@ external_commonjs_vue_commonjs2_vue_root_Vue_default.a.use(vuex_esm["a" /* defau
       }))();
     },
     saveDatas: function saveDatas(_ref18) {
-      var state = _ref18.state,
+      var commit = _ref18.commit,
+          state = _ref18.state,
           getters = _ref18.getters;
       var uid = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-      utilities["a" /* default */].saveDatas(state, getters, uid);
+      utilities["a" /* default */].saveDatas(state, getters, uid).then(function (response) {
+        console.log("données stocké du store", response);
+
+        if (state.idSoumission === null) {
+          commit("SET_ID_SOUMISSION", response.data[0].result);
+        }
+      });
     }
   },
   modules: {}
@@ -66916,7 +66947,7 @@ var routes = [{
   name: "Edition du formulaire",
   props: true,
   component: function component() {
-    return Promise.all(/* import() */[__webpack_require__.e(1), __webpack_require__.e(2), __webpack_require__.e(5)]).then(__webpack_require__.bind(null, "ca0f"));
+    return Promise.all(/* import() */[__webpack_require__.e(1), __webpack_require__.e(2), __webpack_require__.e(6)]).then(__webpack_require__.bind(null, "ca0f"));
   }
 }, {
   path: "/estimation-devis/:id",
@@ -66930,7 +66961,7 @@ var routes = [{
   name: "Traitement du résultat",
   props: true,
   component: function component() {
-    return __webpack_require__.e(/* import() */ 18).then(__webpack_require__.bind(null, "379c"));
+    return __webpack_require__.e(/* import() */ 7).then(__webpack_require__.bind(null, "379c"));
   }
 }, {
   path: "/*",
@@ -67063,10 +67094,9 @@ $export($export.S, 'Array', { isArray: __webpack_require__("bc48") });
         var form = this.forms[k];
 
         if (this.validateState(form.states)) {
-          console.log("etape valide : ", k);
+          //console.log("etape valide : ", k);
           return kk;
-        } else {
-          console.log("etape non valide : ", k);
+        } else {//console.log("etape non valide : ", k);
         }
       }
     }
@@ -67343,8 +67373,11 @@ $export($export.S, 'Array', { isArray: __webpack_require__("bc48") });
   },
   saveDatas: function saveDatas(state, getters) {
     var uid = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
-    _App_config_config_js__WEBPACK_IMPORTED_MODULE_10__[/* default */ "a"].saveStepsDatas(getters.form, state.price, uid).then(function (val) {
-      _App_config_config_js__WEBPACK_IMPORTED_MODULE_10__[/* default */ "a"].saveForm(val).then(function () {//
+    return new Promise(function (resolv) {
+      _App_config_config_js__WEBPACK_IMPORTED_MODULE_10__[/* default */ "a"].saveStepsDatas(state.idSoumission, getters.form, state.price, uid).then(function (val) {
+        _App_config_config_js__WEBPACK_IMPORTED_MODULE_10__[/* default */ "a"].saveForm(val).then(function (response) {
+          resolv(response);
+        });
       });
     });
   },

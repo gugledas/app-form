@@ -54435,9 +54435,9 @@ wbuutilities__WEBPACK_IMPORTED_MODULE_4__[/* AjaxToastBootStrap */ "b"].$bvToast
   /**
    * Prepare les données pour la sauvagarde.
    */
-  saveStepsDatas: function saveStepsDatas(datas, price) {
-    var uid = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
-    var status = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 0;
+  saveStepsDatas: function saveStepsDatas(id, datas, price) {
+    var uid = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 0;
+    var status = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 0;
     return new Promise(function (resolv) {
       //console.log("fdate : ", datas);
       var forms = "";
@@ -54461,16 +54461,13 @@ wbuutilities__WEBPACK_IMPORTED_MODULE_4__[/* AjaxToastBootStrap */ "b"].$bvToast
           },
           action: "update"
         };
-        /*
-        if (datas.id) {
-          table1.where = [
-            {
-              column: "id",
-              value: datas.id,
-            },
-          ];
+
+        if (id !== null && id != "1") {
+          table1.where = [{
+            column: "id",
+            value: datas.id
+          }];
         }
-        /**/
 
         result.push(table1);
       }
@@ -54484,6 +54481,23 @@ wbuutilities__WEBPACK_IMPORTED_MODULE_4__[/* AjaxToastBootStrap */ "b"].$bvToast
       table: "appformmanager_fomrs",
       fields: {},
       action: "delete",
+      where: [{
+        column: "id",
+        value: id
+      }]
+    };
+    result.push(table1);
+    return wbuutilities__WEBPACK_IMPORTED_MODULE_4__[/* AjaxToastBootStrap */ "b"].post(this.baseURl + "/query-ajax/insert-update", result, {});
+  },
+  deleteFormTraitement: function deleteFormTraitement(id, status) {
+    var result = [];
+    console.log("ress", id, status);
+    var table1 = {
+      table: "appformmanager_datas",
+      fields: {
+        status: status
+      },
+      action: "update",
       where: [{
         column: "id",
         value: id
@@ -55021,6 +55035,12 @@ external_commonjs_vue_commonjs2_vue_root_Vue_default.a.use(vuex_esm["a" /* defau
     mode: true,
 
     /**
+     * contient l'id de la donnée a mettre à jour dans la table "appformmanager_datas". Elle est rempli
+     * au premier clic  de l'utilisateur sur le bouton suivant
+     */
+    idSoumission: null,
+
+    /**
      * contient les etapes d'un formulaire
      */
     allStepsDatas: [],
@@ -55243,6 +55263,7 @@ external_commonjs_vue_commonjs2_vue_root_Vue_default.a.use(vuex_esm["a" /* defau
     },
     SET_FORM_ID: function SET_FORM_ID(state, payload) {
       state.formId = payload;
+      state.idSoumission = null;
     },
     SET_TRAIT_ID: function SET_TRAIT_ID(state, payload) {
       state.traitementId = payload;
@@ -55291,6 +55312,9 @@ external_commonjs_vue_commonjs2_vue_root_Vue_default.a.use(vuex_esm["a" /* defau
     },
     SET_STATUS_STEPS_INDEX: function SET_STATUS_STEPS_INDEX(state, val) {
       state.StatusStepsIndexs = val;
+    },
+    SET_ID_SOUMISSION: function SET_ID_SOUMISSION(state, val) {
+      state.idSoumission = val;
     }
   },
   actions: {
@@ -55557,10 +55581,17 @@ external_commonjs_vue_commonjs2_vue_root_Vue_default.a.use(vuex_esm["a" /* defau
       }))();
     },
     saveDatas: function saveDatas(_ref18) {
-      var state = _ref18.state,
+      var commit = _ref18.commit,
+          state = _ref18.state,
           getters = _ref18.getters;
       var uid = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-      utilities["a" /* default */].saveDatas(state, getters, uid);
+      utilities["a" /* default */].saveDatas(state, getters, uid).then(function (response) {
+        console.log("données stocké du store", response);
+
+        if (state.idSoumission === null) {
+          commit("SET_ID_SOUMISSION", response.data[0].result);
+        }
+      });
     }
   },
   modules: {}
@@ -58889,10 +58920,9 @@ module.exports = function (it) {
         var form = this.forms[k];
 
         if (this.validateState(form.states)) {
-          console.log("etape valide : ", k);
+          //console.log("etape valide : ", k);
           return kk;
-        } else {
-          console.log("etape non valide : ", k);
+        } else {//console.log("etape non valide : ", k);
         }
       }
     }
@@ -59169,8 +59199,11 @@ module.exports = function (it) {
   },
   saveDatas: function saveDatas(state, getters) {
     var uid = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
-    _App_config_config_js__WEBPACK_IMPORTED_MODULE_10__[/* default */ "a"].saveStepsDatas(getters.form, state.price, uid).then(function (val) {
-      _App_config_config_js__WEBPACK_IMPORTED_MODULE_10__[/* default */ "a"].saveForm(val).then(function () {//
+    return new Promise(function (resolv) {
+      _App_config_config_js__WEBPACK_IMPORTED_MODULE_10__[/* default */ "a"].saveStepsDatas(state.idSoumission, getters.form, state.price, uid).then(function (val) {
+        _App_config_config_js__WEBPACK_IMPORTED_MODULE_10__[/* default */ "a"].saveForm(val).then(function (response) {
+          resolv(response);
+        });
       });
     });
   },

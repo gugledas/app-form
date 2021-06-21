@@ -1,16 +1,5 @@
 ((typeof self !== 'undefined' ? self : this)["webpackJsonpappForm"] = (typeof self !== 'undefined' ? self : this)["webpackJsonpappForm"] || []).push([[8],{
 
-/***/ "1d37":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_8_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_8_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_8_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_LabelRow_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("cf2d");
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_8_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_8_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_8_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_LabelRow_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_8_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_8_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_8_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_LabelRow_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
-/* unused harmony reexport * */
-
-
-/***/ }),
-
 /***/ "4c93":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -780,19 +769,32 @@ var double = {
 
 /***/ }),
 
-/***/ "ab64":
+/***/ "73bb":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_8_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_8_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_8_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ImageCheckV2_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("ce0a");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_8_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_8_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_8_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ImageCheckV2_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_8_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_8_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_8_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ImageCheckV2_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
+/* unused harmony reexport * */
+
+
+/***/ }),
+
+/***/ "820b":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 // ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"4acd20fe-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/input/LabelRow.vue?vue&type=template&id=83d03f4c&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:!_vm.validationField && _vm.mode ? 'mb-5' : ''},[(_vm.validationField)?_c('transition',{attrs:{"name":"fade"}},[_c('div',{staticClass:"row-content choice-section min-height"},[_c('b-row',{staticClass:"row-content__row"},[_c('b-col',{attrs:{"sm":"6"}},[_c('label',{staticClass:"label"},[_vm._v(_vm._s(_vm.field.label)+" ")])]),_c('b-col',{attrs:{"sm":"6"}},[_c('ValidationProvider',{staticClass:"d-block",attrs:{"rules":_vm.field.require,"name":_vm.field.name},scopedSlots:_vm._u([{key:"default",fn:function(v){return [_c('div',{staticClass:"input-field",attrs:{"sm":"6"}},[(_vm.field.prefixe)?_c('span',{staticClass:"input-field__unit"},[_vm._v(" "+_vm._s(_vm.field.prefixe)+" ")]):_vm._e(),_c('b-form-input',{staticClass:"input-field__input",attrs:{"type":_vm.field.type,"placeholder":"","name":_vm.field.name},model:{value:(_vm.field.value),callback:function ($$v) {_vm.$set(_vm.field, "value", $$v)},expression:"field.value"}}),(_vm.field.suffixe)?_c('span',{staticClass:"input-field__unit"},[_vm._v(" "+_vm._s(_vm.field.suffixe)+" ")]):_vm._e()],1),_c('div',{staticClass:"text-danger"},_vm._l((v.errors),function(error,ii){return _c('small',{key:ii,staticClass:"d-block"},[_vm._v(" "+_vm._s(error)+" ")])}),0)]}}],null,false,1242360762)})],1)],1)],1)]):_vm._e()],1)}
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"4acd20fe-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/input/ImageCheckV2.vue?vue&type=template&id=7b273b28&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:!_vm.validationField && _vm.mode ? 'mb-5' : ''},[(_vm.validationField)?_c('transition',{attrs:{"name":"fade"}},[_c('div',{staticClass:"row-content choice-section min-height"},[_c('b-col',{attrs:{"sm":"6"}},[_c('label',{staticClass:"label"},[_vm._v(_vm._s(_vm.field.label)+" ")])]),_c('ValidationProvider',{staticClass:"d-block",attrs:{"rules":_vm.field.require,"name":_vm.field.name},scopedSlots:_vm._u([{key:"default",fn:function(v){return [_c('b-row',{staticClass:"w-100"},_vm._l((_vm.field.options),function(img,i){return _c('b-col',{key:i,attrs:{"sm":"6"},on:{"click":function($event){return _vm.getImage(i)}}},[_c('div',{staticClass:"choice-button"},[_c('div',{staticClass:"choice-button__img",class:img.isActive
+                    ? 'choice-button__img--active'
+                    : 'choice-button__img--normal'},[_c('img',{attrs:{"srcset":_vm.baseUrl + img.img}})]),_c('div',{staticClass:"ChoiceButton_label mb-2"},[_c('span',[_vm._v(_vm._s(img.text))])]),_c('div',{staticClass:"ChoiceButton_label mb-2"},[_c('span',[_vm._v(_vm._s(img.description))])])])])}),1),_c('div',{staticClass:"text-danger"},_vm._l((v.errors),function(error,ii){return _c('small',{key:ii,staticClass:"d-block"},[_vm._v(" "+_vm._s(error)+" ")])}),0)]}}],null,false,2037392831)})],1)]):_vm._e()],1)}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/App/input/LabelRow.vue?vue&type=template&id=83d03f4c&
+// CONCATENATED MODULE: ./src/App/input/ImageCheckV2.vue?vue&type=template&id=7b273b28&
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/objectSpread2.js + 1 modules
 var objectSpread2 = __webpack_require__("5530");
@@ -809,7 +811,10 @@ var validation = __webpack_require__("e412");
 // EXTERNAL MODULE: ./src/App/EditsFields/vee-validate-custom.js
 var vee_validate_custom = __webpack_require__("b6d1");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/input/LabelRow.vue?vue&type=script&lang=js&
+// EXTERNAL MODULE: ./src/App/config/config.js
+var config = __webpack_require__("f158");
+
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/input/ImageCheckV2.vue?vue&type=script&lang=js&
 
 //
 //
@@ -858,11 +863,17 @@ var vee_validate_custom = __webpack_require__("b6d1");
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
 
-/* harmony default export */ var LabelRowvue_type_script_lang_js_ = ({
+
+/* harmony default export */ var ImageCheckV2vue_type_script_lang_js_ = ({
   props: {
     field: {
       type: Object,
@@ -877,43 +888,13 @@ var vee_validate_custom = __webpack_require__("b6d1");
   },
   data: function data() {
     return {
-      value: 1
+      formValues: {},
+      baseUrl: config["a" /* default */].baseURl
     };
-  },
-  watch: {
-    value: function value() {
-      this.$emit("label-up-value", this.value);
-      this.$store.state.fields.value = this.options;
-      console.log("object", this.options);
-    }
   },
   computed: Object(objectSpread2["a" /* default */])(Object(objectSpread2["a" /* default */])(Object(objectSpread2["a" /* default */])({}, Object(vuex_esm["b" /* mapGetters */])(["formDatas"])), Object(vuex_esm["c" /* mapState */])(["formDatasValidate", "mode"])), {}, {
     validationField: function validationField() {
       if (this.field.states.length) {
-        /*
-        for (const i in this.formDatas.fields) {
-          const field = this.formDatas.fields[i];
-          if (field.name !== this.field.name) {
-            for (const j in this.field.states) {
-              const state = this.field.states[j];
-              if (field.name === state.name) {
-                // visible
-                if (state.action === "visible") {
-                  if (field.value === "" && state.operator === "not_empty")
-                    return false;
-                  else if (field.value !== "" && state.operator === "empty")
-                    return false;
-                  else if (
-                    state.operator === "validated" &&
-                    this.formDatasValidate[field.name]
-                  )
-                    return this.formDatasValidate[field.name].valid;
-                }
-              }
-            }
-          }
-        }
-        /**/
         var status = validation["b" /* validationRessource */].computedValidation(this.formDatas, this.field, this.formDatasValidate);
         if (status !== undefined) return status;
       }
@@ -921,17 +902,33 @@ var vee_validate_custom = __webpack_require__("b6d1");
       return true;
     }
   }),
-  methods: {}
+  methods: {
+    getImage: function getImage(il) {
+      var le = this.field.options;
+      console.log("le", il);
+
+      for (var i = 0; i < le.length; i++) {
+        if (i == il) {
+          le[i].isActive = !le[i].isActive;
+          if (le[i].isActive) this.field.value = le[i].value;else this.field.value = "";
+        } else {
+          le[i].isActive = false;
+        }
+      }
+      /**/
+
+    }
+  }
 });
-// CONCATENATED MODULE: ./src/App/input/LabelRow.vue?vue&type=script&lang=js&
- /* harmony default export */ var input_LabelRowvue_type_script_lang_js_ = (LabelRowvue_type_script_lang_js_); 
-// EXTERNAL MODULE: ./src/App/input/LabelRow.vue?vue&type=style&index=0&lang=scss&
-var LabelRowvue_type_style_index_0_lang_scss_ = __webpack_require__("1d37");
+// CONCATENATED MODULE: ./src/App/input/ImageCheckV2.vue?vue&type=script&lang=js&
+ /* harmony default export */ var input_ImageCheckV2vue_type_script_lang_js_ = (ImageCheckV2vue_type_script_lang_js_); 
+// EXTERNAL MODULE: ./src/App/input/ImageCheckV2.vue?vue&type=style&index=0&lang=scss&
+var ImageCheckV2vue_type_style_index_0_lang_scss_ = __webpack_require__("73bb");
 
 // EXTERNAL MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
 var componentNormalizer = __webpack_require__("2877");
 
-// CONCATENATED MODULE: ./src/App/input/LabelRow.vue
+// CONCATENATED MODULE: ./src/App/input/ImageCheckV2.vue
 
 
 
@@ -941,7 +938,7 @@ var componentNormalizer = __webpack_require__("2877");
 /* normalize component */
 
 var component = Object(componentNormalizer["a" /* default */])(
-  input_LabelRowvue_type_script_lang_js_,
+  input_ImageCheckV2vue_type_script_lang_js_,
   render,
   staticRenderFns,
   false,
@@ -951,7 +948,7 @@ var component = Object(componentNormalizer["a" /* default */])(
   
 )
 
-/* harmony default export */ var LabelRow = __webpack_exports__["default"] = (component.exports);
+/* harmony default export */ var ImageCheckV2 = __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
@@ -976,7 +973,7 @@ Object(vee_validate__WEBPACK_IMPORTED_MODULE_1__[/* extend */ "c"])("alpha", vee
 
 /***/ }),
 
-/***/ "cf2d":
+/***/ "ce0a":
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin

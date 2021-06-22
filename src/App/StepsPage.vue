@@ -126,7 +126,8 @@
     <b-row class="m-0" v-if="mode">
       <b-col cols="4">
         <b-card class="mt-3 text-left d-none-0" header="Price">
-          <pre class="text-left"> {{ price }} </pre>
+          <pre class="text-left">Prix: {{ price }} </pre>
+          <pre class="text-left">Prix aide: {{ priceAide }} </pre>
         </b-card>
       </b-col>
       <b-col cols="4">
@@ -178,7 +179,14 @@ export default {
     this.$store.dispatch("setFormId", this.id);
   },
   computed: {
-    ...mapState(["stepsIndex", "allStepsDatas", "fields", "price", "mode"]),
+    ...mapState([
+      "stepsIndex",
+      "allStepsDatas",
+      "fields",
+      "price",
+      "mode",
+      "priceAide",
+    ]),
     ...mapGetters(["form", "formDatas"]),
     currentSteps() {
       var local = localStorage.getItem("allo");

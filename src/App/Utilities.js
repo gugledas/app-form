@@ -73,6 +73,7 @@ const Utilities = {
       { value: "file", text: "Ajout de fichiers" },
       { value: "recapitulatif", text: "Recapitulatif du montant" },
       { value: "userlogin", text: "Connexion utilisateur" },
+      { value: "input-aide-financiere", text: "Aide financiere" },
     ];
   },
   array_move(arr, old_index, new_index) {

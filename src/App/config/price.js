@@ -23,6 +23,10 @@ export default {
         text: "prix_referentiels",
         value: "prix_referentiels",
       },
+      {
+        text: "Aide financiere",
+        value: "aide_financiere",
+      },
     ];
   },
 };

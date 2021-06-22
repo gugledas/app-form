@@ -14,7 +14,7 @@ export default new Vuex.Store({
      */
     mode: true,
     /**
-     * contient l'id de la donnée a mettre à jour dans la table "appformmanager_datas". Elle est rempli
+     * Contient l'id de la donnée a mettre à jour dans la table "appformmanager_datas". Elle est rempli
      * au premier clic  de l'utilisateur sur le bouton suivant
      */
     idSoumission: null,
@@ -57,6 +57,7 @@ export default new Vuex.Store({
      * Contient le prix calculer progressivement en function de l'action utilisateur(suivant,back).
      */
     price: 0,
+    priceAide: 0,
     /**
      * Contient le status du formulaire suivant.
      true: form activé.
@@ -262,11 +263,17 @@ export default new Vuex.Store({
     AJOUT_PRIX_STEPS(state, prix) {
       state.price += prix;
     },
+    AJOUT_PRIX_AIDE_STEPS(state, prix) {
+      state.priceAide += prix;
+    },
     /**
      * Retire le prix de l'etape.
      */
     REMOVE_PRIX_STEPS(state, prix) {
       state.price -= prix;
+    },
+    REMOVE_PRIX_AIDE_STEPS(state, prix) {
+      state.priceAide -= prix;
     },
     SET_STATUS_STEPS_INDEX(state, val) {
       state.StatusStepsIndexs = val;
@@ -297,6 +304,15 @@ export default new Vuex.Store({
       if (price > 0) {
         commit("AJOUT_PRIX_STEPS", price);
       }
+      //on determine le cout d'aide de l'etape.
+      const priceAide = await utilities.getPriceStape(
+        getters.formDatas,
+        getters.form.forms,
+        "aide_financiere"
+      );
+      if (priceAide > 0) {
+        commit("AJOUT_PRIX_AIDE_STEPS", priceAide);
+      }
       //
       const new_index = await utilities.selectNextState(getters.form.forms, i);
       if (new_index) {
@@ -326,6 +342,15 @@ export default new Vuex.Store({
       );
       if (price > 0) {
         commit("REMOVE_PRIX_STEPS", price);
+      }
+      //remove price states aide
+      const priceAide = await utilities.getPriceStape(
+        getters.formDatas,
+        getters.form.forms,
+        "aide_financiere"
+      );
+      if (priceAide > 0) {
+        commit("REMOVE_PRIX_AIDE_STEPS", priceAide);
       }
     },
     resetFormDatas({ commit }) {

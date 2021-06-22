@@ -73,7 +73,7 @@ export default {
    * Permet de recuperer le prix pour une etape.
    * deux methode de calcul sont definit, une methode UI et une methode code.
    */
-  async getPriceStape(formDatas, forms) {
+  async getPriceStape(formDatas, forms, type_cout = "prix_utilisables") {
     var self = this;
     var price = 0;
     this.forms = forms;
@@ -85,21 +85,28 @@ export default {
           field.prix.complex_logique === undefined ||
           !field.prix.complex_logique
         ) {
-          price += await this.getPriceForField(field);
+          price += await this.getPriceForField(field, false, 0, type_cout);
           // si cest un champs composé.
           if (field.prix && field.prix.components.length) {
-            var price2 = await this.getPriceFieldInState(forms, field);
+            var price2 = await this.getPriceFieldInState(
+              forms,
+              field,
+              0,
+              type_cout
+            );
             if (price2) {
               price += price2 * price;
             }
           }
-        } else if (field.prix.complex_logique) {
-          if (field.none__) {
-            self;
+        } else if (
+          field.prix.complex_logique &&
+          field.prix.action === type_cout
+        ) {
+          if (self) {
+            const datas_logique = await eval(field.prix.datas_logique);
+            console.log(" Field.prix : ", datas_logique);
+            price += parseInt(datas_logique);
           }
-          const datas_logique = await eval(field.prix.datas_logique);
-          console.log(" Field.prix : ", datas_logique);
-          price += parseInt(datas_logique);
         }
       }
     }
@@ -108,7 +115,12 @@ export default {
   /**
    * Il faut s'assurer au prealable que field.prix.components est definit.
    */
-  async getPriceFieldInState(forms, field, priceFinal = 0) {
+  async getPriceFieldInState(
+    forms,
+    field,
+    priceFinal = 0,
+    type_cout = "prix_utilisables"
+  ) {
     return new Promise((resolvParent) => {
       //on parcout les options de prix.
       const getFieldInState = () => {
@@ -140,10 +152,12 @@ export default {
       };
       getFieldInState().then((fieldState) => {
         if (fieldState)
-          this.getPriceForField(fieldState, true).then((priceField) => {
-            priceFinal += priceField;
-            resolvParent(priceFinal);
-          });
+          this.getPriceForField(fieldState, true, 0, type_cout).then(
+            (priceField) => {
+              priceFinal += priceField;
+              resolvParent(priceFinal);
+            }
+          );
         else resolvParent(priceFinal);
       });
       //
@@ -152,11 +166,16 @@ export default {
   /**
    * Retorune toujours un entier.
    */
-  getPriceForField(field, use = false, priceFinal = 0) {
+  getPriceForField(
+    field,
+    use = false,
+    priceFinal = 0,
+    type_cout = "prix_utilisables"
+  ) {
     return new Promise((resolvParent) => {
       const execution = (price = 0) => {
         return new Promise((resolv) => {
-          if (field.prix && (field.prix.action === "prix_utilisables" || use)) {
+          if (field.prix && (field.prix.action === type_cout || use)) {
             var typeDatas = typeof field.value;
             // Cas des champs type selection.
             if (config.typeSelection.includes(field.type)) {

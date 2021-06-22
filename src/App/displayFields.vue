@@ -103,6 +103,11 @@
         :field="formDatas.fields[id]"
         v-if="type == 'userlogin'"
       ></userlogin>
+      <!-- -->
+      <AideFinanciere
+        :field="formDatas.fields[id]"
+        v-if="type == 'input-aide-financiere'"
+      ></AideFinanciere>
 
       <div v-if="this.$store.state.mode" class="boutton-absolute d-flex">
         <b-button
@@ -190,6 +195,7 @@ export default {
     LabelUp: () => import("./input/LabelUp.vue"),
     recapitulatif: () => import("./input/recapitulatif.vue"),
     userlogin: () => import("./input/userlogin.vue"),
+    AideFinanciere: () => import("./input/inputAideFinanciere.vue"),
   },
   props: {
     type: {

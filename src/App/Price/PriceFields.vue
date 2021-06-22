@@ -30,7 +30,12 @@
         ></b-form-input>
       </b-form-group>
       <!-- ! -->
-      <div v-if="field.prix.action === 'prix_utilisables'">
+      <div
+        v-if="
+          field.prix.action === 'prix_utilisables' ||
+          field.prix.action === 'aide_financiere'
+        "
+      >
         <div class="mb-3">
           <b-button variant="outline-primary" size="sm" @click="addCondition">
             + Ajouter une condition

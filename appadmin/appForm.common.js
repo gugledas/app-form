@@ -83,11 +83,11 @@ module.exports =
 /******/
 /******/
 /******/ 		// mini-css-extract-plugin CSS loading
-/******/ 		var cssChunks = {"1":1,"2":1,"4":1,"6":1,"7":1,"8":1,"9":1,"10":1,"11":1,"12":1,"13":1,"14":1,"15":1,"16":1,"17":1,"18":1,"19":1,"20":1};
+/******/ 		var cssChunks = {"1":1,"2":1,"4":1,"6":1,"7":1,"8":1,"9":1,"10":1,"11":1,"12":1,"13":1,"14":1,"15":1,"16":1,"17":1,"18":1,"19":1,"21":1};
 /******/ 		if(installedCssChunks[chunkId]) promises.push(installedCssChunks[chunkId]);
 /******/ 		else if(installedCssChunks[chunkId] !== 0 && cssChunks[chunkId]) {
 /******/ 			promises.push(installedCssChunks[chunkId] = new Promise(function(resolve, reject) {
-/******/ 				var href = "css/" + ({}[chunkId]||chunkId) + "." + {"0":"31d6cfe0","1":"2d029869","2":"66425ef2","4":"2f36306f","5":"31d6cfe0","6":"9deb3556","7":"6bffc4c6","8":"61e966bc","9":"3def3390","10":"b2742065","11":"63248bb6","12":"dd3fcea7","13":"e5f1a246","14":"bc2e9aa0","15":"8f85aa7a","16":"4bdbbebb","17":"4bdbbebb","18":"ac5b10c9","19":"42efe657","20":"44ac9b6b","21":"31d6cfe0","22":"31d6cfe0","23":"31d6cfe0","24":"31d6cfe0","25":"31d6cfe0","26":"31d6cfe0","27":"31d6cfe0","28":"31d6cfe0","29":"31d6cfe0","30":"31d6cfe0","31":"31d6cfe0","32":"31d6cfe0","33":"31d6cfe0","34":"31d6cfe0","35":"31d6cfe0"}[chunkId] + ".css";
+/******/ 				var href = "css/" + ({}[chunkId]||chunkId) + "." + {"0":"31d6cfe0","1":"2d029869","2":"66425ef2","4":"2f36306f","5":"31d6cfe0","6":"9deb3556","7":"6bffc4c6","8":"61e966bc","9":"3def3390","10":"b2742065","11":"63248bb6","12":"dd3fcea7","13":"e5f1a246","14":"bc2e9aa0","15":"8f85aa7a","16":"4bdbbebb","17":"4bdbbebb","18":"ac5b10c9","19":"42efe657","20":"31d6cfe0","21":"44ac9b6b","22":"31d6cfe0","23":"31d6cfe0","24":"31d6cfe0","25":"31d6cfe0","26":"31d6cfe0","27":"31d6cfe0","28":"31d6cfe0","29":"31d6cfe0","30":"31d6cfe0","31":"31d6cfe0","32":"31d6cfe0","33":"31d6cfe0","34":"31d6cfe0","35":"31d6cfe0","36":"31d6cfe0","37":"31d6cfe0"}[chunkId] + ".css";
 /******/ 				var fullhref = __webpack_require__.p + href;
 /******/ 				var existingLinkTags = document.getElementsByTagName("link");
 /******/ 				for(var i = 0; i < existingLinkTags.length; i++) {
@@ -4106,6 +4106,9 @@ var Utilities = {
     }, {
       value: "userlogin",
       text: "Connexion utilisateur"
+    }, {
+      value: "input-aide-financiere",
+      text: "Aide financiere"
     }];
   },
   array_move: function array_move(arr, old_index, new_index) {
@@ -63165,7 +63168,7 @@ external_commonjs_vue_commonjs2_vue_root_Vue_default.a.use(vuex_esm["a" /* defau
     mode: true,
 
     /**
-     * contient l'id de la donnée a mettre à jour dans la table "appformmanager_datas". Elle est rempli
+     * Contient l'id de la donnée a mettre à jour dans la table "appformmanager_datas". Elle est rempli
      * au premier clic  de l'utilisateur sur le bouton suivant
      */
     idSoumission: null,
@@ -63217,6 +63220,7 @@ external_commonjs_vue_commonjs2_vue_root_Vue_default.a.use(vuex_esm["a" /* defau
      * Contient le prix calculer progressivement en function de l'action utilisateur(suivant,back).
      */
     price: 0,
+    priceAide: 0,
 
     /**
      * Contient le status du formulaire suivant.
@@ -63433,12 +63437,18 @@ external_commonjs_vue_commonjs2_vue_root_Vue_default.a.use(vuex_esm["a" /* defau
     AJOUT_PRIX_STEPS: function AJOUT_PRIX_STEPS(state, prix) {
       state.price += prix;
     },
+    AJOUT_PRIX_AIDE_STEPS: function AJOUT_PRIX_AIDE_STEPS(state, prix) {
+      state.priceAide += prix;
+    },
 
     /**
      * Retire le prix de l'etape.
      */
     REMOVE_PRIX_STEPS: function REMOVE_PRIX_STEPS(state, prix) {
       state.price -= prix;
+    },
+    REMOVE_PRIX_AIDE_STEPS: function REMOVE_PRIX_AIDE_STEPS(state, prix) {
+      state.priceAide -= prix;
     },
     SET_STATUS_STEPS_INDEX: function SET_STATUS_STEPS_INDEX(state, val) {
       state.StatusStepsIndexs = val;
@@ -63465,7 +63475,7 @@ external_commonjs_vue_commonjs2_vue_root_Vue_default.a.use(vuex_esm["a" /* defau
      */
     stepsIndex: function stepsIndex(_ref3, i) {
       return Object(asyncToGenerator["a" /* default */])( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-        var commit, getters, price, new_index;
+        var commit, getters, price, priceAide, new_index;
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -63479,37 +63489,48 @@ external_commonjs_vue_commonjs2_vue_root_Vue_default.a.use(vuex_esm["a" /* defau
 
                 if (price > 0) {
                   commit("AJOUT_PRIX_STEPS", price);
-                } //
+                } //on determine le cout d'aide de l'etape.
 
 
                 _context.next = 7;
-                return utilities["a" /* default */].selectNextState(getters.form.forms, i);
+                return utilities["a" /* default */].getPriceStape(getters.formDatas, getters.form.forms, "aide_financiere");
 
               case 7:
+                priceAide = _context.sent;
+
+                if (priceAide > 0) {
+                  commit("AJOUT_PRIX_AIDE_STEPS", priceAide);
+                } //
+
+
+                _context.next = 11;
+                return utilities["a" /* default */].selectNextState(getters.form.forms, i);
+
+              case 11:
                 new_index = _context.sent;
 
                 if (!new_index) {
-                  _context.next = 15;
+                  _context.next = 19;
                   break;
                 }
 
-                _context.next = 11;
+                _context.next = 15;
                 return commit("STEPS_INDEX", new_index);
 
-              case 11:
+              case 15:
                 commit("ADD_STEPS_INDEXS", new_index); // on verifie si on est sur la derniere etape,
 
                 if (getters.form.forms.length === new_index + 1) {
                   commit("SET_STATUS_STEPS_INDEX", false);
                 }
 
-                _context.next = 16;
+                _context.next = 20;
                 break;
 
-              case 15:
+              case 19:
                 commit("SET_STATUS_STEPS_INDEX", false);
 
-              case 16:
+              case 20:
               case "end":
                 return _context.stop();
             }
@@ -63519,7 +63540,7 @@ external_commonjs_vue_commonjs2_vue_root_Vue_default.a.use(vuex_esm["a" /* defau
     },
     stepsBack: function stepsBack(_ref4) {
       return Object(asyncToGenerator["a" /* default */])( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
-        var commit, state, getters, new_index, price;
+        var commit, state, getters, new_index, price, priceAide;
         return regeneratorRuntime.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
@@ -63549,9 +63570,20 @@ external_commonjs_vue_commonjs2_vue_root_Vue_default.a.use(vuex_esm["a" /* defau
 
                 if (price > 0) {
                   commit("REMOVE_PRIX_STEPS", price);
+                } //remove price states aide
+
+
+                _context2.next = 14;
+                return utilities["a" /* default */].getPriceStape(getters.formDatas, getters.form.forms, "aide_financiere");
+
+              case 14:
+                priceAide = _context2.sent;
+
+                if (priceAide > 0) {
+                  commit("REMOVE_PRIX_AIDE_STEPS", priceAide);
                 }
 
-              case 12:
+              case 16:
               case "end":
                 return _context2.stop();
             }
@@ -66827,7 +66859,7 @@ var objectSpread2 = __webpack_require__("5530");
   props: {},
   components: {
     AddEditForm: function AddEditForm() {
-      return __webpack_require__.e(/* import() */ 29).then(__webpack_require__.bind(null, "d2d6"));
+      return __webpack_require__.e(/* import() */ 31).then(__webpack_require__.bind(null, "d2d6"));
     }
   },
   data: function data() {
@@ -66945,7 +66977,7 @@ var routes = [{
   name: "Estimation du devis",
   props: true,
   component: function component() {
-    return Promise.all(/* import() */[__webpack_require__.e(1), __webpack_require__.e(2), __webpack_require__.e(35)]).then(__webpack_require__.bind(null, "7817"));
+    return Promise.all(/* import() */[__webpack_require__.e(1), __webpack_require__.e(2), __webpack_require__.e(37)]).then(__webpack_require__.bind(null, "7817"));
   }
 }, {
   path: "/traitement/:id",
@@ -67148,23 +67180,25 @@ $export($export.S, 'Array', { isArray: __webpack_require__("bc48") });
    * deux methode de calcul sont definit, une methode UI et une methode code.
    */
   getPriceStape: function getPriceStape(formDatas, forms) {
-    var _this = this;
+    var _arguments = arguments,
+        _this = this;
 
     return Object(_siteweb_AppVuejs_app_form_node_modules_babel_runtime_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"])( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-      var self, price, i, field, price2, datas_logique;
+      var type_cout, self, price, i, field, price2, datas_logique;
       return regeneratorRuntime.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
+              type_cout = _arguments.length > 2 && _arguments[2] !== undefined ? _arguments[2] : "prix_utilisables";
               self = _this;
               price = 0;
               _this.forms = forms; //on parcout les champs de l'etape, afin de determiner le cout associé à chaque champs.
 
               _context.t0 = regeneratorRuntime.keys(formDatas.fields);
 
-            case 4:
+            case 5:
               if ((_context.t1 = _context.t0()).done) {
-                _context.next = 29;
+                _context.next = 30;
                 break;
               }
 
@@ -67172,67 +67206,68 @@ $export($export.S, 'Array', { isArray: __webpack_require__("bc48") });
               field = formDatas.fields[i];
 
               if (!field.prix) {
-                _context.next = 27;
+                _context.next = 28;
                 break;
               }
 
               if (!(field.prix.complex_logique === undefined || !field.prix.complex_logique)) {
-                _context.next = 20;
+                _context.next = 21;
                 break;
               }
 
               _context.t2 = price;
-              _context.next = 12;
-              return _this.getPriceForField(field);
+              _context.next = 13;
+              return _this.getPriceForField(field, false, 0, type_cout);
 
-            case 12:
+            case 13:
               price = _context.t2 += _context.sent;
 
               if (!(field.prix && field.prix.components.length)) {
-                _context.next = 18;
+                _context.next = 19;
                 break;
               }
 
-              _context.next = 16;
-              return _this.getPriceFieldInState(forms, field);
+              _context.next = 17;
+              return _this.getPriceFieldInState(forms, field, 0, type_cout);
 
-            case 16:
+            case 17:
               price2 = _context.sent;
 
               if (price2) {
                 price += price2 * price;
               }
 
-            case 18:
-              _context.next = 27;
+            case 19:
+              _context.next = 28;
               break;
 
-            case 20:
-              if (!field.prix.complex_logique) {
-                _context.next = 27;
+            case 21:
+              if (!(field.prix.complex_logique && field.prix.action === type_cout)) {
+                _context.next = 28;
                 break;
               }
 
-              if (field.none__) {
-                self;
+              if (!self) {
+                _context.next = 28;
+                break;
               }
 
-              _context.next = 24;
+              _context.next = 25;
               return eval(field.prix.datas_logique);
 
-            case 24:
+            case 25:
               datas_logique = _context.sent;
               console.log(" Field.prix : ", datas_logique);
               price += parseInt(datas_logique);
 
-            case 27:
-              _context.next = 4;
+            case 28:
+              _context.next = 5;
               break;
 
-            case 29:
+            case 30:
               return _context.abrupt("return", price);
 
-            case 30:
+            case 31:
             case "end":
               return _context.stop();
           }
@@ -67245,16 +67280,17 @@ $export($export.S, 'Array', { isArray: __webpack_require__("bc48") });
    * Il faut s'assurer au prealable que field.prix.components est definit.
    */
   getPriceFieldInState: function getPriceFieldInState(forms, field) {
-    var _arguments = arguments,
+    var _arguments2 = arguments,
         _this2 = this;
 
     return Object(_siteweb_AppVuejs_app_form_node_modules_babel_runtime_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__[/* default */ "a"])( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
-      var priceFinal;
+      var priceFinal, type_cout;
       return regeneratorRuntime.wrap(function _callee2$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
-              priceFinal = _arguments.length > 2 && _arguments[2] !== undefined ? _arguments[2] : 0;
+              priceFinal = _arguments2.length > 2 && _arguments2[2] !== undefined ? _arguments2[2] : 0;
+              type_cout = _arguments2.length > 3 && _arguments2[3] !== undefined ? _arguments2[3] : "prix_utilisables";
               return _context2.abrupt("return", new Promise(function (resolvParent) {
                 //on parcout les options de prix.
                 var getFieldInState = function getFieldInState() {
@@ -67292,14 +67328,14 @@ $export($export.S, 'Array', { isArray: __webpack_require__("bc48") });
                 };
 
                 getFieldInState().then(function (fieldState) {
-                  if (fieldState) _this2.getPriceForField(fieldState, true).then(function (priceField) {
+                  if (fieldState) _this2.getPriceForField(fieldState, true, 0, type_cout).then(function (priceField) {
                     priceFinal += priceField;
                     resolvParent(priceFinal);
                   });else resolvParent(priceFinal);
                 }); //
               }));
 
-            case 2:
+            case 3:
             case "end":
               return _context2.stop();
           }
@@ -67314,11 +67350,12 @@ $export($export.S, 'Array', { isArray: __webpack_require__("bc48") });
   getPriceForField: function getPriceForField(field) {
     var use = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
     var priceFinal = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+    var type_cout = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "prix_utilisables";
     return new Promise(function (resolvParent) {
       var execution = function execution() {
         var price = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
         return new Promise(function (resolv) {
-          if (field.prix && (field.prix.action === "prix_utilisables" || use)) {
+          if (field.prix && (field.prix.action === type_cout || use)) {
             var typeDatas = Object(_siteweb_AppVuejs_app_form_node_modules_babel_runtime_helpers_esm_typeof__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"])(field.value); // Cas des champs type selection.
 
 

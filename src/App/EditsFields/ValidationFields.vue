@@ -154,9 +154,6 @@
         </b-card-body>
       </b-collapse>
     </b-card>
-    <pre>
-      {{ field }}
-    </pre>
   </div>
 </template>
 <script>

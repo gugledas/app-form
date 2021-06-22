@@ -123,6 +123,7 @@
     </b-container>
     <!-- -->
     <reOrderStepes />
+    <!--
     <b-row class="m-0" v-if="mode">
       <b-col cols="4">
         <b-card class="mt-3 text-left d-none-0" header="Price">
@@ -136,6 +137,7 @@
         </b-card>
       </b-col>
     </b-row>
+    -->
   </div>
 </template>
 

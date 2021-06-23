@@ -244,7 +244,7 @@ export default {
       config
         .saveStepsDatas(state.idSoumission, getters.form, state.price, uid)
         .then((val) => {
-          config.saveForm(val).then((response) => {
+          config.saveForm(val, state.mode).then((response) => {
             resolv(response);
           });
         });

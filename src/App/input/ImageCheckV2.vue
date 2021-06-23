@@ -2,7 +2,7 @@
   <div :class="!validationField && mode ? 'mb-5' : ''">
     <transition v-if="validationField" name="fade">
       <div class="row-content choice-section min-height">
-        <b-col sm="6">
+        <b-col sm="6 p-0">
           <label class="label">{{ field.label }} </label>
         </b-col>
         <ValidationProvider
@@ -117,13 +117,12 @@ export default {
 </script>
 
 <style lang="scss">
-$border_color: #49a0a2;
+$border_color: #3687c6;
 .choice-button {
   max-width: 150px;
   //background: rgb(163, 163, 228);
   margin: 10px;
-  vertical-align: center;
-
+  text-align: center;
   &__img {
     width: 100%;
     height: 150px;
@@ -161,7 +160,7 @@ $border_color: #49a0a2;
         background-position: 50%;
         background-repeat: no-repeat;
         background-size: 12px;
-        background-color: #49a0a2;
+        background-color: $border_color;
         background-image: url("../../../public/check-solid.svg");
       }
     }

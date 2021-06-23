@@ -62,8 +62,10 @@ export default {
       var val = this.fields.value;
       var typeValue = typeof val;
       var valeur = [];
+
       for (let i = 0; i < option.length; i++) {
-        if (typeValue == "object") {
+        if (typeValue == "object" && val !== null) {
+          //console.log("object", val);
           if (val.includes(option[i].value)) {
             valeur.push(option[i].text);
           }

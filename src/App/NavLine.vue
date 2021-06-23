@@ -3,10 +3,12 @@
     <div v-for="(item, i) in idLevel" :key="i" class="w-100">
       <b-button
         :title="'Etape ' + i"
-        variant="info"
+        variant="primary"
         class="nav-line__nav"
         :id="'tooltip-1' + i"
-        :class="i == stepsIndex ? 'nav-line__nav--dark' : ''"
+        :class="
+          i == stepsIndex ? 'nav-line__nav--dark' : 'nav-line__nav--normal'
+        "
         @click="loadSteps(i)"
       >
       </b-button
@@ -82,7 +84,10 @@ export default {
     border-left: 1px solid rgb(237, 237, 237);
     border-radius: 0;
     &--dark {
-      background: teal !important;
+      background: #083e68 !important;
+    }
+    &--normal {
+      background: #3687c6 !important;
     }
   }
 }

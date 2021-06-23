@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-container class="p-md-5" fluid="lg">
+    <b-container class="p-md-" fluid="lg">
       <div>
         <h5 class="titre mb-3 shadow-sm p-2">
           Gestion du formulaire: <span class="form-title">{{ form.name }}</span>
@@ -245,38 +245,10 @@ export default {
     },
     saveToLocal() {
       config.prepareDatasToSave(this.form).then((val) => {
-        config.saveForm(val).then(() => {
+        config.saveForm(val, this.mode).then(() => {
           //
         });
       });
-    },
-
-    back() {
-      this.$store.state.stepsIndex--;
-      // this.$store.state.formDatas = this.currentSteps;
-      // this.$store.state.fields = this.currentSteps.fields[0];
-      //
-      this.$store.state.formDatas =
-        this.allStepsDatas[this.$store.state.stepsIndex];
-      this.$store.state.fields = this.$store.state.formDatas.fields[0];
-      console.log("back");
-    },
-    suivant() {
-      var local = localStorage.getItem("allo");
-      var recap = JSON.parse(local);
-      var base = this.$store.state.stepsIndex;
-      if (recap.length >= 1 && base < recap.length - 1) {
-        console.log("local0", recap.length);
-        this.$store.state.stepsIndex++;
-        this.$store.state.formDatas =
-          this.allStepsDatas[this.$store.state.stepsIndex];
-        this.$store.state.fields = this.$store.state.formDatas.fields[0];
-      }
-      console.log("base", this.currentSteps.length);
-    },
-    preview() {
-      this.demo = !this.demo;
-      console.log("prev", this.demo);
     },
 
     clearFormDatas() {

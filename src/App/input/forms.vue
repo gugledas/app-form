@@ -6,9 +6,6 @@
           <img src="../../../public/long-arrow-alt-left-solid.svg" alt="" />
         </div>
       </b-col>
-      <div v-for="(field, i) in formDatas.fields" :key="i" class="col-12">
-        <display-fields :type="field.type" :id="i"></display-fields>
-      </div>
       <div
         class="help-container"
         v-if="formDatas.info.headerTitle && formDatas.info.description"
@@ -20,6 +17,10 @@
           </p>
         </div>
       </div>
+      <div v-for="(field, i) in formDatas.fields" :key="i" class="col-12">
+        <display-fields :type="field.type" :id="i"></display-fields>
+      </div>
+
       <b-col cols="12" class="form-nav-bouton" v-if="StatusStepsIndexs">
         <button
           class="next-bouton"
@@ -137,7 +138,7 @@ export default {
   right: 15px;
   top: 15%;
   max-width: 163px;
-  background-color: rgba(164, 207, 208, 0.3);
+  background-color: rgba(126, 149, 191, 0.3);
   padding: 10px;
   .help-block {
     font-weight: 300;
@@ -224,7 +225,7 @@ export default {
         &--active {
           opacity: 1;
           &:hover {
-            background: rgb(9, 94, 94);
+            background: rgb(14, 75, 140);
           }
         }
         &--disable {

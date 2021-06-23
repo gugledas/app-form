@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-container class="p-md-5" fluid="lg">
+    <b-container class="p-md-" fluid="lg">
       <div>
         <h5 class="titre mb-3 shadow-sm p-2">
           Gestion du formulaire: <span class="form-title">{{ form.name }}</span>

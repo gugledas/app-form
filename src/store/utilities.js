@@ -181,10 +181,11 @@ export default {
             field.status
           ) {
             var typeDatas = typeof field.value;
+            //console.log("getPriceForField field : ", typeDatas);
             // Cas des champs type selection.
             if (config.typeSelection.includes(field.type)) {
               for (const fp in field.options) {
-                if (typeDatas === Object) {
+                if (typeDatas === "object") {
                   if (
                     field.value.includes(field.options[fp].value) &&
                     field.options[fp].cout

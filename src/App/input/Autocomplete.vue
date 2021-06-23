@@ -74,18 +74,26 @@ export default {
     ...mapGetters(["formDatas"]),
     ...mapState(["formDatasValidate", "mode"]),
     validationField() {
-      if (this.field.states && this.field.states.length) {
-        var status = Validation.computedValidation(
+      var status = true;
+      if (this.field.states.length) {
+        status = Validation.computedValidation(
           this.formDatas,
           this.field,
           this.formDatasValidate
         );
-        if (status !== undefined) return status;
+        if (status === undefined) status = false;
+        this.setStatus(status);
+        return status;
+      } else {
+        this.setStatus(status);
+        return status;
       }
-      return true;
     },
   },
   methods: {
+    setStatus(status) {
+      this.$set(this.field, "status", status);
+    },
     nameWithLang({ text }) {
       //return `${text} — [${value}]`;
       return `${text}`;

@@ -72,29 +72,33 @@ export default {
   computed: {
     ...mapGetters(["formDatas"]),
     ...mapState(["formDatasValidate", "mode", "priceAide"]),
-    validationField() {
-      if (this.field.states.length) {
-        var status = Validation.computedValidation(
-          this.formDatas,
-          this.field,
-          this.formDatasValidate
-        );
-        if (status) {
-          this.preproccess_value();
-        }
-        if (status !== undefined) return status;
-      }
-      return true;
-    },
     checkFormDatasValidate() {
       if (this.formDatasValidate) {
         this.preproccess_value();
       }
       return true;
     },
+    validationField() {
+      var status = true;
+      if (this.field.states.length) {
+        status = Validation.computedValidation(
+          this.formDatas,
+          this.field,
+          this.formDatasValidate
+        );
+        if (status === undefined) status = false;
+        this.setStatus(status);
+        return status;
+      } else {
+        this.setStatus(status);
+        return status;
+      }
+    },
   },
-
   methods: {
+    setStatus(status) {
+      this.$set(this.field, "status", status);
+    },
     async preproccess_value() {
       var self = this;
       if (self) {

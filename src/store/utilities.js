@@ -175,7 +175,11 @@ export default {
     return new Promise((resolvParent) => {
       const execution = (price = 0) => {
         return new Promise((resolv) => {
-          if (field.prix && (field.prix.action === type_cout || use)) {
+          if (
+            field.prix &&
+            (field.prix.action === type_cout || use) &&
+            field.status
+          ) {
             var typeDatas = typeof field.value;
             // Cas des champs type selection.
             if (config.typeSelection.includes(field.type)) {
@@ -211,6 +215,7 @@ export default {
         });
       };
       execution().then((priceField) => {
+        /*
         console.log(
           field.name,
           " :: ",
@@ -219,6 +224,7 @@ export default {
           field.value,
           "\n\n"
         );
+        /**/
         if (!isNaN(priceField)) {
           priceFinal += priceField;
         } else {

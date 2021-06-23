@@ -48,6 +48,7 @@ const validationRessource = {
   /**
    * Validation des champs.
    * Retourne false, pour desactiver.
+   * NB: formDatasValidate prend plus de temps pour ce mettre à jour.
    */
   computedValidation: function (formDatas, currentField, formDatasValidate) {
     for (const i in formDatas.fields) {
@@ -57,7 +58,10 @@ const validationRessource = {
           const state = currentField.states[j];
 
           // si le champs n'est pas definit on retourne false;
-          if (formDatasValidate[state.name] === undefined) return false;
+          if (formDatasValidate[state.name] === undefined) {
+            //console.log("Validation non forunit : ", formDatasValidate);
+            return null;
+          }
           if (field.name === state.name) {
             // visible
             if (state.action === "visible") {

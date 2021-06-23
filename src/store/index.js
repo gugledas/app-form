@@ -294,6 +294,7 @@ export default new Vuex.Store({
     },
     /**
      * Elle definit la logique permettant de passer à une autre etape.
+     * apres, la MAJ de l'etape, les calculs de couts doivent patiente jusqu'à la MAJ de formDatasValidate et executé la suite du code.
      */
     async stepsIndex({ commit, getters }, i) {
       //on determine le cout de l'etape:
@@ -326,11 +327,14 @@ export default new Vuex.Store({
         commit("SET_STATUS_STEPS_INDEX", false);
       }
     },
+
+    // apres, la MAJ de l'etape, les calculs de couts doivent patiente jusqu'à la MAJ de formDatasValidate et executé la suite du code.
     async stepsBack({ commit, state, getters }) {
       await commit("REMOVE_STEPS_INDEXS");
       let new_index = state.stepsIndexs[state.stepsIndexs.length - 1];
       if (!new_index) new_index = 0;
       await commit("STEPS_INDEX", new_index);
+
       //activation du bouton submit
       if (!state.StatusStepsIndexs) {
         commit("SET_STATUS_STEPS_INDEX", true);
@@ -341,6 +345,7 @@ export default new Vuex.Store({
         getters.form.forms
       );
       if (price > 0) {
+        console.log("Retranche prix : ", price);
         commit("REMOVE_PRIX_STEPS", price);
       }
       //remove price states aide
@@ -349,7 +354,14 @@ export default new Vuex.Store({
         getters.form.forms,
         "aide_financiere"
       );
+      console.log(
+        "back stape ",
+        getters.formDatas.info.name,
+        "\n priceAide - ",
+        priceAide
+      );
       if (priceAide > 0) {
+        console.log("Retranche l'aide financiere : ", priceAide);
         commit("REMOVE_PRIX_AIDE_STEPS", priceAide);
       }
     },

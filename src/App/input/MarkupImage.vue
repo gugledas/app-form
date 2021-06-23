@@ -29,24 +29,32 @@ export default {
   computed: {
     ...mapGetters(["formDatas"]),
     ...mapState(["formDatasValidate", "mode"]),
-    validationField() {
-      if (this.field.states.length) {
-        var status = Validation.computedValidation(
-          this.formDatas,
-          this.field,
-          this.formDatasValidate
-        );
-        if (status !== undefined) return status;
-      }
-      return true;
-    },
     img_url_format() {
       if (this.field.imgUrl && this.field.imgUrl !== undefined)
         return config.baseURl + this.field.imgUrl;
       return null;
     },
+    validationField() {
+      var status = true;
+      if (this.field.states.length) {
+        status = Validation.computedValidation(
+          this.formDatas,
+          this.field,
+          this.formDatasValidate
+        );
+        if (status === undefined) status = false;
+        this.setStatus(status);
+        return status;
+      } else {
+        this.setStatus(status);
+        return status;
+      }
+    },
   },
   methods: {
+    setStatus(status) {
+      this.$set(this.field, "status", status);
+    },
     labelUpValue(datas) {
       this.$emit("label-up-value", datas);
     },

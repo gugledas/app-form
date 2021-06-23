@@ -15,11 +15,12 @@ export default {
   /**
    * Permet d'ajouter et d'editer un formulaire.
    */
-  saveForm(datas) {
+  saveForm(datas, mode = false) {
     return AjaxToastBootStrap.post(
       this.baseURl + "/query-ajax/insert-update",
       datas,
-      {}
+      {},
+      mode
     );
   },
   prepareDatasToSave(datas) {

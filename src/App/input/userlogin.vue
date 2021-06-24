@@ -13,6 +13,12 @@
           name="Nom"
           ref="userlogin_name"
         >
+          <hr />
+          <div class="login-form">
+            <label class="label d-flex align-items-center">
+              <span>{{ field.label }}</span>
+            </label>
+          </div>
           <b-form-group label="Nom">
             <b-form-input
               v-model="userlogin.name.value"
@@ -171,6 +177,9 @@ export default {
 <style lang="scss">
 .form-userlogin legend {
   border: none;
+}
+.login-form {
+  margin-bottom: 5rem;
 }
 </style>
 

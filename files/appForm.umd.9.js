@@ -7,12 +7,12 @@
 // ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"4acd20fe-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/input/MarkupImage.vue?vue&type=template&id=9f3add8a&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"4acd20fe-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/input/MarkupImage.vue?vue&type=template&id=3dcdeeac&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:!_vm.validationField && _vm.mode ? 'mb-5' : ''},[(_vm.validationField)?_c('transition',{attrs:{"name":"fade"}},[_c('div',{staticClass:"number-markup__img choice-section min-height"},[_c('img',{attrs:{"src":_vm.img_url_format}})])]):_vm._e()],1)}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/App/input/MarkupImage.vue?vue&type=template&id=9f3add8a&
+// CONCATENATED MODULE: ./src/App/input/MarkupImage.vue?vue&type=template&id=3dcdeeac&
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/objectSpread2.js + 1 modules
 var objectSpread2 = __webpack_require__("5530");
@@ -59,20 +59,28 @@ var config = __webpack_require__("f158");
     };
   },
   computed: Object(objectSpread2["a" /* default */])(Object(objectSpread2["a" /* default */])(Object(objectSpread2["a" /* default */])({}, Object(vuex_esm["b" /* mapGetters */])(["formDatas"])), Object(vuex_esm["c" /* mapState */])(["formDatasValidate", "mode"])), {}, {
-    validationField: function validationField() {
-      if (this.field.states.length) {
-        var status = validation["b" /* validationRessource */].computedValidation(this.formDatas, this.field, this.formDatasValidate);
-        if (status !== undefined) return status;
-      }
-
-      return true;
-    },
     img_url_format: function img_url_format() {
       if (this.field.imgUrl && this.field.imgUrl !== undefined) return config["a" /* default */].baseURl + this.field.imgUrl;
       return null;
+    },
+    validationField: function validationField() {
+      var status = true;
+
+      if (this.field.states.length) {
+        status = validation["b" /* validationRessource */].computedValidation(this.formDatas, this.field, this.formDatasValidate);
+        if (status === undefined) status = false;
+        this.setStatus(status);
+        return status;
+      } else {
+        this.setStatus(status);
+        return status;
+      }
     }
   }),
   methods: {
+    setStatus: function setStatus(status) {
+      this.$set(this.field, "status", status);
+    },
     labelUpValue: function labelUpValue(datas) {
       this.$emit("label-up-value", datas);
     }

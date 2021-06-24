@@ -3,7 +3,7 @@
     <transition v-if="validationField" name="fade">
       <div class="row-content choice-section min-height">
         <b-row class="row-content__row">
-          <b-col sm="6" class="mb-3">
+          <b-col sm="12" class="mb-3">
             <label class="label d-flex align-items-center">
               <span class="price-info label">{{ field.label }} :</span>
               <span class="price-info price">{{ price }}</span>
@@ -58,10 +58,10 @@ export default {
 
 <style lang="scss" scoped>
 .price-info {
-  white-space: nowrap;
   margin-right: 1rem;
   &.price {
     margin-right: 0.5rem;
+    font-weight: 600;
   }
 }
 .text-description {

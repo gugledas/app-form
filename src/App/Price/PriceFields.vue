@@ -142,9 +142,6 @@
         </div>
       </div>
     </div>
-    <pre>
-      {{ field }}
-    </pre>
   </div>
 </template>
 

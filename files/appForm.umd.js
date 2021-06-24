@@ -96,7 +96,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 		if(installedCssChunks[chunkId]) promises.push(installedCssChunks[chunkId]);
 /******/ 		else if(installedCssChunks[chunkId] !== 0 && cssChunks[chunkId]) {
 /******/ 			promises.push(installedCssChunks[chunkId] = new Promise(function(resolve, reject) {
-/******/ 				var href = "css/" + ({}[chunkId]||chunkId) + "." + {"0":"31d6cfe0","2":"2d029869","3":"66425ef2","4":"31d6cfe0","5":"61e966bc","6":"3def3390","7":"b2742065","8":"63248bb6","9":"dd3fcea7","10":"e5f1a246","11":"bc2e9aa0","12":"8f85aa7a","13":"4bdbbebb","14":"4bdbbebb","15":"ac5b10c9","16":"42efe657","17":"31d6cfe0","18":"44ac9b6b","19":"31d6cfe0","20":"31d6cfe0","21":"31d6cfe0","22":"31d6cfe0","23":"31d6cfe0","24":"31d6cfe0","25":"31d6cfe0","26":"31d6cfe0","27":"31d6cfe0","28":"31d6cfe0","29":"31d6cfe0","30":"31d6cfe0","31":"31d6cfe0","32":"31d6cfe0","33":"31d6cfe0"}[chunkId] + ".css";
+/******/ 				var href = "css/" + ({}[chunkId]||chunkId) + "." + {"0":"31d6cfe0","2":"2d029869","3":"d7aaaa2b","4":"31d6cfe0","5":"5f515804","6":"3def3390","7":"b2742065","8":"63248bb6","9":"dd3fcea7","10":"e5f1a246","11":"645fa62c","12":"26b91e31","13":"5686f708","14":"5686f708","15":"ac5b10c9","16":"42efe657","17":"31d6cfe0","18":"44ac9b6b","19":"31d6cfe0","20":"31d6cfe0","21":"31d6cfe0","22":"31d6cfe0","23":"31d6cfe0","24":"31d6cfe0","25":"31d6cfe0","26":"31d6cfe0","27":"31d6cfe0","28":"31d6cfe0","29":"31d6cfe0","30":"31d6cfe0","31":"31d6cfe0","32":"31d6cfe0","33":"31d6cfe0"}[chunkId] + ".css";
 /******/ 				var fullhref = __webpack_require__.p + href;
 /******/ 				var existingLinkTags = document.getElementsByTagName("link");
 /******/ 				for(var i = 0; i < existingLinkTags.length; i++) {
@@ -54429,7 +54429,8 @@ wbuutilities__WEBPACK_IMPORTED_MODULE_4__[/* AjaxToastBootStrap */ "b"].$bvToast
    * Permet d'ajouter et d'editer un formulaire.
    */
   saveForm: function saveForm(datas) {
-    return wbuutilities__WEBPACK_IMPORTED_MODULE_4__[/* AjaxToastBootStrap */ "b"].post(this.baseURl + "/query-ajax/insert-update", datas, {});
+    var mode = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+    return wbuutilities__WEBPACK_IMPORTED_MODULE_4__[/* AjaxToastBootStrap */ "b"].post(this.baseURl + "/query-ajax/insert-update", datas, {}, mode);
   },
   prepareDatasToSave: function prepareDatasToSave(datas) {
     return _Utilities_js__WEBPACK_IMPORTED_MODULE_5__[/* default */ "a"].saveSteps(datas);
@@ -54987,14 +54988,14 @@ var runtime = __webpack_require__("96cf");
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.splice.js
 var es_array_splice = __webpack_require__("a434");
 
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.function.name.js
+var es_function_name = __webpack_require__("b0c0");
+
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.object.to-string.js
 var es_object_to_string = __webpack_require__("d3b7");
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.promise.js
 var es_promise = __webpack_require__("e6cf");
-
-// EXTERNAL MODULE: ./node_modules/core-js/modules/es.function.name.js
-var es_function_name = __webpack_require__("b0c0");
 
 // EXTERNAL MODULE: ./node_modules/vuex/dist/vuex.esm.js
 var vuex_esm = __webpack_require__("2f62");
@@ -55342,6 +55343,7 @@ external_commonjs_vue_commonjs2_vue_root_Vue_default.a.use(vuex_esm["a" /* defau
 
     /**
      * Elle definit la logique permettant de passer à une autre etape.
+     * apres, la MAJ de l'etape, les calculs de couts doivent patiente jusqu'à la MAJ de formDatasValidate et executé la suite du code.
      */
     stepsIndex: function stepsIndex(_ref3, i) {
       return Object(asyncToGenerator["a" /* default */])( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
@@ -55408,6 +55410,7 @@ external_commonjs_vue_commonjs2_vue_root_Vue_default.a.use(vuex_esm["a" /* defau
         }, _callee);
       }))();
     },
+    // apres, la MAJ de l'etape, les calculs de couts doivent patiente jusqu'à la MAJ de formDatasValidate et executé la suite du code.
     stepsBack: function stepsBack(_ref4) {
       return Object(asyncToGenerator["a" /* default */])( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
         var commit, state, getters, new_index, price, priceAide;
@@ -55439,6 +55442,7 @@ external_commonjs_vue_commonjs2_vue_root_Vue_default.a.use(vuex_esm["a" /* defau
                 price = _context2.sent;
 
                 if (price > 0) {
+                  console.log("Retranche prix : ", price);
                   commit("REMOVE_PRIX_STEPS", price);
                 } //remove price states aide
 
@@ -55448,12 +55452,14 @@ external_commonjs_vue_commonjs2_vue_root_Vue_default.a.use(vuex_esm["a" /* defau
 
               case 14:
                 priceAide = _context2.sent;
+                console.log("back stape ", getters.formDatas.info.name, "\n priceAide - ", priceAide);
 
                 if (priceAide > 0) {
+                  console.log("Retranche l'aide financiere : ", priceAide);
                   commit("REMOVE_PRIX_AIDE_STEPS", priceAide);
                 }
 
-              case 16:
+              case 17:
               case "end":
                 return _context2.stop();
             }
@@ -59190,13 +59196,14 @@ module.exports = function (it) {
       var execution = function execution() {
         var price = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
         return new Promise(function (resolv) {
-          if (field.prix && (field.prix.action === type_cout || use)) {
-            var typeDatas = Object(_siteweb_AppVuejs_app_form_node_modules_babel_runtime_helpers_esm_typeof__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"])(field.value); // Cas des champs type selection.
+          if (field.prix && (field.prix.action === type_cout || use) && field.status) {
+            var typeDatas = Object(_siteweb_AppVuejs_app_form_node_modules_babel_runtime_helpers_esm_typeof__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"])(field.value); //console.log("getPriceForField field : ", typeDatas);
+            // Cas des champs type selection.
 
 
             if (_App_config_config_js__WEBPACK_IMPORTED_MODULE_10__[/* default */ "a"].typeSelection.includes(field.type)) {
               for (var fp in field.options) {
-                if (typeDatas === Object) {
+                if (typeDatas === "object") {
                   if (field.value.includes(field.options[fp].value) && field.options[fp].cout) {
                     price += parseInt(field.options[fp].cout);
                   }
@@ -59222,8 +59229,16 @@ module.exports = function (it) {
       };
 
       execution().then(function (priceField) {
-        console.log(field.name, " :: ", priceField, " :: ", field.value, "\n\n");
-
+        /*
+        console.log(
+          field.name,
+          " :: ",
+          priceField,
+          " :: ",
+          field.value,
+          "\n\n"
+        );
+        /**/
         if (!isNaN(priceField)) {
           priceFinal += priceField;
         } else {
@@ -59238,7 +59253,7 @@ module.exports = function (it) {
     var uid = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
     return new Promise(function (resolv) {
       _App_config_config_js__WEBPACK_IMPORTED_MODULE_10__[/* default */ "a"].saveStepsDatas(state.idSoumission, getters.form, state.price, uid).then(function (val) {
-        _App_config_config_js__WEBPACK_IMPORTED_MODULE_10__[/* default */ "a"].saveForm(val).then(function (response) {
+        _App_config_config_js__WEBPACK_IMPORTED_MODULE_10__[/* default */ "a"].saveForm(val, state.mode).then(function (response) {
           resolv(response);
         });
       });

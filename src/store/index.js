@@ -3,6 +3,7 @@ import Vuex from "vuex";
 import utilities from "./utilities.js";
 import { drupalUtilities } from "drupal-vuejs";
 import config from "../App/config/config.js";
+import { AjaxToastBootStrap } from "wbuutilities";
 
 Vue.use(Vuex);
 import axios from "axios";
@@ -467,12 +468,20 @@ export default new Vuex.Store({
             console.log("drupalUtilities : ", resp);
             if (resp.data) {
               var uid = resp.data.uid[0].value;
-              utilities.saveDatas(state, getters, uid);
+              utilities.saveDatas(state, getters, uid).then(() => {
+                AjaxToastBootStrap.modalSuccess(
+                  "Votre compte a été  crée, un mail a été envoyer dans votre boite email afin de valider votre compte. ",
+                  { title: "Creation de compte" }
+                );
+                setTimeout(function () {
+                  window.location.assign("/node/52");
+                }, 3000);
+              });
             }
           })
           .catch((error) => {
             console.log("error GET drupalUtilities : ", error);
-            state.userlogin.email.ref.setErrors(["Cet email existe deja"]);
+            state.userlogin.email.ref.setErrors(["Une erreur s'est produite."]);
           });
         //
       }

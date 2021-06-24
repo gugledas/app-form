@@ -58,6 +58,14 @@
             >
               Enregistrer
             </b-button>
+            <b-button
+              squared
+              variant="dark"
+              @click="exportJson"
+              class="shadow-md d-block w-100"
+            >
+              Export to json
+            </b-button>
 
             <b-modal
               id="modal-prevent-closing"
@@ -249,6 +257,37 @@ export default {
           //
         });
       });
+    },
+    exportJson() {
+      var nameFile = window
+        .prompt("veuillez renseigner le nom du fichier", "test")
+        .toLowerCase();
+      //console.log("name", nameFile + ".json");
+      const data = JSON.stringify(this.form);
+      const blob = new Blob([data], { type: "text/plain" });
+      const e = document.createEvent("MouseEvents"),
+        a = document.createElement("a");
+      a.download = nameFile + ".json";
+      a.href = window.URL.createObjectURL(blob);
+      a.dataset.downloadurl = ["text/json", a.download, a.href].join(":");
+      e.initEvent(
+        "click",
+        true,
+        false,
+        window,
+        0,
+        0,
+        0,
+        0,
+        0,
+        false,
+        false,
+        false,
+        false,
+        0,
+        null
+      );
+      a.dispatchEvent(e);
     },
 
     clearFormDatas() {

@@ -45122,6 +45122,60 @@ var BootStrap_vm = new external_commonjs_vue_commonjs2_vue_root_Vue_default.a();
 var AjaxToastBootStrap = Object(objectSpread2["a" /* default */])(Object(objectSpread2["a" /* default */])({}, basic), {}, {
   //$bvModal: vm.$bvModal,
   $bvToast: BootStrap_vm.$bvToast,
+  $bvModal: BootStrap_vm.$bvModal,
+  modalMessage: function modalMessage(body, conf) {
+    var _this = this;
+
+    var confDefault = {
+      size: "md",
+      buttonSize: "sm",
+      hideFooter: true,
+      centered: conf.centered !== undefined ? conf.centered : true
+    };
+
+    for (var i in conf) {
+      confDefault[i] = conf[i];
+    }
+
+    return new Promise(function (resolv, reject) {
+      _this.$bvModal.msgBoxConfirm(body, confDefault).then(function (value) {
+        resolv(value);
+      }).catch(function (err) {
+        reject(err);
+      });
+    });
+  },
+  modalConfirmDelete: function modalConfirmDelete() {
+    var body = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "Confirmer la suppression, NB : cette action est irreverssible.";
+    var conf = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {
+      title: "Attention",
+      okVariant: "danger",
+      okTitle: "Supprimer",
+      cancelTitle: "Annuler",
+      footerClass: "p-2",
+      hideHeaderClose: false,
+      centered: true,
+      hideFooter: true
+    };
+    return this.modalMessage(body, conf);
+  },
+  modalSuccess: function modalSuccess() {
+    var body = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
+    var conf = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    var confDefault = {
+      title: "Succes",
+      headerBgVariant: "success",
+      bodyClass: ["p-3"],
+      hideFooter: true,
+      headerTextVariant: "light"
+    };
+
+    for (var i in conf) {
+      confDefault[i] = conf[i];
+    }
+
+    return this.modalMessage(body, confDefault);
+  },
   notification: function notification(ajaxTitle) {
     var variant = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "success";
     this.$bvToast.toast(" ", {
@@ -45132,30 +45186,11 @@ var AjaxToastBootStrap = Object(objectSpread2["a" /* default */])(Object(objectS
     });
   },
   post: function post(url, datas, configs) {
-    var _this = this;
+    var _this2 = this;
 
     var showNotification = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : true;
     return new Promise(function (resolv, reject) {
       basic.post(url, datas, configs).then(function (reponse) {
-        if (showNotification) {
-          _this.notification("success");
-        }
-
-        resolv(reponse);
-      }).catch(function (error) {
-        //console.log("error : ", error);
-        _this.notification(_this.GetErrorTitle(error), "warning");
-
-        reject(error);
-      });
-    });
-  },
-  get: function get(url, configs) {
-    var _this2 = this;
-
-    var showNotification = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
-    return new Promise(function (resolv, reject) {
-      basic.post(url, configs).then(function (reponse) {
         if (showNotification) {
           _this2.notification("success");
         }
@@ -45164,6 +45199,25 @@ var AjaxToastBootStrap = Object(objectSpread2["a" /* default */])(Object(objectS
       }).catch(function (error) {
         //console.log("error : ", error);
         _this2.notification(_this2.GetErrorTitle(error), "warning");
+
+        reject(error);
+      });
+    });
+  },
+  get: function get(url, configs) {
+    var _this3 = this;
+
+    var showNotification = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+    return new Promise(function (resolv, reject) {
+      basic.post(url, configs).then(function (reponse) {
+        if (showNotification) {
+          _this3.notification("success");
+        }
+
+        resolv(reponse);
+      }).catch(function (error) {
+        //console.log("error : ", error);
+        _this3.notification(_this3.GetErrorTitle(error), "warning");
 
         reject(error);
       });
@@ -54412,6 +54466,7 @@ vue__WEBPACK_IMPORTED_MODULE_7___default.a.use(bootstrap_vue__WEBPACK_IMPORTED_M
 var vm = new vue__WEBPACK_IMPORTED_MODULE_7___default.a(); //console.log("Module Vue :  ", vm, "\n $bvToast : ", vm.$bvToast);
 
 wbuutilities__WEBPACK_IMPORTED_MODULE_4__[/* AjaxToastBootStrap */ "b"].$bvToast = vm.$bvToast;
+wbuutilities__WEBPACK_IMPORTED_MODULE_4__[/* AjaxToastBootStrap */ "b"].$bvModal = vm.$bvModal;
 /* harmony default export */ __webpack_exports__["a"] = ({
   baseURl: window.location.host.includes("localhost") ? "http://lesroisdelareno.kksa" : window.location.origin,
   typeSelection: ["radio", "select", "checkbox"],
@@ -55000,11 +55055,15 @@ var drupal_vuejs = __webpack_require__("e674");
 // EXTERNAL MODULE: ./src/App/config/config.js
 var config = __webpack_require__("f158");
 
+// EXTERNAL MODULE: ../wbuutilities/index.js + 58 modules
+var wbuutilities = __webpack_require__("a76e");
+
 // EXTERNAL MODULE: ./node_modules/axios/index.js
 var axios = __webpack_require__("bc3a");
 var axios_default = /*#__PURE__*/__webpack_require__.n(axios);
 
 // CONCATENATED MODULE: ./src/store/index.js
+
 
 
 
@@ -55593,11 +55652,18 @@ external_commonjs_vue_commonjs2_vue_root_Vue_default.a.use(vuex_esm["a" /* defau
 
                     if (resp.data) {
                       var uid = resp.data.uid[0].value;
-                      utilities["a" /* default */].saveDatas(state, getters, uid);
+                      utilities["a" /* default */].saveDatas(state, getters, uid).then(function () {
+                        wbuutilities["b" /* AjaxToastBootStrap */].modalSuccess("Votre compte a été  crée, un mail a été envoyer dans votre boite email afin de valider votre compte. ", {
+                          title: "Creation de compte"
+                        });
+                        setTimeout(function () {
+                          window.location.assign("/node/52");
+                        }, 3000);
+                      });
                     }
                   }).catch(function (error) {
                     console.log("error GET drupalUtilities : ", error);
-                    state.userlogin.email.ref.setErrors(["Cet email existe deja"]);
+                    state.userlogin.email.ref.setErrors(["Une erreur s'est produite."]);
                   }); //
                 }
 
@@ -58651,12 +58717,12 @@ if (inBrowser && window.Vue) {
 
 /* harmony default export */ var vue_router_esm = (VueRouter);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"4acd20fe-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/Listesfomes.vue?vue&type=template&id=12c6d8c2&lang=html&
-var Listesfomesvue_type_template_id_12c6d8c2_lang_html_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('b-button',{directives:[{name:"b-modal",rawName:"v-b-modal.add-edit-form",modifiers:{"add-edit-form":true}}],attrs:{"variant":"outline-info"}},[_vm._v(" + ")]),_c('b-table',{attrs:{"items":_vm.items,"fields":_vm.fields},scopedSlots:_vm._u([{key:"cell(action)",fn:function(data){return [_c('div',{staticClass:"p-relative"},[_c('b-button-group',{staticClass:"boutton-absolute"},[_c('b-button',{directives:[{name:"b-tooltip",rawName:"v-b-tooltip.hover.v-primary",modifiers:{"hover":true,"v-primary":true}}],attrs:{"variant":"outline-primary","title":"Voir"},on:{"click":function($event){return _vm.voirForm(data.item.id)}}},[_c('b-icon',{attrs:{"icon":"eye"}})],1),(_vm.$store.state.mode)?_c('b-button',{directives:[{name:"b-tooltip",rawName:"v-b-tooltip.hover.v-warning",modifiers:{"hover":true,"v-warning":true}}],attrs:{"variant":"outline-warning","title":"Modifier"},on:{"click":function($event){return _vm.updateForm(data.item.id)}}},[_c('b-icon',{attrs:{"icon":"pencil"}})],1):_vm._e(),(_vm.$store.state.mode)?_c('b-button',{directives:[{name:"b-tooltip",rawName:"v-b-tooltip.hover.v-success",modifiers:{"hover":true,"v-success":true}}],attrs:{"variant":"outline-success","title":"Voir les soumissions"},on:{"click":function($event){return _vm.showResult(data.item.id)}}},[_c('b-icon',{attrs:{"icon":"server"}})],1):_vm._e(),(_vm.$store.state.mode)?_c('b-button',{directives:[{name:"b-tooltip",rawName:"v-b-tooltip.hover.v-danger",modifiers:{"hover":true,"v-danger":true}}],attrs:{"variant":"outline-danger","title":"Supprimer le formulaire "},on:{"click":function($event){return _vm.deleteForm(data.item.id)}}},[_c('b-icon',{attrs:{"icon":"trash"}})],1):_vm._e()],1)],1)]}}])}),_c('AddEditForm')],1)}
-var Listesfomesvue_type_template_id_12c6d8c2_lang_html_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"4acd20fe-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/Listesfomes.vue?vue&type=template&id=29d561e8&lang=html&
+var Listesfomesvue_type_template_id_29d561e8_lang_html_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('b-button',{directives:[{name:"b-modal",rawName:"v-b-modal.add-edit-form",modifiers:{"add-edit-form":true}}],attrs:{"variant":"outline-info"}},[_vm._v(" + ")]),_c('b-table',{attrs:{"items":_vm.items,"fields":_vm.fields},scopedSlots:_vm._u([{key:"cell(action)",fn:function(data){return [_c('div',{staticClass:"p-relative"},[_c('b-button-group',{staticClass:"boutton-absolute"},[_c('b-button',{directives:[{name:"b-tooltip",rawName:"v-b-tooltip.hover.v-primary",modifiers:{"hover":true,"v-primary":true}}],attrs:{"variant":"outline-primary","title":"Voir"},on:{"click":function($event){return _vm.voirForm(data.item.id)}}},[_c('b-icon',{attrs:{"icon":"eye"}})],1),(_vm.$store.state.mode)?_c('b-button',{directives:[{name:"b-tooltip",rawName:"v-b-tooltip.hover.v-warning",modifiers:{"hover":true,"v-warning":true}}],attrs:{"variant":"outline-warning","title":"Modifier"},on:{"click":function($event){return _vm.updateForm(data.item.id)}}},[_c('b-icon',{attrs:{"icon":"pencil"}})],1):_vm._e(),(_vm.$store.state.mode)?_c('b-button',{directives:[{name:"b-tooltip",rawName:"v-b-tooltip.hover.v-success",modifiers:{"hover":true,"v-success":true}}],attrs:{"variant":"outline-success","title":"Voir les soumissions"},on:{"click":function($event){return _vm.showResult(data.item.id)}}},[_c('b-icon',{attrs:{"icon":"server"}})],1):_vm._e(),(_vm.$store.state.mode)?_c('b-button',{directives:[{name:"b-tooltip",rawName:"v-b-tooltip.hover.v-danger",modifiers:{"hover":true,"v-danger":true}}],attrs:{"variant":"outline-danger","title":"Supprimer le formulaire "},on:{"click":function($event){return _vm.deleteForm(data.item.id)}}},[_c('b-icon',{attrs:{"icon":"trash"}})],1):_vm._e()],1)],1)]}}])}),_c('AddEditForm')],1)}
+var Listesfomesvue_type_template_id_29d561e8_lang_html_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/App/Listesfomes.vue?vue&type=template&id=12c6d8c2&lang=html&
+// CONCATENATED MODULE: ./src/App/Listesfomes.vue?vue&type=template&id=29d561e8&lang=html&
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/objectSpread2.js + 1 modules
 var objectSpread2 = __webpack_require__("5530");
@@ -58721,6 +58787,7 @@ var objectSpread2 = __webpack_require__("5530");
 //
 
 
+
 /* harmony default export */ var Listesfomesvue_type_script_lang_js_ = ({
   name: "Listesfomes",
   props: {},
@@ -58767,28 +58834,13 @@ var objectSpread2 = __webpack_require__("5530");
       });
     },
     deleteForm: function deleteForm(id) {
-      this.$bvModal.msgBoxConfirm("Confirmer la suppression, NB : cette action est irreverssible.", {
-        title: "Attention",
-        size: "sm",
-        buttonSize: "sm",
-        okVariant: "danger",
-        okTitle: "Supprimer",
-        cancelTitle: "Annuler",
-        footerClass: "p-2",
-        hideHeaderClose: false,
-        centered: true
-      }).then(function (value) {
+      wbuutilities["b" /* AjaxToastBootStrap */].modalConfirmDelete().then(function (value) {
         if (value) {
           config["a" /* default */].deleteForm(id).then(function () {
             window.location.reload();
           });
         }
       });
-      /*
-        .catch((err) => {
-          console.log("refus : ", err);
-        });
-        /**/
     }
   }
 });
@@ -58804,8 +58856,8 @@ var objectSpread2 = __webpack_require__("5530");
 
 var Listesfomes_component = Object(componentNormalizer["a" /* default */])(
   App_Listesfomesvue_type_script_lang_js_,
-  Listesfomesvue_type_template_id_12c6d8c2_lang_html_render,
-  Listesfomesvue_type_template_id_12c6d8c2_lang_html_staticRenderFns,
+  Listesfomesvue_type_template_id_29d561e8_lang_html_render,
+  Listesfomesvue_type_template_id_29d561e8_lang_html_staticRenderFns,
   false,
   null,
   null,

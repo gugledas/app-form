@@ -7,11 +7,13 @@ Vue.use(BVToastPlugin);
 const vm = new Vue();
 //console.log("Module Vue :  ", vm, "\n $bvToast : ", vm.$bvToast);
 AjaxToastBootStrap.$bvToast = vm.$bvToast;
+AjaxToastBootStrap.$bvModal = vm.$bvModal;
 export default {
   baseURl: window.location.host.includes("localhost")
     ? "http://lesroisdelareno.kksa"
     : window.location.origin,
   typeSelection: ["radio", "select", "checkbox"],
+
   /**
    * Permet d'ajouter et d'editer un formulaire.
    */

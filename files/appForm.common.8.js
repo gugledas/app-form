@@ -815,12 +815,12 @@ Object(vee_validate__WEBPACK_IMPORTED_MODULE_1__[/* extend */ "c"])("alpha", vee
 // ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"4acd20fe-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/input/LabelUp.vue?vue&type=template&id=0d0d8e1c&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"4acd20fe-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/input/LabelUp.vue?vue&type=template&id=1f6fdfd3&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:!_vm.validationField && _vm.mode ? 'mb-5' : ''},[_c('div',{staticClass:"number-markup__input choice-section min-height"},[(_vm.validationField)?_c('ValidationProvider',{attrs:{"rules":_vm.field.require,"name":_vm.field.name},scopedSlots:_vm._u([{key:"default",fn:function(v){return [_c('label',{staticClass:"label"},[_vm._v(_vm._s(_vm.field.label))]),_c('div',{staticClass:"input-field"},[_c('b-form-input',{staticClass:"input-field__input",attrs:{"type":"number","placeholder":"","min":"1","max":"100"},model:{value:(_vm.field.value),callback:function ($$v) {_vm.$set(_vm.field, "value", $$v)},expression:"field.value"}}),(_vm.field.suffixe)?_c('span',{staticClass:"input-field__unit"},[_vm._v(_vm._s(_vm.field.suffixe))]):_vm._e()],1),_c('div',{staticClass:"text-danger"},_vm._l((v.errors),function(error,ii){return _c('small',{key:ii,staticClass:"d-block"},[_vm._v(" "+_vm._s(error)+" ")])}),0)]}}],null,false,2577315277)}):_vm._e()],1)])}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/App/input/LabelUp.vue?vue&type=template&id=0d0d8e1c&
+// CONCATENATED MODULE: ./src/App/input/LabelUp.vue?vue&type=template&id=1f6fdfd3&
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/objectSpread2.js + 1 modules
 var objectSpread2 = __webpack_require__("5530");
@@ -894,15 +894,24 @@ var vee_validate_custom = __webpack_require__("b6d1");
   watch: {},
   computed: Object(objectSpread2["a" /* default */])(Object(objectSpread2["a" /* default */])(Object(objectSpread2["a" /* default */])({}, Object(vuex_esm["b" /* mapGetters */])(["formDatas"])), Object(vuex_esm["c" /* mapState */])(["formDatasValidate", "mode"])), {}, {
     validationField: function validationField() {
-      if (this.field.states.length) {
-        var status = validation["b" /* validationRessource */].computedValidation(this.formDatas, this.field, this.formDatasValidate);
-        if (status !== undefined) return status;
-      }
+      var status = true;
 
-      return true;
+      if (this.field.states.length) {
+        status = validation["b" /* validationRessource */].computedValidation(this.formDatas, this.field, this.formDatasValidate);
+        if (status === undefined) status = false;
+        this.setStatus(status);
+        return status;
+      } else {
+        this.setStatus(status);
+        return status;
+      }
     }
   }),
-  methods: {}
+  methods: {
+    setStatus: function setStatus(status) {
+      this.$set(this.field, "status", status);
+    }
+  }
 });
 // CONCATENATED MODULE: ./src/App/input/LabelUp.vue?vue&type=script&lang=js&
  /* harmony default export */ var input_LabelUpvue_type_script_lang_js_ = (LabelUpvue_type_script_lang_js_); 

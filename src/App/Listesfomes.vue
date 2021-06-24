@@ -52,6 +52,7 @@
 <script>
 import { mapState } from "vuex";
 import config from "./config/config.js";
+import { AjaxToastBootStrap } from "wbuutilities";
 export default {
   name: "Listesfomes",
   props: {},
@@ -97,33 +98,13 @@ export default {
       this.$router.push({ path: `/traitement/${id}` });
     },
     deleteForm(id) {
-      this.$bvModal
-        .msgBoxConfirm(
-          "Confirmer la suppression, NB : cette action est irreverssible.",
-          {
-            title: "Attention",
-            size: "sm",
-            buttonSize: "sm",
-            okVariant: "danger",
-            okTitle: "Supprimer",
-            cancelTitle: "Annuler",
-            footerClass: "p-2",
-            hideHeaderClose: false,
-            centered: true,
-          }
-        )
-        .then((value) => {
-          if (value) {
-            config.deleteForm(id).then(() => {
-              window.location.reload();
-            });
-          }
-        });
-      /*
-        .catch((err) => {
-          console.log("refus : ", err);
-        });
-        /**/
+      AjaxToastBootStrap.modalConfirmDelete().then((value) => {
+        if (value) {
+          config.deleteForm(id).then(() => {
+            window.location.reload();
+          });
+        }
+      });
     },
   },
 };

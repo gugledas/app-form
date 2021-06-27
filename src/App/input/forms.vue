@@ -37,13 +37,13 @@
       </b-col>
       <b-col cols="12" v-if="!StatusStepsIndexs" class="form-nav-bouton">
         <b-row>
-          <b-col cols="6">
+          <b-col v-if="uid">
             <button class="next-bouton" @click="Save">
               <b-icon icon="server"></b-icon>
               Enregistrer
             </button>
           </b-col>
-          <b-col cols="6">
+          <b-col v-if="!uid">
             <button class="next-bouton" @click="SaveByUser">
               <b-icon icon="server"></b-icon>
               Me rappeller
@@ -88,7 +88,7 @@ export default {
   },
   computed: {
     ...mapState(["mode", "stepsIndex", "StatusStepsIndexs", "price"]),
-    ...mapGetters(["formDatas", "form"]),
+    ...mapGetters(["formDatas", "form", "uid"]),
     stepsState() {
       var state = false;
       if (this.$store.getters.form.forms.length - 1 > this.level) {

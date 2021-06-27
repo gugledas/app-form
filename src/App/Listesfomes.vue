@@ -46,6 +46,7 @@
       </template>
     </b-table>
     <AddEditForm></AddEditForm>
+    <b-button @click="checkUser">User</b-button>
   </div>
 </template>
 
@@ -53,6 +54,7 @@
 import { mapState } from "vuex";
 import config from "./config/config.js";
 import { AjaxToastBootStrap } from "wbuutilities";
+import { users } from "drupal-vuejs";
 export default {
   name: "Listesfomes",
   props: {},
@@ -104,6 +106,11 @@ export default {
             window.location.reload();
           });
         }
+      });
+    },
+    checkUser() {
+      users.getCurrentUser().then((resp) => {
+        console.log("getCurrentUser : ", resp);
       });
     },
   },

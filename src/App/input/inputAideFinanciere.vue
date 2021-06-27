@@ -13,12 +13,16 @@
             class="border py-3 px-4"
             :checkFormDatasValidate="checkFormDatasValidate"
           >
-            <div>
-              {{ field.label }}
+            <div class="d-flex align-items-center justify-content-between">
+              <img :src="fieldSrcImage" style="max-width: 50px" />
+              <div>
+                {{ field.label }}
+              </div>
+              <strong class="px-2 d-block text-right">
+                {{ field.value }} €
+              </strong>
             </div>
-            <div class="py-2">
-              <strong> {{ field.value }} € </strong>
-            </div>
+
             <div>
               <small> {{ field.description }} </small>
             </div>
@@ -39,6 +43,7 @@ import { mapGetters, mapState } from "vuex";
 import { ValidationProvider } from "vee-validate";
 import { validationRessource as Validation } from "../config/validation.js";
 import "../EditsFields/vee-validate-custom.js";
+import conf from "../config/config.js";
 export default {
   name: "inputAideFinanciere",
   props: {
@@ -94,6 +99,12 @@ export default {
         return status;
       }
     },
+    fieldSrcImage() {
+      return (
+        conf.baseURl +
+        "/themes/custom/lesroisdelareno/images/aquathermo-avis.jpg"
+      );
+    },
   },
   methods: {
     setStatus(status) {
@@ -104,7 +115,6 @@ export default {
       if (self) {
         this.field.value = await eval(self.field.preproccess_value);
       }
-      console.log(" Evaluation aide : ", this.field.value);
     },
   },
 };

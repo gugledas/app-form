@@ -85,6 +85,10 @@ export default new Vuex.Store({
         ref: "",
       },
     },
+    /**
+     * Contient les informations sur l'utilisateur s'il est connecté.
+     */
+    user: {},
   },
   getters: {
     /**
@@ -154,6 +158,14 @@ export default new Vuex.Store({
           fields: [],
         };
       }
+    },
+    /**
+     * uid de l'utilisateur qui est connecté.
+     */
+    uid: (state) => {
+      if (state.user && state.user.uid) {
+        return state.user.uid[0].value;
+      } else return 0;
     },
   },
   mutations: {
@@ -463,7 +475,7 @@ export default new Vuex.Store({
           //status: [{ value: true }],
         };
         drupalUtilities
-          .post("/user/register?_format=json", datas)
+          .post("/fr/user/register?_format=json", datas)
           .then((resp) => {
             console.log("drupalUtilities : ", resp);
             if (resp.data) {
@@ -479,14 +491,29 @@ export default new Vuex.Store({
               });
             }
           })
-          .catch((error) => {
-            console.log("error GET drupalUtilities : ", error);
-            state.userlogin.email.ref.setErrors(["Une erreur s'est produite."]);
+          .catch((errors) => {
+            console.log("error GET drupalUtilities : ", errors.error.data);
+            if (errors.error && errors.error.data && errors.error.data.errors) {
+              for (const i in errors.error.data.errors) {
+                const error = errors.error.data.errors[i].split(":");
+                if (error[0] == "mail") {
+                  error[0] = "email";
+                }
+                if (state.userlogin[error[0]]) {
+                  state.userlogin[error[0]].ref.setErrors([error[1]]);
+                }
+              }
+            } else
+              state.userlogin.email.ref.setErrors([
+                "Une erreur s'est produite.",
+              ]);
           });
-        //
       }
     },
     saveDatas({ commit, state, getters }, uid = 0) {
+      if (!uid) {
+        uid = getters.uid;
+      }
       utilities.saveDatas(state, getters, uid).then((response) => {
         console.log("données stocké du store", response);
         if (state.idSoumission === null) {

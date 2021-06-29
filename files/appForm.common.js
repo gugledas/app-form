@@ -83,11 +83,11 @@ module.exports =
 /******/
 /******/
 /******/ 		// mini-css-extract-plugin CSS loading
-/******/ 		var cssChunks = {"2":1,"3":1,"5":1,"6":1,"7":1,"8":1,"9":1,"10":1,"11":1,"12":1,"13":1,"14":1,"15":1,"16":1,"18":1};
+/******/ 		var cssChunks = {"2":1,"3":1,"4":1,"6":1,"7":1,"8":1,"9":1,"10":1,"11":1,"12":1,"13":1,"14":1,"15":1,"16":1,"17":1,"18":1,"20":1};
 /******/ 		if(installedCssChunks[chunkId]) promises.push(installedCssChunks[chunkId]);
 /******/ 		else if(installedCssChunks[chunkId] !== 0 && cssChunks[chunkId]) {
 /******/ 			promises.push(installedCssChunks[chunkId] = new Promise(function(resolve, reject) {
-/******/ 				var href = "css/" + ({}[chunkId]||chunkId) + "." + {"0":"31d6cfe0","2":"2d029869","3":"d7aaaa2b","4":"31d6cfe0","5":"5f515804","6":"3def3390","7":"b2742065","8":"63248bb6","9":"dd3fcea7","10":"e5f1a246","11":"645fa62c","12":"26b91e31","13":"5686f708","14":"5686f708","15":"ac5b10c9","16":"42efe657","17":"31d6cfe0","18":"44ac9b6b","19":"31d6cfe0","20":"31d6cfe0","21":"31d6cfe0","22":"31d6cfe0","23":"31d6cfe0","24":"31d6cfe0","25":"31d6cfe0","26":"31d6cfe0","27":"31d6cfe0","28":"31d6cfe0","29":"31d6cfe0","30":"31d6cfe0","31":"31d6cfe0","32":"31d6cfe0","33":"31d6cfe0"}[chunkId] + ".css";
+/******/ 				var href = "css/" + ({}[chunkId]||chunkId) + "." + {"0":"31d6cfe0","2":"2d029869","3":"aeae6e44","4":"2f36306f","5":"31d6cfe0","6":"6bffc4c6","7":"5f515804","8":"3def3390","9":"b2742065","10":"63248bb6","11":"dd3fcea7","12":"e5f1a246","13":"645fa62c","14":"26b91e31","15":"5686f708","16":"5686f708","17":"ac5b10c9","18":"42efe657","19":"31d6cfe0","20":"44ac9b6b","21":"31d6cfe0","22":"31d6cfe0","23":"31d6cfe0","24":"31d6cfe0","25":"31d6cfe0","26":"31d6cfe0","27":"31d6cfe0","28":"31d6cfe0","29":"31d6cfe0","30":"31d6cfe0","31":"31d6cfe0","32":"31d6cfe0","33":"31d6cfe0","34":"31d6cfe0","35":"31d6cfe0"}[chunkId] + ".css";
 /******/ 				var fullhref = __webpack_require__.p + href;
 /******/ 				var existingLinkTags = document.getElementsByTagName("link");
 /******/ 				for(var i = 0; i < existingLinkTags.length; i++) {
@@ -1436,6 +1436,177 @@ var BVToastPlugin = /*#__PURE__*/Object(_utils_plugins__WEBPACK_IMPORTED_MODULE_
     plugin: plugin
   }
 });
+
+/***/ }),
+
+/***/ "1276":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var fixRegExpWellKnownSymbolLogic = __webpack_require__("d784");
+var isRegExp = __webpack_require__("44e7");
+var anObject = __webpack_require__("825a");
+var requireObjectCoercible = __webpack_require__("1d80");
+var speciesConstructor = __webpack_require__("4840");
+var advanceStringIndex = __webpack_require__("8aa5");
+var toLength = __webpack_require__("50c4");
+var callRegExpExec = __webpack_require__("14c3");
+var regexpExec = __webpack_require__("9263");
+var stickyHelpers = __webpack_require__("9f7f");
+
+var UNSUPPORTED_Y = stickyHelpers.UNSUPPORTED_Y;
+var arrayPush = [].push;
+var min = Math.min;
+var MAX_UINT32 = 0xFFFFFFFF;
+
+// @@split logic
+fixRegExpWellKnownSymbolLogic('split', 2, function (SPLIT, nativeSplit, maybeCallNative) {
+  var internalSplit;
+  if (
+    'abbc'.split(/(b)*/)[1] == 'c' ||
+    // eslint-disable-next-line regexp/no-empty-group -- required for testing
+    'test'.split(/(?:)/, -1).length != 4 ||
+    'ab'.split(/(?:ab)*/).length != 2 ||
+    '.'.split(/(.?)(.?)/).length != 4 ||
+    // eslint-disable-next-line regexp/no-assertion-capturing-group, regexp/no-empty-group -- required for testing
+    '.'.split(/()()/).length > 1 ||
+    ''.split(/.?/).length
+  ) {
+    // based on es5-shim implementation, need to rework it
+    internalSplit = function (separator, limit) {
+      var string = String(requireObjectCoercible(this));
+      var lim = limit === undefined ? MAX_UINT32 : limit >>> 0;
+      if (lim === 0) return [];
+      if (separator === undefined) return [string];
+      // If `separator` is not a regex, use native split
+      if (!isRegExp(separator)) {
+        return nativeSplit.call(string, separator, lim);
+      }
+      var output = [];
+      var flags = (separator.ignoreCase ? 'i' : '') +
+                  (separator.multiline ? 'm' : '') +
+                  (separator.unicode ? 'u' : '') +
+                  (separator.sticky ? 'y' : '');
+      var lastLastIndex = 0;
+      // Make `global` and avoid `lastIndex` issues by working with a copy
+      var separatorCopy = new RegExp(separator.source, flags + 'g');
+      var match, lastIndex, lastLength;
+      while (match = regexpExec.call(separatorCopy, string)) {
+        lastIndex = separatorCopy.lastIndex;
+        if (lastIndex > lastLastIndex) {
+          output.push(string.slice(lastLastIndex, match.index));
+          if (match.length > 1 && match.index < string.length) arrayPush.apply(output, match.slice(1));
+          lastLength = match[0].length;
+          lastLastIndex = lastIndex;
+          if (output.length >= lim) break;
+        }
+        if (separatorCopy.lastIndex === match.index) separatorCopy.lastIndex++; // Avoid an infinite loop
+      }
+      if (lastLastIndex === string.length) {
+        if (lastLength || !separatorCopy.test('')) output.push('');
+      } else output.push(string.slice(lastLastIndex));
+      return output.length > lim ? output.slice(0, lim) : output;
+    };
+  // Chakra, V8
+  } else if ('0'.split(undefined, 0).length) {
+    internalSplit = function (separator, limit) {
+      return separator === undefined && limit === 0 ? [] : nativeSplit.call(this, separator, limit);
+    };
+  } else internalSplit = nativeSplit;
+
+  return [
+    // `String.prototype.split` method
+    // https://tc39.es/ecma262/#sec-string.prototype.split
+    function split(separator, limit) {
+      var O = requireObjectCoercible(this);
+      var splitter = separator == undefined ? undefined : separator[SPLIT];
+      return splitter !== undefined
+        ? splitter.call(separator, O, limit)
+        : internalSplit.call(String(O), separator, limit);
+    },
+    // `RegExp.prototype[@@split]` method
+    // https://tc39.es/ecma262/#sec-regexp.prototype-@@split
+    //
+    // NOTE: This cannot be properly polyfilled in engines that don't support
+    // the 'y' flag.
+    function (regexp, limit) {
+      var res = maybeCallNative(internalSplit, regexp, this, limit, internalSplit !== nativeSplit);
+      if (res.done) return res.value;
+
+      var rx = anObject(regexp);
+      var S = String(this);
+      var C = speciesConstructor(rx, RegExp);
+
+      var unicodeMatching = rx.unicode;
+      var flags = (rx.ignoreCase ? 'i' : '') +
+                  (rx.multiline ? 'm' : '') +
+                  (rx.unicode ? 'u' : '') +
+                  (UNSUPPORTED_Y ? 'g' : 'y');
+
+      // ^(? + rx + ) is needed, in combination with some S slicing, to
+      // simulate the 'y' flag.
+      var splitter = new C(UNSUPPORTED_Y ? '^(?:' + rx.source + ')' : rx, flags);
+      var lim = limit === undefined ? MAX_UINT32 : limit >>> 0;
+      if (lim === 0) return [];
+      if (S.length === 0) return callRegExpExec(splitter, S) === null ? [S] : [];
+      var p = 0;
+      var q = 0;
+      var A = [];
+      while (q < S.length) {
+        splitter.lastIndex = UNSUPPORTED_Y ? 0 : q;
+        var z = callRegExpExec(splitter, UNSUPPORTED_Y ? S.slice(q) : S);
+        var e;
+        if (
+          z === null ||
+          (e = min(toLength(splitter.lastIndex + (UNSUPPORTED_Y ? q : 0)), S.length)) === p
+        ) {
+          q = advanceStringIndex(S, q, unicodeMatching);
+        } else {
+          A.push(S.slice(p, q));
+          if (A.length === lim) return A;
+          for (var i = 1; i <= z.length - 1; i++) {
+            A.push(z[i]);
+            if (A.length === lim) return A;
+          }
+          q = p = e;
+        }
+      }
+      A.push(S.slice(p));
+      return A;
+    }
+  ];
+}, UNSUPPORTED_Y);
+
+
+/***/ }),
+
+/***/ "14c3":
+/***/ (function(module, exports, __webpack_require__) {
+
+var classof = __webpack_require__("c6b6");
+var regexpExec = __webpack_require__("9263");
+
+// `RegExpExec` abstract operation
+// https://tc39.es/ecma262/#sec-regexpexec
+module.exports = function (R, S) {
+  var exec = R.exec;
+  if (typeof exec === 'function') {
+    var result = exec.call(R, S);
+    if (typeof result !== 'object') {
+      throw TypeError('RegExp exec method returned something other than an Object or null');
+    }
+    return result;
+  }
+
+  if (classof(R) !== 'RegExp') {
+    throw TypeError('RegExp#exec called on incompatible receiver');
+  }
+
+  return regexpExec.call(R, S);
+};
+
+
 
 /***/ }),
 
@@ -3241,13 +3412,6 @@ module.exports = function createError(message, config, code, request, response) 
   return enhanceError(error, config, code, request, response);
 };
 
-
-/***/ }),
-
-/***/ "2dd8":
-/***/ (function(module, exports, __webpack_require__) {
-
-// extracted by mini-css-extract-plugin
 
 /***/ }),
 
@@ -34762,6 +34926,13 @@ module.exports = {
 
 /***/ }),
 
+/***/ "6a84":
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+
 /***/ "6b4f":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -38649,6 +38820,22 @@ module.exports = store.inspectSource;
 
 /***/ }),
 
+/***/ "8aa5":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var charAt = __webpack_require__("6547").charAt;
+
+// `AdvanceStringIndex` abstract operation
+// https://tc39.es/ecma262/#sec-advancestringindex
+module.exports = function (S, index, unicode) {
+  return index + (unicode ? charAt(S, index).length : 1);
+};
+
+
+/***/ }),
+
 /***/ "8bbf":
 /***/ (function(module, exports) {
 
@@ -39340,6 +39527,101 @@ module.exports = DESCRIPTORS ? function (object, key, value) {
   object[key] = value;
   return object;
 };
+
+
+/***/ }),
+
+/***/ "9263":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+/* eslint-disable regexp/no-assertion-capturing-group, regexp/no-empty-group, regexp/no-lazy-ends -- testing */
+/* eslint-disable regexp/no-useless-quantifier -- testing */
+var regexpFlags = __webpack_require__("ad6d");
+var stickyHelpers = __webpack_require__("9f7f");
+var shared = __webpack_require__("5692");
+
+var nativeExec = RegExp.prototype.exec;
+var nativeReplace = shared('native-string-replace', String.prototype.replace);
+
+var patchedExec = nativeExec;
+
+var UPDATES_LAST_INDEX_WRONG = (function () {
+  var re1 = /a/;
+  var re2 = /b*/g;
+  nativeExec.call(re1, 'a');
+  nativeExec.call(re2, 'a');
+  return re1.lastIndex !== 0 || re2.lastIndex !== 0;
+})();
+
+var UNSUPPORTED_Y = stickyHelpers.UNSUPPORTED_Y || stickyHelpers.BROKEN_CARET;
+
+// nonparticipating capturing group, copied from es5-shim's String#split patch.
+var NPCG_INCLUDED = /()??/.exec('')[1] !== undefined;
+
+var PATCH = UPDATES_LAST_INDEX_WRONG || NPCG_INCLUDED || UNSUPPORTED_Y;
+
+if (PATCH) {
+  patchedExec = function exec(str) {
+    var re = this;
+    var lastIndex, reCopy, match, i;
+    var sticky = UNSUPPORTED_Y && re.sticky;
+    var flags = regexpFlags.call(re);
+    var source = re.source;
+    var charsAdded = 0;
+    var strCopy = str;
+
+    if (sticky) {
+      flags = flags.replace('y', '');
+      if (flags.indexOf('g') === -1) {
+        flags += 'g';
+      }
+
+      strCopy = String(str).slice(re.lastIndex);
+      // Support anchored sticky behavior.
+      if (re.lastIndex > 0 && (!re.multiline || re.multiline && str[re.lastIndex - 1] !== '\n')) {
+        source = '(?: ' + source + ')';
+        strCopy = ' ' + strCopy;
+        charsAdded++;
+      }
+      // ^(? + rx + ) is needed, in combination with some str slicing, to
+      // simulate the 'y' flag.
+      reCopy = new RegExp('^(?:' + source + ')', flags);
+    }
+
+    if (NPCG_INCLUDED) {
+      reCopy = new RegExp('^' + source + '$(?!\\s)', flags);
+    }
+    if (UPDATES_LAST_INDEX_WRONG) lastIndex = re.lastIndex;
+
+    match = nativeExec.call(sticky ? reCopy : re, strCopy);
+
+    if (sticky) {
+      if (match) {
+        match.input = match.input.slice(charsAdded);
+        match[0] = match[0].slice(charsAdded);
+        match.index = re.lastIndex;
+        re.lastIndex += match[0].length;
+      } else re.lastIndex = 0;
+    } else if (UPDATES_LAST_INDEX_WRONG && match) {
+      re.lastIndex = re.global ? match.index + match[0].length : lastIndex;
+    }
+    if (NPCG_INCLUDED && match && match.length > 1) {
+      // Fix browsers whose `exec` methods don't consistently return `undefined`
+      // for NPCG, like IE8. NOTE: This doesn' work for /(.?)?/
+      nativeReplace.call(match[0], reCopy, function () {
+        for (i = 1; i < arguments.length - 2; i++) {
+          if (arguments[i] === undefined) match[i] = undefined;
+        }
+      });
+    }
+
+    return match;
+  };
+}
+
+module.exports = patchedExec;
 
 
 /***/ }),
@@ -40671,6 +40953,37 @@ module.exports = function (IteratorConstructor, NAME, next) {
 
 /***/ }),
 
+/***/ "9f7f":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var fails = __webpack_require__("d039");
+
+// babel-minify transpiles RegExp('a', 'y') -> /a/y and it causes SyntaxError,
+// so we use an intermediate function.
+function RE(s, f) {
+  return RegExp(s, f);
+}
+
+exports.UNSUPPORTED_Y = fails(function () {
+  // babel-minify transpiles RegExp('a', 'y') -> /a/y and it causes SyntaxError
+  var re = RE('a', 'y');
+  re.lastIndex = 2;
+  return re.exec('abcd') != null;
+});
+
+exports.BROKEN_CARET = fails(function () {
+  // https://bugzilla.mozilla.org/show_bug.cgi?id=773687
+  var re = RE('^r', 'gy');
+  re.lastIndex = 2;
+  return re.exec('str') != null;
+});
+
+
+/***/ }),
+
 /***/ "a094":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -41365,9 +41678,6 @@ var ButtonDelete_component = Object(componentNormalizer["a" /* default */])(
 // EXTERNAL MODULE: ../wbuutilities/node_modules/core-js/modules/es.object.to-string.js
 var es_object_to_string = __webpack_require__("c26d");
 
-// EXTERNAL MODULE: ../wbuutilities/node_modules/core-js/modules/es.promise.js
-var es_promise = __webpack_require__("a9ce");
-
 // EXTERNAL MODULE: ../wbuutilities/node_modules/core-js/modules/es.regexp.exec.js
 var es_regexp_exec = __webpack_require__("9a6c");
 
@@ -41387,14 +41697,13 @@ var axios_default = /*#__PURE__*/__webpack_require__.n(axios);
 
 
 
-
 /**
  * Permet d'effectuer les requetes
  * pour modifier ou definir les paramettres par defaut de l'instance, {AjaxBasic}.axiosInstance.defaults.timeout = 30000;
  */
 
 var InstAxios = axios_default.a.create({
-  timeout: 5000
+  timeout: 15000
 });
 var basicRequest = {
   axiosInstance: InstAxios,
@@ -41491,6 +41800,9 @@ var basicRequest = {
 /* harmony default export */ var basic = (basicRequest);
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/objectSpread2.js + 1 modules
 var objectSpread2 = __webpack_require__("5530");
+
+// EXTERNAL MODULE: ../wbuutilities/node_modules/core-js/modules/es.promise.js
+var es_promise = __webpack_require__("a9ce");
 
 // EXTERNAL MODULE: external {"commonjs":"vue","commonjs2":"vue","root":"Vue"}
 var external_commonjs_vue_commonjs2_vue_root_Vue_ = __webpack_require__("8bbf");
@@ -46177,6 +46489,47 @@ module.exports = function (METHOD_NAME) {
 
 /***/ }),
 
+/***/ "ac1f":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var $ = __webpack_require__("23e7");
+var exec = __webpack_require__("9263");
+
+// `RegExp.prototype.exec` method
+// https://tc39.es/ecma262/#sec-regexp.prototype.exec
+$({ target: 'RegExp', proto: true, forced: /./.exec !== exec }, {
+  exec: exec
+});
+
+
+/***/ }),
+
+/***/ "ad6d":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var anObject = __webpack_require__("825a");
+
+// `RegExp.prototype.flags` getter implementation
+// https://tc39.es/ecma262/#sec-get-regexp.prototype.flags
+module.exports = function () {
+  var that = anObject(this);
+  var result = '';
+  if (that.global) result += 'g';
+  if (that.ignoreCase) result += 'i';
+  if (that.multiline) result += 'm';
+  if (that.dotAll) result += 's';
+  if (that.unicode) result += 'u';
+  if (that.sticky) result += 'y';
+  return result;
+};
+
+
+/***/ }),
+
 /***/ "ae93":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -49811,6 +50164,143 @@ function _classCallCheck(instance, Constructor) {
 
 /***/ }),
 
+/***/ "d784":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+// TODO: Remove from `core-js@4` since it's moved to entry points
+__webpack_require__("ac1f");
+var redefine = __webpack_require__("6eeb");
+var regexpExec = __webpack_require__("9263");
+var fails = __webpack_require__("d039");
+var wellKnownSymbol = __webpack_require__("b622");
+var createNonEnumerableProperty = __webpack_require__("9112");
+
+var SPECIES = wellKnownSymbol('species');
+var RegExpPrototype = RegExp.prototype;
+
+var REPLACE_SUPPORTS_NAMED_GROUPS = !fails(function () {
+  // #replace needs built-in support for named groups.
+  // #match works fine because it just return the exec results, even if it has
+  // a "grops" property.
+  var re = /./;
+  re.exec = function () {
+    var result = [];
+    result.groups = { a: '7' };
+    return result;
+  };
+  return ''.replace(re, '$<a>') !== '7';
+});
+
+// IE <= 11 replaces $0 with the whole match, as if it was $&
+// https://stackoverflow.com/questions/6024666/getting-ie-to-replace-a-regex-with-the-literal-string-0
+var REPLACE_KEEPS_$0 = (function () {
+  // eslint-disable-next-line regexp/prefer-escape-replacement-dollar-char -- required for testing
+  return 'a'.replace(/./, '$0') === '$0';
+})();
+
+var REPLACE = wellKnownSymbol('replace');
+// Safari <= 13.0.3(?) substitutes nth capture where n>m with an empty string
+var REGEXP_REPLACE_SUBSTITUTES_UNDEFINED_CAPTURE = (function () {
+  if (/./[REPLACE]) {
+    return /./[REPLACE]('a', '$0') === '';
+  }
+  return false;
+})();
+
+// Chrome 51 has a buggy "split" implementation when RegExp#exec !== nativeExec
+// Weex JS has frozen built-in prototypes, so use try / catch wrapper
+var SPLIT_WORKS_WITH_OVERWRITTEN_EXEC = !fails(function () {
+  // eslint-disable-next-line regexp/no-empty-group -- required for testing
+  var re = /(?:)/;
+  var originalExec = re.exec;
+  re.exec = function () { return originalExec.apply(this, arguments); };
+  var result = 'ab'.split(re);
+  return result.length !== 2 || result[0] !== 'a' || result[1] !== 'b';
+});
+
+module.exports = function (KEY, length, exec, sham) {
+  var SYMBOL = wellKnownSymbol(KEY);
+
+  var DELEGATES_TO_SYMBOL = !fails(function () {
+    // String methods call symbol-named RegEp methods
+    var O = {};
+    O[SYMBOL] = function () { return 7; };
+    return ''[KEY](O) != 7;
+  });
+
+  var DELEGATES_TO_EXEC = DELEGATES_TO_SYMBOL && !fails(function () {
+    // Symbol-named RegExp methods call .exec
+    var execCalled = false;
+    var re = /a/;
+
+    if (KEY === 'split') {
+      // We can't use real regex here since it causes deoptimization
+      // and serious performance degradation in V8
+      // https://github.com/zloirock/core-js/issues/306
+      re = {};
+      // RegExp[@@split] doesn't call the regex's exec method, but first creates
+      // a new one. We need to return the patched regex when creating the new one.
+      re.constructor = {};
+      re.constructor[SPECIES] = function () { return re; };
+      re.flags = '';
+      re[SYMBOL] = /./[SYMBOL];
+    }
+
+    re.exec = function () { execCalled = true; return null; };
+
+    re[SYMBOL]('');
+    return !execCalled;
+  });
+
+  if (
+    !DELEGATES_TO_SYMBOL ||
+    !DELEGATES_TO_EXEC ||
+    (KEY === 'replace' && !(
+      REPLACE_SUPPORTS_NAMED_GROUPS &&
+      REPLACE_KEEPS_$0 &&
+      !REGEXP_REPLACE_SUBSTITUTES_UNDEFINED_CAPTURE
+    )) ||
+    (KEY === 'split' && !SPLIT_WORKS_WITH_OVERWRITTEN_EXEC)
+  ) {
+    var nativeRegExpMethod = /./[SYMBOL];
+    var methods = exec(SYMBOL, ''[KEY], function (nativeMethod, regexp, str, arg2, forceStringMethod) {
+      var $exec = regexp.exec;
+      if ($exec === regexpExec || $exec === RegExpPrototype.exec) {
+        if (DELEGATES_TO_SYMBOL && !forceStringMethod) {
+          // The native String method already delegates to @@method (this
+          // polyfilled function), leasing to infinite recursion.
+          // We avoid it by directly calling the native @@method method.
+          return { done: true, value: nativeRegExpMethod.call(regexp, str, arg2) };
+        }
+        return { done: true, value: nativeMethod.call(str, regexp, arg2) };
+      }
+      return { done: false };
+    }, {
+      REPLACE_KEEPS_$0: REPLACE_KEEPS_$0,
+      REGEXP_REPLACE_SUBSTITUTES_UNDEFINED_CAPTURE: REGEXP_REPLACE_SUBSTITUTES_UNDEFINED_CAPTURE
+    });
+    var stringMethod = methods[0];
+    var regexMethod = methods[1];
+
+    redefine(String.prototype, KEY, stringMethod);
+    redefine(RegExpPrototype, SYMBOL, length == 2
+      // 21.2.5.8 RegExp.prototype[@@replace](string, replaceValue)
+      // 21.2.5.11 RegExp.prototype[@@split](string, limit)
+      ? function (string, arg) { return regexMethod.call(string, this, arg); }
+      // 21.2.5.6 RegExp.prototype[@@match](string)
+      // 21.2.5.9 RegExp.prototype[@@search](string)
+      : function (string) { return regexMethod.call(string, this); }
+    );
+  }
+
+  if (sham) createNonEnumerableProperty(RegExpPrototype[SYMBOL], 'sham', true);
+};
+
+
+/***/ }),
+
 /***/ "d82f":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -50836,6 +51326,7 @@ module.exports = function (exec) {
 // EXPORTS
 __webpack_require__.d(__webpack_exports__, "a", function() { return /* reexport */ App_utilities; });
 __webpack_require__.d(__webpack_exports__, "b", function() { return /* reexport */ jsonApi_termsTaxo; });
+__webpack_require__.d(__webpack_exports__, "c", function() { return /* reexport */ user; });
 
 // UNUSED EXPORTS: drupalSession
 
@@ -50914,6 +51405,8 @@ var runtime = __webpack_require__("96cf");
 
 
 var utilities = {
+  baseURl: src_config.baseURl,
+
   /**
    * configCustom[{name:"",value:""}]
    */
@@ -51148,7 +51641,21 @@ var termsTaxo_termsTaxo = /*#__PURE__*/function () {
 }();
 
 /* harmony default export */ var jsonApi_termsTaxo = (termsTaxo_termsTaxo);
+// CONCATENATED MODULE: ../drupal-vuejs/src/App/users/user.js
+
+
+
+/* harmony default export */ var user = ({
+  getCurrentUser: function getCurrentUser() {
+    return new Promise(function (resolv) {
+      App_utilities.get("/appformmanager/user").then(function (resp) {
+        resolv(resp.data);
+      });
+    });
+  }
+});
 // CONCATENATED MODULE: ../drupal-vuejs/index.js
+
 
 
 
@@ -54512,10 +55019,10 @@ wbuutilities__WEBPACK_IMPORTED_MODULE_4__[/* AjaxToastBootStrap */ "b"].$bvModal
           action: "update"
         };
 
-        if (id !== null && id != "1") {
+        if (id !== null) {
           table1.where = [{
             column: "id",
-            value: datas.id
+            value: id
           }];
         }
 
@@ -54555,6 +55062,9 @@ wbuutilities__WEBPACK_IMPORTED_MODULE_4__[/* AjaxToastBootStrap */ "b"].$bvModal
     };
     result.push(table1);
     return wbuutilities__WEBPACK_IMPORTED_MODULE_4__[/* AjaxToastBootStrap */ "b"].post(this.baseURl + "/query-ajax/insert-update", result, {});
+  },
+  modalSuccess: function modalSuccess(title, conf) {
+    return wbuutilities__WEBPACK_IMPORTED_MODULE_4__[/* AjaxToastBootStrap */ "b"].modalSuccess(title, conf);
   }
 });
 
@@ -54902,9 +55412,24 @@ var esm = __webpack_require__("5f5b");
 // EXTERNAL MODULE: ./node_modules/bootstrap-vue/esm/icons/plugin.js
 var icons_plugin = __webpack_require__("b1e0");
 
-// EXTERNAL MODULE: ./node_modules/bootstrap-vue/dist/bootstrap-vue.css
-var bootstrap_vue = __webpack_require__("2dd8");
+// EXTERNAL MODULE: ./src/plugins/bootstrap.scss
+var bootstrap = __webpack_require__("6a84");
 
+// CONCATENATED MODULE: ./src/plugins/bootstrap-vue.js
+
+
+ //import plugins
+//import { BVToastPlugin } from "bootstrap-vue";
+// Then import Bootstrap an BootstrapVue SCSS files (order is important)
+
+
+external_commonjs_vue_commonjs2_vue_root_Vue_default.a.use(esm["a" /* BootstrapVue */]);
+external_commonjs_vue_commonjs2_vue_root_Vue_default.a.use(icons_plugin["a" /* IconsPlugin */]);
+/*
+Vue.use(BVToastPlugin);
+const vm = new Vue();
+console.log("log Vue :  ", vm, "\n $bvToast : ", vm.$bvToast);
+*/
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"4acd20fe-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App.vue?vue&type=template&id=5988978c&
 var Appvue_type_template_id_5988978c_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"app-form",attrs:{"id":"app"}},[(_vm.$store.state.mode)?_c('div',{attrs:{"id":"nav"}},[_c('router-link',{attrs:{"to":"/"}},[_vm._v(" Gestion des formlaires ")]),_vm._v(" | "),_c('router-link',{attrs:{"to":"/about"}},[_vm._v("About")])],1):_vm._e(),_c('router-view')],1)}
 var staticRenderFns = []
@@ -55043,26 +55568,30 @@ var es_object_to_string = __webpack_require__("d3b7");
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.promise.js
 var es_promise = __webpack_require__("e6cf");
 
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.regexp.exec.js
+var es_regexp_exec = __webpack_require__("ac1f");
+
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.string.split.js
+var es_string_split = __webpack_require__("1276");
+
 // EXTERNAL MODULE: ./node_modules/vuex/dist/vuex.esm.js
 var vuex_esm = __webpack_require__("2f62");
 
 // EXTERNAL MODULE: ./src/store/utilities.js
 var utilities = __webpack_require__("fd71");
 
-// EXTERNAL MODULE: ../drupal-vuejs/index.js + 6 modules
+// EXTERNAL MODULE: ../drupal-vuejs/index.js + 7 modules
 var drupal_vuejs = __webpack_require__("e674");
 
 // EXTERNAL MODULE: ./src/App/config/config.js
 var config = __webpack_require__("f158");
-
-// EXTERNAL MODULE: ../wbuutilities/index.js + 58 modules
-var wbuutilities = __webpack_require__("a76e");
 
 // EXTERNAL MODULE: ./node_modules/axios/index.js
 var axios = __webpack_require__("bc3a");
 var axios_default = /*#__PURE__*/__webpack_require__.n(axios);
 
 // CONCATENATED MODULE: ./src/store/index.js
+
 
 
 
@@ -55169,7 +55698,12 @@ external_commonjs_vue_commonjs2_vue_root_Vue_default.a.use(vuex_esm["a" /* defau
         value: "",
         ref: ""
       }
-    }
+    },
+
+    /**
+     * Contient les informations sur l'utilisateur s'il est connecté.
+     */
+    user: {}
   },
   getters: {
     /**
@@ -55246,6 +55780,15 @@ external_commonjs_vue_commonjs2_vue_root_Vue_default.a.use(vuex_esm["a" /* defau
           fields: []
         };
       }
+    },
+
+    /**
+     * uid de l'utilisateur qui est connecté.
+     */
+    uid: function uid(state) {
+      if (state.user && state.user.uid) {
+        return state.user.uid[0].value;
+      } else return 0;
     }
   },
   mutations: {
@@ -55376,6 +55919,9 @@ external_commonjs_vue_commonjs2_vue_root_Vue_default.a.use(vuex_esm["a" /* defau
     },
     SET_ID_SOUMISSION: function SET_ID_SOUMISSION(state, val) {
       state.idSoumission = val;
+    },
+    SET_USER: function SET_USER(state, user) {
+      state.user = user;
     }
   },
   actions: {
@@ -55560,10 +56106,18 @@ external_commonjs_vue_commonjs2_vue_root_Vue_default.a.use(vuex_esm["a" /* defau
     /**
      * Recupere les formulaires soumis en BD.
      */
-    loadTraitementDatas: function loadTraitementDatas(_ref12, id) {
+    loadTraitementDatas: function loadTraitementDatas(_ref12, payload) {
       var commit = _ref12.commit;
       return new Promise(function (resolv, reject) {
+        var uid = payload.uid ? payload.uid : null;
+        var id = payload.id ? payload.id : null;
+        console.log("loadTraitementDatas uid : ", uid, " id : ", id);
         var datas = " select * from `appformmanager_datas` where `appformmanager_forms` = " + id;
+
+        if (uid) {
+          datas += " AND `uid` = " + uid;
+        }
+
         axios_default.a.post(config["a" /* default */].baseURl + "/query-ajax/select", datas).then(function (reponse) {
           console.log("get traitement Items: ", reponse);
           commit("SET_TRAITEMENT_ITEMS", reponse.data);
@@ -55620,23 +56174,29 @@ external_commonjs_vue_commonjs2_vue_root_Vue_default.a.use(vuex_esm["a" /* defau
                 commit = _ref17.commit, state = _ref17.state, getters = _ref17.getters;
                 //on valide les données utilisateur,
                 console.log(commit, state);
-                _context3.next = 4;
+
+                if (getters.uid) {
+                  _context3.next = 15;
+                  break;
+                }
+
+                _context3.next = 5;
                 return state.userlogin.name.ref.validate();
 
-              case 4:
+              case 5:
                 statusName = _context3.sent;
-                _context3.next = 7;
+                _context3.next = 8;
                 return state.userlogin.telephone.ref.validate();
 
-              case 7:
+              case 8:
                 statusTelephone = _context3.sent;
-                _context3.next = 10;
+                _context3.next = 11;
                 return state.userlogin.email.ref.validate();
 
-              case 10:
+              case 11:
                 statusEmail = _context3.sent;
-                console.log("email validation : ", state.userlogin.email.ref);
 
+                //console.log("email validation : ", state.userlogin.email.ref);
                 if (statusName.valid && statusTelephone.valid && statusEmail.valid) {
                   datas = {
                     name: [{
@@ -55647,27 +56207,49 @@ external_commonjs_vue_commonjs2_vue_root_Vue_default.a.use(vuex_esm["a" /* defau
                     }] //status: [{ value: true }],
 
                   };
-                  drupal_vuejs["a" /* drupalUtilities */].post("/user/register?_format=json", datas).then(function (resp) {
-                    console.log("drupalUtilities : ", resp);
-
+                  drupal_vuejs["a" /* drupalUtilities */].post("/fr/user/register?_format=json", datas).then(function (resp) {
+                    //console.log("drupalUtilities : ", resp);
                     if (resp.data) {
                       var uid = resp.data.uid[0].value;
                       utilities["a" /* default */].saveDatas(state, getters, uid).then(function () {
-                        wbuutilities["b" /* AjaxToastBootStrap */].modalSuccess("Votre compte a été  crée, un mail a été envoyer dans votre boite email afin de valider votre compte. ", {
-                          title: "Creation de compte"
+                        config["a" /* default */].modalSuccess("Votre devis aété sauvegardé et votre compte a été  crée. Un mail a été envoyé dans votre boite email afin de valider votre compte. ", {
+                          title: "Devis sauvegardé"
                         });
                         setTimeout(function () {
                           window.location.assign("/node/52");
                         }, 3000);
                       });
                     }
-                  }).catch(function (error) {
-                    console.log("error GET drupalUtilities : ", error);
-                    state.userlogin.email.ref.setErrors(["Une erreur s'est produite."]);
-                  }); //
+                  }).catch(function (errors) {
+                    console.log("error GET drupalUtilities : ", errors.error.data);
+
+                    if (errors.error && errors.error.data && errors.error.data.errors) {
+                      for (var i in errors.error.data.errors) {
+                        var error = errors.error.data.errors[i].split(":");
+
+                        if (error[0] == "mail") {
+                          error[0] = "email";
+                        }
+
+                        if (state.userlogin[error[0]]) {
+                          state.userlogin[error[0]].ref.setErrors([error[1]]);
+                        }
+                      }
+                    } else state.userlogin.email.ref.setErrors(["Une erreur s'est produite."]);
+                  });
                 }
 
-              case 13:
+                _context3.next = 16;
+                break;
+
+              case 15:
+                utilities["a" /* default */].saveDatas(state, getters, getters.uid).then(function () {
+                  config["a" /* default */].modalSuccess("Votre devis a été sauvegardé, ", {
+                    title: "Devis"
+                  });
+                });
+
+              case 16:
               case "end":
                 return _context3.stop();
             }
@@ -55680,12 +56262,23 @@ external_commonjs_vue_commonjs2_vue_root_Vue_default.a.use(vuex_esm["a" /* defau
           state = _ref18.state,
           getters = _ref18.getters;
       var uid = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+
+      if (!uid) {
+        uid = getters.uid;
+      }
+
       utilities["a" /* default */].saveDatas(state, getters, uid).then(function (response) {
         console.log("données stocké du store", response);
 
         if (state.idSoumission === null) {
           commit("SET_ID_SOUMISSION", response.data[0].result);
         }
+      });
+    },
+    getCurrentUser: function getCurrentUser(_ref19) {
+      var commit = _ref19.commit;
+      drupal_vuejs["c" /* users */].getCurrentUser().then(function (resp) {
+        commit("SET_USER", resp);
       });
     }
   },
@@ -58717,15 +59310,18 @@ if (inBrowser && window.Vue) {
 
 /* harmony default export */ var vue_router_esm = (VueRouter);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"4acd20fe-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/Listesfomes.vue?vue&type=template&id=29d561e8&lang=html&
-var Listesfomesvue_type_template_id_29d561e8_lang_html_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('b-button',{directives:[{name:"b-modal",rawName:"v-b-modal.add-edit-form",modifiers:{"add-edit-form":true}}],attrs:{"variant":"outline-info"}},[_vm._v(" + ")]),_c('b-table',{attrs:{"items":_vm.items,"fields":_vm.fields},scopedSlots:_vm._u([{key:"cell(action)",fn:function(data){return [_c('div',{staticClass:"p-relative"},[_c('b-button-group',{staticClass:"boutton-absolute"},[_c('b-button',{directives:[{name:"b-tooltip",rawName:"v-b-tooltip.hover.v-primary",modifiers:{"hover":true,"v-primary":true}}],attrs:{"variant":"outline-primary","title":"Voir"},on:{"click":function($event){return _vm.voirForm(data.item.id)}}},[_c('b-icon',{attrs:{"icon":"eye"}})],1),(_vm.$store.state.mode)?_c('b-button',{directives:[{name:"b-tooltip",rawName:"v-b-tooltip.hover.v-warning",modifiers:{"hover":true,"v-warning":true}}],attrs:{"variant":"outline-warning","title":"Modifier"},on:{"click":function($event){return _vm.updateForm(data.item.id)}}},[_c('b-icon',{attrs:{"icon":"pencil"}})],1):_vm._e(),(_vm.$store.state.mode)?_c('b-button',{directives:[{name:"b-tooltip",rawName:"v-b-tooltip.hover.v-success",modifiers:{"hover":true,"v-success":true}}],attrs:{"variant":"outline-success","title":"Voir les soumissions"},on:{"click":function($event){return _vm.showResult(data.item.id)}}},[_c('b-icon',{attrs:{"icon":"server"}})],1):_vm._e(),(_vm.$store.state.mode)?_c('b-button',{directives:[{name:"b-tooltip",rawName:"v-b-tooltip.hover.v-danger",modifiers:{"hover":true,"v-danger":true}}],attrs:{"variant":"outline-danger","title":"Supprimer le formulaire "},on:{"click":function($event){return _vm.deleteForm(data.item.id)}}},[_c('b-icon',{attrs:{"icon":"trash"}})],1):_vm._e()],1)],1)]}}])}),_c('AddEditForm')],1)}
-var Listesfomesvue_type_template_id_29d561e8_lang_html_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"4acd20fe-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/Listesfomes.vue?vue&type=template&id=7d95a07e&lang=html&
+var Listesfomesvue_type_template_id_7d95a07e_lang_html_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('b-button',{directives:[{name:"b-modal",rawName:"v-b-modal.add-edit-form",modifiers:{"add-edit-form":true}}],attrs:{"variant":"outline-info"}},[_vm._v(" + ")]),_c('b-table',{attrs:{"items":_vm.items,"fields":_vm.fields},scopedSlots:_vm._u([{key:"cell(action)",fn:function(data){return [_c('div',{staticClass:"p-relative"},[_c('b-button-group',{staticClass:"boutton-absolute"},[_c('b-button',{directives:[{name:"b-tooltip",rawName:"v-b-tooltip.hover.v-primary",modifiers:{"hover":true,"v-primary":true}}],attrs:{"variant":"outline-primary","title":"Voir"},on:{"click":function($event){return _vm.voirForm(data.item.id)}}},[_c('b-icon',{attrs:{"icon":"eye"}})],1),_c('b-button',{directives:[{name:"b-tooltip",rawName:"v-b-tooltip.hover.v-secondary",modifiers:{"hover":true,"v-secondary":true}}],attrs:{"variant":"outline-secondary","title":"voir mes devis"},on:{"click":function($event){return _vm.updateMyOwnForm(data.item.id)}}},[_c('b-icon',{attrs:{"icon":"newspaper"}})],1),(_vm.$store.state.mode)?_c('b-button',{directives:[{name:"b-tooltip",rawName:"v-b-tooltip.hover.v-warning",modifiers:{"hover":true,"v-warning":true}}],attrs:{"variant":"outline-warning","title":"Modifier"},on:{"click":function($event){return _vm.updateForm(data.item.id)}}},[_c('b-icon',{attrs:{"icon":"pencil"}})],1):_vm._e(),(_vm.$store.state.mode)?_c('b-button',{directives:[{name:"b-tooltip",rawName:"v-b-tooltip.hover.v-success",modifiers:{"hover":true,"v-success":true}}],attrs:{"variant":"outline-success","title":"Voir les soumissions"},on:{"click":function($event){return _vm.showResult(data.item.id)}}},[_c('b-icon',{attrs:{"icon":"server"}})],1):_vm._e(),(_vm.$store.state.mode)?_c('b-button',{directives:[{name:"b-tooltip",rawName:"v-b-tooltip.hover.v-danger",modifiers:{"hover":true,"v-danger":true}}],attrs:{"variant":"outline-danger","title":"Supprimer le formulaire "},on:{"click":function($event){return _vm.deleteForm(data.item.id)}}},[_c('b-icon',{attrs:{"icon":"trash"}})],1):_vm._e()],1)],1)]}}])}),_c('AddEditForm')],1)}
+var Listesfomesvue_type_template_id_7d95a07e_lang_html_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/App/Listesfomes.vue?vue&type=template&id=29d561e8&lang=html&
+// CONCATENATED MODULE: ./src/App/Listesfomes.vue?vue&type=template&id=7d95a07e&lang=html&
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/objectSpread2.js + 1 modules
 var objectSpread2 = __webpack_require__("5530");
+
+// EXTERNAL MODULE: ../wbuutilities/index.js + 58 modules
+var wbuutilities = __webpack_require__("a76e");
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/Listesfomes.vue?vue&type=script&lang=js&
 
@@ -58785,6 +59381,15 @@ var objectSpread2 = __webpack_require__("5530");
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -58793,7 +59398,7 @@ var objectSpread2 = __webpack_require__("5530");
   props: {},
   components: {
     AddEditForm: function AddEditForm() {
-      return __webpack_require__.e(/* import() */ 28).then(__webpack_require__.bind(null, "d2d6"));
+      return __webpack_require__.e(/* import() */ 30).then(__webpack_require__.bind(null, "d2d6"));
     }
   },
   data: function data() {
@@ -58833,6 +59438,11 @@ var objectSpread2 = __webpack_require__("5530");
         path: "/traitement/".concat(id)
       });
     },
+    updateMyOwnForm: function updateMyOwnForm(id) {
+      this.$router.push({
+        path: "/traitement-my-own/".concat(id)
+      });
+    },
     deleteForm: function deleteForm(id) {
       wbuutilities["b" /* AjaxToastBootStrap */].modalConfirmDelete().then(function (value) {
         if (value) {
@@ -58856,8 +59466,8 @@ var objectSpread2 = __webpack_require__("5530");
 
 var Listesfomes_component = Object(componentNormalizer["a" /* default */])(
   App_Listesfomesvue_type_script_lang_js_,
-  Listesfomesvue_type_template_id_29d561e8_lang_html_render,
-  Listesfomesvue_type_template_id_29d561e8_lang_html_staticRenderFns,
+  Listesfomesvue_type_template_id_7d95a07e_lang_html_render,
+  Listesfomesvue_type_template_id_7d95a07e_lang_html_staticRenderFns,
   false,
   null,
   null,
@@ -58892,6 +59502,13 @@ var routes = [{
     return Promise.all(/* import() */[__webpack_require__.e(2), __webpack_require__.e(3)]).then(__webpack_require__.bind(null, "7817"));
   }
 }, {
+  path: "/traitement-my-own/:id",
+  name: "Traitement du résultat",
+  props: true,
+  component: function component() {
+    return __webpack_require__.e(/* import() */ 6).then(__webpack_require__.bind(null, "0690"));
+  }
+}, {
   path: "/*",
   redirect: "/"
 }];
@@ -58903,19 +59520,44 @@ var router = new vue_router_esm({
 // CONCATENATED MODULE: ./src/main-prod.js
 //import "@babel/polyfill";
 
+/*
+import "mutationobserver-shim";
+import Vue from "vue";
+import { BootstrapVue } from "bootstrap-vue";
+import { IconsPlugin } from "bootstrap-vue";
+//on importe uniquement bootstrap-vue.css;
+import "bootstrap-vue/dist/bootstrap-vue.css";
+import App from "./App.vue";
+import VueFormulate from "@braid/vue-formulate";
+import store from "./store";
+import router from "./router/routeUser.js";
+
+Vue.config.productionTip = false;
+Vue.use(BootstrapVue);
+Vue.use(IconsPlugin);
+Vue.use(VueFormulate);
+
+new Vue({
+  store,
+  router,
+  render: (h) => h(App),
+  mounted() {
+    this.$store.state.mode = false;
+    this.$store.dispatch("getCurrentUser");
+  },
+}).$mount("#app");
+*/
+//import "@babel/polyfill";
 
 
- //on importe uniquement bootstrap-vue.css;
 
 
 
-
+ //import router from "./router";
 
 
 external_commonjs_vue_commonjs2_vue_root_Vue_default.a.config.productionTip = false;
 external_commonjs_vue_commonjs2_vue_root_Vue_default.a.use(formulate_esm);
-external_commonjs_vue_commonjs2_vue_root_Vue_default.a.use(esm["a" /* BootstrapVue */]);
-external_commonjs_vue_commonjs2_vue_root_Vue_default.a.use(icons_plugin["a" /* IconsPlugin */]);
 new external_commonjs_vue_commonjs2_vue_root_Vue_default.a({
   store: store,
   router: routeUser,
@@ -58924,6 +59566,7 @@ new external_commonjs_vue_commonjs2_vue_root_Vue_default.a({
   },
   mounted: function mounted() {
     this.$store.state.mode = false;
+    this.$store.dispatch("getCurrentUser");
   }
 }).$mount("#app");
 // CONCATENATED MODULE: ./node_modules/@vue/cli-service/lib/commands/build/entry-lib-no-default.js

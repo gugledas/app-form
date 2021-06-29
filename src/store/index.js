@@ -1,9 +1,8 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import utilities from "./utilities.js";
-import { drupalUtilities } from "drupal-vuejs";
+import { drupalUtilities, users } from "drupal-vuejs";
 import config from "../App/config/config.js";
-import { AjaxToastBootStrap } from "wbuutilities";
 
 Vue.use(Vuex);
 import axios from "axios";
@@ -294,6 +293,9 @@ export default new Vuex.Store({
     SET_ID_SOUMISSION(state, val) {
       state.idSoumission = val;
     },
+    SET_USER(state, user) {
+      state.user = user;
+    },
   },
   actions: {
     addSetpsDatas({ commit }, payload) {
@@ -416,11 +418,17 @@ export default new Vuex.Store({
     /**
      * Recupere les formulaires soumis en BD.
      */
-    loadTraitementDatas({ commit }, id) {
+    loadTraitementDatas({ commit }, payload) {
       return new Promise((resolv, reject) => {
+        var uid = payload.uid ? payload.uid : null;
+        var id = payload.id ? payload.id : null;
+        console.log("loadTraitementDatas uid : ", uid, " id : ", id);
         var datas =
           " select * from `appformmanager_datas` where `appformmanager_forms` = " +
           id;
+        if (uid) {
+          datas += " AND `uid` = " + uid;
+        }
         axios
           .post(config.baseURl + "/query-ajax/select", datas)
           .then((reponse) => {
@@ -464,51 +472,62 @@ export default new Vuex.Store({
     async saveDatasUser({ commit, state, getters }) {
       //on valide les données utilisateur,
       console.log(commit, state);
-      const statusName = await state.userlogin.name.ref.validate();
-      const statusTelephone = await state.userlogin.telephone.ref.validate();
-      const statusEmail = await state.userlogin.email.ref.validate();
-      console.log("email validation : ", state.userlogin.email.ref);
-      if (statusName.valid && statusTelephone.valid && statusEmail.valid) {
-        const datas = {
-          name: [{ value: state.userlogin.name.value }],
-          mail: [{ value: state.userlogin.email.value }],
-          //status: [{ value: true }],
-        };
-        drupalUtilities
-          .post("/fr/user/register?_format=json", datas)
-          .then((resp) => {
-            console.log("drupalUtilities : ", resp);
-            if (resp.data) {
-              var uid = resp.data.uid[0].value;
-              utilities.saveDatas(state, getters, uid).then(() => {
-                AjaxToastBootStrap.modalSuccess(
-                  "Votre compte a été  crée, un mail a été envoyer dans votre boite email afin de valider votre compte. ",
-                  { title: "Creation de compte" }
-                );
-                setTimeout(function () {
-                  window.location.assign("/node/52");
-                }, 3000);
-              });
-            }
-          })
-          .catch((errors) => {
-            console.log("error GET drupalUtilities : ", errors.error.data);
-            if (errors.error && errors.error.data && errors.error.data.errors) {
-              for (const i in errors.error.data.errors) {
-                const error = errors.error.data.errors[i].split(":");
-                if (error[0] == "mail") {
-                  error[0] = "email";
-                }
-                if (state.userlogin[error[0]]) {
-                  state.userlogin[error[0]].ref.setErrors([error[1]]);
-                }
+      if (!getters.uid) {
+        const statusName = await state.userlogin.name.ref.validate();
+        const statusTelephone = await state.userlogin.telephone.ref.validate();
+        const statusEmail = await state.userlogin.email.ref.validate();
+        //console.log("email validation : ", state.userlogin.email.ref);
+        if (statusName.valid && statusTelephone.valid && statusEmail.valid) {
+          const datas = {
+            name: [{ value: state.userlogin.name.value }],
+            mail: [{ value: state.userlogin.email.value }],
+            //status: [{ value: true }],
+          };
+          drupalUtilities
+            .post("/fr/user/register?_format=json", datas)
+            .then((resp) => {
+              //console.log("drupalUtilities : ", resp);
+              if (resp.data) {
+                var uid = resp.data.uid[0].value;
+                utilities.saveDatas(state, getters, uid).then(() => {
+                  config.modalSuccess(
+                    "Votre devis aété sauvegardé et votre compte a été  crée. Un mail a été envoyé dans votre boite email afin de valider votre compte. ",
+                    { title: "Devis sauvegardé" }
+                  );
+                  setTimeout(function () {
+                    window.location.assign("/node/52");
+                  }, 3000);
+                });
               }
-            } else
-              state.userlogin.email.ref.setErrors([
-                "Une erreur s'est produite.",
-              ]);
+            })
+            .catch((errors) => {
+              console.log("error GET drupalUtilities : ", errors.error.data);
+              if (
+                errors.error &&
+                errors.error.data &&
+                errors.error.data.errors
+              ) {
+                for (const i in errors.error.data.errors) {
+                  const error = errors.error.data.errors[i].split(":");
+                  if (error[0] == "mail") {
+                    error[0] = "email";
+                  }
+                  if (state.userlogin[error[0]]) {
+                    state.userlogin[error[0]].ref.setErrors([error[1]]);
+                  }
+                }
+              } else
+                state.userlogin.email.ref.setErrors([
+                  "Une erreur s'est produite.",
+                ]);
+            });
+        }
+      } else
+        utilities.saveDatas(state, getters, getters.uid).then(() => {
+          config.modalSuccess("Votre devis a été sauvegardé, ", {
+            title: "Devis",
           });
-      }
+        });
     },
     saveDatas({ commit, state, getters }, uid = 0) {
       if (!uid) {
@@ -519,6 +538,11 @@ export default new Vuex.Store({
         if (state.idSoumission === null) {
           commit("SET_ID_SOUMISSION", response.data[0].result);
         }
+      });
+    },
+    getCurrentUser({ commit }) {
+      users.getCurrentUser().then((resp) => {
+        commit("SET_USER", resp);
       });
     },
   },

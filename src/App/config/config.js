@@ -53,11 +53,11 @@ export default {
           action: "update",
         };
 
-        if (id !== null && id != "1") {
+        if (id !== null) {
           table1.where = [
             {
               column: "id",
-              value: datas.id,
+              value: id,
             },
           ];
         }
@@ -109,5 +109,8 @@ export default {
       result,
       {}
     );
+  },
+  modalSuccess(title, conf) {
+    return AjaxToastBootStrap.modalSuccess(title, conf);
   },
 };

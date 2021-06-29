@@ -1,6 +1,6 @@
 <template lang="html">
   <div :class="!validationField && mode ? 'mb-5' : ''">
-    <transition v-if="validationField" name="fade">
+    <transition v-if="validationField && !uid" name="fade">
       <form
         ref="form_userlogin"
         @submit.stop.prevent="handleSubmit"
@@ -89,7 +89,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapGetters } from "vuex";
 import { ValidationProvider } from "vee-validate";
 import "../EditsFields/vee-validate-custom.js";
 export default {
@@ -122,6 +122,7 @@ export default {
   },
   computed: {
     ...mapState(["userlogin", "mode"]),
+    ...mapGetters(["uid"]),
     MajRefs() {
       if (this.userlogin) {
         this.setRefs();

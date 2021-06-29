@@ -38,7 +38,7 @@
       <b-col cols="12" v-if="!StatusStepsIndexs" class="form-nav-bouton">
         <b-row>
           <b-col v-if="uid">
-            <button class="next-bouton" @click="Save">
+            <button class="next-bouton" @click="SaveByUser">
               <b-icon icon="server"></b-icon>
               Enregistrer
             </button>
@@ -102,18 +102,15 @@ export default {
       if (this.stepsState) {
         this.$store.dispatch("stepsIndex", this.stepsIndex);
         if (!this.mode) {
-          this.Save();
+          this.$store.dispatch("saveDatas");
         }
       }
     },
     back() {
       this.$store.dispatch("stepsBack");
-      //this.$store.state.stepsIndex--;
-    },
-    Save() {
-      this.$store.dispatch("saveDatas");
     },
     SaveByUser() {
+      console.log("save SaveByUser");
       this.$store.dispatch("saveDatasUser");
     },
   },

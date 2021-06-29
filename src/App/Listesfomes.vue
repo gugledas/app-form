@@ -15,6 +15,15 @@
             </b-button>
 
             <b-button
+              variant="outline-secondary"
+              @click="updateMyOwnForm(data.item.id)"
+              v-b-tooltip.hover.v-secondary
+              title="voir mes devis"
+            >
+              <b-icon icon="newspaper"></b-icon>
+            </b-button>
+
+            <b-button
               variant="outline-warning"
               @click="updateForm(data.item.id)"
               v-if="$store.state.mode"
@@ -46,7 +55,6 @@
       </template>
     </b-table>
     <AddEditForm></AddEditForm>
-    <b-button @click="checkUser">User</b-button>
   </div>
 </template>
 
@@ -54,7 +62,7 @@
 import { mapState } from "vuex";
 import config from "./config/config.js";
 import { AjaxToastBootStrap } from "wbuutilities";
-import { users } from "drupal-vuejs";
+
 export default {
   name: "Listesfomes",
   props: {},
@@ -99,6 +107,9 @@ export default {
     showResult(id) {
       this.$router.push({ path: `/traitement/${id}` });
     },
+    updateMyOwnForm(id) {
+      this.$router.push({ path: `/traitement-my-own/${id}` });
+    },
     deleteForm(id) {
       AjaxToastBootStrap.modalConfirmDelete().then((value) => {
         if (value) {
@@ -106,11 +117,6 @@ export default {
             window.location.reload();
           });
         }
-      });
-    },
-    checkUser() {
-      users.getCurrentUser().then((resp) => {
-        console.log("getCurrentUser : ", resp);
       });
     },
   },

@@ -1,9 +1,9 @@
 <template>
   <div>
     <b-container class="bv-example-row bg-light p-4" fluid="lg">
-      <div>
+      <div :checkUid="checkUid">
         <h5 class="titre mb-3 shadow-sm p-2">
-          Traitement :
+          Mes devis :
           <span class="form-title">{{ form.name }}</span>
         </h5>
       </div>
@@ -45,14 +45,11 @@ export default {
     },
   },
   mounted() {
-    this.$store.dispatch("loadTraitementDatas", { id: this.id }).then(() => {
-      this.$store.dispatch("setTraitId", this.id);
-      this.$store.dispatch("setFormId", this.id);
-    });
+    //
   },
   computed: {
     ...mapState(["traitementId"]),
-    ...mapGetters(["traitementFormItems", "form"]),
+    ...mapGetters(["traitementFormItems", "form", "uid"]),
     ListeFieldsDisplay() {
       const fieldsDisplay = [
         {
@@ -93,8 +90,24 @@ export default {
       }
       return lists;
     },
+    checkUid() {
+      if (this.uid) {
+        this.loadDatas();
+        return true;
+      }
+      return false;
+    },
   },
   methods: {
+    loadDatas() {
+      if (this.uid)
+        this.$store
+          .dispatch("loadTraitementDatas", { id: this.id, uid: this.uid })
+          .then(() => {
+            this.$store.dispatch("setTraitId", this.id);
+            this.$store.dispatch("setFormId", this.id);
+          });
+    },
     deleteSteps(datas) {
       var all = this.$store.state.allStepsDatas;
       var r = all.indexOf(this.formDatas);
@@ -107,7 +120,6 @@ export default {
         }
       }
     },
-
     saveToLocal() {
       //var self = this;
       //var datas = this.form;
@@ -121,7 +133,6 @@ export default {
         var forms = JSON.stringify(reponse[0].fields);
         localStorage.setItem("allo", JSON.stringify(forms));
         console.log("savesteps: ", reponse);
-
         axios
           .post(
             "http://lesroisdelareno.kksa" + "/query-ajax/insert-update",
@@ -137,7 +148,6 @@ export default {
       });
       /**/
     },
-
     resetValue() {
       this.$store.getters.formDatas.selected = "";
       this.$store.getters.formDatas.value = [];
@@ -159,7 +169,6 @@ export default {
       event.preventDefault();
       // Exit when the form isn't valid
       this.demo = true;
-
       this.$nextTick(() => {
         this.$bvModal.hide("modal-prevent-closing");
       });

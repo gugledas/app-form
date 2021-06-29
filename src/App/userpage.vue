@@ -3,6 +3,9 @@
     <div>
       <b-row align-h="center">
         <b-col sm="10">
+          <h5 class="text-right cursorHover" @click="returnHome" v-if="uid">
+            Voir mes devis
+          </h5>
           <h5 class="titre mb-3 shadow-sm p-2">
             Estimation de devis :
             <span class="form-title">{{ form.name }}</span>
@@ -47,15 +50,21 @@ export default {
   },
   computed: {
     ...mapState(["stepsIndex", "allStepsDatas", "fields", "price"]),
-    ...mapGetters(["form", "formDatas"]),
+    ...mapGetters(["form", "formDatas", "uid"]),
   },
   methods: {
-    //
+    returnHome() {
+      this.$router.push({ path: `/` });
+    },
   },
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.cursorHover {
+  cursor: pointer;
+}
+</style>
 
 <!--
  //nom du fichier en pascal.

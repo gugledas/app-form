@@ -151,7 +151,7 @@ async function RevetSol() {
   //
   const D_S = self.getFieldInForms(
     "rev_tement_au_sol",
-    "quel_nouveau_rev_tement_souhaitez_vous"
+    "quelle_pr_paration_souhaitez_vous"
   );
   const price_D_S = await self.getPriceForField(D_S, true, 0);
   //
@@ -166,7 +166,7 @@ async function RevetSol() {
     "quelle_est_la_surface_en_m"
   ).value;
 
-  price = S * price_R_S + price_D_S * S * price_P_S;
+  price = S * price_R_S + price_D_S * S + S * price_P_S;
   return price;
 }
 RevetSol();
@@ -184,7 +184,7 @@ async function RevetSolSDB() {
   //
   const D_S = self.getFieldInForms(
     "rev_tement_au_sol_salle_de_bains",
-    "quel_nouveau_rev_tement_souhaitez_vous"
+    "quelle_pr_paration_souhaitez_vous"
   );
   const price_D_S = await self.getPriceForField(D_S, true, 0);
   //
@@ -199,7 +199,7 @@ async function RevetSolSDB() {
     "quelle_est_la_surface_en_m"
   ).value;
 
-  price = S * price_R_S + price_D_S * S * price_P_S;
+  price = S * price_R_S + price_D_S * S + S * price_P_S;
   return price;
 }
 RevetSolSDB();
@@ -217,7 +217,7 @@ async function RevetSolSALON() {
   //
   const D_S = self.getFieldInForms(
     "rev_tement_au_sol_sallon",
-    "quel_nouveau_rev_tement_souhaitez_vous"
+    "quelle_pr_paration_souhaitez_vous"
   );
   const price_D_S = await self.getPriceForField(D_S, true, 0);
   //
@@ -232,7 +232,7 @@ async function RevetSolSALON() {
     "quelle_est_la_surface_en_m"
   ).value;
 
-  price = S * price_R_S + price_D_S * S * price_P_S;
+  price = S * price_R_S + price_D_S * S + S * price_P_S;
   return price;
 }
 RevetSolSALON();
@@ -250,7 +250,7 @@ async function RevetSolCH() {
   //
   const D_S = self.getFieldInForms(
     "rev_tement_au_sol_chambre",
-    "quel_nouveau_rev_tement_souhaitez_vous"
+    "quelle_pr_paration_souhaitez_vous"
   );
   const price_D_S = await self.getPriceForField(D_S, true, 0);
   //
@@ -265,7 +265,7 @@ async function RevetSolCH() {
     "quelle_est_la_surface_en_m"
   ).value;
 
-  price = S * price_R_S + price_D_S * S * price_P_S;
+  price = S * price_R_S + price_D_S * S + S * price_P_S;
   return price;
 }
 RevetSolCH();
@@ -273,7 +273,7 @@ RevetSolCH();
 //
 //-------------------------------------------------------
 //
-async function RevetSolSalBain() {
+async function RevetSolSalManger() {
   var price = 0;
   const R_S = self.getFieldInForms(
     "rev_tement_au_sol_salle_manger",
@@ -283,7 +283,7 @@ async function RevetSolSalBain() {
   //
   const D_S = self.getFieldInForms(
     "rev_tement_au_sol_salle_manger",
-    "quel_nouveau_rev_tement_souhaitez_vous"
+    "quelle_pr_paration_souhaitez_vous"
   );
   const price_D_S = await self.getPriceForField(D_S, true, 0);
   //
@@ -298,10 +298,10 @@ async function RevetSolSalBain() {
     "quelle_est_la_surface_en_m"
   ).value;
 
-  price = S * price_R_S + price_D_S * S * price_P_S;
+  price = S * price_R_S + price_D_S * S + S * price_P_S;
   return price;
 }
-RevetSolSalBain();
+RevetSolSalManger();
 
 //
 //-------------------------------------------------------
@@ -316,7 +316,7 @@ async function RevetSolCouloir() {
   //
   const D_S = self.getFieldInForms(
     "rev_tement_au_sol_couloir",
-    "quel_nouveau_rev_tement_souhaitez_vous"
+    "quelle_pr_paration_souhaitez_vous"
   );
   const price_D_S = await self.getPriceForField(D_S, true, 0);
   //
@@ -331,7 +331,7 @@ async function RevetSolCouloir() {
     "quelle_est_la_surface_en_m"
   ).value;
 
-  price = S * price_R_S + price_D_S * S * price_P_S;
+  price = S * price_R_S + price_D_S * S + S * price_P_S;
   return price;
 }
 RevetSolCouloir();
@@ -349,7 +349,7 @@ async function RevetSolBuan() {
   //
   const D_S = self.getFieldInForms(
     "rev_tement_au_sol_buanderie",
-    "quel_nouveau_rev_tement_souhaitez_vous"
+    "quelle_pr_paration_souhaitez_vous"
   );
   const price_D_S = await self.getPriceForField(D_S, true, 0);
   //
@@ -364,10 +364,43 @@ async function RevetSolBuan() {
     "quelle_est_la_surface_en_m"
   ).value;
 
-  price = S * price_R_S + price_D_S * S * price_P_S;
+  price = S * price_R_S + price_D_S * S + S * price_P_S;
   return price;
 }
 RevetSolBuan();
+
+//
+//-------------------------------------------------------
+//
+async function RevetSolToilette() {
+  var price = 0;
+  const R_S = self.getFieldInForms(
+    "rev_tement_au_sol_toilette",
+    "quel_est_le_rev_tement_au_sol_actuel"
+  );
+  const price_R_S = await self.getPriceForField(R_S, true, 0);
+  //
+  const D_S = self.getFieldInForms(
+    "rev_tement_au_sol_toilette",
+    "quelle_pr_paration_souhaitez_vous"
+  );
+  const price_D_S = await self.getPriceForField(D_S, true, 0);
+  //
+  const P_S = self.getFieldInForms(
+    "rev_tement_au_sol_toilette",
+    "quel_nouveau_rev_tement_souhaitez_vous"
+  );
+  const price_P_S = await self.getPriceForField(P_S, true, 0);
+  //
+  const S = self.getFieldInForms(
+    "rev_tement_au_sol_toilette",
+    "quelle_est_la_surface_en_m"
+  ).value;
+
+  price = S * price_R_S + price_D_S * S + S * price_P_S;
+  return price;
+}
+RevetSolToilette();
 
 //
 //-------------------------------------------------------
@@ -382,7 +415,7 @@ async function RevetSolDressing() {
   //
   const D_S = self.getFieldInForms(
     "rev_tement_au_sol_dressing",
-    "quel_nouveau_rev_tement_souhaitez_vous"
+    "quelle_pr_paration_souhaitez_vous"
   );
   const price_D_S = await self.getPriceForField(D_S, true, 0);
   //
@@ -397,7 +430,7 @@ async function RevetSolDressing() {
     "quelle_est_la_surface_en_m"
   ).value;
 
-  price = S * price_R_S + price_D_S * S * price_P_S;
+  price = S * price_R_S + price_D_S * S + S * price_P_S;
   return price;
 }
 RevetSolDressing();
@@ -415,7 +448,7 @@ async function RevetSolbureau() {
   //
   const D_S = self.getFieldInForms(
     "rev_tement_au_sol_bureau",
-    "quel_nouveau_rev_tement_souhaitez_vous"
+    "quelle_pr_paration_souhaitez_vous"
   );
   const price_D_S = await self.getPriceForField(D_S, true, 0);
   //
@@ -430,7 +463,7 @@ async function RevetSolbureau() {
     "quelle_est_la_surface_en_m"
   ).value;
 
-  price = S * price_R_S + price_D_S * S * price_P_S;
+  price = S * price_R_S + price_D_S * S + S * price_P_S;
   return price;
 }
 RevetSolbureau();
@@ -656,12 +689,24 @@ async function RevetMuraux() {
   );
   const price_T_C = await self.getPriceForField(T_C, true, 0);
   //
+  const M_A = self.getFieldInForms(
+    "rev_tements_muraux_cuisine",
+    "quel_est_le_rev_tement_mural_actuel"
+  );
+  const price_M_A = await self.getPriceForField(M_A, true, 0);
+  //
+  const M_S = self.getFieldInForms(
+    "rev_tements_muraux_cuisine",
+    "quel_nouveau_rev_tement_souhaitez_vous"
+  );
+  const price_M_S = await self.getPriceForField(M_S, true, 0);
+  //
   const S = self.getFieldInForms(
     "rev_tements_muraux_cuisine",
     "quelle_est_la_surface_approximative_des_murs_en_m"
   ).value;
 
-  price = S * price_T_C;
+  price = S * price_T_C + S * price_M_A + S * price_M_S;
   return price;
 }
 RevetMuraux();
@@ -677,12 +722,24 @@ async function RevetMurauxSDB() {
   );
   const price_T_C = await self.getPriceForField(T_C, true, 0);
   //
+  const M_A = self.getFieldInForms(
+    "rev_tements_muraux_salle_de_bain",
+    "quel_est_le_rev_tement_mural_actuel"
+  );
+  const price_M_A = await self.getPriceForField(M_A, true, 0);
+  //
+  const M_S = self.getFieldInForms(
+    "rev_tements_muraux_salle_de_bain",
+    "quel_nouveau_rev_tement_souhaitez_vous"
+  );
+  const price_M_S = await self.getPriceForField(M_S, true, 0);
+  //
   const S = self.getFieldInForms(
     "rev_tements_muraux_salle_de_bain",
     "quelle_est_la_surface_approximative_des_murs_en_m"
   ).value;
 
-  price = S * price_T_C;
+  price = S * price_T_C + S * price_M_A + S * price_M_S;
   return price;
 }
 RevetMurauxSDB();
@@ -698,12 +755,24 @@ async function RevetMurauxSalon() {
   );
   const price_T_C = await self.getPriceForField(T_C, true, 0);
   //
+  const M_A = self.getFieldInForms(
+    "rev_tements_muraux_sallon",
+    "quel_est_le_rev_tement_mural_actuel"
+  );
+  const price_M_A = await self.getPriceForField(M_A, true, 0);
+  //
+  const M_S = self.getFieldInForms(
+    "rev_tements_muraux_sallon",
+    "quel_nouveau_rev_tement_souhaitez_vous"
+  );
+  const price_M_S = await self.getPriceForField(M_S, true, 0);
+  //
   const S = self.getFieldInForms(
     "rev_tements_muraux_sallon",
     "quelle_est_la_surface_approximative_des_murs_en_m"
   ).value;
 
-  price = S * price_T_C;
+  price = S * price_T_C + S * price_M_A + S * price_M_S;
   return price;
 }
 RevetMurauxSalon();
@@ -719,12 +788,24 @@ async function RevetMurauxChambre() {
   );
   const price_T_C = await self.getPriceForField(T_C, true, 0);
   //
+  const M_A = self.getFieldInForms(
+    "rev_tements_muraux_chambre",
+    "quel_est_le_rev_tement_mural_actuel"
+  );
+  const price_M_A = await self.getPriceForField(M_A, true, 0);
+  //
+  const M_S = self.getFieldInForms(
+    "rev_tements_muraux_chambre",
+    "quel_nouveau_rev_tement_souhaitez_vous"
+  );
+  const price_M_S = await self.getPriceForField(M_S, true, 0);
+  //
   const S = self.getFieldInForms(
     "rev_tements_muraux_chambre",
     "quelle_est_la_surface_approximative_des_murs_en_m"
   ).value;
 
-  price = S * price_T_C;
+  price = S * price_T_C + S * price_M_A + S * price_M_S;
   return price;
 }
 RevetMurauxChambre();
@@ -740,12 +821,24 @@ async function RevetMurauxSalle() {
   );
   const price_T_C = await self.getPriceForField(T_C, true, 0);
   //
+  const M_A = self.getFieldInForms(
+    "rev_tements_muraux_salle_manger",
+    "quel_est_le_rev_tement_mural_actuel"
+  );
+  const price_M_A = await self.getPriceForField(M_A, true, 0);
+  //
+  const M_S = self.getFieldInForms(
+    "rev_tements_muraux_salle_manger",
+    "quel_nouveau_rev_tement_souhaitez_vous"
+  );
+  const price_M_S = await self.getPriceForField(M_S, true, 0);
+  //
   const S = self.getFieldInForms(
     "rev_tements_muraux_salle_manger",
     "quelle_est_la_surface_approximative_des_murs_en_m"
   ).value;
 
-  price = S * price_T_C;
+  price = S * price_T_C + S * price_M_A + S * price_M_S;
   return price;
 }
 RevetMurauxSalle();
@@ -761,12 +854,24 @@ async function RevetMurauxCouloir() {
   );
   const price_T_C = await self.getPriceForField(T_C, true, 0);
   //
+  const M_A = self.getFieldInForms(
+    "rev_tements_muraux_couloir",
+    "quel_est_le_rev_tement_mural_actuel"
+  );
+  const price_M_A = await self.getPriceForField(M_A, true, 0);
+  //
+  const M_S = self.getFieldInForms(
+    "rev_tements_muraux_couloir",
+    "quel_nouveau_rev_tement_souhaitez_vous"
+  );
+  const price_M_S = await self.getPriceForField(M_S, true, 0);
+  //
   const S = self.getFieldInForms(
     "rev_tements_muraux_couloir",
     "quelle_est_la_surface_approximative_des_murs_en_m"
   ).value;
 
-  price = S * price_T_C;
+  price = S * price_T_C + S * price_M_A + S * price_M_S;
   return price;
 }
 RevetMurauxCouloir();
@@ -782,12 +887,24 @@ async function RevetMurauxBuan() {
   );
   const price_T_C = await self.getPriceForField(T_C, true, 0);
   //
+  const M_A = self.getFieldInForms(
+    "rev_tements_muraux_buanderie",
+    "quel_est_le_rev_tement_mural_actuel"
+  );
+  const price_M_A = await self.getPriceForField(M_A, true, 0);
+  //
+  const M_S = self.getFieldInForms(
+    "rev_tements_muraux_buanderie",
+    "quel_nouveau_rev_tement_souhaitez_vous"
+  );
+  const price_M_S = await self.getPriceForField(M_S, true, 0);
+  //
   const S = self.getFieldInForms(
     "rev_tements_muraux_buanderie",
     "quelle_est_la_surface_approximative_des_murs_en_m"
   ).value;
 
-  price = S * price_T_C;
+  price = S * price_T_C + S * price_M_A + S * price_M_S;
   return price;
 }
 RevetMurauxBuan();
@@ -803,12 +920,24 @@ async function RevetMurauxToilette() {
   );
   const price_T_C = await self.getPriceForField(T_C, true, 0);
   //
+  const M_A = self.getFieldInForms(
+    "rev_tements_muraux_toilette",
+    "quel_est_le_rev_tement_mural_actuel"
+  );
+  const price_M_A = await self.getPriceForField(M_A, true, 0);
+  //
+  const M_S = self.getFieldInForms(
+    "rev_tements_muraux_toilette",
+    "quel_nouveau_rev_tement_souhaitez_vous"
+  );
+  const price_M_S = await self.getPriceForField(M_S, true, 0);
+  //
   const S = self.getFieldInForms(
     "rev_tements_muraux_toilette",
     "quelle_est_la_surface_approximative_des_murs_en_m"
   ).value;
 
-  price = S * price_T_C;
+  price = S * price_T_C + S * price_M_A + S * price_M_S;
   return price;
 }
 RevetMurauxToilette();
@@ -824,12 +953,24 @@ async function RevetMurauxDressing() {
   );
   const price_T_C = await self.getPriceForField(T_C, true, 0);
   //
+  const M_A = self.getFieldInForms(
+    "rev_tements_muraux_dressing",
+    "quel_est_le_rev_tement_mural_actuel"
+  );
+  const price_M_A = await self.getPriceForField(M_A, true, 0);
+  //
+  const M_S = self.getFieldInForms(
+    "rev_tements_muraux_dressing",
+    "quel_nouveau_rev_tement_souhaitez_vous"
+  );
+  const price_M_S = await self.getPriceForField(M_S, true, 0);
+  //
   const S = self.getFieldInForms(
     "rev_tements_muraux_dressing",
     "quelle_est_la_surface_approximative_des_murs_en_m"
   ).value;
 
-  price = S * price_T_C;
+  price = S * price_T_C + S * price_M_A + S * price_M_S;
   return price;
 }
 RevetMurauxDressing();
@@ -845,12 +986,24 @@ async function RevetMurauxBureau() {
   );
   const price_T_C = await self.getPriceForField(T_C, true, 0);
   //
+  const M_A = self.getFieldInForms(
+    "rev_tements_muraux_bureau",
+    "quel_est_le_rev_tement_mural_actuel"
+  );
+  const price_M_A = await self.getPriceForField(M_A, true, 0);
+  //
+  const M_S = self.getFieldInForms(
+    "rev_tements_muraux_bureau",
+    "quel_nouveau_rev_tement_souhaitez_vous"
+  );
+  const price_M_S = await self.getPriceForField(M_S, true, 0);
+  //
   const S = self.getFieldInForms(
     "rev_tements_muraux_bureau",
     "quelle_est_la_surface_approximative_des_murs_en_m"
   ).value;
 
-  price = S * price_T_C;
+  price = S * price_T_C + S * price_M_A + S * price_M_S;
   return price;
 }
 RevetMurauxBureau();
@@ -1064,3 +1217,173 @@ async function RevetPlfbureau() {
   return price;
 }
 RevetPlfbureau();
+//
+//-------------------------------------------------------
+//
+async function PriseElectCuisine() {
+  var price = 0;
+  const T_I = self.getFieldInForms(
+    "lectricit",
+    "quelle_type_d_installation_d_sirez_vous"
+  );
+  const price_T_I = await self.getPriceForField(T_I, true, 0);
+  //
+  const price_N = await self.getPriceForField(field, true, 0);
+
+  price = price_N + price_T_I * field.value;
+  return price;
+}
+PriseElectCuisine();
+//
+//-------------------------------------------------------
+//
+async function PriseElectSDB() {
+  var price = 0;
+  const T_I = self.getFieldInForms(
+    "lectricit_salle_de_bain",
+    "quelle_type_d_installation_d_sirez_vous"
+  );
+  const price_T_I = await self.getPriceForField(T_I, true, 0);
+  //
+  const price_N = await self.getPriceForField(field, true, 0);
+
+  price = price_N + price_T_I * field.value;
+  return price;
+}
+PriseElectSDB();
+//
+//-------------------------------------------------------
+//
+async function PriseElectSalon() {
+  var price = 0;
+  const T_I = self.getFieldInForms(
+    "lectricit_sallon",
+    "quelle_type_d_installation_d_sirez_vous"
+  );
+  const price_T_I = await self.getPriceForField(T_I, true, 0);
+  //
+  const price_N = await self.getPriceForField(field, true, 0);
+
+  price = price_N + price_T_I * field.value;
+  return price;
+}
+PriseElectSalon();
+//
+//-------------------------------------------------------
+//
+async function PriseElectChambre() {
+  var price = 0;
+  const T_I = self.getFieldInForms(
+    "lectricit_chambre",
+    "quelle_type_d_installation_d_sirez_vous"
+  );
+  const price_T_I = await self.getPriceForField(T_I, true, 0);
+  //
+  const price_N = await self.getPriceForField(field, true, 0);
+
+  price = price_N + price_T_I * field.value;
+  return price;
+}
+PriseElectChambre();
+//
+//-------------------------------------------------------
+//
+async function PriseElectSM() {
+  var price = 0;
+  const T_I = self.getFieldInForms(
+    "lectricit_salle_manger",
+    "quelle_type_d_installation_d_sirez_vous"
+  );
+  const price_T_I = await self.getPriceForField(T_I, true, 0);
+  //
+  const price_N = await self.getPriceForField(field, true, 0);
+
+  price = price_N + price_T_I * field.value;
+  return price;
+}
+PriseElectSM();
+//
+//-------------------------------------------------------
+//
+async function PriseElectCouloir() {
+  var price = 0;
+  const T_I = self.getFieldInForms(
+    "lectricit_couloir",
+    "quelle_type_d_installation_d_sirez_vous"
+  );
+  const price_T_I = await self.getPriceForField(T_I, true, 0);
+  //
+  const price_N = await self.getPriceForField(field, true, 0);
+
+  price = price_N + price_T_I * field.value;
+  return price;
+}
+PriseElectCouloir();
+//
+//-------------------------------------------------------
+//
+async function PriseElectBuanderie() {
+  var price = 0;
+  const T_I = self.getFieldInForms(
+    "lectricit_buanderie",
+    "quelle_type_d_installation_d_sirez_vous"
+  );
+  const price_T_I = await self.getPriceForField(T_I, true, 0);
+  //
+  const price_N = await self.getPriceForField(field, true, 0);
+
+  price = price_N + price_T_I * field.value;
+  return price;
+}
+PriseElectBuanderie();
+//
+//-------------------------------------------------------
+//
+async function PriseElectToilette() {
+  var price = 0;
+  const T_I = self.getFieldInForms(
+    "lectricit_toilette",
+    "quelle_type_d_installation_d_sirez_vous"
+  );
+  const price_T_I = await self.getPriceForField(T_I, true, 0);
+  //
+  const price_N = await self.getPriceForField(field, true, 0);
+
+  price = price_N + price_T_I * field.value;
+  return price;
+}
+PriseElectToilette();
+//
+//-------------------------------------------------------
+//
+async function PriseElectDressing() {
+  var price = 0;
+  const T_I = self.getFieldInForms(
+    "lectricit_dressing",
+    "quelle_type_d_installation_d_sirez_vous"
+  );
+  const price_T_I = await self.getPriceForField(T_I, true, 0);
+  //
+  const price_N = await self.getPriceForField(field, true, 0);
+
+  price = price_N + price_T_I * field.value;
+  return price;
+}
+PriseElectDressing();
+//
+//-------------------------------------------------------
+//
+async function PriseElectBureau() {
+  var price = 0;
+  const T_I = self.getFieldInForms(
+    "lectricit_bureau",
+    "quelle_type_d_installation_d_sirez_vous"
+  );
+  const price_T_I = await self.getPriceForField(T_I, true, 0);
+  //
+  const price_N = await self.getPriceForField(field, true, 0);
+
+  price = price_N + price_T_I * field.value;
+  return price;
+}
+PriseElectBureau();

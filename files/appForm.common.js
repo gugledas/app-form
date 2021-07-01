@@ -56204,7 +56204,8 @@ external_commonjs_vue_commonjs2_vue_root_Vue_default.a.use(vuex_esm["a" /* defau
                     }],
                     mail: [{
                       value: state.userlogin.email.value
-                    }] //status: [{ value: true }],
+                    }] // Ce paramettre est gerer automatiquement par drupal.
+                    //status: [{ value: 1 }],
 
                   };
                   drupal_vuejs["a" /* drupalUtilities */].post("/fr/user/register?_format=json", datas).then(function (resp) {
@@ -56212,7 +56213,7 @@ external_commonjs_vue_commonjs2_vue_root_Vue_default.a.use(vuex_esm["a" /* defau
                     if (resp.data) {
                       var uid = resp.data.uid[0].value;
                       utilities["a" /* default */].saveDatas(state, getters, uid).then(function () {
-                        config["a" /* default */].modalSuccess("Votre devis aété sauvegardé et votre compte a été  crée. Un mail a été envoyé dans votre boite email afin de valider votre compte. ", {
+                        config["a" /* default */].modalSuccess("Votre devis a été sauvegardé et votre compte a été  crée. Un mail a été envoyé dans votre boite email afin de valider votre compte.", {
                           title: "Devis sauvegardé"
                         });
                         setTimeout(function () {

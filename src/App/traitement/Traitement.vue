@@ -28,6 +28,7 @@ import { mapState, mapGetters } from "vuex";
 import ListTable from "./ListTable.vue";
 //import pages from "./pages.vue";
 //import pages from "./pages2.vue";
+
 export default {
   components: { ListTable },
   props: {
@@ -60,17 +61,29 @@ export default {
           key: "id",
         },
         {
-          label: "Status du formulaire",
+          label: "#Action",
+          key: "action",
+          stickyColumn: true,
+          thStyle: { minWidth: "170px" },
+          tdClass: ["bg-light"],
+        },
+        {
+          label: "Status",
           key: "status",
+          thStyle: { minWidth: "140px" },
         },
         {
           label: "Price",
           key: "price",
+          thStyle: { minWidth: "120px" },
+          formatter: (value) => {
+            return value + " €";
+          },
         },
         {
-          label: "#Action",
-          key: "action",
-          stickyColumn: true,
+          label: "Utilisateur",
+          key: "uid",
+          thStyle: { minWidth: "220px" },
         },
       ];
       for (const i in this.form.forms) {
@@ -80,7 +93,11 @@ export default {
           const field = form.fields[f];
           // console.log(field);
           if (field.display_field) {
-            fieldsDisplay.push({ label: field.label, key: field.name });
+            fieldsDisplay.push({
+              label: field.label,
+              key: field.name,
+              thStyle: { minWidth: "220px" },
+            });
           }
         }
       }

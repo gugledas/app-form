@@ -481,7 +481,8 @@ export default new Vuex.Store({
           const datas = {
             name: [{ value: state.userlogin.name.value }],
             mail: [{ value: state.userlogin.email.value }],
-            //status: [{ value: true }],
+            // Ce paramettre est gerer automatiquement par drupal.
+            //status: [{ value: 1 }],
           };
           drupalUtilities
             .post("/fr/user/register?_format=json", datas)
@@ -491,7 +492,7 @@ export default new Vuex.Store({
                 var uid = resp.data.uid[0].value;
                 utilities.saveDatas(state, getters, uid).then(() => {
                   config.modalSuccess(
-                    "Votre devis aété sauvegardé et votre compte a été  crée. Un mail a été envoyé dans votre boite email afin de valider votre compte. ",
+                    "Votre devis a été sauvegardé et votre compte a été  crée. Un mail a été envoyé dans votre boite email afin de valider votre compte.",
                     { title: "Devis sauvegardé" }
                   );
                   setTimeout(function () {

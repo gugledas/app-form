@@ -47,11 +47,20 @@ export default {
   computed: {
     ...mapState(["price", "mode"]),
     validationField() {
+      this.setStatus(true);
+      this.setPrice();
       return true;
     },
   },
   methods: {
-    //
+    setStatus(status) {
+      this.$set(this.field, "status", status);
+    },
+    setPrice() {
+      this.field.prix = {
+        cout: this.price,
+      };
+    },
   },
 };
 </script>

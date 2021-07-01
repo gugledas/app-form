@@ -7,9 +7,91 @@
       :hover="true"
       head-variant="dark"
       responsive
-      sticky-header="350px"
       class="traitement"
+      :sticky-header="true"
+      :trigger_perfom="trigger_perfom"
     >
+      <template v-slot:cell()="scope">
+        <div>
+          <div
+            v-if="
+              scope.item[scope.field.key] &&
+              scope.item[scope.field.key].type === undefined
+            "
+          >
+            <div v-if="scope.field.key === 'status'">
+              <h5 class="status">
+                {{ scope.item.status == 1 ? "Traité" : "non traité" }}
+              </h5>
+            </div>
+            <div v-else-if="scope.field.key === 'uid'">
+              <div v-if="scope.item.uid !== '0'">
+                <pre>
+               Item : {{ scope.item }}
+              </pre
+                >
+                <!--
+                <ul v-if="scope.item.user">
+                  <pre>
+                    {{ scope.item }}
+                  </pre>
+                  <li
+                    class="m-0 p-0 pl-4"
+                    v-for="(val, i) in getInfoUser(scope.item.user)"
+                    :key="i"
+                  >
+                    {{ val }}
+                  </li>
+                </ul>
+              --></div>
+              <div v-else>Anonyme</div>
+            </div>
+            <div v-else>
+              {{ scope.value }}
+            </div>
+          </div>
+          <div v-else-if="!scope.item[scope.field.key]">
+            <div v-if="scope.field.key === 'action'">
+              <b-button-group class="">
+                <b-button
+                  variant="outline-primary"
+                  @click="getValideStepe(scope.index)"
+                >
+                  voir
+                </b-button>
+                <b-button
+                  variant="outline-success"
+                  @click="showResult(scope.item)"
+                >
+                  Editer
+                </b-button>
+
+                <b-button
+                  variant="outline-warning"
+                  @click="formTraiter(scope.item)"
+                >
+                  Traiter
+                </b-button>
+              </b-button-group>
+            </div>
+          </div>
+          <div v-else>
+            <component
+              v-bind:is="getTemplatesFiles(scope.item[scope.field.key].type)"
+              :field="scope.item[scope.field.key]"
+              class="content-field"
+            ></component>
+          </div>
+        </div>
+      </template>
+      <!--
+      <component
+        v-if=""
+
+        :is="getTemplatesFiles()"
+        :field="field"
+        class="content-field"
+      ></component>
       <template #cell(status)="data">
         <div>
           <h5 class="status">
@@ -23,7 +105,7 @@
           <b-button
             size="sm"
             variant="outline-primary"
-            @click="voirForm(data.index)"
+            @click="getValideStepe(data.index)"
           >
             voir
           </b-button>
@@ -44,6 +126,7 @@
           </b-button>
         </b-button-group>
       </template>
+    -->
     </b-table>
     <b-modal
       id="modal--closing"
@@ -55,12 +138,12 @@
       class="super-hover"
     >
       <b-row align-h="center" v-if="traitementFormItems.length">
-        <b-col sm="12" v-for="(steps, i) in validSteps" :key="i"
-          ><b-card no-body class="mb-1" v-if="steps !== undefined">
+        <b-col sm="12" class="mb-4" v-for="(steps, i) in validSteps2" :key="i">
+          <b-card no-body class="mb-1" v-if="steps !== undefined">
             <b-card-header header-tag="header" class="p-1" role="tab">
-              <b-button block variant="dark" disabled>{{
-                steps.info.title
-              }}</b-button>
+              <b-button block variant="dark" disabled>
+                {{ steps.info.title }}
+              </b-button>
             </b-card-header>
             <b-collapse
               id="accordion-option"
@@ -72,16 +155,25 @@
                 <b-row class="d-flex flex-wrap">
                   <b-col
                     cols="12"
-                    class="m-1"
-                    v-for="(item, index) in steps.fields"
+                    v-for="(field, index) in steps.fields"
                     :key="index"
                   >
-                    <type-displays :fields="item"></type-displays>
+                    <type-displays
+                      :field="field"
+                      v-if="field.status === undefined || field.status"
+                      class="mb-2"
+                    ></type-displays>
+                    <div v-else>
+                      <pre class="d-none">
+                        {{ field.name }}
+                      </pre>
+                    </div>
                   </b-col>
                 </b-row>
               </b-card-body>
-            </b-collapse> </b-card
-        ></b-col>
+            </b-collapse>
+          </b-card>
+        </b-col>
       </b-row>
     </b-modal>
   </div>
@@ -91,6 +183,8 @@
 import { mapState, mapGetters } from "vuex";
 import Utilities from "../../store/utilities";
 import config from "../config/config";
+import traitementDisplay from "./affichage/traitement-display.js";
+import { users } from "drupal-vuejs";
 
 export default {
   name: "Listesfomes",
@@ -115,6 +209,8 @@ export default {
     return {
       showModal: false,
       currentIndex: null,
+      validSteps2: [],
+      traitementFormItemsDisplay: [],
     };
   },
   mounted() {
@@ -124,23 +220,15 @@ export default {
   computed: {
     ...mapState(["items"]),
     ...mapGetters(["traitementFormItems"]),
-    validSteps() {
-      var all = [];
-      var forms;
-      if (this.traitementFormItems.length && this.currentIndex !== null) {
-        forms = this.traitementFormItems[this.currentIndex].datas;
-        all.push(forms[0]);
-        for (let i = 0; i < forms.length; i++) {
-          const kk = Utilities.selectNextState(forms, i);
-          if (kk) {
-            i = kk;
-            all.push(forms[kk]);
-          }
-        }
+    trigger_perfom() {
+      if (this.traitementFormItems.length) {
+        this.getTraitementFormItems();
+        return true;
       }
-      return all;
+      return "";
     },
-    traitementFormItemsDisplay() {
+    /**/
+    traitementFormItemsDisplayOld() {
       const lists = [];
       for (const i in this.traitementFormItems) {
         const rowData = this.traitementFormItems[i];
@@ -149,14 +237,17 @@ export default {
           status: rowData.status,
           created: rowData.created,
           price: rowData.price,
+          uid: rowData.uid,
+          user: {}, //pour gerer les informations provenant de la connexions.
         };
+        //await this.getUser(rowData.uid, row.user);
         for (const s in rowData.datas) {
           const stape = rowData.datas[s];
           for (const f in stape.fields) {
             const field = stape.fields[f];
             //console.log("field.name : ", field.name);
             if (this.liste_fields_check.includes(field.name)) {
-              row[field.name] = field.value;
+              row[field.name] = field;
             }
           }
         }
@@ -166,10 +257,60 @@ export default {
     },
   },
   methods: {
-    voirForm(id) {
-      console.log("id", id);
-      this.currentIndex = id;
+    async getTraitementFormItems() {
+      console.log("traitementFormItems : ", this.traitementFormItemsDisplay);
+      this.traitementFormItemsDisplay = [];
+      for (const i in this.traitementFormItems) {
+        const rowData = this.traitementFormItems[i];
+        const row = {
+          id: rowData.id,
+          status: rowData.status,
+          created: rowData.created,
+          price: rowData.price,
+          uid: rowData.uid,
+          user: {}, //pour gerer les informations provenant de la connexions.
+        };
+        await this.getUser(rowData.uid, row);
+        for (const s in rowData.datas) {
+          const stape = rowData.datas[s];
+          for (const f in stape.fields) {
+            const field = stape.fields[f];
+            //console.log("field.name : ", field.name);
+            if (this.liste_fields_check.includes(field.name)) {
+              row[field.name] = field;
+            }
+          }
+        }
+        this.traitementFormItemsDisplay.push(row);
+      }
+    },
+    getTemplatesFiles(type) {
+      return traitementDisplay.getTemplatesFiles(type);
+    },
+    getValideStepe(id) {
+      var self = this;
       this.showModal = !this.showModal;
+      this.validSteps2 = [];
+      const forms = this.traitementFormItems[id].datas;
+      this.validSteps2.push(forms[0]);
+      function execution(i) {
+        const loop = function (i) {
+          return new Promise((resolv) => {
+            Utilities.selectNextState(forms, i).then((rep) => {
+              console.log("getValideStepe : ", rep);
+              resolv(rep);
+            });
+          });
+        };
+        loop(i).then((kk) => {
+          if (kk && kk < 200) {
+            self.validSteps2.push(forms[kk]);
+            console.log("kk : ", kk);
+            execution(kk);
+          }
+        });
+      }
+      execution(0);
     },
     showResult(id) {
       console.log("id", id);
@@ -205,6 +346,20 @@ export default {
         });
         /**/
     },
+    getUser(uid, item = {}) {
+      users.getUser(uid).then((rep) => {
+        item.user = rep;
+      });
+    },
+    getInfoUser(item) {
+      item.user = [];
+      var keys = ["mail", "name"];
+      keys.forEach((key) => {
+        if (item[key]) {
+          item.user.push({ text: item[key][0].value });
+        }
+      });
+    },
   },
 };
 </script>
@@ -221,6 +376,10 @@ export default {
  - variable en PascalCase
 -->
 <style lang="scss">
+.traitement.table-responsive {
+  max-height: 73vh;
+  min-height: 350px;
+}
 .traitement {
   .status {
     font-size: 0.7em;

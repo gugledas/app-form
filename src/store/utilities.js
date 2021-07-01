@@ -7,54 +7,101 @@ export default {
    * @param forms array etape du formualire;
    * @param i indice de letape encours.
    */
-  selectNextState(forms, i) {
+  /*
+  selectNextStateOld(forms, i) {
     var j = i + 1;
     this.forms = forms;
-    for (const k in this.forms) {
-      let kk = parseInt(k);
-      if (kk >= j) {
-        j = null;
-        const form = this.forms[k];
-        if (this.validateState(form.states)) {
-          //console.log("etape valide : ", k);
-          return kk;
-        } else {
-          //console.log("etape non valide : ", k);
+    return new Promise(resolv => {
+      for (const k in this.forms) {
+        let kk = parseInt(k);
+        if (kk >= j) {
+          const form = this.forms[k];
+
+          this.validateState(form.states).then(rep => {
+            console.log("selectNextState : ", kk, " response : ", rep);
+            if (rep) resolv(kk);
+          });
+        }
+        var ii = kk + 1;
+        if (this.forms.length === ii) {
+          console.log("selectNextState END : ", kk);
+          resolv(null);
         }
       }
-    }
-    return j;
+      if (!forms) {
+        resolv(null);
+      }
+    });
+  },
+  /**/
+  /**
+   * Selectionne l'indice de la prochaine etape valide.
+   * @param forms array etape du formualire;
+   * @param i indice de letape encours.
+   */
+  selectNextState(forms, i) {
+    var k = i + 1;
+    this.forms = forms;
+    var self = this;
+    return new Promise((resolvParent) => {
+      const loop = function (j) {
+        return new Promise((resolv) => {
+          if (!forms[j]) {
+            resolv(null);
+          }
+          self.validateState(forms[j].states).then((rep) => {
+            //console.log("selectNextState : ", j, " response : ", rep);
+            if (rep) {
+              resolv(j);
+            } else {
+              resolv(loop(j + 1));
+            }
+          });
+        });
+      };
+      loop(k).then((r) => {
+        resolvParent(r);
+      });
+    });
   },
 
   validateState(states) {
-    if (!states || states.length === 0) return true;
-    for (const k in this.forms) {
-      const form = this.forms[k];
-      for (const s in states) {
-        const state = states[s];
-        if (state.action === "visible") {
-          // Identification de l'etape;
-          if (form.info.name === state.state_name) {
-            // Recherche du champs.
-            for (const f in form.fields) {
-              const field = form.fields[f];
-              // Identification du champs.
-              if (field.name === state.name) {
-                // action à verifier
-                if (state.operator === "egal") {
-                  //console.log("state :: ", state.value, "\n", field.value);
-                  if (field.value) {
-                    return field.value.includes(state.value) ? true : false;
-                  } else {
-                    return false;
+    return new Promise((resolv) => {
+      if (!states || states.length === 0) resolv(true);
+      for (const k in this.forms) {
+        const form = this.forms[k];
+        for (const s in states) {
+          const state = states[s];
+          if (state.action === "visible") {
+            // Identification de l'etape;
+            if (form.info.name === state.state_name) {
+              // Recherche du champs.
+              for (const f in form.fields) {
+                const field = form.fields[f];
+                // Identification du champs.
+                if (field.name === state.name) {
+                  // action à verifier
+                  if (state.operator === "egal") {
+                    //console.log("state :: ", state.value, "\n", field.value);
+                    if (field.value) {
+                      resolv(field.value.includes(state.value) ? true : false);
+                    } else {
+                      resolv(false);
+                    }
                   }
                 }
               }
             }
+          } else {
+            resolv(true);
           }
         }
+        var ii = parseInt(k) + 1;
+        if (this.forms.length === ii) {
+          resolv(true);
+        }
       }
-    }
+    });
   },
   getFieldInForms(state_name, field_name) {
     for (const i in this.forms) {

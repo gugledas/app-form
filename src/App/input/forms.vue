@@ -38,13 +38,13 @@
       <b-col cols="12" v-if="!StatusStepsIndexs" class="form-nav-bouton">
         <b-row>
           <b-col v-if="uid">
-            <button class="next-bouton" @click="SaveByUser">
+            <button class="next-bouton" @click="SaveByUser(1)">
               <b-icon icon="server"></b-icon>
               Enregistrer
             </button>
           </b-col>
-          <b-col v-if="!uid">
-            <button class="next-bouton" @click="SaveByUser">
+          <b-col>
+            <button class="next-bouton" @click="SaveByUser(0)">
               <b-icon icon="server"></b-icon>
               Me rappeller
             </button>
@@ -109,9 +109,8 @@ export default {
     back() {
       this.$store.dispatch("stepsBack");
     },
-    SaveByUser() {
-      console.log("save SaveByUser");
-      this.$store.dispatch("saveDatasUser");
+    SaveByUser(status) {
+      this.$store.dispatch("saveDatasUser", status);
     },
   },
 };

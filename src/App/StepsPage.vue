@@ -260,9 +260,9 @@ export default {
     },
     exportJson() {
       var nameFile = window
-        .prompt("veuillez renseigner le nom du fichier", "test")
+        .prompt("Veuillez renseigner le nom du fichier", "test")
         .toLowerCase();
-      //console.log("name", nameFile + ".json");
+      // Console.log("name", nameFile + ".json");
       const data = JSON.stringify(this.form);
       const blob = new Blob([data], { type: "text/plain" });
       const e = document.createEvent("MouseEvents"),
@@ -320,6 +320,8 @@ export default {
           field.value = null;
         } else if (TypeArray.includes(field.type)) {
           field.value = [];
+        } else if (field.type === "userlogin") {
+          field.value = null;
         }
       }
     },

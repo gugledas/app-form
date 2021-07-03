@@ -68,7 +68,7 @@ export default new Vuex.Store({
      */
     userlogin: {
       name: {
-        value: "",
+        value: "dfr",
         ref: "",
       },
       prenom: {
@@ -83,11 +83,20 @@ export default new Vuex.Store({
         value: "",
         ref: "",
       },
+      password: {
+        value: "",
+        ref: "",
+      },
+      tabIndex: "register",
     },
     /**
      * Contient les informations sur l'utilisateur s'il est connecté.
      */
     user: {},
+    /**
+     * Contient.
+     */
+    CachesUser: {},
   },
   getters: {
     /**
@@ -112,7 +121,6 @@ export default new Vuex.Store({
       }
       return items;
     },
-
     /**
      * Contient le formulaire selectionné par le client.
      */
@@ -296,6 +304,9 @@ export default new Vuex.Store({
     SET_USER(state, user) {
       state.user = user;
     },
+    SET_CACHEUSER(state, user) {
+      state.CachesUser["uid" + user.uid] = user.user;
+    },
   },
   actions: {
     addSetpsDatas({ commit }, payload) {
@@ -312,7 +323,7 @@ export default new Vuex.Store({
      * apres, la MAJ de l'etape, les calculs de couts doivent patiente jusqu'à la MAJ de formDatasValidate et executé la suite du code.
      */
     async stepsIndex({ commit, getters }, i) {
-      //on determine le cout de l'etape:
+      // on determine le cout de l'etape:
       const price = await utilities.getPriceStape(
         getters.formDatas,
         getters.form.forms
@@ -320,7 +331,7 @@ export default new Vuex.Store({
       if (price > 0) {
         commit("AJOUT_PRIX_STEPS", price);
       }
-      //on determine le cout d'aide de l'etape.
+      // On determine le cout d'aide de l'etape.
       const priceAide = await utilities.getPriceStape(
         getters.formDatas,
         getters.form.forms,
@@ -334,7 +345,7 @@ export default new Vuex.Store({
       if (new_index) {
         await commit("STEPS_INDEX", new_index);
         commit("ADD_STEPS_INDEXS", new_index);
-        // on verifie si on est sur la derniere etape,
+        // On verifie si on est sur la derniere etape.
         if (getters.form.forms.length === new_index + 1) {
           commit("SET_STATUS_STEPS_INDEX", false);
         }
@@ -343,7 +354,7 @@ export default new Vuex.Store({
       }
     },
 
-    // apres, la MAJ de l'etape, les calculs de couts doivent patiente jusqu'à la MAJ de formDatasValidate et executé la suite du code.
+    // Apres, la MAJ de l'etape, les calculs de couts doivent patiente jusqu'à la MAJ de formDatasValidate et executé la suite du code.
     async stepsBack({ commit, state, getters }) {
       await commit("REMOVE_STEPS_INDEXS");
       let new_index = state.stepsIndexs[state.stepsIndexs.length - 1];
@@ -414,7 +425,6 @@ export default new Vuex.Store({
           console.log("get error ", error);
         });
     },
-
     /**
      * Recupere les formulaires soumis en BD.
      */
@@ -469,32 +479,48 @@ export default new Vuex.Store({
     /**
      * Enregistre les données et cree le compte utilisateur.
      */
-    async saveDatasUser({ commit, state, getters }) {
+    async saveDatasUser({ commit, state, getters }, status = 0) {
       //on valide les données utilisateur,
-      console.log(commit, state);
+      console.log("saveDatasUser : ", commit, state);
       if (!getters.uid) {
-        const statusName = await state.userlogin.name.ref.validate();
-        const statusTelephone = await state.userlogin.telephone.ref.validate();
-        const statusEmail = await state.userlogin.email.ref.validate();
-        //console.log("email validation : ", state.userlogin.email.ref);
-        if (statusName.valid && statusTelephone.valid && statusEmail.valid) {
-          const datas = {
-            name: [{ value: state.userlogin.name.value }],
-            mail: [{ value: state.userlogin.email.value }],
-            // Ce paramettre est gerer automatiquement par drupal.
-            //status: [{ value: 1 }],
-          };
+        var statusName = {},
+          statusEmail = {},
+          statusPassword = {};
+        statusName = await state.userlogin.name.ref.validate();
+        if (state.userlogin.tabIndex === "register") {
+          //var statusTelephone = await state.userlogin.telephone.ref.validate();
+          statusEmail = await state.userlogin.email.ref.validate();
+        } else {
+          statusPassword = await state.userlogin.password.ref.validate();
+        }
+        if (statusName.valid && (statusEmail.valid || statusPassword.valid)) {
+          var datas = [],
+            url = null,
+            msg = "";
+          if (state.userlogin.tabIndex === "register") {
+            datas = {
+              name: [{ value: state.userlogin.name.value }],
+              mail: [{ value: state.userlogin.email.value }],
+            };
+            url = "/fr/user/register?_format=json";
+            msg =
+              "Votre devis a été sauvegardé et votre compte a été  crée. Un mail a été envoyé dans votre boite email afin de valider votre compte.";
+          } else {
+            datas = {
+              name: [{ value: state.userlogin.name.value }],
+              password: [{ value: state.userlogin.password.value }],
+            };
+            url = "/appformmanager/user";
+            msg = "Votre devis a été sauvegardé";
+          }
           drupalUtilities
-            .post("/fr/user/register?_format=json", datas)
+            .post(url, datas)
             .then((resp) => {
-              //console.log("drupalUtilities : ", resp);
+              console.log("drupalUtilities : ", resp);
               if (resp.data) {
                 var uid = resp.data.uid[0].value;
-                utilities.saveDatas(state, getters, uid).then(() => {
-                  config.modalSuccess(
-                    "Votre devis a été sauvegardé et votre compte a été  crée. Un mail a été envoyé dans votre boite email afin de valider votre compte.",
-                    { title: "Devis sauvegardé" }
-                  );
+                utilities.saveDatas(state, getters, uid, status).then(() => {
+                  config.modalSuccess(msg, { title: "Devis sauvegardé" });
                   setTimeout(function () {
                     window.location.assign("/node/52");
                   }, 3000);
@@ -502,7 +528,7 @@ export default new Vuex.Store({
               }
             })
             .catch((errors) => {
-              console.log("error GET drupalUtilities : ", errors.error.data);
+              console.log("Error GET drupalUtilities : ", errors.error.data);
               if (
                 errors.error &&
                 errors.error.data &&
@@ -524,7 +550,7 @@ export default new Vuex.Store({
             });
         }
       } else
-        utilities.saveDatas(state, getters, getters.uid).then(() => {
+        utilities.saveDatas(state, getters, getters.uid, status).then(() => {
           config.modalSuccess("Votre devis a été sauvegardé, ", {
             title: "Devis",
           });
@@ -535,7 +561,7 @@ export default new Vuex.Store({
         uid = getters.uid;
       }
       utilities.saveDatas(state, getters, uid).then((response) => {
-        console.log("données stocké du store", response);
+        console.log("Données stocké du store", response);
         if (state.idSoumission === null) {
           commit("SET_ID_SOUMISSION", response.data[0].result);
         }
@@ -545,6 +571,9 @@ export default new Vuex.Store({
       users.getCurrentUser().then((resp) => {
         commit("SET_USER", resp);
       });
+    },
+    setCachesUser({ commit }, user) {
+      commit("SET_CACHEUSER", user);
     },
   },
   modules: {},

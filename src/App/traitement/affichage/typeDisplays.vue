@@ -75,7 +75,7 @@ export default {
   },
   methods: {
     getTemplatesFiles() {
-      traitementDisplay.getTemplatesFiles(this.field.type);
+      return traitementDisplay.getTemplatesFiles(this.field.type);
     },
   },
 };

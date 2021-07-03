@@ -89,12 +89,12 @@ module.exports = function from(arrayLike /* , mapfn = undefined, thisArg = undef
 // ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"4acd20fe-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/traitement/affichage/typeDisplays.vue?vue&type=template&id=f4290bc4&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('div',{staticClass:"simple-champ"},[_c('div',{staticClass:"label-title"},[_vm._v(_vm._s(_vm.fields.label))]),(_vm.val.length)?_c('div',{staticClass:"label-title flex-wrap"},_vm._l((_vm.val),function(item,i){return _c('div',{key:i,staticClass:"label-title col-12"},[(item.img)?_c('img',{staticClass:"mr-2",attrs:{"srcset":_vm.baseURl + item.img,"alt":item.test,"width":"60px","height":"45px"}}):_vm._e(),(_vm.fields.type != 'checkboximg')?_c('strong',[_vm._v(_vm._s(item))]):_vm._e(),(_vm.fields.type == 'checkboximg')?_c('strong',[_vm._v(_vm._s(item.text))]):_vm._e()])}),0):_vm._e()])])}
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"4acd20fe-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/traitement/affichage/typeDisplays.vue?vue&type=template&id=b1b9de72&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"simple-champ",class:_vm.field.type},[_c('div',{staticClass:"label-title"},[_vm._v(_vm._s(_vm.field.label))]),(_vm.field.value)?_c('div',{staticClass:"label-title flex-wrap"},[_c(_vm.getTemplatesFiles(),{tag:"component",staticClass:"content-field",attrs:{"field":_vm.field}})],1):_vm._e()])}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/App/traitement/affichage/typeDisplays.vue?vue&type=template&id=f4290bc4&
+// CONCATENATED MODULE: ./src/App/traitement/affichage/typeDisplays.vue?vue&type=template&id=b1b9de72&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.symbol.js
 var es_symbol = __webpack_require__("a4d3");
@@ -197,6 +197,9 @@ var es_string_includes = __webpack_require__("2532");
 // EXTERNAL MODULE: ./src/App/config/config.js
 var config = __webpack_require__("f158");
 
+// EXTERNAL MODULE: ./src/App/traitement/affichage/traitement-display.js + 30 modules
+var traitement_display = __webpack_require__("5784");
+
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/traitement/affichage/typeDisplays.vue?vue&type=script&lang=js&
 
 
@@ -215,21 +218,11 @@ var config = __webpack_require__("f158");
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
 
 /* harmony default export */ var typeDisplaysvue_type_script_lang_js_ = ({
   props: {
-    fields: {
+    field: {
       type: Object,
       required: true
     }
@@ -241,7 +234,7 @@ var config = __webpack_require__("f158");
       baseURl: config["a" /* default */].baseURl
     };
   },
-  watch: {// fields: {
+  watch: {// field: {
     //   handle() {
     //     this.formatValue();
     //     console.log("all");
@@ -249,8 +242,8 @@ var config = __webpack_require__("f158");
     //   deep: true,
     // },
   },
-  mounted: function mounted() {// var option = this.fields.options;
-    // var val = this.fields.value;
+  mounted: function mounted() {// var option = this.field.options;
+    // var val = this.field.value;
     // if (val != null && val != undefined) {
     //   if (option.length) {
     //     this.formatValue();
@@ -259,8 +252,8 @@ var config = __webpack_require__("f158");
   },
   computed: {
     val: function val() {
-      var option = this.fields.options;
-      var val = this.fields.value;
+      var option = this.field.options;
+      var val = this.field.value;
 
       var typeValue = Object(esm_typeof["a" /* default */])(val);
 
@@ -276,7 +269,7 @@ var config = __webpack_require__("f158");
       }
 
       if (option.length && typeValue == "string" && val.length) {
-        if (this.fields.type === "checkboximg") {
+        if (this.field.type === "checkboximg") {
           var _iterator = _createForOfIteratorHelper(option),
               _step;
 
@@ -293,11 +286,15 @@ var config = __webpack_require__("f158");
         } else valeur.push(val);
       }
 
-      if (this.fields.options.length < 1 && val !== null) valeur.push(val);
+      if (this.field.options.length < 1 && val !== null) valeur.push(val);
       return valeur;
     }
   },
-  methods: {}
+  methods: {
+    getTemplatesFiles: function getTemplatesFiles() {
+      return traitement_display["a" /* default */].getTemplatesFiles(this.field.type);
+    }
+  }
 });
 // CONCATENATED MODULE: ./src/App/traitement/affichage/typeDisplays.vue?vue&type=script&lang=js&
  /* harmony default export */ var affichage_typeDisplaysvue_type_script_lang_js_ = (typeDisplaysvue_type_script_lang_js_); 

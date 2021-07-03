@@ -26,24 +26,12 @@
             </div>
             <div v-else-if="scope.field.key === 'uid'">
               <div v-if="scope.item.uid !== '0'">
-                <pre>
-               Item : {{ scope.item }}
-              </pre
-                >
-                <!--
-                <ul v-if="scope.item.user">
-                  <pre>
-                    {{ scope.item }}
-                  </pre>
-                  <li
-                    class="m-0 p-0 pl-4"
-                    v-for="(val, i) in getInfoUser(scope.item.user)"
-                    :key="i"
-                  >
-                    {{ val }}
+                <ul v-if="scope.item.user" class="m-0 p-0 pl-2">
+                  <li v-for="(val, i) in getInfoUser(scope.item.user)" :key="i">
+                    {{ val.text }}
                   </li>
                 </ul>
-              --></div>
+              </div>
               <div v-else>Anonyme</div>
             </div>
             <div v-else>
@@ -84,50 +72,8 @@
           </div>
         </div>
       </template>
-      <!--
-      <component
-        v-if=""
-
-        :is="getTemplatesFiles()"
-        :field="field"
-        class="content-field"
-      ></component>
-      <template #cell(status)="data">
-        <div>
-          <h5 class="status">
-            {{ data.item.status == 1 ? "Traité" : "non traité" }}
-          </h5>
-        </div>
-      </template>
-
-      <template #cell(action)="data">
-        <b-button-group class="">
-          <b-button
-            size="sm"
-            variant="outline-primary"
-            @click="getValideStepe(data.index)"
-          >
-            voir
-          </b-button>
-          <b-button
-            size="sm"
-            variant="outline-success"
-            @click="showResult(data.item)"
-          >
-            Editer
-          </b-button>
-
-          <b-button
-            size="sm"
-            variant="outline-warning"
-            @click="formTraiter(data.item)"
-          >
-            Traiter
-          </b-button>
-        </b-button-group>
-      </template>
-    -->
     </b-table>
+    <!-- -->
     <b-modal
       id="modal--closing"
       v-model="showModal"
@@ -218,7 +164,7 @@ export default {
   },
   watch: {},
   computed: {
-    ...mapState(["items"]),
+    ...mapState(["items", "CachesUser"]),
     ...mapGetters(["traitementFormItems"]),
     trigger_perfom() {
       if (this.traitementFormItems.length) {
@@ -227,37 +173,9 @@ export default {
       }
       return "";
     },
-    /**/
-    traitementFormItemsDisplayOld() {
-      const lists = [];
-      for (const i in this.traitementFormItems) {
-        const rowData = this.traitementFormItems[i];
-        const row = {
-          id: rowData.id,
-          status: rowData.status,
-          created: rowData.created,
-          price: rowData.price,
-          uid: rowData.uid,
-          user: {}, //pour gerer les informations provenant de la connexions.
-        };
-        //await this.getUser(rowData.uid, row.user);
-        for (const s in rowData.datas) {
-          const stape = rowData.datas[s];
-          for (const f in stape.fields) {
-            const field = stape.fields[f];
-            //console.log("field.name : ", field.name);
-            if (this.liste_fields_check.includes(field.name)) {
-              row[field.name] = field;
-            }
-          }
-        }
-        lists.push(row);
-      }
-      return lists;
-    },
   },
   methods: {
-    async getTraitementFormItems() {
+    getTraitementFormItems() {
       console.log("traitementFormItems : ", this.traitementFormItemsDisplay);
       this.traitementFormItemsDisplay = [];
       for (const i in this.traitementFormItems) {
@@ -270,7 +188,7 @@ export default {
           uid: rowData.uid,
           user: {}, //pour gerer les informations provenant de la connexions.
         };
-        await this.getUser(rowData.uid, row);
+        this.getUser(rowData.uid, row);
         for (const s in rowData.datas) {
           const stape = rowData.datas[s];
           for (const f in stape.fields) {
@@ -305,7 +223,7 @@ export default {
         loop(i).then((kk) => {
           if (kk && kk < 200) {
             self.validSteps2.push(forms[kk]);
-            console.log("kk : ", kk);
+            // Console.log("kk : ", kk);
             execution(kk);
           }
         });
@@ -334,45 +252,51 @@ export default {
         })
         .then((value) => {
           if (value) {
-            console.log("refus : ", id);
+            console.log("Refus : ", id);
             config.deleteFormTraitement(id.id, status).then(() => {
               window.location.reload();
             });
           }
         });
-      /*
-        .catch((err) => {
-          console.log("refus : ", err);
-        });
-        /**/
+      /**
+       *  .catch((err) => {
+       *    console.log("refus : ", err);
+       *  });
+       */
     },
     getUser(uid, item = {}) {
-      users.getUser(uid).then((rep) => {
-        item.user = rep;
-      });
+      if (this.CachesUser["uid" + uid]) {
+        item.user = this.CachesUser["uid" + uid];
+      } else {
+        users.getUser(uid).then((rep) => {
+          item.user = rep;
+          this.$store.dispatch("setCachesUser", { uid: uid, user: rep });
+        });
+      }
     },
     getInfoUser(item) {
-      item.user = [];
+      const user = [];
       var keys = ["mail", "name"];
       keys.forEach((key) => {
         if (item[key]) {
-          item.user.push({ text: item[key][0].value });
+          user.push({ text: item[key][0].value });
         }
       });
+      return user;
     },
   },
 };
 </script>
 
 <!--
- //nom du fichier en pascal.
- //<template>
+  // Nom du fichier en pascal.
+  // <template>
  - le nom des attributs en kebab-case;
  - la valeur des attributs et des variables en camelCase;
  - function en PascalCase
- //props, data
+  // props, data
  - variable en camelCase
- //methods
+  // methods
  - variable en PascalCase
 -->
 <style lang="scss">

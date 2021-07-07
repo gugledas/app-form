@@ -113,4 +113,21 @@ export default {
   modalSuccess(title, conf) {
     return AjaxToastBootStrap.modalSuccess(title, conf);
   },
+  getMysqlDateToFrench(data) {
+    if (data && data != "") {
+      var _date = new Date(data);
+      var french_date =
+        _date.getDate().toString().padStart(2, "0") +
+        "/" +
+        (_date.getMonth() + 1).toString().padStart(2, "0") +
+        "/" +
+        _date.getFullYear() +
+        " à " +
+        _date.getHours().toString().padStart(2, "0") +
+        ":" +
+        _date.getMinutes().toString().padStart(2, "0");
+      return french_date;
+    }
+    return "";
+  },
 };

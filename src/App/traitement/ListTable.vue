@@ -45,11 +45,13 @@
                   variant="outline-primary"
                   @click="getValideStepe(scope.index)"
                 >
-                  voir
+                  voir mon devis
                 </b-button>
+
                 <b-button
                   variant="outline-success"
                   @click="showResult(scope.item)"
+                  v-if="$store.state.mode"
                 >
                   Editer
                 </b-button>
@@ -57,6 +59,7 @@
                 <b-button
                   variant="outline-warning"
                   @click="formTraiter(scope.item)"
+                  v-if="$store.state.mode"
                 >
                   Traiter
                 </b-button>
@@ -82,6 +85,8 @@
       :title="'Résultat du formulaire'"
       scrollable
       class="super-hover"
+      cancelTitle="Quitter"
+      okTitle="Me rappeler"
     >
       <b-row align-h="center" v-if="traitementFormItems.length">
         <b-col sm="12" class="mb-4" v-for="(steps, i) in validSteps2" :key="i">

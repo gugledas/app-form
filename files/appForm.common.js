@@ -57885,7 +57885,7 @@ external_commonjs_vue_commonjs2_vue_root_Vue_default.a.use(vuex_esm["a" /* defau
                 console.log("saveDatasUser : ", commit, state);
 
                 if (getters.uid) {
-                  _context3.next = 20;
+                  _context3.next = 21;
                   break;
                 }
 
@@ -57906,17 +57906,18 @@ external_commonjs_vue_commonjs2_vue_root_Vue_default.a.use(vuex_esm["a" /* defau
 
               case 11:
                 statusEmail = _context3.sent;
-                _context3.next = 17;
+                _context3.next = 18;
                 break;
 
               case 14:
-                _context3.next = 16;
+                console.log("state.userlogin.password.ref : ", state.userlogin.password.ref);
+                _context3.next = 17;
                 return state.userlogin.password.ref.validate();
 
-              case 16:
+              case 17:
                 statusPassword = _context3.sent;
 
-              case 17:
+              case 18:
                 if (statusName.valid && (statusEmail.valid || statusPassword.valid)) {
                   datas = [], url = null, msg = "";
 
@@ -57977,17 +57978,17 @@ external_commonjs_vue_commonjs2_vue_root_Vue_default.a.use(vuex_esm["a" /* defau
                   });
                 }
 
-                _context3.next = 21;
+                _context3.next = 22;
                 break;
 
-              case 20:
+              case 21:
                 utilities["a" /* default */].saveDatas(state, getters, getters.uid, status).then(function () {
                   config["a" /* default */].modalSuccess("Votre devis a été sauvegardé, ", {
                     title: "Devis"
                   });
                 });
 
-              case 21:
+              case 22:
               case "end":
                 return _context3.stop();
             }

@@ -5,7 +5,6 @@
         ref="form_userlogin"
         @submit.stop.prevent="handleSubmit"
         class="form-userlogin choice-section min-height"
-        :MajRefs="MajRefs"
       >
         <ul class="d-flex p-0 mx-0 select-tab">
           <li
@@ -49,7 +48,7 @@
           </div>
         </ValidationProvider>
         <!-- -->
-        <b-form-group label="Prenom" v-show="current_tab === 'register'">
+        <b-form-group label="Prenom" v-if="current_tab === 'register'">
           <b-form-input
             v-model="userlogin.prenom.value"
             type="text"
@@ -157,6 +156,7 @@ export default {
   },
   mounted() {
     this.initValue();
+    this.setRefs();
   },
   watch: {
     //
@@ -164,13 +164,7 @@ export default {
   computed: {
     ...mapState(["userlogin", "mode"]),
     ...mapGetters(["uid"]),
-    MajRefs() {
-      if (this.userlogin.name && this.userlogin.name.value) {
-        this.setRefs();
-        return this.userlogin.name.value;
-      }
-      return false;
-    },
+
     validationField() {
       return true;
     },
@@ -198,13 +192,13 @@ export default {
       });
     },
     setRefs() {
-      if (this.$refs.userlogin_name) {
+      this.$nextTick(() => {
+        //alert("Dd");
         this.userlogin.name.ref = this.$refs.userlogin_name;
         this.userlogin.telephone.ref = this.$refs.userlogin_tel;
         this.userlogin.email.ref = this.$refs.userlogin_email;
         this.userlogin.password.ref = this.$refs.userlogin_password;
-      }
-      //console.log("this.userlogin.password.ref ", this.userlogin.password.ref);
+      });
     },
     input(value, field) {
       this.field.value[field].value = value;
@@ -227,8 +221,10 @@ export default {
       }
     },
     select_tab(val) {
+      var self = this;
       this.current_tab = val;
       this.userlogin.tabIndex = val;
+      self.setRefs();
     },
   },
 };

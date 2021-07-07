@@ -57,11 +57,14 @@ export default {
     ListeFieldsDisplay() {
       const fieldsDisplay = [
         {
-          label: "Id",
-          key: "id",
+          label: "Date",
+          key: "created",
+          formatter: function (val) {
+            return config.getMysqlDateToFrench(val);
+          },
         },
         {
-          label: "#Action",
+          label: "Que souhaitez vous faire",
           key: "action",
           stickyColumn: true,
           thStyle: { minWidth: "170px" },
@@ -73,7 +76,7 @@ export default {
           thStyle: { minWidth: "140px" },
         },
         {
-          label: "Price",
+          label: "Prix",
           key: "price",
           thStyle: { minWidth: "120px" },
           formatter: (value) => {

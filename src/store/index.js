@@ -491,6 +491,10 @@ export default new Vuex.Store({
           //var statusTelephone = await state.userlogin.telephone.ref.validate();
           statusEmail = await state.userlogin.email.ref.validate();
         } else {
+          console.log(
+            "state.userlogin.password.ref : ",
+            state.userlogin.password.ref
+          );
           statusPassword = await state.userlogin.password.ref.validate();
         }
         if (statusName.valid && (statusEmail.valid || statusPassword.valid)) {

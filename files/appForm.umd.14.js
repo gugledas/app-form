@@ -815,12 +815,12 @@ Object(vee_validate__WEBPACK_IMPORTED_MODULE_1__[/* extend */ "c"])("alpha", vee
 // ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"4acd20fe-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/input/userlogin.vue?vue&type=template&id=5f2d06d5&lang=html&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:!_vm.validationField && _vm.mode ? 'mb-5' : ''},[(_vm.validationField && (!_vm.uid || (_vm.uid && _vm.mode)))?_c('transition',{attrs:{"name":"fade"}},[_c('form',{ref:"form_userlogin",staticClass:"form-userlogin choice-section min-height",attrs:{"MajRefs":_vm.MajRefs},on:{"submit":function($event){$event.stopPropagation();$event.preventDefault();return _vm.handleSubmit($event)}}},[_c('ul',{staticClass:"d-flex p-0 mx-0 select-tab"},[_c('li',{staticClass:"item",class:[_vm.current_tab === 'register' ? 'active' : ''],on:{"click":function($event){return _vm.select_tab('register')}}},[_vm._v(" Creer un compte ")]),_c('li',{staticClass:"item",class:[_vm.current_tab !== 'register' ? 'active' : ''],on:{"click":function($event){return _vm.select_tab('login')}}},[_vm._v(" Se connecter ")])]),_c('ValidationProvider',{ref:"userlogin_name",staticClass:"d-block",attrs:{"rules":"required","name":"Nom"},scopedSlots:_vm._u([{key:"default",fn:function(v){return [_c('div',{staticClass:"login-form"},[_c('label',{staticClass:"label d-flex align-items-center"},[_c('span',[_vm._v(_vm._s(_vm.field.label))])])]),_c('b-form-group',{attrs:{"label":_vm.nomDisplay}},[_c('b-form-input',{attrs:{"type":"text"},on:{"input":function($event){return _vm.input($event, 'name')}},model:{value:(_vm.userlogin.name.value),callback:function ($$v) {_vm.$set(_vm.userlogin.name, "value", $$v)},expression:"userlogin.name.value"}})],1),_c('div',{staticClass:"text-danger"},_vm._l((v.errors),function(error,ii){return _c('small',{key:ii,staticClass:"d-block"},[_vm._v(" "+_vm._s(error)+" ")])}),0)]}}],null,false,1650481904)}),_c('b-form-group',{directives:[{name:"show",rawName:"v-show",value:(_vm.current_tab === 'register'),expression:"current_tab === 'register'"}],attrs:{"label":"Prenom"}},[_c('b-form-input',{attrs:{"type":"text"},on:{"input":function($event){return _vm.input($event, 'prenom')}},model:{value:(_vm.userlogin.prenom.value),callback:function ($$v) {_vm.$set(_vm.userlogin.prenom, "value", $$v)},expression:"userlogin.prenom.value"}})],1),(_vm.current_tab === 'register')?_c('ValidationProvider',{ref:"userlogin_tel",staticClass:"d-block",attrs:{"rules":"required","name":"Telephone"},scopedSlots:_vm._u([{key:"default",fn:function(v){return [_c('b-form-group',{attrs:{"label":"Telephone"}},[_c('b-form-input',{attrs:{"type":"text"},on:{"input":function($event){return _vm.input($event, 'telephone')}},model:{value:(_vm.userlogin.telephone.value),callback:function ($$v) {_vm.$set(_vm.userlogin.telephone, "value", $$v)},expression:"userlogin.telephone.value"}})],1),_c('div',{staticClass:"text-danger"},_vm._l((v.errors),function(error,ii){return _c('small',{key:ii,staticClass:"d-block"},[_vm._v(" "+_vm._s(error)+" ")])}),0)]}}],null,false,1994085191)}):_vm._e(),(_vm.current_tab === 'register')?_c('ValidationProvider',{ref:"userlogin_email",staticClass:"d-block",attrs:{"rules":"required|email","name":"Email"},scopedSlots:_vm._u([{key:"default",fn:function(v){return [_c('b-form-group',{attrs:{"label":"Email"}},[_c('b-form-input',{attrs:{"type":"email"},on:{"input":function($event){return _vm.input($event, 'email')}},model:{value:(_vm.userlogin.email.value),callback:function ($$v) {_vm.$set(_vm.userlogin.email, "value", $$v)},expression:"userlogin.email.value"}})],1),_c('div',{staticClass:"text-danger"},_vm._l((v.errors),function(error,ii){return _c('small',{key:ii,staticClass:"d-block"},[_vm._v(" "+_vm._s(error)+" ")])}),0)]}}],null,false,1829562814)}):_vm._e(),(_vm.current_tab === 'login')?_c('ValidationProvider',{ref:"userlogin_password",staticClass:"d-block",attrs:{"rules":"required","name":"Password"},scopedSlots:_vm._u([{key:"default",fn:function(v){return [_c('b-form-group',{attrs:{"label":"Mot de passe"}},[_c('b-form-input',{attrs:{"type":"password"},on:{"input":function($event){return _vm.input($event, 'password')}},model:{value:(_vm.userlogin.password.value),callback:function ($$v) {_vm.$set(_vm.userlogin.password, "value", $$v)},expression:"userlogin.password.value"}})],1),_c('div',{staticClass:"text-danger"},_vm._l((v.errors),function(error,ii){return _c('small',{key:ii,staticClass:"d-block"},[_vm._v(" "+_vm._s(error)+" ")])}),0)]}}],null,false,3320814594)}):_vm._e()],1)]):_vm._e()],1)}
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"4acd20fe-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/input/userlogin.vue?vue&type=template&id=17eea8e5&lang=html&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:!_vm.validationField && _vm.mode ? 'mb-5' : ''},[(_vm.validationField && (!_vm.uid || (_vm.uid && _vm.mode)))?_c('transition',{attrs:{"name":"fade"}},[_c('form',{ref:"form_userlogin",staticClass:"form-userlogin choice-section min-height",on:{"submit":function($event){$event.stopPropagation();$event.preventDefault();return _vm.handleSubmit($event)}}},[_c('ul',{staticClass:"d-flex p-0 mx-0 select-tab"},[_c('li',{staticClass:"item",class:[_vm.current_tab === 'register' ? 'active' : ''],on:{"click":function($event){return _vm.select_tab('register')}}},[_vm._v(" Creer un compte ")]),_c('li',{staticClass:"item",class:[_vm.current_tab !== 'register' ? 'active' : ''],on:{"click":function($event){return _vm.select_tab('login')}}},[_vm._v(" Se connecter ")])]),_c('ValidationProvider',{ref:"userlogin_name",staticClass:"d-block",attrs:{"rules":"required","name":"Nom"},scopedSlots:_vm._u([{key:"default",fn:function(v){return [_c('div',{staticClass:"login-form"},[_c('label',{staticClass:"label d-flex align-items-center"},[_c('span',[_vm._v(_vm._s(_vm.field.label))])])]),_c('b-form-group',{attrs:{"label":_vm.nomDisplay}},[_c('b-form-input',{attrs:{"type":"text"},on:{"input":function($event){return _vm.input($event, 'name')}},model:{value:(_vm.userlogin.name.value),callback:function ($$v) {_vm.$set(_vm.userlogin.name, "value", $$v)},expression:"userlogin.name.value"}})],1),_c('div',{staticClass:"text-danger"},_vm._l((v.errors),function(error,ii){return _c('small',{key:ii,staticClass:"d-block"},[_vm._v(" "+_vm._s(error)+" ")])}),0)]}}],null,false,1650481904)}),(_vm.current_tab === 'register')?_c('b-form-group',{attrs:{"label":"Prenom"}},[_c('b-form-input',{attrs:{"type":"text"},on:{"input":function($event){return _vm.input($event, 'prenom')}},model:{value:(_vm.userlogin.prenom.value),callback:function ($$v) {_vm.$set(_vm.userlogin.prenom, "value", $$v)},expression:"userlogin.prenom.value"}})],1):_vm._e(),(_vm.current_tab === 'register')?_c('ValidationProvider',{ref:"userlogin_tel",staticClass:"d-block",attrs:{"rules":"required","name":"Telephone"},scopedSlots:_vm._u([{key:"default",fn:function(v){return [_c('b-form-group',{attrs:{"label":"Telephone"}},[_c('b-form-input',{attrs:{"type":"text"},on:{"input":function($event){return _vm.input($event, 'telephone')}},model:{value:(_vm.userlogin.telephone.value),callback:function ($$v) {_vm.$set(_vm.userlogin.telephone, "value", $$v)},expression:"userlogin.telephone.value"}})],1),_c('div',{staticClass:"text-danger"},_vm._l((v.errors),function(error,ii){return _c('small',{key:ii,staticClass:"d-block"},[_vm._v(" "+_vm._s(error)+" ")])}),0)]}}],null,false,1994085191)}):_vm._e(),(_vm.current_tab === 'register')?_c('ValidationProvider',{ref:"userlogin_email",staticClass:"d-block",attrs:{"rules":"required|email","name":"Email"},scopedSlots:_vm._u([{key:"default",fn:function(v){return [_c('b-form-group',{attrs:{"label":"Email"}},[_c('b-form-input',{attrs:{"type":"email"},on:{"input":function($event){return _vm.input($event, 'email')}},model:{value:(_vm.userlogin.email.value),callback:function ($$v) {_vm.$set(_vm.userlogin.email, "value", $$v)},expression:"userlogin.email.value"}})],1),_c('div',{staticClass:"text-danger"},_vm._l((v.errors),function(error,ii){return _c('small',{key:ii,staticClass:"d-block"},[_vm._v(" "+_vm._s(error)+" ")])}),0)]}}],null,false,1829562814)}):_vm._e(),(_vm.current_tab === 'login')?_c('ValidationProvider',{ref:"userlogin_password",staticClass:"d-block",attrs:{"rules":"required","name":"Password"},scopedSlots:_vm._u([{key:"default",fn:function(v){return [_c('b-form-group',{attrs:{"label":"Mot de passe"}},[_c('b-form-input',{attrs:{"type":"password"},on:{"input":function($event){return _vm.input($event, 'password')}},model:{value:(_vm.userlogin.password.value),callback:function ($$v) {_vm.$set(_vm.userlogin.password, "value", $$v)},expression:"userlogin.password.value"}})],1),_c('div',{staticClass:"text-danger"},_vm._l((v.errors),function(error,ii){return _c('small',{key:ii,staticClass:"d-block"},[_vm._v(" "+_vm._s(error)+" ")])}),0)]}}],null,false,3320814594)}):_vm._e()],1)]):_vm._e()],1)}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/App/input/userlogin.vue?vue&type=template&id=5f2d06d5&lang=html&
+// CONCATENATED MODULE: ./src/App/input/userlogin.vue?vue&type=template&id=17eea8e5&lang=html&
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/objectSpread2.js + 1 modules
 var objectSpread2 = __webpack_require__("5530");
@@ -840,7 +840,6 @@ var vee_validate_custom = __webpack_require__("b6d1");
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/input/userlogin.vue?vue&type=script&lang=js&
 
 
-//
 //
 //
 //
@@ -996,18 +995,11 @@ var vee_validate_custom = __webpack_require__("b6d1");
   },
   mounted: function mounted() {
     this.initValue();
+    this.setRefs();
   },
   watch: {//
   },
   computed: Object(objectSpread2["a" /* default */])(Object(objectSpread2["a" /* default */])(Object(objectSpread2["a" /* default */])({}, Object(vuex_esm["c" /* mapState */])(["userlogin", "mode"])), Object(vuex_esm["b" /* mapGetters */])(["uid"])), {}, {
-    MajRefs: function MajRefs() {
-      if (this.userlogin.name && this.userlogin.name.value) {
-        this.setRefs();
-        return this.userlogin.name.value;
-      }
-
-      return false;
-    },
     validationField: function validationField() {
       return true;
     },
@@ -1037,13 +1029,15 @@ var vee_validate_custom = __webpack_require__("b6d1");
       });
     },
     setRefs: function setRefs() {
-      if (this.$refs.userlogin_name) {
-        this.userlogin.name.ref = this.$refs.userlogin_name;
-        this.userlogin.telephone.ref = this.$refs.userlogin_tel;
-        this.userlogin.email.ref = this.$refs.userlogin_email;
-        this.userlogin.password.ref = this.$refs.userlogin_password;
-      } //console.log("this.userlogin.password.ref ", this.userlogin.password.ref);
+      var _this2 = this;
 
+      this.$nextTick(function () {
+        //alert("Dd");
+        _this2.userlogin.name.ref = _this2.$refs.userlogin_name;
+        _this2.userlogin.telephone.ref = _this2.$refs.userlogin_tel;
+        _this2.userlogin.email.ref = _this2.$refs.userlogin_email;
+        _this2.userlogin.password.ref = _this2.$refs.userlogin_password;
+      });
     },
     input: function input(value, field) {
       this.field.value[field].value = value;
@@ -1081,8 +1075,10 @@ var vee_validate_custom = __webpack_require__("b6d1");
       }
     },
     select_tab: function select_tab(val) {
+      var self = this;
       this.current_tab = val;
       this.userlogin.tabIndex = val;
+      self.setRefs();
     }
   }
 });

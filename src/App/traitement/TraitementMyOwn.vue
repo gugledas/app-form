@@ -53,19 +53,18 @@ export default {
     ListeFieldsDisplay() {
       const fieldsDisplay = [
         {
-          label: "Id",
-          key: "id",
+          label: "Date",
+          key: "created",
+          formatter: function (val) {
+            return config.getMysqlDateToFrench(val);
+          },
         },
         {
-          label: "Status du formulaire",
-          key: "status",
-        },
-        {
-          label: "Price",
+          label: "Prix",
           key: "price",
         },
         {
-          label: "#Action",
+          label: "Que souhaitez vous faire",
           key: "action",
           stickyColumn: true,
         },

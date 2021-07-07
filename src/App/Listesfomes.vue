@@ -9,7 +9,7 @@
               variant="outline-primary"
               @click="voirForm(data.item.id)"
               v-b-tooltip.hover.v-primary
-              title="Voir"
+              title="Estimer mes travaux"
             >
               <b-icon icon="eye"></b-icon>
             </b-button>
@@ -77,15 +77,11 @@ export default {
           key: "id",
         },
         {
-          label: "nom du formulaire",
+          label: "Type de travaux",
           key: "name",
         },
         {
-          label: "Description",
-          key: "description",
-        },
-        {
-          label: "#Action",
+          label: "Que souhaitez vous faire",
           key: "action",
           thClass: ["th-action"],
         },

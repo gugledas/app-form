@@ -22,7 +22,11 @@
           >
             <div v-if="scope.field.key === 'status'">
               <h5 class="status">
-                {{ scope.item.status == 1 ? "Traité" : "non traité" }}
+                {{
+                  scope.item.status == 1
+                    ? "Sauvegardé"
+                    : "Devis en attente de rappel"
+                }}
               </h5>
             </div>
             <div v-else-if="scope.field.key === 'uid'">
@@ -156,7 +160,15 @@
             >
               Quitter
             </b-button>
-            <b-button variant="primary" size="sm" @click="updateStatus()">
+            <b-button
+              variant="primary"
+              size="sm"
+              @click="updateStatus()"
+              v-if="
+                (currentDevis.status === '1' || currentDevis.status === 1) &&
+                currentDevis.uid === $store.state.uid
+              "
+            >
               Me rappeler
             </b-button>
           </div>
@@ -207,10 +219,16 @@ export default {
   data() {
     return {
       showModal: false,
-      currentIndex: null,
       validSteps2: [],
       traitementFormItemsDisplay: [],
+      /**
+       * L'id du formulaire selectionné.
+       */
       currentDataId: null,
+      /**
+       * Les informations du devis selectionné.
+       */
+      currentDevis: {},
       currentPage: 1,
       //totalRows: 20,
       //perPage: 20,
@@ -267,13 +285,14 @@ export default {
       this.showModal = !this.showModal;
       this.validSteps2 = [];
       this.currentDataId = this.traitementFormItems[id].id;
+      this.currentDevis = this.traitementFormItems[id];
       const forms = this.traitementFormItems[id].datas;
       this.validSteps2.push(forms[0]);
       function execution(i) {
         const loop = function (i) {
           return new Promise((resolv) => {
             Utilities.selectNextState(forms, i).then((rep) => {
-              console.log("getValideStepe : ", rep);
+              //console.log("getValideStepe : ", rep);
               resolv(rep);
             });
           });
@@ -397,7 +416,6 @@ export default {
 .traitement {
   .status {
     font-size: 0.7em;
-    text-transform: uppercase;
     font-weight: bold;
   }
 }

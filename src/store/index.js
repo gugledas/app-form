@@ -522,26 +522,50 @@ export default new Vuex.Store({
             url = "/appformmanager/user";
             msg = "Votre devis a été sauvegardé";
           }
+          const displayMsg = () => {
+            config.modalSuccess(msg, {
+              title: "Devis sauvegardé",
+              footerClass: "d-none",
+            });
+            setTimeout(function () {
+              window.location.assign("/node/52");
+            }, 3000);
+          };
           drupalUtilities
             .post(url, datas)
             .then((resp) => {
-              console.log("drupalUtilities : ", resp);
-              if (resp.data) {
+              //console.log("drupalUtilities : ", resp);
+              //On verifie s'il y'a eut redirection.
+              if (
+                resp.reponse &&
+                resp.reponse.config.url !== resp.reponse.request.responseURL
+              ) {
+                displayMsg();
+              } else if (resp.data) {
                 var uid = resp.data.uid[0].value;
                 utilities.saveDatas(state, getters, uid, status).then(() => {
-                  config.modalSuccess(msg, {
-                    title: "Devis sauvegardé",
-                    footerClass: "d-none",
-                  });
-                  setTimeout(function () {
-                    window.location.assign("/node/52");
-                  }, 3000);
+                  displayMsg();
                 });
               }
             })
             .catch((errors) => {
-              console.log("Error GET drupalUtilities : ", errors.error.data);
+              /*
+              console.log(
+                "Error GET drupalUtilities : ",
+                errors,
+                "\n error.response :",
+                errors.response,
+                "\n error.request ",
+                errors.request
+              );
+              /**/
+              //On verifie s'il y'a eut redirection.
               if (
+                errors.response.config.url !==
+                errors.response.request.responseURL
+              ) {
+                displayMsg();
+              } else if (
                 errors.error &&
                 errors.error.data &&
                 errors.error.data.errors

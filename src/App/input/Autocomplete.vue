@@ -26,11 +26,13 @@
               </template>
               <template slot="placeholder">
                 <span class="option__title">
-                  Code postal ou nom de la vialle
+                  Code postal ou nom de la ville
                 </span>
               </template>
               <template slot="noOptions">
-                <span class="option__title">aea</span>
+                <span class="option__title">
+                  Saisir un code postal ou le nom d'une ville
+                </span>
               </template>
             </multiselect>
             <div class="text-danger">
@@ -99,15 +101,15 @@ export default {
       return `${text}`;
     },
     asyncFind(search) {
-      console.log("search : ", search);
+      //console.log("search : ", search);
       if (search.length > 2) {
         const terms = new termsTaxo("departements");
-        console.log("find");
+        //console.log("find");
         this.isLoading = true;
         terms.getSearch(search).then(() => {
           this.options = terms.getOptions();
           this.isLoading = false;
-          console.log("this.options : ", this.options);
+          //console.log("this.options : ", this.options);
         });
       }
     },

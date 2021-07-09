@@ -96,7 +96,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 		if(installedCssChunks[chunkId]) promises.push(installedCssChunks[chunkId]);
 /******/ 		else if(installedCssChunks[chunkId] !== 0 && cssChunks[chunkId]) {
 /******/ 			promises.push(installedCssChunks[chunkId] = new Promise(function(resolve, reject) {
-/******/ 				var href = "css/" + ({}[chunkId]||chunkId) + "." + {"0":"31d6cfe0","2":"2d029869","3":"aeae6e44","4":"cad56d0c","5":"1c5bb887","6":"31d6cfe0","7":"5f515804","8":"3def3390","9":"b2742065","10":"63248bb6","11":"dd3fcea7","12":"e5f1a246","13":"421b08c6","14":"8d2429ae","15":"5686f708","16":"5686f708","17":"ac5b10c9","18":"42efe657","19":"31d6cfe0","20":"44ac9b6b","21":"31d6cfe0","22":"31d6cfe0","23":"31d6cfe0","24":"31d6cfe0","25":"31d6cfe0","26":"31d6cfe0","27":"31d6cfe0","28":"31d6cfe0","29":"31d6cfe0","30":"31d6cfe0","31":"31d6cfe0","32":"31d6cfe0","33":"31d6cfe0","34":"31d6cfe0","35":"31d6cfe0"}[chunkId] + ".css";
+/******/ 				var href = "css/" + ({}[chunkId]||chunkId) + "." + {"0":"31d6cfe0","2":"2d029869","3":"aeae6e44","4":"a18c2998","5":"1c5bb887","6":"31d6cfe0","7":"5f515804","8":"3def3390","9":"b2742065","10":"63248bb6","11":"dd3fcea7","12":"e5f1a246","13":"5451517c","14":"8d2429ae","15":"5686f708","16":"5686f708","17":"ac5b10c9","18":"42efe657","19":"31d6cfe0","20":"44ac9b6b","21":"31d6cfe0","22":"31d6cfe0","23":"31d6cfe0","24":"31d6cfe0","25":"31d6cfe0","26":"31d6cfe0","27":"31d6cfe0","28":"31d6cfe0","29":"31d6cfe0","30":"31d6cfe0","31":"31d6cfe0","32":"31d6cfe0","33":"31d6cfe0","34":"31d6cfe0","35":"31d6cfe0"}[chunkId] + ".css";
 /******/ 				var fullhref = __webpack_require__.p + href;
 /******/ 				var existingLinkTags = document.getElementsByTagName("link");
 /******/ 				for(var i = 0; i < existingLinkTags.length; i++) {
@@ -53256,7 +53256,7 @@ var termsTaxo_termsTaxo = /*#__PURE__*/function () {
       var _this2 = this;
 
       var filter = new buildFilter();
-      filter.addFilter("name", "STARTS_WITH", search);
+      filter.addFilter("name", "CONTAINS", search);
       return new Promise(function (resolv) {
         App_utilities.get(_this2.url + "?" + filter.query, Confs.headers).then(function (resp) {
           _this2.terms = resp.data;
@@ -58031,7 +58031,7 @@ external_commonjs_vue_commonjs2_vue_root_Vue_default.a.use(vuex_esm["a" /* defau
     saveDatasUser: function saveDatasUser(_ref17) {
       var _arguments = arguments;
       return Object(asyncToGenerator["a" /* default */])( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
-        var commit, state, getters, status, statusName, statusEmail, statusPassword, datas, url, msg;
+        var commit, state, getters, status, statusName, statusEmail, statusPassword, datas, url, msg, displayMsg;
         return regeneratorRuntime.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
@@ -58102,25 +58102,42 @@ external_commonjs_vue_commonjs2_vue_root_Vue_default.a.use(vuex_esm["a" /* defau
                     msg = "Votre devis a été sauvegardé";
                   }
 
-                  drupal_vuejs["a" /* drupalUtilities */].post(url, datas).then(function (resp) {
-                    console.log("drupalUtilities : ", resp);
+                  displayMsg = function displayMsg() {
+                    config["a" /* default */].modalSuccess(msg, {
+                      title: "Devis sauvegardé",
+                      footerClass: "d-none"
+                    });
+                    setTimeout(function () {
+                      window.location.assign("/node/52");
+                    }, 3000);
+                  };
 
-                    if (resp.data) {
+                  drupal_vuejs["a" /* drupalUtilities */].post(url, datas).then(function (resp) {
+                    //console.log("drupalUtilities : ", resp);
+                    //On verifie s'il y'a eut redirection.
+                    if (resp.reponse && resp.reponse.config.url !== resp.reponse.request.responseURL) {
+                      displayMsg();
+                    } else if (resp.data) {
                       var uid = resp.data.uid[0].value;
                       utilities["a" /* default */].saveDatas(state, getters, uid, status).then(function () {
-                        config["a" /* default */].modalSuccess(msg, {
-                          title: "Devis sauvegardé",
-                          footerClass: "d-none"
-                        });
-                        setTimeout(function () {
-                          window.location.assign("/node/52");
-                        }, 3000);
+                        displayMsg();
                       });
                     }
                   }).catch(function (errors) {
-                    console.log("Error GET drupalUtilities : ", errors.error.data);
-
-                    if (errors.error && errors.error.data && errors.error.data.errors) {
+                    /*
+                    console.log(
+                      "Error GET drupalUtilities : ",
+                      errors,
+                      "\n error.response :",
+                      errors.response,
+                      "\n error.request ",
+                      errors.request
+                    );
+                    /**/
+                    //On verifie s'il y'a eut redirection.
+                    if (errors.response.config.url !== errors.response.request.responseURL) {
+                      displayMsg();
+                    } else if (errors.error && errors.error.data && errors.error.data.errors) {
                       for (var i in errors.error.data.errors) {
                         var error = errors.error.data.errors[i].split(":");
 

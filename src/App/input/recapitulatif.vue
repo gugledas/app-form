@@ -6,7 +6,7 @@
           <b-col sm="12" class="mb-3">
             <label class="label d-flex align-items-center">
               <span class="price-info label">{{ field.label }} :</span>
-              <span class="price-info price">{{ price }}</span>
+              <span class="price-info price">{{ priceEstimation }}</span>
               <span class="price-info currency">€</span>
             </label>
           </b-col>
@@ -50,6 +50,19 @@ export default {
       this.setStatus(true);
       this.setPrice();
       return true;
+    },
+    priceEstimation() {
+      const price = this.price;
+      if (price > 0) {
+        if (this.field.percent) {
+          var percent = parseInt(this.field.percent);
+          if (percent > 0) {
+            percent = (price * percent) / 100 + price;
+            return price + " - " + percent;
+          }
+        }
+      }
+      return price;
     },
   },
   methods: {

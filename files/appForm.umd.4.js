@@ -29,15 +29,18 @@ var config = __webpack_require__("f158");
 // EXTERNAL MODULE: ./node_modules/vuex/dist/vuex.esm.js
 var vuex_esm = __webpack_require__("2f62");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"4acd20fe-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/traitement/ListTable.vue?vue&type=template&id=7d13806d&lang=html&
-var ListTablevue_type_template_id_7d13806d_lang_html_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('b-table',{staticClass:"traitement",attrs:{"items":_vm.traitementFormItemsDisplay,"fields":_vm.liste_fields_display,"outlined":true,"hover":true,"head-variant":"dark","responsive":"","sticky-header":true,"trigger_perfom":_vm.trigger_perfom,"busy":_vm.isBusy},scopedSlots:_vm._u([{key:"cell()",fn:function(scope){return [_c('div',[(
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"4acd20fe-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/traitement/ListTable.vue?vue&type=template&id=5d40ab8b&lang=html&
+var ListTablevue_type_template_id_5d40ab8b_lang_html_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('b-table',{staticClass:"traitement",attrs:{"items":_vm.traitementFormItemsDisplay,"fields":_vm.liste_fields_display,"outlined":true,"hover":true,"head-variant":"dark","responsive":"","sticky-header":true,"trigger_perfom":_vm.trigger_perfom,"busy":_vm.isBusy},scopedSlots:_vm._u([{key:"cell()",fn:function(scope){return [_c('div',[(
             scope.item[scope.field.key] &&
             scope.item[scope.field.key].type === undefined
-          )?_c('div',[(scope.field.key === 'status')?_c('div',[_c('h5',{staticClass:"status"},[_vm._v(" "+_vm._s(scope.item.status == 1 ? "Traité" : "non traité")+" ")])]):(scope.field.key === 'uid')?_c('div',[(scope.item.uid !== '0')?_c('div',[(scope.item.user)?_c('ul',{staticClass:"m-0 p-0 pl-2"},_vm._l((_vm.getInfoUser(scope.item.user)),function(val,i){return _c('li',{key:i},[_vm._v(" "+_vm._s(val.text)+" ")])}),0):_vm._e()]):_c('div',[_vm._v("Anonyme")])]):_c('div',[_vm._v(" "+_vm._s(scope.value)+" ")])]):(!scope.item[scope.field.key])?_c('div',[(scope.field.key === 'action')?_c('div',[_c('b-button-group',{},[_c('b-button',{attrs:{"variant":"outline-primary"},on:{"click":function($event){return _vm.getValideStepe(scope.index)}}},[_vm._v(" voir mon devis ")]),(_vm.$store.state.mode)?_c('b-button',{attrs:{"variant":"outline-success"},on:{"click":function($event){return _vm.showResult(scope.item)}}},[_vm._v(" Editer ")]):_vm._e(),(_vm.$store.state.mode)?_c('b-button',{attrs:{"variant":"outline-warning"},on:{"click":function($event){return _vm.formTraiter(scope.item)}}},[_vm._v(" Traiter ")]):_vm._e()],1)],1):_vm._e()]):_c('div',[_c(_vm.getTemplatesFiles(scope.item[scope.field.key].type),{tag:"component",staticClass:"content-field",attrs:{"field":scope.item[scope.field.key]}})],1)])]}},{key:"table-busy",fn:function(){return [_c('div',{staticClass:"text-center text-danger my-2"},[_c('b-spinner',{staticClass:"align-middle"}),_c('strong',[_vm._v("chargements des devis...")])],1)]},proxy:true}])}),(_vm.totalRows > 20)?_c('b-pagination',{staticClass:"my-0",attrs:{"total-rows":_vm.totalRows,"per-page":_vm.perPage,"align":"fill","size":"sm"},on:{"change":_vm.changePagination},model:{value:(_vm.currentPage),callback:function ($$v) {_vm.currentPage=$$v},expression:"currentPage"}}):_vm._e(),_c('b-modal',{ref:"modal",staticClass:"super-hover",attrs:{"id":"modal--closing","size":"lg","title":'Résultat du formulaire',"scrollable":"","cancelTitle":"Quitter","okTitle":"Me rappeler"},scopedSlots:_vm._u([{key:"modal-footer",fn:function(){return [_c('div',{staticClass:"d-flex"},[_c('div',{staticClass:"w-100"},[_c('b-button',{staticClass:"mr-3",attrs:{"variant":"primary","size":"sm"},on:{"click":function($event){return _vm.$bvModal.hide('modal--closing')}}},[_vm._v(" Quitter ")]),_c('b-button',{attrs:{"variant":"primary","size":"sm"},on:{"click":function($event){return _vm.updateStatus()}}},[_vm._v(" Me rappeler ")])],1)])]},proxy:true}]),model:{value:(_vm.showModal),callback:function ($$v) {_vm.showModal=$$v},expression:"showModal"}},[(_vm.traitementFormItems.length)?_c('b-row',{attrs:{"align-h":"center"}},_vm._l((_vm.validSteps2),function(steps,i){return _c('b-col',{key:i,staticClass:"mb-4",attrs:{"sm":"12"}},[(steps !== undefined)?_c('b-card',{staticClass:"mb-1",attrs:{"no-body":""}},[_c('b-card-header',{staticClass:"p-1",attrs:{"header-tag":"header","role":"tab"}},[_c('b-button',{attrs:{"block":"","variant":"dark","disabled":""}},[_vm._v(" "+_vm._s(steps.info.title)+" ")])],1),_c('b-collapse',{attrs:{"id":"accordion-option","accordion":"my-accordion","role":"tabpanel","visible":""}},[_c('b-card-body',{staticClass:"p-2"},[_c('b-row',{staticClass:"d-flex flex-wrap"},_vm._l((steps.fields),function(field,index){return _c('b-col',{key:index,attrs:{"cols":"12"}},[(field.status === undefined || field.status)?_c('type-displays',{staticClass:"mb-2",attrs:{"field":field}}):_c('div',[_c('pre',{staticClass:"d-none"},[_vm._v("                      "+_vm._s(field.name)+"\n                    ")])])],1)}),1)],1)],1)],1):_vm._e()],1)}),1):_vm._e()],1)],1)}
-var ListTablevue_type_template_id_7d13806d_lang_html_staticRenderFns = []
+          )?_c('div',[(scope.field.key === 'status')?_c('div',[_c('h5',{staticClass:"status"},[_vm._v(" "+_vm._s(scope.item.status == 1 ? "Sauvegardé" : "Devis en attente de rappel")+" ")])]):(scope.field.key === 'uid')?_c('div',[(scope.item.uid !== '0')?_c('div',[(scope.item.user)?_c('ul',{staticClass:"m-0 p-0 pl-2"},_vm._l((_vm.getInfoUser(scope.item.user)),function(val,i){return _c('li',{key:i},[_vm._v(" "+_vm._s(val.text)+" ")])}),0):_vm._e()]):_c('div',[_vm._v("Anonyme")])]):_c('div',[_vm._v(" "+_vm._s(scope.value)+" ")])]):(!scope.item[scope.field.key])?_c('div',[(scope.field.key === 'action')?_c('div',[_c('b-button-group',{},[_c('b-button',{attrs:{"variant":"outline-primary"},on:{"click":function($event){return _vm.getValideStepe(scope.index)}}},[_vm._v(" voir mon devis ")]),(_vm.$store.state.mode)?_c('b-button',{attrs:{"variant":"outline-success"},on:{"click":function($event){return _vm.showResult(scope.item)}}},[_vm._v(" Editer ")]):_vm._e(),(_vm.$store.state.mode)?_c('b-button',{attrs:{"variant":"outline-warning"},on:{"click":function($event){return _vm.formTraiter(scope.item)}}},[_vm._v(" Traiter ")]):_vm._e()],1)],1):_vm._e()]):_c('div',[_c(_vm.getTemplatesFiles(scope.item[scope.field.key].type),{tag:"component",staticClass:"content-field",attrs:{"field":scope.item[scope.field.key]}})],1)])]}},{key:"table-busy",fn:function(){return [_c('div',{staticClass:"text-center text-danger my-2"},[_c('b-spinner',{staticClass:"align-middle"}),_c('strong',[_vm._v("chargements des devis...")])],1)]},proxy:true}])}),(_vm.totalRows > 20)?_c('b-pagination',{staticClass:"my-0",attrs:{"total-rows":_vm.totalRows,"per-page":_vm.perPage,"align":"fill","size":"sm"},on:{"change":_vm.changePagination},model:{value:(_vm.currentPage),callback:function ($$v) {_vm.currentPage=$$v},expression:"currentPage"}}):_vm._e(),_c('b-modal',{ref:"modal",staticClass:"super-hover",attrs:{"id":"modal--closing","size":"lg","title":'Résultat du formulaire',"scrollable":"","cancelTitle":"Quitter","okTitle":"Me rappeler"},scopedSlots:_vm._u([{key:"modal-footer",fn:function(){return [_c('div',{staticClass:"d-flex"},[_c('div',{staticClass:"w-100"},[_c('b-button',{staticClass:"mr-3",attrs:{"variant":"primary","size":"sm"},on:{"click":function($event){return _vm.$bvModal.hide('modal--closing')}}},[_vm._v(" Quitter ")]),(
+              (_vm.currentDevis.status === '1' || _vm.currentDevis.status === 1) &&
+              _vm.currentDevis.uid === _vm.$store.state.uid
+            )?_c('b-button',{attrs:{"variant":"primary","size":"sm"},on:{"click":function($event){return _vm.updateStatus()}}},[_vm._v(" Me rappeler ")]):_vm._e()],1)])]},proxy:true}]),model:{value:(_vm.showModal),callback:function ($$v) {_vm.showModal=$$v},expression:"showModal"}},[(_vm.traitementFormItems.length)?_c('b-row',{attrs:{"align-h":"center"}},_vm._l((_vm.validSteps2),function(steps,i){return _c('b-col',{key:i,staticClass:"mb-4",attrs:{"sm":"12"}},[(steps !== undefined)?_c('b-card',{staticClass:"mb-1",attrs:{"no-body":""}},[_c('b-card-header',{staticClass:"p-1",attrs:{"header-tag":"header","role":"tab"}},[_c('b-button',{attrs:{"block":"","variant":"dark","disabled":""}},[_vm._v(" "+_vm._s(steps.info.title)+" ")])],1),_c('b-collapse',{attrs:{"id":"accordion-option","accordion":"my-accordion","role":"tabpanel","visible":""}},[_c('b-card-body',{staticClass:"p-2"},[_c('b-row',{staticClass:"d-flex flex-wrap"},_vm._l((steps.fields),function(field,index){return _c('b-col',{key:index,attrs:{"cols":"12"}},[(field.status === undefined || field.status)?_c('type-displays',{staticClass:"mb-2",attrs:{"field":field}}):_c('div',[_c('pre',{staticClass:"d-none"},[_vm._v("                      "+_vm._s(field.name)+"\n                    ")])])],1)}),1)],1)],1)],1):_vm._e()],1)}),1):_vm._e()],1)],1)}
+var ListTablevue_type_template_id_5d40ab8b_lang_html_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/App/traitement/ListTable.vue?vue&type=template&id=7d13806d&lang=html&
+// CONCATENATED MODULE: ./src/App/traitement/ListTable.vue?vue&type=template&id=5d40ab8b&lang=html&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.number.constructor.js
 var es_number_constructor = __webpack_require__("a9e3");
@@ -251,6 +254,18 @@ var drupal_vuejs = __webpack_require__("e674");
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -292,10 +307,18 @@ var drupal_vuejs = __webpack_require__("e674");
   data: function data() {
     return {
       showModal: false,
-      currentIndex: null,
       validSteps2: [],
       traitementFormItemsDisplay: [],
+
+      /**
+       * L'id du formulaire selectionné.
+       */
       currentDataId: null,
+
+      /**
+       * Les informations du devis selectionné.
+       */
+      currentDevis: {},
       currentPage: 1 //totalRows: 20,
       //perPage: 20,
 
@@ -355,6 +378,7 @@ var drupal_vuejs = __webpack_require__("e674");
       this.showModal = !this.showModal;
       this.validSteps2 = [];
       this.currentDataId = this.traitementFormItems[id].id;
+      this.currentDevis = this.traitementFormItems[id];
       var forms = this.traitementFormItems[id].datas;
       this.validSteps2.push(forms[0]);
 
@@ -362,7 +386,7 @@ var drupal_vuejs = __webpack_require__("e674");
         var loop = function loop(i) {
           return new Promise(function (resolv) {
             utilities["a" /* default */].selectNextState(forms, i).then(function (rep) {
-              console.log("getValideStepe : ", rep);
+              //console.log("getValideStepe : ", rep);
               resolv(rep);
             });
           });
@@ -491,8 +515,8 @@ var componentNormalizer = __webpack_require__("2877");
 
 var component = Object(componentNormalizer["a" /* default */])(
   traitement_ListTablevue_type_script_lang_js_,
-  ListTablevue_type_template_id_7d13806d_lang_html_render,
-  ListTablevue_type_template_id_7d13806d_lang_html_staticRenderFns,
+  ListTablevue_type_template_id_5d40ab8b_lang_html_render,
+  ListTablevue_type_template_id_5d40ab8b_lang_html_staticRenderFns,
   false,
   null,
   null,

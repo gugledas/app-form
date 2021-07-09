@@ -10,6 +10,7 @@
       class="traitement"
       :sticky-header="true"
       :trigger_perfom="trigger_perfom"
+      :busy="isBusy"
     >
       <template v-slot:cell()="scope">
         <div>
@@ -75,7 +76,25 @@
           </div>
         </div>
       </template>
+      <template #table-busy>
+        <div class="text-center text-danger my-2">
+          <b-spinner class="align-middle"></b-spinner>
+          <strong>chargements des devis...</strong>
+        </div>
+      </template>
     </b-table>
+    <!-- -->
+    <b-pagination
+      v-model="currentPage"
+      :total-rows="totalRows"
+      :per-page="perPage"
+      align="fill"
+      size="sm"
+      class="my-0"
+      @change="changePagination"
+      v-if="totalRows > 20"
+    ></b-pagination>
+
     <!-- -->
     <b-modal
       id="modal--closing"
@@ -126,6 +145,23 @@
           </b-card>
         </b-col>
       </b-row>
+      <template #modal-footer>
+        <div class="d-flex">
+          <div class="w-100">
+            <b-button
+              variant="primary"
+              size="sm"
+              class="mr-3"
+              @click="$bvModal.hide('modal--closing')"
+            >
+              Quitter
+            </b-button>
+            <b-button variant="primary" size="sm" @click="updateStatus()">
+              Me rappeler
+            </b-button>
+          </div>
+        </div>
+      </template>
     </b-modal>
   </div>
 </template>
@@ -152,6 +188,18 @@ export default {
         return [];
       },
     },
+    totalRows: {
+      type: Number,
+      required: true,
+    },
+    isBusy: {
+      type: Boolean,
+      required: true,
+    },
+    perPage: {
+      type: Number,
+      required: true,
+    },
   },
   components: {
     typeDisplays: () => import("./affichage/typeDisplays.vue"),
@@ -162,6 +210,10 @@ export default {
       currentIndex: null,
       validSteps2: [],
       traitementFormItemsDisplay: [],
+      currentDataId: null,
+      currentPage: 1,
+      //totalRows: 20,
+      //perPage: 20,
     };
   },
   mounted() {
@@ -174,7 +226,7 @@ export default {
     trigger_perfom() {
       if (this.traitementFormItems.length) {
         this.getTraitementFormItems();
-        return true;
+        return this.traitementFormItems.length;
       }
       return "";
     },
@@ -214,6 +266,7 @@ export default {
       var self = this;
       this.showModal = !this.showModal;
       this.validSteps2 = [];
+      this.currentDataId = this.traitementFormItems[id].id;
       const forms = this.traitementFormItems[id].datas;
       this.validSteps2.push(forms[0]);
       function execution(i) {
@@ -288,6 +341,38 @@ export default {
         }
       });
       return user;
+    },
+    updateStatus() {
+      if (this.currentDataId) {
+        var dataUpdate = {
+          table: "appformmanager_datas",
+          fields: {
+            status: 0,
+          },
+          action: "update",
+          where: [
+            {
+              column: "id",
+              value: this.currentDataId,
+            },
+          ],
+        };
+        config.saveForm([dataUpdate], this.$store.state.mode).then(() => {
+          config.modalSuccess(
+            "Vous serrez rappellé par un specialiste dans les plus bref delais.",
+            {
+              title: "Status du devis mise à jour",
+              footerClass: "d-none",
+            }
+          );
+          setTimeout(function () {
+            window.location.reload();
+          }, 3000);
+        });
+      }
+    },
+    changePagination(val) {
+      this.$emit("ev-change-pagination", val);
     },
   },
 };

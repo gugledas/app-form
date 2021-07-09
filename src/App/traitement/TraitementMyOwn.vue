@@ -12,6 +12,10 @@
           <list-table
             :liste_fields_check="ListeFieldsCheck"
             :liste_fields_display="ListeFieldsDisplay"
+            :totalRows="totalRows"
+            :isBusy="isBusy"
+            :perPage="perPage"
+            @ev-change-pagination="ChangePagination"
           ></list-table>
         </b-col>
       </b-row>
@@ -37,7 +41,7 @@ export default {
     },
   },
   data: () => {
-    return {};
+    return { totalRows: 0, isBusy: false, perPage: 20 };
   },
   watch: {
     stepsId() {
@@ -92,21 +96,13 @@ export default {
     checkUid() {
       if (this.uid) {
         this.loadDatas();
+        this.getTotalRows();
         return true;
       }
       return false;
     },
   },
   methods: {
-    loadDatas() {
-      if (this.uid)
-        this.$store
-          .dispatch("loadTraitementDatas", { id: this.id, uid: this.uid })
-          .then(() => {
-            this.$store.dispatch("setTraitId", this.id);
-            this.$store.dispatch("setFormId", this.id);
-          });
-    },
     deleteSteps(datas) {
       var all = this.$store.state.allStepsDatas;
       var r = all.indexOf(this.formDatas);
@@ -170,6 +166,38 @@ export default {
       this.demo = true;
       this.$nextTick(() => {
         this.$bvModal.hide("modal-prevent-closing");
+      });
+    },
+    loadDatas(pagination = 0) {
+      this.isBusy = true;
+      var pag = null;
+      if (pagination) pag = (pagination - 1) * this.perPage;
+      this.$store
+        .dispatch("loadTraitementDatas", {
+          id: this.id,
+          pagination: pag,
+          uid: this.uid,
+        })
+        .then(() => {
+          this.$store.dispatch("setTraitId", this.id);
+          this.$store.dispatch("setFormId", this.id);
+          this.isBusy = false;
+        });
+    },
+    ChangePagination(val) {
+      this.loadDatas(val);
+    },
+    getTotalRows() {
+      var datas =
+        "select count(*) as nombres from `appformmanager_datas` where `appformmanager_forms` = " +
+        this.id +
+        " and `uid` = " +
+        this.uid;
+      config.getData(datas).then((resp) => {
+        if (resp.data[0] && resp.data[0].nombres) {
+          this.totalRows = parseInt(resp.data[0].nombres);
+        }
+        console.log("resp[0].nombres : ", resp.data[0]);
       });
     },
   },

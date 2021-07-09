@@ -429,9 +429,11 @@ export default new Vuex.Store({
      * Recupere les formulaires soumis en BD.
      */
     loadTraitementDatas({ commit }, payload) {
+      commit("SET_TRAITEMENT_ITEMS", []);
       return new Promise((resolv, reject) => {
         var uid = payload.uid ? payload.uid : null;
         var id = payload.id ? payload.id : null;
+        var pagination = payload.pagination ? payload.pagination : 0;
         console.log("loadTraitementDatas uid : ", uid, " id : ", id);
         var datas =
           " select * from `appformmanager_datas` where `appformmanager_forms` = " +
@@ -439,8 +441,11 @@ export default new Vuex.Store({
         if (uid) {
           datas += " AND `uid` = " + uid;
         }
-        axios
-          .post(config.baseURl + "/query-ajax/select", datas)
+        if (pagination)
+          datas += " order by id DESC limit 20 OFFSET " + pagination;
+        else datas += " order by id DESC limit 20";
+        config
+          .getData(datas)
           .then((reponse) => {
             console.log("get traitement Items: ", reponse);
             commit("SET_TRAITEMENT_ITEMS", reponse.data);
@@ -524,7 +529,10 @@ export default new Vuex.Store({
               if (resp.data) {
                 var uid = resp.data.uid[0].value;
                 utilities.saveDatas(state, getters, uid, status).then(() => {
-                  config.modalSuccess(msg, { title: "Devis sauvegardé" });
+                  config.modalSuccess(msg, {
+                    title: "Devis sauvegardé",
+                    footerClass: "d-none",
+                  });
                   setTimeout(function () {
                     window.location.assign("/node/52");
                   }, 3000);
@@ -557,7 +565,11 @@ export default new Vuex.Store({
         utilities.saveDatas(state, getters, getters.uid, status).then(() => {
           config.modalSuccess("Votre devis a été sauvegardé, ", {
             title: "Devis",
+            footerClass: "d-none",
           });
+          setTimeout(function () {
+            window.location.reload();
+          }, 3000);
         });
     },
     saveDatas({ commit, state, getters }, uid = 0) {

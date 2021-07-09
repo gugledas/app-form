@@ -13,7 +13,10 @@ export default {
     ? "http://lesroisdelareno.kksa"
     : window.location.origin,
   typeSelection: ["radio", "select", "checkbox"],
-
+  getData(datas) {
+    //var datas = "select * from `appformmanager_fomrs`";
+    return AjaxToastBootStrap.post(this.baseURl + "/query-ajax/select", datas);
+  },
   /**
    * Permet d'ajouter et d'editer un formulaire.
    */

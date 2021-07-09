@@ -12,6 +12,10 @@
           <list-table
             :liste_fields_check="ListeFieldsCheck"
             :liste_fields_display="ListeFieldsDisplay"
+            :totalRows="totalRows"
+            :isBusy="isBusy"
+            :perPage="perPage"
+            @ev-change-pagination="ChangePagination"
           ></list-table>
         </b-col>
       </b-row>
@@ -38,7 +42,11 @@ export default {
     },
   },
   data: () => {
-    return {};
+    return {
+      totalRows: 0,
+      isBusy: false,
+      perPage: 20,
+    };
   },
   watch: {
     stepsId() {
@@ -46,10 +54,8 @@ export default {
     },
   },
   mounted() {
-    this.$store.dispatch("loadTraitementDatas", { id: this.id }).then(() => {
-      this.$store.dispatch("setTraitId", this.id);
-      this.$store.dispatch("setFormId", this.id);
-    });
+    this.loadDatas();
+    this.getTotalRows();
   },
   computed: {
     ...mapState(["traitementId"]),
@@ -183,6 +189,35 @@ export default {
       this.$nextTick(() => {
         this.$bvModal.hide("modal-prevent-closing");
       });
+    },
+    getTotalRows() {
+      var datas =
+        "select count(*) as nombres from `appformmanager_datas` where `appformmanager_forms` = " +
+        this.id;
+      config.getData(datas).then((resp) => {
+        if (resp.data[0] && resp.data[0].nombres) {
+          this.totalRows = parseInt(resp.data[0].nombres);
+        }
+        console.log("resp[0].nombres : ", resp.data[0]);
+      });
+    },
+    loadDatas(pagination = 0) {
+      this.isBusy = true;
+      var pag = null;
+      if (pagination) pag = (pagination - 1) * this.perPage;
+      this.$store
+        .dispatch("loadTraitementDatas", {
+          id: this.id,
+          pagination: pag,
+        })
+        .then(() => {
+          this.$store.dispatch("setTraitId", this.id);
+          this.$store.dispatch("setFormId", this.id);
+          this.isBusy = false;
+        });
+    },
+    ChangePagination(val) {
+      this.loadDatas(val);
     },
   },
 };

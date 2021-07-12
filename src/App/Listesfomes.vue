@@ -61,6 +61,7 @@
 <script>
 import { mapState } from "vuex";
 import config from "./config/config.js";
+
 import { AjaxToastBootStrap } from "wbuutilities";
 
 export default {

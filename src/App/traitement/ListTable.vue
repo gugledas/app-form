@@ -166,7 +166,7 @@
               @click="updateStatus()"
               v-if="
                 (currentDevis.status === '1' || currentDevis.status === 1) &&
-                currentDevis.uid === $store.state.uid
+                currentDevis.uid.includes($store.getters.uid)
               "
             >
               Me rappeler
@@ -417,6 +417,12 @@ export default {
   .status {
     font-size: 0.7em;
     font-weight: bold;
+  }
+}
+.content-field {
+  .label {
+    color: inherit;
+    text-align: left;
   }
 }
 </style>

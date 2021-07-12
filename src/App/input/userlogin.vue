@@ -121,8 +121,23 @@
             </small>
           </div>
         </ValidationProvider>
-
+        <hr />
+        <div v-for="(fieldrender, i) in fieldsRegisterRender" :key="i">
+          <component
+            v-bind:is="fieldrender"
+            @input="b_binput"
+            @binput="bb_binput"
+          ></component>
+        </div>
         <!-- -->
+        <hr />
+        <pre>
+          {{ modelsFields }}
+        </pre>
+        <component
+          v-bind:is="testrenjsx"
+          @click_h2="final_click_h2"
+        ></component>
       </form>
     </transition>
   </div>
@@ -132,6 +147,8 @@
 import { mapState, mapGetters } from "vuex";
 import { ValidationProvider } from "vee-validate";
 import "../EditsFields/vee-validate-custom.js";
+import { drupalFormFields } from "drupal-vuejs";
+import testrenjsx from "../testrenjsx.vue";
 export default {
   name: "userloginV2",
   props: {
@@ -152,11 +169,15 @@ export default {
     return {
       tabIndex: 0,
       current_tab: "register",
+      fieldsRegisterRender: [],
+      modelsFields: {},
+      testrenjsx: testrenjsx,
     };
   },
   mounted() {
     this.initValue();
     this.setRefs();
+    this.getFiledRegisterUser();
   },
   watch: {
     //
@@ -169,7 +190,7 @@ export default {
       return true;
     },
     nomDisplay() {
-      if (this.current_tab == "register") {
+      if (this.current_tab === "register") {
         return "Nom";
       } else {
         return "Login ou email";
@@ -177,6 +198,21 @@ export default {
     },
   },
   methods: {
+    final_click_h2() {
+      alert("final_click_h2");
+    },
+    b_binput(e) {
+      alert(e);
+    },
+    bb_binput(e) {
+      alert(e);
+    },
+    async getFiledRegisterUser() {
+      const drupalFormField = new drupalFormFields("user", "user", this);
+      this.fieldsRegisterRender = await drupalFormField.format();
+      console.log("fieldsRegisterRender : ", this.fieldsRegisterRender);
+      this.modelsFields = drupalFormField.modelsFields;
+    },
     handleOk(event) {
       event.preventDefault();
       this.handleSubmit();

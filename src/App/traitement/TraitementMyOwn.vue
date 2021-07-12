@@ -64,6 +64,11 @@ export default {
           },
         },
         {
+          label: "Status",
+          key: "status",
+          thStyle: { minWidth: "140px" },
+        },
+        {
           label: "Prix",
           key: "price",
         },

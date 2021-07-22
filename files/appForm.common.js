@@ -83,11 +83,11 @@ module.exports =
 /******/
 /******/
 /******/ 		// mini-css-extract-plugin CSS loading
-/******/ 		var cssChunks = {"2":1,"3":1,"4":1,"5":1,"7":1,"8":1,"9":1,"10":1,"11":1,"12":1,"13":1,"14":1,"15":1,"16":1,"17":1,"18":1,"20":1};
+/******/ 		var cssChunks = {"2":1,"3":1,"4":1,"6":1,"7":1,"8":1,"9":1,"10":1,"11":1,"13":1,"14":1,"15":1,"16":1,"17":1,"18":1,"20":1};
 /******/ 		if(installedCssChunks[chunkId]) promises.push(installedCssChunks[chunkId]);
 /******/ 		else if(installedCssChunks[chunkId] !== 0 && cssChunks[chunkId]) {
 /******/ 			promises.push(installedCssChunks[chunkId] = new Promise(function(resolve, reject) {
-/******/ 				var href = "css/" + ({}[chunkId]||chunkId) + "." + {"0":"31d6cfe0","2":"2d029869","3":"aeae6e44","4":"50cd075b","5":"1c5bb887","6":"31d6cfe0","7":"5f515804","8":"3def3390","9":"b2742065","10":"63248bb6","11":"dd3fcea7","12":"e5f1a246","13":"5451517c","14":"8d2429ae","15":"5686f708","16":"5686f708","17":"ac5b10c9","18":"42efe657","19":"31d6cfe0","20":"44ac9b6b","21":"31d6cfe0","22":"31d6cfe0","23":"31d6cfe0","24":"31d6cfe0","25":"31d6cfe0","26":"31d6cfe0","27":"31d6cfe0","28":"31d6cfe0","29":"31d6cfe0","30":"31d6cfe0","31":"31d6cfe0","32":"31d6cfe0","33":"31d6cfe0","34":"31d6cfe0","35":"31d6cfe0"}[chunkId] + ".css";
+/******/ 				var href = "css/" + ({}[chunkId]||chunkId) + "." + {"0":"31d6cfe0","2":"2d029869","3":"aeae6e44","4":"2e41ede7","5":"31d6cfe0","6":"5f515804","7":"3def3390","8":"b2742065","9":"63248bb6","10":"dd3fcea7","11":"e5f1a246","12":"31d6cfe0","13":"5451517c","14":"8d2429ae","15":"5686f708","16":"5686f708","17":"ac5b10c9","18":"42efe657","19":"31d6cfe0","20":"44ac9b6b","21":"31d6cfe0","22":"31d6cfe0","23":"31d6cfe0","24":"31d6cfe0","25":"31d6cfe0","26":"31d6cfe0","27":"31d6cfe0","28":"31d6cfe0","29":"31d6cfe0","30":"31d6cfe0","31":"31d6cfe0","32":"31d6cfe0","33":"31d6cfe0","34":"31d6cfe0","35":"31d6cfe0"}[chunkId] + ".css";
 /******/ 				var fullhref = __webpack_require__.p + href;
 /******/ 				var existingLinkTags = document.getElementsByTagName("link");
 /******/ 				for(var i = 0; i < existingLinkTags.length; i++) {
@@ -830,6 +830,53 @@ module.exports = TO_STRING_TAG_SUPPORT ? {}.toString : function toString() {
 var getBuiltIn = __webpack_require__("472a");
 
 module.exports = getBuiltIn('document', 'documentElement');
+
+
+/***/ }),
+
+/***/ "0cb2":
+/***/ (function(module, exports, __webpack_require__) {
+
+var toObject = __webpack_require__("7b0b");
+
+var floor = Math.floor;
+var replace = ''.replace;
+var SUBSTITUTION_SYMBOLS = /\$([$&'`]|\d{1,2}|<[^>]*>)/g;
+var SUBSTITUTION_SYMBOLS_NO_NAMED = /\$([$&'`]|\d{1,2})/g;
+
+// https://tc39.es/ecma262/#sec-getsubstitution
+module.exports = function (matched, str, position, captures, namedCaptures, replacement) {
+  var tailPos = position + matched.length;
+  var m = captures.length;
+  var symbols = SUBSTITUTION_SYMBOLS_NO_NAMED;
+  if (namedCaptures !== undefined) {
+    namedCaptures = toObject(namedCaptures);
+    symbols = SUBSTITUTION_SYMBOLS;
+  }
+  return replace.call(replacement, symbols, function (match, ch) {
+    var capture;
+    switch (ch.charAt(0)) {
+      case '$': return '$';
+      case '&': return matched;
+      case '`': return str.slice(0, position);
+      case "'": return str.slice(tailPos);
+      case '<':
+        capture = namedCaptures[ch.slice(1, -1)];
+        break;
+      default: // \d\d?
+        var n = +ch;
+        if (n === 0) return match;
+        if (n > m) {
+          var f = floor(n / 10);
+          if (f === 0) return match;
+          if (f <= m) return captures[f - 1] === undefined ? ch.charAt(1) : captures[f - 1] + ch.charAt(1);
+          return match;
+        }
+        capture = captures[n - 1];
+    }
+    return capture === undefined ? '' : capture;
+  });
+};
 
 
 /***/ }),
@@ -7524,6 +7571,112 @@ module.exports = function dispatchRequest(config) {
 /***/ (function(module, exports) {
 
 module.exports = false;
+
+
+/***/ }),
+
+/***/ "5319":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var fixRegExpWellKnownSymbolLogic = __webpack_require__("d784");
+var anObject = __webpack_require__("825a");
+var toLength = __webpack_require__("50c4");
+var toInteger = __webpack_require__("a691");
+var requireObjectCoercible = __webpack_require__("1d80");
+var advanceStringIndex = __webpack_require__("8aa5");
+var getSubstitution = __webpack_require__("0cb2");
+var regExpExec = __webpack_require__("14c3");
+
+var max = Math.max;
+var min = Math.min;
+
+var maybeToString = function (it) {
+  return it === undefined ? it : String(it);
+};
+
+// @@replace logic
+fixRegExpWellKnownSymbolLogic('replace', 2, function (REPLACE, nativeReplace, maybeCallNative, reason) {
+  var REGEXP_REPLACE_SUBSTITUTES_UNDEFINED_CAPTURE = reason.REGEXP_REPLACE_SUBSTITUTES_UNDEFINED_CAPTURE;
+  var REPLACE_KEEPS_$0 = reason.REPLACE_KEEPS_$0;
+  var UNSAFE_SUBSTITUTE = REGEXP_REPLACE_SUBSTITUTES_UNDEFINED_CAPTURE ? '$' : '$0';
+
+  return [
+    // `String.prototype.replace` method
+    // https://tc39.es/ecma262/#sec-string.prototype.replace
+    function replace(searchValue, replaceValue) {
+      var O = requireObjectCoercible(this);
+      var replacer = searchValue == undefined ? undefined : searchValue[REPLACE];
+      return replacer !== undefined
+        ? replacer.call(searchValue, O, replaceValue)
+        : nativeReplace.call(String(O), searchValue, replaceValue);
+    },
+    // `RegExp.prototype[@@replace]` method
+    // https://tc39.es/ecma262/#sec-regexp.prototype-@@replace
+    function (regexp, replaceValue) {
+      if (
+        (!REGEXP_REPLACE_SUBSTITUTES_UNDEFINED_CAPTURE && REPLACE_KEEPS_$0) ||
+        (typeof replaceValue === 'string' && replaceValue.indexOf(UNSAFE_SUBSTITUTE) === -1)
+      ) {
+        var res = maybeCallNative(nativeReplace, regexp, this, replaceValue);
+        if (res.done) return res.value;
+      }
+
+      var rx = anObject(regexp);
+      var S = String(this);
+
+      var functionalReplace = typeof replaceValue === 'function';
+      if (!functionalReplace) replaceValue = String(replaceValue);
+
+      var global = rx.global;
+      if (global) {
+        var fullUnicode = rx.unicode;
+        rx.lastIndex = 0;
+      }
+      var results = [];
+      while (true) {
+        var result = regExpExec(rx, S);
+        if (result === null) break;
+
+        results.push(result);
+        if (!global) break;
+
+        var matchStr = String(result[0]);
+        if (matchStr === '') rx.lastIndex = advanceStringIndex(S, toLength(rx.lastIndex), fullUnicode);
+      }
+
+      var accumulatedResult = '';
+      var nextSourcePosition = 0;
+      for (var i = 0; i < results.length; i++) {
+        result = results[i];
+
+        var matched = String(result[0]);
+        var position = max(min(toInteger(result.index), S.length), 0);
+        var captures = [];
+        // NOTE: This is equivalent to
+        //   captures = result.slice(1).map(maybeToString)
+        // but for some reason `nativeSlice.call(result, 1, result.length)` (called in
+        // the slice polyfill when slicing native arrays) "doesn't work" in safari 9 and
+        // causes a crash (https://pastebin.com/N21QzeQA) when trying to debug it.
+        for (var j = 1; j < result.length; j++) captures.push(maybeToString(result[j]));
+        var namedCaptures = result.groups;
+        if (functionalReplace) {
+          var replacerArgs = [matched].concat(captures, position, S);
+          if (namedCaptures !== undefined) replacerArgs.push(namedCaptures);
+          var replacement = String(replaceValue.apply(undefined, replacerArgs));
+        } else {
+          replacement = getSubstitution(matched, S, position, captures, namedCaptures, replaceValue);
+        }
+        if (position >= nextSourcePosition) {
+          accumulatedResult += S.slice(nextSourcePosition, position) + replacement;
+          nextSourcePosition = position + matched.length;
+        }
+      }
+      return accumulatedResult + S.slice(nextSourcePosition);
+    }
+  ];
+});
 
 
 /***/ }),
@@ -42476,6 +42629,9 @@ var ButtonDelete_component = Object(componentNormalizer["a" /* default */])(
 // EXTERNAL MODULE: ../wbuutilities/node_modules/core-js/modules/es.object.to-string.js
 var es_object_to_string = __webpack_require__("c26d");
 
+// EXTERNAL MODULE: ../wbuutilities/node_modules/core-js/modules/es.promise.js
+var es_promise = __webpack_require__("a9ce");
+
 // EXTERNAL MODULE: ../wbuutilities/node_modules/core-js/modules/es.regexp.exec.js
 var es_regexp_exec = __webpack_require__("9a6c");
 
@@ -42495,13 +42651,14 @@ var axios_default = /*#__PURE__*/__webpack_require__.n(axios);
 
 
 
+
 /**
  * Permet d'effectuer les requetes
  * pour modifier ou definir les paramettres par defaut de l'instance, {AjaxBasic}.axiosInstance.defaults.timeout = 30000;
  */
 
 var InstAxios = axios_default.a.create({
-  timeout: 15000
+  timeout: 300000
 });
 var basicRequest = {
   axiosInstance: InstAxios,
@@ -42598,9 +42755,6 @@ var basicRequest = {
 /* harmony default export */ var basic = (basicRequest);
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/objectSpread2.js + 1 modules
 var objectSpread2 = __webpack_require__("5530");
-
-// EXTERNAL MODULE: ../wbuutilities/node_modules/core-js/modules/es.promise.js
-var es_promise = __webpack_require__("a9ce");
 
 // EXTERNAL MODULE: external {"commonjs":"vue","commonjs2":"vue","root":"Vue"}
 var external_commonjs_vue_commonjs2_vue_root_Vue_ = __webpack_require__("8bbf");
@@ -46318,7 +46472,7 @@ var AjaxToastBootStrap = Object(objectSpread2["a" /* default */])(Object(objectS
 
     var showNotification = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
     return new Promise(function (resolv, reject) {
-      basic.post(url, configs).then(function (reponse) {
+      basic.get(url, configs).then(function (reponse) {
         if (showNotification) {
           _this3.notification("success");
         }
@@ -52967,7 +53121,7 @@ __webpack_require__.d(__webpack_exports__, "a", function() { return /* reexport 
 __webpack_require__.d(__webpack_exports__, "b", function() { return /* reexport */ jsonApi_termsTaxo; });
 __webpack_require__.d(__webpack_exports__, "c", function() { return /* reexport */ user; });
 
-// UNUSED EXPORTS: drupalSession
+// UNUSED EXPORTS: drupalSession, drupalFormFields
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.object.to-string.js
 var es_object_to_string = __webpack_require__("d3b7");
@@ -53300,7 +53454,191 @@ var termsTaxo_termsTaxo = /*#__PURE__*/function () {
     });
   }
 });
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.symbol.js
+var es_symbol = __webpack_require__("a4d3");
+
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.symbol.description.js
+var es_symbol_description = __webpack_require__("e01a");
+
+// CONCATENATED MODULE: ../drupal-vuejs/src/App/formatFields/InputBootstrap.js
+
+
+/* harmony default export */ var InputBootstrap = ({
+  vue: "",
+  //represente instance this de vue.
+  modelsFields: {},
+
+  /**
+   * La valeur par defaut peut etre definit via defaultValue, lors de la consctruction, ou definit dans <component.
+   * On recupere les données via un emit @b-input au niveau du <component.
+   * @param {} h
+   * @param {*} field
+   * @param {*} defaultValue
+   * @returns
+   */
+  string: function string(h, field) {
+    var defaultValue = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+    var vm = this.vue;
+    var input = h("b-form-input", {
+      props: {
+        type: "text",
+        value: defaultValue,
+        b_input: {
+          type: Object,
+          required: true
+        }
+      },
+      on: {
+        input: function input(e) {
+          vm.$emit("ev_select_project", e);
+          console.log(" Vue instance : ", vm.$emit);
+        }
+      }
+    });
+    var formG = h("b-form-group", {
+      props: {
+        label: field.label_value,
+        description: field.description
+      },
+      on: {
+        ev_select_project: function ev_select_project(e) {
+          alert("ffffffffff");
+          vm.$emit("binput", e);
+          console.log("binput : ", e);
+        },
+        onBinput: function onBinput(e) {
+          vm.$emit("binput--", e);
+          console.log(" Vue instance : ", vm);
+        }
+      },
+      onBinput: function onBinput(e) {
+        vm.$emit("binput--", e);
+        console.log(" Vue instance : ", vm);
+      }
+    }, [input]); //return { form: formG, value: defaultValue };
+
+    return formG;
+  }
+});
+// EXTERNAL MODULE: external {"commonjs":"vue","commonjs2":"vue","root":"Vue"}
+var external_commonjs_vue_commonjs2_vue_root_Vue_ = __webpack_require__("8bbf");
+var external_commonjs_vue_commonjs2_vue_root_Vue_default = /*#__PURE__*/__webpack_require__.n(external_commonjs_vue_commonjs2_vue_root_Vue_);
+
+// CONCATENATED MODULE: ../drupal-vuejs/src/App/formatFields/formatFieldsBootstrap.js
+
+
+
+
+
+
+
+
+
+/**
+ * Permet de formater les champs drupal avec les equivalence bootstrap vuejs.
+ */
+
+var formatFieldsBootstrap_formatField = /*#__PURE__*/function () {
+  function formatField(entity, bundle) {
+    var vm = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+
+    Object(classCallCheck["a" /* default */])(this, formatField);
+
+    this.entity = entity;
+    this.bundle = bundle;
+    InputBootstrap.vue = vm ? vm : new external_commonjs_vue_commonjs2_vue_root_Vue_default.a({}); // ---------
+  }
+  /**
+   * Retoune les champs convertie en utilisant les composants bootstrap-vuejs.
+   * @returns Array []
+   */
+
+
+  Object(createClass["a" /* default */])(formatField, [{
+    key: "format",
+    value: function () {
+      var _format = Object(asyncToGenerator["a" /* default */])( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+        var fields;
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return this.getFields();
+
+              case 2:
+                fields = _context.sent;
+                return _context.abrupt("return", new Promise(function (resolv, reject) {
+                  if (fields.data && fields.data.fields) {
+                    var formatFields = [];
+
+                    var _loop = function _loop(i) {
+                      formatFields.push({
+                        props: {},
+                        render: function render(createElement) {
+                          var renderField = [];
+
+                          switch (fields.data.fields[i].type) {
+                            case "string":
+                              //utilities.modelsFields[i] = "";
+                              renderField.push(InputBootstrap.string(createElement, fields.data.fields[i]));
+                              break;
+                          }
+
+                          return createElement("div", renderField);
+                        }
+                      });
+                    };
+
+                    for (var i in fields.data.fields) {
+                      _loop(i);
+                    }
+
+                    resolv(formatFields);
+                  } else {
+                    reject("Aucune donnée disponible");
+                  }
+                }));
+
+              case 4:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function format() {
+        return _format.apply(this, arguments);
+      }
+
+      return format;
+    }()
+    /**
+     * Get fileds in drupal.
+     * @returns
+     */
+
+  }, {
+    key: "getFields",
+    value: function getFields() {
+      var url = "/api/form-node/generate-form";
+
+      if (this.entity === "user") {
+        url = "/api/form-node/generate-user";
+      }
+
+      url += "/" + this.bundle;
+      return App_utilities.get(url);
+    }
+  }]);
+
+  return formatField;
+}();
+
+/* harmony default export */ var formatFieldsBootstrap = (formatFieldsBootstrap_formatField);
 // CONCATENATED MODULE: ../drupal-vuejs/index.js
+
 
 
 
@@ -56714,15 +57052,19 @@ module.exports = function buildFullPath(baseURL, requestedURL) {
 /* harmony import */ var core_js_modules_es_object_to_string_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_object_to_string_js__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var core_js_modules_es_promise_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__("e6cf");
 /* harmony import */ var core_js_modules_es_promise_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_promise_js__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var core_js_modules_es_string_pad_start_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__("4d90");
-/* harmony import */ var core_js_modules_es_string_pad_start_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_string_pad_start_js__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var core_js_modules_es_regexp_to_string_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__("25f0");
-/* harmony import */ var core_js_modules_es_regexp_to_string_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_regexp_to_string_js__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var wbuutilities__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__("a76e");
-/* harmony import */ var _Utilities_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__("2c10");
-/* harmony import */ var bootstrap_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__("104d");
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__("8bbf");
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var core_js_modules_es_regexp_exec_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__("ac1f");
+/* harmony import */ var core_js_modules_es_regexp_exec_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_regexp_exec_js__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var core_js_modules_es_string_replace_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__("5319");
+/* harmony import */ var core_js_modules_es_string_replace_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_string_replace_js__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var core_js_modules_es_string_pad_start_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__("4d90");
+/* harmony import */ var core_js_modules_es_string_pad_start_js__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_string_pad_start_js__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var core_js_modules_es_regexp_to_string_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__("25f0");
+/* harmony import */ var core_js_modules_es_regexp_to_string_js__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_regexp_to_string_js__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var wbuutilities__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__("a76e");
+/* harmony import */ var _Utilities_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__("2c10");
+/* harmony import */ var bootstrap_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__("104d");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__("8bbf");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_11__);
 
 
 
@@ -56733,17 +57075,20 @@ module.exports = function buildFullPath(baseURL, requestedURL) {
 
 
 
-vue__WEBPACK_IMPORTED_MODULE_9___default.a.use(bootstrap_vue__WEBPACK_IMPORTED_MODULE_8__[/* BVToastPlugin */ "a"]);
-var vm = new vue__WEBPACK_IMPORTED_MODULE_9___default.a(); //console.log("Module Vue :  ", vm, "\n $bvToast : ", vm.$bvToast);
 
-wbuutilities__WEBPACK_IMPORTED_MODULE_6__[/* AjaxToastBootStrap */ "b"].$bvToast = vm.$bvToast;
-wbuutilities__WEBPACK_IMPORTED_MODULE_6__[/* AjaxToastBootStrap */ "b"].$bvModal = vm.$bvModal;
+
+vue__WEBPACK_IMPORTED_MODULE_11___default.a.use(bootstrap_vue__WEBPACK_IMPORTED_MODULE_10__[/* BVToastPlugin */ "a"]);
+var vm = new vue__WEBPACK_IMPORTED_MODULE_11___default.a(); //console.log("Module Vue :  ", vm, "\n $bvToast : ", vm.$bvToast);
+
+wbuutilities__WEBPACK_IMPORTED_MODULE_8__[/* AjaxToastBootStrap */ "b"].$bvToast = vm.$bvToast;
+wbuutilities__WEBPACK_IMPORTED_MODULE_8__[/* AjaxToastBootStrap */ "b"].$bvModal = vm.$bvModal;
 /* harmony default export */ __webpack_exports__["a"] = ({
   baseURl: window.location.host.includes("localhost") ? "http://lesroisdelareno.kksa" : window.location.origin,
   typeSelection: ["radio", "select", "checkbox"],
   getData: function getData(datas) {
+    var mode = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
     //var datas = "select * from `appformmanager_fomrs`";
-    return wbuutilities__WEBPACK_IMPORTED_MODULE_6__[/* AjaxToastBootStrap */ "b"].post(this.baseURl + "/query-ajax/select", datas);
+    return wbuutilities__WEBPACK_IMPORTED_MODULE_8__[/* AjaxToastBootStrap */ "b"].post(this.baseURl + "/query-ajax/select", datas, {}, mode);
   },
 
   /**
@@ -56751,18 +57096,25 @@ wbuutilities__WEBPACK_IMPORTED_MODULE_6__[/* AjaxToastBootStrap */ "b"].$bvModal
    */
   saveForm: function saveForm(datas) {
     var mode = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-    return wbuutilities__WEBPACK_IMPORTED_MODULE_6__[/* AjaxToastBootStrap */ "b"].post(this.baseURl + "/query-ajax/insert-update", datas, {}, mode);
+    return wbuutilities__WEBPACK_IMPORTED_MODULE_8__[/* AjaxToastBootStrap */ "b"].post(this.baseURl + "/query-ajax/insert-update", datas, {}, mode);
   },
   prepareDatasToSave: function prepareDatasToSave(datas) {
-    return _Utilities_js__WEBPACK_IMPORTED_MODULE_7__[/* default */ "a"].saveSteps(datas);
+    return _Utilities_js__WEBPACK_IMPORTED_MODULE_9__[/* default */ "a"].saveSteps(datas);
   },
 
   /**
    * Prepare les données pour la sauvagarde.
+   *
+   * @param {*} id
+   * @param {*} datas
+   * @param {*} price
+   * @param {*} uid
+   * @param {*} status
+   * @returns
    */
   saveStepsDatas: function saveStepsDatas(id, datas, price) {
     var uid = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 0;
-    var status = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 0;
+    var status = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 2;
     return new Promise(function (resolv) {
       //console.log("fdate : ", datas);
       var forms = "";
@@ -56801,6 +57153,7 @@ wbuutilities__WEBPACK_IMPORTED_MODULE_6__[/* AjaxToastBootStrap */ "b"].$bvModal
     });
   },
   deleteForm: function deleteForm(id) {
+    var mode = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
     var result = [];
     var table1 = {
       table: "appformmanager_fomrs",
@@ -56812,9 +57165,18 @@ wbuutilities__WEBPACK_IMPORTED_MODULE_6__[/* AjaxToastBootStrap */ "b"].$bvModal
       }]
     };
     result.push(table1);
-    return wbuutilities__WEBPACK_IMPORTED_MODULE_6__[/* AjaxToastBootStrap */ "b"].post(this.baseURl + "/query-ajax/insert-update", result, {});
+    return wbuutilities__WEBPACK_IMPORTED_MODULE_8__[/* AjaxToastBootStrap */ "b"].post(this.baseURl + "/query-ajax/insert-update", result, {}, mode);
   },
+
+  /**
+   *
+   * @param {*} id
+   * @param {*} status 0=>devis en attente, 1 devis sauvegarder, 2 devis abondonnée.
+   * @param {*} mode
+   * @returns
+   */
   deleteFormTraitement: function deleteFormTraitement(id, status) {
+    var mode = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
     var result = [];
     console.log("ress", id, status);
     var table1 = {
@@ -56829,14 +57191,14 @@ wbuutilities__WEBPACK_IMPORTED_MODULE_6__[/* AjaxToastBootStrap */ "b"].$bvModal
       }]
     };
     result.push(table1);
-    return wbuutilities__WEBPACK_IMPORTED_MODULE_6__[/* AjaxToastBootStrap */ "b"].post(this.baseURl + "/query-ajax/insert-update", result, {});
+    return wbuutilities__WEBPACK_IMPORTED_MODULE_8__[/* AjaxToastBootStrap */ "b"].post(this.baseURl + "/query-ajax/insert-update", result, {}, mode);
   },
-  modalSuccess: function modalSuccess(title, conf) {
-    return wbuutilities__WEBPACK_IMPORTED_MODULE_6__[/* AjaxToastBootStrap */ "b"].modalSuccess(title, conf);
+  modalSuccess: function modalSuccess(body, conf) {
+    return wbuutilities__WEBPACK_IMPORTED_MODULE_8__[/* AjaxToastBootStrap */ "b"].modalSuccess(body, conf);
   },
   getMysqlDateToFrench: function getMysqlDateToFrench(data) {
     if (data && data != "") {
-      var _date = new Date(data);
+      var _date = new Date(data.replace(/-/g, "/"));
 
       var french_date = _date.getDate().toString().padStart(2, "0") + "/" + (_date.getMonth() + 1).toString().padStart(2, "0") + "/" + _date.getFullYear() + " à " + _date.getHours().toString().padStart(2, "0") + ":" + _date.getMinutes().toString().padStart(2, "0");
 
@@ -56844,6 +57206,19 @@ wbuutilities__WEBPACK_IMPORTED_MODULE_6__[/* AjaxToastBootStrap */ "b"].$bvModal
     }
 
     return "";
+  },
+
+  /**
+   * Pour le rendu JSX on utilisara domProps;
+   */
+  messages: {
+    devisRappel: "Votre devis a été pris en compte,<br> Nous vous contacterons dans les 24 heures !",
+    devisCreateUser: "Vous pouvez ajuster ou suivre le traitement de votre devis, en vous connectant sur <a href='/'> lesroisdelareno.fr </a>. <br> <strong> Bien vouloir verifier votre boite mail pour plus d'information </strong>",
+    devisEnd: "<br> Toute l'équipe de <a href='/'>lesroisdelareno.fr</a> vous remercie de votre confiance",
+    devisSave: "Votre devis a été sauvegardé",
+    statusDevis0: "Devis en attente de rappel",
+    statusDevis1: "Sauvegardé",
+    statusDevis2: "Abandonné"
   }
 });
 
@@ -57407,6 +57782,12 @@ var es_object_to_string = __webpack_require__("d3b7");
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.promise.js
 var es_promise = __webpack_require__("e6cf");
 
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.includes.js
+var es_array_includes = __webpack_require__("caad");
+
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.string.includes.js
+var es_string_includes = __webpack_require__("2532");
+
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.regexp.exec.js
 var es_regexp_exec = __webpack_require__("ac1f");
 
@@ -57419,7 +57800,7 @@ var vuex_esm = __webpack_require__("2f62");
 // EXTERNAL MODULE: ./src/store/utilities.js
 var utilities = __webpack_require__("fd71");
 
-// EXTERNAL MODULE: ../drupal-vuejs/index.js + 7 modules
+// EXTERNAL MODULE: ../drupal-vuejs/index.js + 9 modules
 var drupal_vuejs = __webpack_require__("e674");
 
 // EXTERNAL MODULE: ./src/App/config/config.js
@@ -57430,6 +57811,8 @@ var axios = __webpack_require__("bc3a");
 var axios_default = /*#__PURE__*/__webpack_require__.n(axios);
 
 // CONCATENATED MODULE: ./src/store/index.js
+
+
 
 
 
@@ -57964,8 +58347,8 @@ external_commonjs_vue_commonjs2_vue_root_Vue_default.a.use(vuex_esm["a" /* defau
       return new Promise(function (resolv, reject) {
         var uid = payload.uid ? payload.uid : null;
         var id = payload.id ? payload.id : null;
-        var pagination = payload.pagination ? payload.pagination : 0;
-        console.log("loadTraitementDatas uid : ", uid, " id : ", id);
+        var pagination = payload.pagination ? payload.pagination : 0; //console.log("loadTraitementDatas uid : ", uid, " id : ", id);
+
         var datas = " select * from `appformmanager_datas` where `appformmanager_forms` = " + id;
 
         if (uid) {
@@ -57974,11 +58357,11 @@ external_commonjs_vue_commonjs2_vue_root_Vue_default.a.use(vuex_esm["a" /* defau
 
         if (pagination) datas += " order by id DESC limit 20 OFFSET " + pagination;else datas += " order by id DESC limit 20";
         config["a" /* default */].getData(datas).then(function (reponse) {
-          console.log("get traitement Items: ", reponse);
+          //console.log("get traitement Items: ", reponse);
           commit("SET_TRAITEMENT_ITEMS", reponse.data);
           resolv(reponse.data);
         }).catch(function (error) {
-          console.log("get error ", error);
+          //console.log("get error ", error);
           reject(error);
         });
       });
@@ -58020,55 +58403,104 @@ external_commonjs_vue_commonjs2_vue_root_Vue_default.a.use(vuex_esm["a" /* defau
      * Enregistre les données et cree le compte utilisateur.
      */
     saveDatasUser: function saveDatasUser(_ref17) {
-      var _arguments = arguments;
+      var _arguments = arguments,
+          _this = this;
+
       return Object(asyncToGenerator["a" /* default */])( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
-        var commit, state, getters, status, statusName, statusEmail, statusPassword, datas, url, msg, displayMsg;
+        var commit, state, getters, status, self, datas, url, msg, msgCreate, displayMsg, statusName, statusEmail, statusPassword;
         return regeneratorRuntime.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
                 commit = _ref17.commit, state = _ref17.state, getters = _ref17.getters;
                 status = _arguments.length > 1 && _arguments[1] !== undefined ? _arguments[1] : 0;
-                //on valide les données utilisateur,
+                self = _this, datas = [], url = null, msg = "";
+                /**
+                 *
+                 * @param {Array} text
+                 * @returns
+                 */
+
+                msgCreate = function msgCreate(texts) {
+                  var h = self.$createElement !== undefined ? self.$createElement : self._vm.$createElement;
+                  var text = [];
+
+                  for (var i in texts) {
+                    text.push(h("p", {
+                      domProps: {
+                        innerHTML: texts[i]
+                      },
+                      style: {
+                        lineHeight: "25px",
+                        fontSize: "17px",
+                        padding: "15px 15px 0px",
+                        margin: 0
+                      }
+                    }, []));
+                  }
+
+                  return h("div", {}, [text]);
+                };
+                /**
+                 *
+                 * @param { return msgCreate } msg
+                 * @param { string } title
+                 * @param { Boolean } statusMsg
+                 */
+
+
+                displayMsg = function displayMsg(msg) {
+                  var title = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "Devis sauvegardé";
+                  var statusMsg = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+                  config["a" /* default */].modalSuccess(msg, {
+                    title: title,
+                    footerClass: "d-none",
+                    headerBgVariant: statusMsg ? "success" : "danger",
+                    headerTextVariant: "light"
+                  });
+                  if (statusMsg) setTimeout(function () {
+                    window.location.assign("/");
+                  }, 7000);
+                }; //On valide les données utilisateur,
+
+
                 console.log("saveDatasUser : ", commit, state);
 
                 if (getters.uid) {
-                  _context3.next = 21;
+                  _context3.next = 23;
                   break;
                 }
 
                 statusName = {}, statusEmail = {}, statusPassword = {};
-                _context3.next = 7;
+                _context3.next = 10;
                 return state.userlogin.name.ref.validate();
 
-              case 7:
+              case 10:
                 statusName = _context3.sent;
 
                 if (!(state.userlogin.tabIndex === "register")) {
-                  _context3.next = 14;
+                  _context3.next = 17;
                   break;
                 }
 
-                _context3.next = 11;
+                _context3.next = 14;
                 return state.userlogin.email.ref.validate();
 
-              case 11:
+              case 14:
                 statusEmail = _context3.sent;
-                _context3.next = 18;
+                _context3.next = 20;
                 break;
 
-              case 14:
-                console.log("state.userlogin.password.ref : ", state.userlogin.password.ref);
-                _context3.next = 17;
+              case 17:
+                _context3.next = 19;
                 return state.userlogin.password.ref.validate();
 
-              case 17:
+              case 19:
                 statusPassword = _context3.sent;
 
-              case 18:
+              case 20:
                 if (statusName.valid && (statusEmail.valid || statusPassword.valid)) {
-                  datas = [], url = null, msg = "";
-
+                  // Inscription d'un utilisateur.
                   if (state.userlogin.tabIndex === "register") {
                     datas = {
                       name: [{
@@ -58076,58 +58508,55 @@ external_commonjs_vue_commonjs2_vue_root_Vue_default.a.use(vuex_esm["a" /* defau
                       }],
                       mail: [{
                         value: state.userlogin.email.value
+                      }],
+                      field_prenom: [{
+                        value: state.userlogin.prenom.value
+                      }],
+                      field_telephone: [{
+                        value: state.userlogin.telephone.value
                       }]
                     };
                     url = "/fr/user/register?_format=json";
-                    msg = "Votre devis a été sauvegardé et votre compte a été  crée. Un mail a été envoyé dans votre boite email afin de valider votre compte.";
-                  } else {
-                    datas = {
-                      name: [{
-                        value: state.userlogin.name.value
-                      }],
-                      password: [{
-                        value: state.userlogin.password.value
-                      }]
-                    };
-                    url = "/appformmanager/user";
-                    msg = "Votre devis a été sauvegardé";
-                  }
-
-                  displayMsg = function displayMsg() {
-                    config["a" /* default */].modalSuccess(msg, {
-                      title: "Devis sauvegardé",
-                      footerClass: "d-none"
-                    });
-                    setTimeout(function () {
-                      window.location.assign("/node/52");
-                    }, 3000);
-                  };
+                    msg = msgCreate([config["a" /* default */].messages.devisRappel, config["a" /* default */].messages.devisCreateUser, config["a" /* default */].messages.devisEnd]);
+                  } // Connexion d'un utilisateur
+                  else {
+                      datas = {
+                        name: [{
+                          value: state.userlogin.name.value
+                        }],
+                        password: [{
+                          value: state.userlogin.password.value
+                        }]
+                      };
+                      url = "/appformmanager/user";
+                      msg = msgCreate([config["a" /* default */].messages.devisRappel]);
+                    }
 
                   drupal_vuejs["a" /* drupalUtilities */].post(url, datas).then(function (resp) {
                     //console.log("drupalUtilities : ", resp);
                     //On verifie s'il y'a eut redirection.
                     if (resp.reponse && resp.reponse.config.url !== resp.reponse.request.responseURL) {
-                      displayMsg();
+                      drupal_vuejs["c" /* users */].getCurrentUser().then(function (userData) {
+                        console.log(" utilisateur : ", userData);
+                        if (userData.uid && userData.uid[0].value) utilities["a" /* default */].saveDatas(state, getters, userData.uid[0].value, status).then(function () {
+                          displayMsg(msg);
+                        });else {
+                          msg = msgCreate([" Une erreur s'est produite "]);
+                          displayMsg(msg, "Erreur de connexion", false);
+                        }
+                      });
                     } else if (resp.data) {
                       var uid = resp.data.uid[0].value;
                       utilities["a" /* default */].saveDatas(state, getters, uid, status).then(function () {
-                        displayMsg();
+                        displayMsg(msg);
                       });
                     }
                   }).catch(function (errors) {
-                    /*
-                    console.log(
-                      "Error GET drupalUtilities : ",
-                      errors,
-                      "\n error.response :",
-                      errors.response,
-                      "\n error.request ",
-                      errors.request
-                    );
-                    /**/
-                    //On verifie s'il y'a eut redirection.
-                    if (errors.response.config.url !== errors.response.request.responseURL) {
-                      displayMsg();
+                    msg = msgCreate([errors.error && errors.error && errors.error.statusText ? "<strong>" + errors.error.statusText + "</strong>" : "Une erreur s'est produite"]);
+                    if (!url.includes("register")) displayMsg(msg, "Erreur de connexion", false);
+                    console.log("errors.response ", errors, "\n", errors.error); //On verifie s'il y'a eut redirection.
+
+                    if (errors.response && errors.response.config && errors.response.request && errors.response.config.url !== errors.response.request.responseURL) {//
                     } else if (errors.error && errors.error.data && errors.error.data.errors) {
                       for (var i in errors.error.data.errors) {
                         var error = errors.error.data.errors[i].split(":");
@@ -58144,21 +58573,16 @@ external_commonjs_vue_commonjs2_vue_root_Vue_default.a.use(vuex_esm["a" /* defau
                   });
                 }
 
-                _context3.next = 22;
+                _context3.next = 24;
                 break;
 
-              case 21:
+              case 23:
+                // si l'utilisateur est connecté.
                 utilities["a" /* default */].saveDatas(state, getters, getters.uid, status).then(function () {
-                  config["a" /* default */].modalSuccess("Votre devis a été sauvegardé, ", {
-                    title: "Devis",
-                    footerClass: "d-none"
-                  });
-                  setTimeout(function () {
-                    window.location.reload();
-                  }, 3000);
+                  if (status) displayMsg(msgCreate([config["a" /* default */].messages.devisSave]));else displayMsg(msgCreate([config["a" /* default */].messages.devisRappel]));
                 });
 
-              case 22:
+              case 24:
               case "end":
                 return _context3.stop();
             }
@@ -58177,8 +58601,7 @@ external_commonjs_vue_commonjs2_vue_root_Vue_default.a.use(vuex_esm["a" /* defau
       }
 
       utilities["a" /* default */].saveDatas(state, getters, uid).then(function (response) {
-        console.log("Données stocké du store", response);
-
+        //console.log("Données stocké du store", response);
         if (state.idSoumission === null) {
           commit("SET_ID_SOUMISSION", response.data[0].result);
         }
@@ -61223,12 +61646,12 @@ if (inBrowser && window.Vue) {
 
 /* harmony default export */ var vue_router_esm = (VueRouter);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"4acd20fe-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/Listesfomes.vue?vue&type=template&id=a44722a0&lang=html&
-var Listesfomesvue_type_template_id_a44722a0_lang_html_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('b-button',{directives:[{name:"b-modal",rawName:"v-b-modal.add-edit-form",modifiers:{"add-edit-form":true}}],attrs:{"variant":"outline-info"}},[_vm._v(" + ")]),_c('b-table',{attrs:{"items":_vm.items,"fields":_vm.fields},scopedSlots:_vm._u([{key:"cell(action)",fn:function(data){return [_c('div',{staticClass:"p-relative"},[_c('b-button-group',{staticClass:"boutton-absolute"},[_c('b-button',{directives:[{name:"b-tooltip",rawName:"v-b-tooltip.hover.v-primary",modifiers:{"hover":true,"v-primary":true}}],attrs:{"variant":"outline-primary","title":"Estimer mes travaux"},on:{"click":function($event){return _vm.voirForm(data.item.id)}}},[_c('b-icon',{attrs:{"icon":"eye"}})],1),_c('b-button',{directives:[{name:"b-tooltip",rawName:"v-b-tooltip.hover.v-secondary",modifiers:{"hover":true,"v-secondary":true}}],attrs:{"variant":"outline-secondary","title":"voir mes devis"},on:{"click":function($event){return _vm.updateMyOwnForm(data.item.id)}}},[_c('b-icon',{attrs:{"icon":"newspaper"}})],1),(_vm.$store.state.mode)?_c('b-button',{directives:[{name:"b-tooltip",rawName:"v-b-tooltip.hover.v-warning",modifiers:{"hover":true,"v-warning":true}}],attrs:{"variant":"outline-warning","title":"Modifier"},on:{"click":function($event){return _vm.updateForm(data.item.id)}}},[_c('b-icon',{attrs:{"icon":"pencil"}})],1):_vm._e(),(_vm.$store.state.mode)?_c('b-button',{directives:[{name:"b-tooltip",rawName:"v-b-tooltip.hover.v-success",modifiers:{"hover":true,"v-success":true}}],attrs:{"variant":"outline-success","title":"Voir les soumissions"},on:{"click":function($event){return _vm.showResult(data.item.id)}}},[_c('b-icon',{attrs:{"icon":"server"}})],1):_vm._e(),(_vm.$store.state.mode)?_c('b-button',{directives:[{name:"b-tooltip",rawName:"v-b-tooltip.hover.v-danger",modifiers:{"hover":true,"v-danger":true}}],attrs:{"variant":"outline-danger","title":"Supprimer le formulaire "},on:{"click":function($event){return _vm.deleteForm(data.item.id)}}},[_c('b-icon',{attrs:{"icon":"trash"}})],1):_vm._e()],1)],1)]}}])}),_c('AddEditForm')],1)}
-var Listesfomesvue_type_template_id_a44722a0_lang_html_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"4acd20fe-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/Listesfomes.vue?vue&type=template&id=606cd95c&lang=html&
+var Listesfomesvue_type_template_id_606cd95c_lang_html_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('b-button',{directives:[{name:"b-modal",rawName:"v-b-modal.add-edit-form",modifiers:{"add-edit-form":true}}],attrs:{"variant":"outline-info"}},[_vm._v(" + ")]),_c('b-table',{attrs:{"items":_vm.items,"fields":_vm.fields},scopedSlots:_vm._u([{key:"cell(action)",fn:function(data){return [_c('div',{staticClass:"p-relative"},[_c('b-button-group',{staticClass:"boutton-absolute"},[_c('b-button',{directives:[{name:"b-tooltip",rawName:"v-b-tooltip.hover.v-primary",modifiers:{"hover":true,"v-primary":true}}],attrs:{"variant":"outline-primary","title":"Estimer mes travaux"},on:{"click":function($event){return _vm.voirForm(data.item.id)}}},[_c('b-icon',{attrs:{"icon":"eye"}})],1),_c('b-button',{directives:[{name:"b-tooltip",rawName:"v-b-tooltip.hover.v-secondary",modifiers:{"hover":true,"v-secondary":true}}],attrs:{"variant":"outline-secondary","title":"voir mes devis"},on:{"click":function($event){return _vm.updateMyOwnForm(data.item.id)}}},[_c('b-icon',{attrs:{"icon":"newspaper"}})],1),(_vm.$store.state.mode)?_c('b-button',{directives:[{name:"b-tooltip",rawName:"v-b-tooltip.hover.v-warning",modifiers:{"hover":true,"v-warning":true}}],attrs:{"variant":"outline-warning","title":"Modifier"},on:{"click":function($event){return _vm.updateForm(data.item.id)}}},[_c('b-icon',{attrs:{"icon":"pencil"}})],1):_vm._e(),(_vm.$store.state.mode)?_c('b-button',{directives:[{name:"b-tooltip",rawName:"v-b-tooltip.hover.v-success",modifiers:{"hover":true,"v-success":true}}],attrs:{"variant":"outline-success","title":"Voir les soumissions"},on:{"click":function($event){return _vm.showResult(data.item.id)}}},[_c('b-icon',{attrs:{"icon":"server"}})],1):_vm._e(),(_vm.$store.state.mode)?_c('b-button',{directives:[{name:"b-tooltip",rawName:"v-b-tooltip.hover.v-danger",modifiers:{"hover":true,"v-danger":true}}],attrs:{"variant":"outline-danger","title":"Supprimer le formulaire "},on:{"click":function($event){return _vm.deleteForm(data.item.id)}}},[_c('b-icon',{attrs:{"icon":"trash"}})],1):_vm._e()],1)],1)]}}])}),_c('AddEditForm')],1)}
+var Listesfomesvue_type_template_id_606cd95c_lang_html_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/App/Listesfomes.vue?vue&type=template&id=a44722a0&lang=html&
+// CONCATENATED MODULE: ./src/App/Listesfomes.vue?vue&type=template&id=606cd95c&lang=html&
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/objectSpread2.js + 1 modules
 var objectSpread2 = __webpack_require__("5530");
@@ -61376,8 +61799,8 @@ var wbuutilities = __webpack_require__("a76e");
 
 var Listesfomes_component = Object(componentNormalizer["a" /* default */])(
   App_Listesfomesvue_type_script_lang_js_,
-  Listesfomesvue_type_template_id_a44722a0_lang_html_render,
-  Listesfomesvue_type_template_id_a44722a0_lang_html_staticRenderFns,
+  Listesfomesvue_type_template_id_606cd95c_lang_html_render,
+  Listesfomesvue_type_template_id_606cd95c_lang_html_staticRenderFns,
   false,
   null,
   null,
@@ -61941,16 +62364,6 @@ module.exports = CancelToken;
       };
 
       execution().then(function (priceField) {
-        /*
-        console.log(
-          field.name,
-          " :: ",
-          priceField,
-          " :: ",
-          field.value,
-          "\n\n"
-        );
-        /**/
         if (!isNaN(priceField)) {
           priceFinal += priceField;
         } else {
@@ -61963,7 +62376,7 @@ module.exports = CancelToken;
   },
   saveDatas: function saveDatas(state, getters) {
     var uid = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
-    var status = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 0;
+    var status = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 2;
     return new Promise(function (resolv) {
       _App_config_config_js__WEBPACK_IMPORTED_MODULE_10__[/* default */ "a"].saveStepsDatas(state.idSoumission, getters.form, state.price, uid, status).then(function (val) {
         _App_config_config_js__WEBPACK_IMPORTED_MODULE_10__[/* default */ "a"].saveForm(val, state.mode).then(function (response) {

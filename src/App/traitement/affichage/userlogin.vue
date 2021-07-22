@@ -1,9 +1,8 @@
 <template lang="html">
   <div>
     <ul class="m-0 p-0 pl-4">
-      <li v-for="(value, i) in field.value" :key="i" class="d-flex">
-        <span class="label"> {{ value.label }} : </span>
-        <strong class="value"> {{ value.value }} </strong>
+      <li v-for="(value, i) in currentDevisDisplay" :key="i" class="d-flex">
+        <strong class="value"> {{ value.text }} </strong>
       </li>
     </ul>
   </div>
@@ -18,6 +17,9 @@ export default {
     field: {
       type: Object,
       required: true,
+    },
+    currentDevis: {
+      type: Object,
     },
   },
   components: {
@@ -35,7 +37,13 @@ export default {
     //
   },
   computed: {
-    //
+    currentDevisDisplay() {
+      if (this.currentDevis && this.currentDevis.user) {
+        return this.currentDevis.user;
+      } else {
+        return [];
+      }
+    },
   },
   methods: {
     //

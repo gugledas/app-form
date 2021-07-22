@@ -1,24 +1,26 @@
 <template>
   <div>
-    <b-container class="bv-example-row bg-light p-4" fluid="lg">
+    <b-container fluid="lg">
       <div :checkUid="checkUid">
         <h5 class="titre mb-3 shadow-sm p-2">
           Mes devis :
           <span class="form-title">{{ form.name }}</span>
         </h5>
       </div>
-      <b-row align-h="center">
-        <b-col class="" cols="12">
-          <list-table
-            :liste_fields_check="ListeFieldsCheck"
-            :liste_fields_display="ListeFieldsDisplay"
-            :totalRows="totalRows"
-            :isBusy="isBusy"
-            :perPage="perPage"
-            @ev-change-pagination="ChangePagination"
-          ></list-table>
-        </b-col>
-      </b-row>
+      <div class="appfom-container">
+        <b-row align-h="center">
+          <b-col class="" cols="12">
+            <listBlocks
+              :liste_fields_check="ListeFieldsCheck"
+              :liste_fields_display="ListeFieldsDisplay"
+              :totalRows="totalRows"
+              :isBusy="isBusy"
+              :perPage="perPage"
+              @ev-change-pagination="ChangePagination"
+            ></listBlocks>
+          </b-col>
+        </b-row>
+      </div>
     </b-container>
   </div>
 </template>
@@ -29,11 +31,11 @@ import config from "../config/config.js";
 //import utilities from "./Utilities";
 //import NavLine from "./NavLine.vue";
 import { mapState, mapGetters } from "vuex";
-import ListTable from "./ListTable.vue";
+import listBlocks from "./blocks/listBlocks.vue";
 //import pages from "./pages.vue";
 //import pages from "./pages2.vue";
 export default {
-  components: { ListTable },
+  components: { listBlocks },
   props: {
     id: {
       type: String,
@@ -223,4 +225,5 @@ export default {
     margin: 5px;
   }
 }
+@import "./affichage/traitement.scss";
 </style>

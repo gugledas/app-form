@@ -434,7 +434,7 @@ export default new Vuex.Store({
         var uid = payload.uid ? payload.uid : null;
         var id = payload.id ? payload.id : null;
         var pagination = payload.pagination ? payload.pagination : 0;
-        console.log("loadTraitementDatas uid : ", uid, " id : ", id);
+        //console.log("loadTraitementDatas uid : ", uid, " id : ", id);
         var datas =
           " select * from `appformmanager_datas` where `appformmanager_forms` = " +
           id;
@@ -447,12 +447,12 @@ export default new Vuex.Store({
         config
           .getData(datas)
           .then((reponse) => {
-            console.log("get traitement Items: ", reponse);
+            //console.log("get traitement Items: ", reponse);
             commit("SET_TRAITEMENT_ITEMS", reponse.data);
             resolv(reponse.data);
           })
           .catch((error) => {
-            console.log("get error ", error);
+            //console.log("get error ", error);
             reject(error);
           });
       });
@@ -485,7 +485,61 @@ export default new Vuex.Store({
      * Enregistre les données et cree le compte utilisateur.
      */
     async saveDatasUser({ commit, state, getters }, status = 0) {
-      //on valide les données utilisateur,
+      var self = this,
+        datas = [],
+        url = null,
+        msg = "";
+      /**
+       *
+       * @param {Array} text
+       * @returns
+       */
+      var msgCreate = function (texts) {
+        var h =
+          self.$createElement !== undefined
+            ? self.$createElement
+            : self._vm.$createElement;
+        const text = [];
+        for (const i in texts) {
+          text.push(
+            h(
+              "p",
+              {
+                domProps: {
+                  innerHTML: texts[i],
+                },
+                style: {
+                  lineHeight: "25px",
+                  fontSize: "17px",
+                  padding: "15px 15px 0px",
+                  margin: 0,
+                },
+              },
+              []
+            )
+          );
+        }
+        return h("div", {}, [text]);
+      };
+      /**
+       *
+       * @param { return msgCreate } msg
+       * @param { string } title
+       * @param { Boolean } statusMsg
+       */
+      var displayMsg = (msg, title = "Devis sauvegardé", statusMsg = true) => {
+        config.modalSuccess(msg, {
+          title: title,
+          footerClass: "d-none",
+          headerBgVariant: statusMsg ? "success" : "danger",
+          headerTextVariant: "light",
+        });
+        if (statusMsg)
+          setTimeout(function () {
+            window.location.assign("/");
+          }, 7000);
+      };
+      //On valide les données utilisateur,
       console.log("saveDatasUser : ", commit, state);
       if (!getters.uid) {
         var statusName = {},
@@ -496,41 +550,35 @@ export default new Vuex.Store({
           //var statusTelephone = await state.userlogin.telephone.ref.validate();
           statusEmail = await state.userlogin.email.ref.validate();
         } else {
-          console.log(
-            "state.userlogin.password.ref : ",
-            state.userlogin.password.ref
-          );
           statusPassword = await state.userlogin.password.ref.validate();
         }
         if (statusName.valid && (statusEmail.valid || statusPassword.valid)) {
-          var datas = [],
-            url = null,
-            msg = "";
+          // Inscription d'un utilisateur.
           if (state.userlogin.tabIndex === "register") {
             datas = {
               name: [{ value: state.userlogin.name.value }],
               mail: [{ value: state.userlogin.email.value }],
+              field_prenom: [{ value: state.userlogin.prenom.value }],
+              field_telephone: [{ value: state.userlogin.telephone.value }],
             };
+
             url = "/fr/user/register?_format=json";
-            msg =
-              "Votre devis a été sauvegardé et votre compte a été  crée. Un mail a été envoyé dans votre boite email afin de valider votre compte.";
-          } else {
+            msg = msgCreate([
+              config.messages.devisRappel,
+              config.messages.devisCreateUser,
+              config.messages.devisEnd,
+            ]);
+          }
+          // Connexion d'un utilisateur
+          else {
             datas = {
               name: [{ value: state.userlogin.name.value }],
               password: [{ value: state.userlogin.password.value }],
             };
             url = "/appformmanager/user";
-            msg = "Votre devis a été sauvegardé";
+            msg = msgCreate([config.messages.devisRappel]);
           }
-          const displayMsg = () => {
-            config.modalSuccess(msg, {
-              title: "Devis sauvegardé",
-              footerClass: "d-none",
-            });
-            setTimeout(function () {
-              window.location.assign("/node/52");
-            }, 3000);
-          };
+
           drupalUtilities
             .post(url, datas)
             .then((resp) => {
@@ -540,31 +588,44 @@ export default new Vuex.Store({
                 resp.reponse &&
                 resp.reponse.config.url !== resp.reponse.request.responseURL
               ) {
-                displayMsg();
+                users.getCurrentUser().then((userData) => {
+                  console.log(" utilisateur : ", userData);
+                  if (userData.uid && userData.uid[0].value)
+                    utilities
+                      .saveDatas(state, getters, userData.uid[0].value, status)
+                      .then(() => {
+                        displayMsg(msg);
+                      });
+                  else {
+                    msg = msgCreate([" Une erreur s'est produite "]);
+                    displayMsg(msg, "Erreur de connexion", false);
+                  }
+                });
               } else if (resp.data) {
                 var uid = resp.data.uid[0].value;
                 utilities.saveDatas(state, getters, uid, status).then(() => {
-                  displayMsg();
+                  displayMsg(msg);
                 });
               }
             })
             .catch((errors) => {
-              /*
-              console.log(
-                "Error GET drupalUtilities : ",
-                errors,
-                "\n error.response :",
-                errors.response,
-                "\n error.request ",
-                errors.request
-              );
-              /**/
+              msg = msgCreate([
+                errors.error && errors.error && errors.error.statusText
+                  ? "<strong>" + errors.error.statusText + "</strong>"
+                  : "Une erreur s'est produite",
+              ]);
+              if (!url.includes("register"))
+                displayMsg(msg, "Erreur de connexion", false);
+              console.log("errors.response ", errors, "\n", errors.error);
               //On verifie s'il y'a eut redirection.
               if (
+                errors.response &&
+                errors.response.config &&
+                errors.response.request &&
                 errors.response.config.url !==
-                errors.response.request.responseURL
+                  errors.response.request.responseURL
               ) {
-                displayMsg();
+                //
               } else if (
                 errors.error &&
                 errors.error.data &&
@@ -585,15 +646,12 @@ export default new Vuex.Store({
                 ]);
             });
         }
-      } else
+      }
+      // si l'utilisateur est connecté.
+      else
         utilities.saveDatas(state, getters, getters.uid, status).then(() => {
-          config.modalSuccess("Votre devis a été sauvegardé, ", {
-            title: "Devis",
-            footerClass: "d-none",
-          });
-          setTimeout(function () {
-            window.location.reload();
-          }, 3000);
+          if (status) displayMsg(msgCreate([config.messages.devisSave]));
+          else displayMsg(msgCreate([config.messages.devisRappel]));
         });
     },
     saveDatas({ commit, state, getters }, uid = 0) {
@@ -601,7 +659,7 @@ export default new Vuex.Store({
         uid = getters.uid;
       }
       utilities.saveDatas(state, getters, uid).then((response) => {
-        console.log("Données stocké du store", response);
+        //console.log("Données stocké du store", response);
         if (state.idSoumission === null) {
           commit("SET_ID_SOUMISSION", response.data[0].result);
         }

@@ -1,9 +1,17 @@
 <template lang="html">
-  <div>
-    {{ field.value }}
-    <pre class="d-none">
-      {{ field }}
-    </pre>
+  <div
+    class="d-flex flex-column justify-content-center text-center"
+    data-render="default-render"
+  >
+    <div v-if="diplayLabel">
+      <div class="icon">
+        <b-icon icon="cloud-download" font-scale="1.7"></b-icon>
+      </div>
+    </div>
+    <div class="label-field" v-if="diplayLabel">
+      {{ field.label }}
+    </div>
+    <div class="field-content">{{ field.value }}</div>
   </div>
 </template>
 
@@ -16,6 +24,10 @@ export default {
     field: {
       type: Object,
       required: true,
+    },
+    diplayLabel: {
+      type: Boolean,
+      default: false,
     },
   },
   components: {

@@ -263,16 +263,6 @@ export default {
         });
       };
       execution().then((priceField) => {
-        /*
-        console.log(
-          field.name,
-          " :: ",
-          priceField,
-          " :: ",
-          field.value,
-          "\n\n"
-        );
-        /**/
         if (!isNaN(priceField)) {
           priceFinal += priceField;
         } else {
@@ -284,9 +274,9 @@ export default {
         resolvParent(priceFinal);
       });
     });
-  },
+  }, 
 
-  saveDatas(state, getters, uid = 0, status = 0) {
+  saveDatas(state, getters, uid = 0, status = 2) {
     return new Promise((resolv) => {
       config
         .saveStepsDatas(

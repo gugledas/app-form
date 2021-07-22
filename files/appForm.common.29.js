@@ -54,7 +54,7 @@ var vee_validate_custom = __webpack_require__("b6d1");
 var vue_multiselect_min = __webpack_require__("8e5f");
 var vue_multiselect_min_default = /*#__PURE__*/__webpack_require__.n(vue_multiselect_min);
 
-// EXTERNAL MODULE: ../drupal-vuejs/index.js + 7 modules
+// EXTERNAL MODULE: ../drupal-vuejs/index.js + 9 modules
 var drupal_vuejs = __webpack_require__("e674");
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/input/Autocomplete.vue?vue&type=script&lang=js&

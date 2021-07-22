@@ -1,98 +1,35 @@
-<template lang="html">
+<template>
   <div>
-    <b-table
-      :items="traitementFormItemsDisplay"
-      :fields="liste_fields_display"
-      :outlined="true"
-      :hover="true"
-      head-variant="dark"
-      responsive
-      class="traitement"
-      :sticky-header="true"
-      :trigger_perfom="trigger_perfom"
-      :busy="isBusy"
-    >
-      <template v-slot:cell()="scope">
-        <div>
-          <div
-            v-if="
-              scope.item[scope.field.key] &&
-              scope.item[scope.field.key].type === undefined
-            "
-          >
-            <div v-if="scope.field.key === 'status'">
-              <h5 class="status">
-                {{
-                  scope.item.status == 1
-                    ? "Sauvegardé"
-                    : "Devis en attente de rappel"
-                }}
-              </h5>
-            </div>
-            <div v-else-if="scope.field.key === 'uid'">
-              <div v-if="scope.item.uid !== '0'">
-                <ul v-if="scope.item.user" class="m-0 p-0 pl-2">
-                  <li
-                    v-for="(val, i) in getInfoUser(
-                      scope.item.user,
-                      scope.item.idloop
-                    )"
-                    :key="i"
-                  >
-                    {{ val.text }}
-                  </li>
-                </ul>
-              </div>
-              <div v-else>Anonyme</div>
-            </div>
-            <div v-else>
-              {{ scope.value }}
-            </div>
-          </div>
-          <div v-else-if="!scope.item[scope.field.key]">
-            <div v-if="scope.field.key === 'action'">
-              <b-button-group class="">
-                <b-button
-                  variant="outline-primary"
-                  @click="getValideStepe(scope.index)"
-                >
-                  voir mon devis
-                </b-button>
+    <div class="d-flex justify-content-center p-5" v-if="isBusy">
+      <b-icon
+        icon="circle-fill"
+        animation="throb"
+        font-scale="4"
+        variant="primary"
+      ></b-icon>
+    </div>
+    <div v-if="!isBusy" class="titre-project-resume">
+      {{ nombreStatus.rappel.length }} projet en attente de rappel, <br />
+      {{ nombreStatus.save.length }} projet sauvegardé, <br />
+      <span v-if="$store.state.mode">
+        {{ nombreStatus.loose.length }} projet abandonné
+      </span>
+      <br />
+    </div>
+    <b-row :trigger_perfom="trigger_perfom" class="list-block" v-if="!isBusy">
+      <b-col v-for="(item, i) in traitementFormItemsDisplay" :key="i" md="12">
+        <block
+          :item="item"
+          :form="form"
+          :traitementFormItems="traitementFormItems"
+          :data-id="i"
+          @get-valide-stepe="getValideStepe"
+          @form-traiter="formTraiter"
+          @get-info-user="getInfoUser"
+        ></block>
+      </b-col>
+    </b-row>
 
-                <b-button
-                  variant="outline-success"
-                  @click="showResult(scope.item)"
-                  v-if="$store.state.mode"
-                >
-                  Editer
-                </b-button>
-
-                <b-button
-                  variant="outline-warning"
-                  @click="formTraiter(scope.item)"
-                  v-if="$store.state.mode"
-                >
-                  Traiter
-                </b-button>
-              </b-button-group>
-            </div>
-          </div>
-          <div v-else>
-            <component
-              v-bind:is="getTemplatesFiles(scope.item[scope.field.key].type)"
-              :field="scope.item[scope.field.key]"
-              class="content-field"
-            ></component>
-          </div>
-        </div>
-      </template>
-      <template #table-busy>
-        <div class="text-center text-danger my-2">
-          <b-spinner class="align-middle"></b-spinner>
-          <strong>chargements des devis...</strong>
-        </div>
-      </template>
-    </b-table>
     <!-- -->
     <b-pagination
       v-model="currentPage"
@@ -184,16 +121,15 @@
     </b-modal>
   </div>
 </template>
-
 <script>
 import { mapState, mapGetters } from "vuex";
-import Utilities from "../../store/utilities";
-import config from "../config/config";
-import traitementDisplay from "./affichage/traitement-display.js";
-import { users } from "drupal-vuejs";
+import Utilities from "../../../store/utilities";
+import config from "../../config/config";
 
+import { users } from "drupal-vuejs";
+import block from "../affichage/bloc.vue";
 export default {
-  name: "Listesfomes",
+  name: "listBlocks",
   props: {
     liste_fields_check: {
       type: Array,
@@ -221,7 +157,8 @@ export default {
     },
   },
   components: {
-    typeDisplays: () => import("./affichage/typeDisplays.vue"),
+    block,
+    typeDisplays: () => import("../affichage/typeDisplays.vue"),
   },
   data() {
     return {
@@ -241,19 +178,32 @@ export default {
       //perPage: 20,
     };
   },
-  mounted() {
-    //
-  },
-  watch: {},
+
   computed: {
     ...mapState(["items", "CachesUser"]),
-    ...mapGetters(["traitementFormItems"]),
+    ...mapGetters(["traitementFormItems", "form"]),
     trigger_perfom() {
       if (this.traitementFormItems.length) {
         this.getTraitementFormItems();
         return this.traitementFormItems.length;
       }
       return "";
+    },
+    nombreStatus() {
+      const nbst = {
+        save: [],
+        rappel: [],
+        loose: [],
+      };
+      if (this.traitementFormItemsDisplay.length) {
+        for (const i in this.traitementFormItemsDisplay) {
+          const devis = this.traitementFormItemsDisplay[i];
+          if (devis.status === "1") nbst.save.push(devis);
+          else if (devis.status === "0") nbst.rappel.push(devis);
+          else if (devis.status === "2") nbst.loose.push(devis);
+        }
+      }
+      return nbst;
     },
   },
   methods: {
@@ -284,35 +234,7 @@ export default {
         this.traitementFormItemsDisplay.push(row);
       }
     },
-    getTemplatesFiles(type) {
-      return traitementDisplay.getTemplatesFiles(type);
-    },
-    getValideStepe(id) {
-      var self = this;
-      this.showModal = !this.showModal;
-      this.validSteps2 = [];
-      this.currentDataId = this.traitementFormItems[id].id;
-      this.currentDevis = this.traitementFormItems[id];
-      const forms = this.traitementFormItems[id].datas;
-      this.validSteps2.push(forms[0]);
-      function execution(i) {
-        const loop = function (i) {
-          return new Promise((resolv) => {
-            Utilities.selectNextState(forms, i).then((rep) => {
-              resolv(rep);
-            });
-          });
-        };
-        loop(i).then((kk) => {
-          if (kk && kk < 200) {
-            self.validSteps2.push(forms[kk]);
-            // Console.log("kk : ", kk);
-            execution(kk);
-          }
-        });
-      }
-      execution(0);
-    },
+
     showResult(id) {
       console.log("id", id);
     },
@@ -322,7 +244,7 @@ export default {
         status = "1";
       } else status = "0";
       this.$bvModal
-        .msgBoxConfirm("Confirmez-vous avoir l'action", {
+        .msgBoxConfirm("Confirmez-vous l'action ?", {
           title: "Alerte",
           size: "sm",
           buttonSize: "sm",
@@ -359,8 +281,10 @@ export default {
         });
       }
     },
-    getInfoUser(item, idloop) {
-      const user = [];
+    getInfoUser(item) {
+      var user = item.user;
+      var idloop = item.idloop;
+      const userDisplay = [];
       var keys = [
         { key: "mail", label: "Mail" },
         { key: "name", label: "Nom" },
@@ -368,13 +292,15 @@ export default {
         { key: "field_telephone", label: "Téléphone" },
       ];
       keys.forEach((key) => {
-        if (item[key.key] && item[key.key][0]) {
-          user.push({ text: key.label + " : " + item[key.key][0].value });
+        if (user[key.key] && user[key.key][0]) {
+          userDisplay.push({
+            text: key.label + " : " + user[key.key][0].value,
+          });
         }
       });
       if (this.traitementFormItems[idloop])
-        this.$set(this.traitementFormItems[idloop], "user", user);
-      return user;
+        this.$set(this.traitementFormItems[idloop], "user", userDisplay);
+      return userDisplay;
     },
     updateStatus() {
       if (this.currentDataId) {
@@ -408,36 +334,32 @@ export default {
     changePagination(val) {
       this.$emit("ev-change-pagination", val);
     },
+    getValideStepe(id) {
+      var self = this;
+      this.showModal = !this.showModal;
+      this.validSteps2 = [];
+      this.currentDataId = this.traitementFormItems[id].id;
+      this.currentDevis = this.traitementFormItems[id];
+      const forms = this.traitementFormItems[id].datas;
+      this.validSteps2.push(forms[0]);
+      function execution(i) {
+        const loop = function (i) {
+          return new Promise((resolv) => {
+            Utilities.selectNextState(forms, i).then((rep) => {
+              resolv(rep);
+            });
+          });
+        };
+        loop(i).then((kk) => {
+          if (kk && kk < 250) {
+            self.validSteps2.push(forms[kk]);
+            // Console.log("kk : ", kk);
+            execution(kk);
+          }
+        });
+      }
+      execution(0);
+    },
   },
 };
 </script>
-
-<!--
-  // Nom du fichier en pascal.
-  // <template>
- - le nom des attributs en kebab-case;
- - la valeur des attributs et des variables en camelCase;
- - function en PascalCase
-  // props, data
- - variable en camelCase
-  // methods
- - variable en PascalCase
--->
-<style lang="scss">
-.traitement.table-responsive {
-  max-height: 73vh;
-  min-height: 350px;
-}
-.traitement {
-  .status {
-    font-size: 0.7em;
-    font-weight: bold;
-  }
-}
-.content-field {
-  .label {
-    color: inherit;
-    text-align: left;
-  }
-}
-</style>

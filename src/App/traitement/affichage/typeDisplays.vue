@@ -5,6 +5,7 @@
       <component
         :is="getTemplatesFiles()"
         :field="field"
+        :currentDevis="currentDevis"
         class="content-field"
       ></component>
     </div>
@@ -20,6 +21,9 @@ export default {
     field: {
       type: Object,
       required: true,
+    },
+    currentDevis: {
+      type: Object,
     },
   },
   components: {},
@@ -80,7 +84,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss">
-@import "./traitement.scss";
-</style>

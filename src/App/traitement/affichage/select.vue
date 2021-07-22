@@ -1,10 +1,22 @@
 <template lang="html">
-  <div>
-    <ul class="m-0 p-0 pl-4">
+  <div
+    class="d-flex flex-column justify-content-center text-center"
+    data-render="select"
+  >
+    <div v-if="diplayLabel">
+      <div class="icon"><b-icon icon="box" font-scale="1.7"></b-icon></div>
+    </div>
+    <div class="label-field" v-if="diplayLabel">
+      {{ field.label }}
+    </div>
+    <ul class="m-0 p-0 pl-4 field-content">
       <li v-for="(item, i) in getValue" :key="i">
         {{ item }}
       </li>
     </ul>
+    <pre class="d-none">
+      {{ field }}
+    </pre>
   </div>
 </template>
 
@@ -17,6 +29,10 @@ export default {
     field: {
       type: Object,
       required: true,
+    },
+    diplayLabel: {
+      type: Boolean,
+      default: false,
     },
   },
   components: {

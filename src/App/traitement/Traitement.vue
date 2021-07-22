@@ -1,26 +1,26 @@
 <template>
-  <div>
-    <b-container class="bv-example-row bg-light p-4" fluid="lg">
-      <div>
-        <h5 class="titre mb-3 shadow-sm p-2">
-          Traitement :
-          <span class="form-title">{{ form.name }}</span>
-        </h5>
-      </div>
+  <b-container fluid="md">
+    <div>
+      <h5 class="titre mb-0 shadow-sm p-2">
+        Traitement :
+        <span class="form-title">{{ form.name }}</span>
+      </h5>
+    </div>
+    <div class="appfom-container">
       <b-row align-h="center">
         <b-col class="" cols="12">
-          <list-table
+          <listBlocks
             :liste_fields_check="ListeFieldsCheck"
             :liste_fields_display="ListeFieldsDisplay"
             :totalRows="totalRows"
             :isBusy="isBusy"
             :perPage="perPage"
             @ev-change-pagination="ChangePagination"
-          ></list-table>
+          ></listBlocks>
         </b-col>
       </b-row>
-    </b-container>
-  </div>
+    </div>
+  </b-container>
 </template>
 
 <script>
@@ -29,12 +29,13 @@ import config from "../config/config.js";
 //import utilities from "./Utilities";
 //import NavLine from "./NavLine.vue";
 import { mapState, mapGetters } from "vuex";
-import ListTable from "./ListTable.vue";
+//import ListTable from "./ListTable.vue";
+import listBlocks from "./blocks/listBlocks.vue";
 //import pages from "./pages.vue";
 //import pages from "./pages2.vue";
 
 export default {
-  components: { ListTable },
+  components: { listBlocks },
   props: {
     id: {
       type: String,
@@ -237,4 +238,5 @@ export default {
     margin: 5px;
   }
 }
+@import "./affichage/traitement.scss";
 </style>

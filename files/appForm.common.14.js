@@ -815,12 +815,12 @@ Object(vee_validate__WEBPACK_IMPORTED_MODULE_1__[/* extend */ "c"])("alpha", vee
 // ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"4acd20fe-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/input/userlogin.vue?vue&type=template&id=17eea8e5&lang=html&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"4acd20fe-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/input/userlogin.vue?vue&type=template&id=1c23e39e&lang=html&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:!_vm.validationField && _vm.mode ? 'mb-5' : ''},[(_vm.validationField && (!_vm.uid || (_vm.uid && _vm.mode)))?_c('transition',{attrs:{"name":"fade"}},[_c('form',{ref:"form_userlogin",staticClass:"form-userlogin choice-section min-height",on:{"submit":function($event){$event.stopPropagation();$event.preventDefault();return _vm.handleSubmit($event)}}},[_c('ul',{staticClass:"d-flex p-0 mx-0 select-tab"},[_c('li',{staticClass:"item",class:[_vm.current_tab === 'register' ? 'active' : ''],on:{"click":function($event){return _vm.select_tab('register')}}},[_vm._v(" Creer un compte ")]),_c('li',{staticClass:"item",class:[_vm.current_tab !== 'register' ? 'active' : ''],on:{"click":function($event){return _vm.select_tab('login')}}},[_vm._v(" Se connecter ")])]),_c('ValidationProvider',{ref:"userlogin_name",staticClass:"d-block",attrs:{"rules":"required","name":"Nom"},scopedSlots:_vm._u([{key:"default",fn:function(v){return [_c('div',{staticClass:"login-form"},[_c('label',{staticClass:"label d-flex align-items-center"},[_c('span',[_vm._v(_vm._s(_vm.field.label))])])]),_c('b-form-group',{attrs:{"label":_vm.nomDisplay}},[_c('b-form-input',{attrs:{"type":"text"},on:{"input":function($event){return _vm.input($event, 'name')}},model:{value:(_vm.userlogin.name.value),callback:function ($$v) {_vm.$set(_vm.userlogin.name, "value", $$v)},expression:"userlogin.name.value"}})],1),_c('div',{staticClass:"text-danger"},_vm._l((v.errors),function(error,ii){return _c('small',{key:ii,staticClass:"d-block"},[_vm._v(" "+_vm._s(error)+" ")])}),0)]}}],null,false,1650481904)}),(_vm.current_tab === 'register')?_c('b-form-group',{attrs:{"label":"Prenom"}},[_c('b-form-input',{attrs:{"type":"text"},on:{"input":function($event){return _vm.input($event, 'prenom')}},model:{value:(_vm.userlogin.prenom.value),callback:function ($$v) {_vm.$set(_vm.userlogin.prenom, "value", $$v)},expression:"userlogin.prenom.value"}})],1):_vm._e(),(_vm.current_tab === 'register')?_c('ValidationProvider',{ref:"userlogin_tel",staticClass:"d-block",attrs:{"rules":"required","name":"Telephone"},scopedSlots:_vm._u([{key:"default",fn:function(v){return [_c('b-form-group',{attrs:{"label":"Telephone"}},[_c('b-form-input',{attrs:{"type":"text"},on:{"input":function($event){return _vm.input($event, 'telephone')}},model:{value:(_vm.userlogin.telephone.value),callback:function ($$v) {_vm.$set(_vm.userlogin.telephone, "value", $$v)},expression:"userlogin.telephone.value"}})],1),_c('div',{staticClass:"text-danger"},_vm._l((v.errors),function(error,ii){return _c('small',{key:ii,staticClass:"d-block"},[_vm._v(" "+_vm._s(error)+" ")])}),0)]}}],null,false,1994085191)}):_vm._e(),(_vm.current_tab === 'register')?_c('ValidationProvider',{ref:"userlogin_email",staticClass:"d-block",attrs:{"rules":"required|email","name":"Email"},scopedSlots:_vm._u([{key:"default",fn:function(v){return [_c('b-form-group',{attrs:{"label":"Email"}},[_c('b-form-input',{attrs:{"type":"email"},on:{"input":function($event){return _vm.input($event, 'email')}},model:{value:(_vm.userlogin.email.value),callback:function ($$v) {_vm.$set(_vm.userlogin.email, "value", $$v)},expression:"userlogin.email.value"}})],1),_c('div',{staticClass:"text-danger"},_vm._l((v.errors),function(error,ii){return _c('small',{key:ii,staticClass:"d-block"},[_vm._v(" "+_vm._s(error)+" ")])}),0)]}}],null,false,1829562814)}):_vm._e(),(_vm.current_tab === 'login')?_c('ValidationProvider',{ref:"userlogin_password",staticClass:"d-block",attrs:{"rules":"required","name":"Password"},scopedSlots:_vm._u([{key:"default",fn:function(v){return [_c('b-form-group',{attrs:{"label":"Mot de passe"}},[_c('b-form-input',{attrs:{"type":"password"},on:{"input":function($event){return _vm.input($event, 'password')}},model:{value:(_vm.userlogin.password.value),callback:function ($$v) {_vm.$set(_vm.userlogin.password, "value", $$v)},expression:"userlogin.password.value"}})],1),_c('div',{staticClass:"text-danger"},_vm._l((v.errors),function(error,ii){return _c('small',{key:ii,staticClass:"d-block"},[_vm._v(" "+_vm._s(error)+" ")])}),0)]}}],null,false,3320814594)}):_vm._e()],1)]):_vm._e()],1)}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/App/input/userlogin.vue?vue&type=template&id=17eea8e5&lang=html&
+// CONCATENATED MODULE: ./src/App/input/userlogin.vue?vue&type=template&id=1c23e39e&lang=html&
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/objectSpread2.js + 1 modules
 var objectSpread2 = __webpack_require__("5530");
@@ -837,6 +837,67 @@ var vee_validate_esm = __webpack_require__("7bb1");
 // EXTERNAL MODULE: ./src/App/EditsFields/vee-validate-custom.js
 var vee_validate_custom = __webpack_require__("b6d1");
 
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/testrenjsx.vue?vue&type=script&lang=js&
+/* harmony default export */ var testrenjsxvue_type_script_lang_js_ = ({
+  name: "CardsJSXTest",
+  functional: true,
+  props: {
+    multiline: Boolean,
+    name: String,
+    value: String
+  },
+  render: function render(createElement, context) {
+    var self = this;
+    console.log("context : ", context);
+    var input = createElement("b-form-input", {
+      props: {
+        type: "text"
+      },
+      on: {
+        input: function input(e) {
+          self.$emit("ev_select_project", e);
+          console.log(" Vue instance : ", self.$emit);
+        }
+      }
+    });
+    var g = createElement("h2", {
+      on: {
+        click: function click() {
+          self.$emit("click_h2", "kk888");
+        },
+        ev_select_project: function ev_select_project() {
+          alert("ev_select_project");
+        }
+      }
+    }, ["kksa888 ?????", input]);
+    return g;
+  }
+});
+// CONCATENATED MODULE: ./src/App/testrenjsx.vue?vue&type=script&lang=js&
+ /* harmony default export */ var App_testrenjsxvue_type_script_lang_js_ = (testrenjsxvue_type_script_lang_js_); 
+// EXTERNAL MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
+var componentNormalizer = __webpack_require__("2877");
+
+// CONCATENATED MODULE: ./src/App/testrenjsx.vue
+var testrenjsx_render, testrenjsx_staticRenderFns
+
+
+
+
+/* normalize component */
+
+var component = Object(componentNormalizer["a" /* default */])(
+  App_testrenjsxvue_type_script_lang_js_,
+  testrenjsx_render,
+  testrenjsx_staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* harmony default export */ var testrenjsx = (component.exports);
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/input/userlogin.vue?vue&type=script&lang=js&
 
 
@@ -968,9 +1029,9 @@ var vee_validate_custom = __webpack_require__("b6d1");
 //
 //
 //
-//
-//
 
+
+ //import { drupalFormFields } from "drupal-vuejs";
 
 
 /* harmony default export */ var userloginvue_type_script_lang_js_ = ({
@@ -990,7 +1051,10 @@ var vee_validate_custom = __webpack_require__("b6d1");
   data: function data() {
     return {
       tabIndex: 0,
-      current_tab: "register"
+      current_tab: "register",
+      fieldsRegisterRender: [],
+      modelsFields: {},
+      testrenjsx: testrenjsx
     };
   },
   mounted: function mounted() {
@@ -1004,7 +1068,7 @@ var vee_validate_custom = __webpack_require__("b6d1");
       return true;
     },
     nomDisplay: function nomDisplay() {
-      if (this.current_tab == "register") {
+      if (this.current_tab === "register") {
         return "Nom";
       } else {
         return "Login ou email";
@@ -1012,6 +1076,18 @@ var vee_validate_custom = __webpack_require__("b6d1");
     }
   }),
   methods: {
+    final_click_h2: function final_click_h2() {
+      alert("final_click_h2");
+    },
+
+    /*
+    async getFiledRegisterUser() {
+      const drupalFormField = new drupalFormFields("user", "user", this);
+      this.fieldsRegisterRender = await drupalFormField.format();
+      console.log("fieldsRegisterRender : ", this.fieldsRegisterRender);
+      this.modelsFields = drupalFormField.modelsFields;
+    },
+    /**/
     handleOk: function handleOk(event) {
       event.preventDefault();
       this.handleSubmit();
@@ -1087,9 +1163,6 @@ var vee_validate_custom = __webpack_require__("b6d1");
 // EXTERNAL MODULE: ./src/App/input/userlogin.vue?vue&type=style&index=0&lang=scss&
 var userloginvue_type_style_index_0_lang_scss_ = __webpack_require__("30eb");
 
-// EXTERNAL MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
-var componentNormalizer = __webpack_require__("2877");
-
 // CONCATENATED MODULE: ./src/App/input/userlogin.vue
 
 
@@ -1099,7 +1172,7 @@ var componentNormalizer = __webpack_require__("2877");
 
 /* normalize component */
 
-var component = Object(componentNormalizer["a" /* default */])(
+var userlogin_component = Object(componentNormalizer["a" /* default */])(
   input_userloginvue_type_script_lang_js_,
   render,
   staticRenderFns,
@@ -1110,7 +1183,7 @@ var component = Object(componentNormalizer["a" /* default */])(
   
 )
 
-/* harmony default export */ var userlogin = __webpack_exports__["default"] = (component.exports);
+/* harmony default export */ var userlogin = __webpack_exports__["default"] = (userlogin_component.exports);
 
 /***/ })
 

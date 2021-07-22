@@ -1,6 +1,15 @@
 <template lang="html">
-  <div>
-    <strong>{{ price }} €</strong>
+  <div
+    class="d-flex flex-column justify-content-center text-center"
+    data-render="recapitulatif"
+  >
+    <div>
+      <div class="icon">
+        <b-icon icon="credit-card" font-scale="1.7"></b-icon>
+      </div>
+    </div>
+    <div class="label-field" v-if="diplayLabel">{{ field.label }}</div>
+    <strong class="field-content"> {{ priceEstimation }} €</strong>
   </div>
 </template>
 
@@ -13,6 +22,10 @@ export default {
     field: {
       type: Object,
       required: true,
+    },
+    diplayLabel: {
+      type: Boolean,
+      default: false,
     },
   },
   components: {
@@ -30,12 +43,18 @@ export default {
     //
   },
   computed: {
-    price() {
-      if (this.field.prix && this.field.prix.cout) {
-        return this.field.prix.cout;
-      } else {
-        return 0;
+    priceEstimation() {
+      const price = this.field.prix.cout;
+      if (price > 0) {
+        if (this.field.percent) {
+          var percent = parseInt(this.field.percent);
+          if (percent > 0) {
+            percent = (price * percent) / 100 + price;
+            return price + " - " + percent;
+          }
+        }
       }
+      return price;
     },
   },
   methods: {

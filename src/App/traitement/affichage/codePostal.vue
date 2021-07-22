@@ -1,6 +1,10 @@
 <template lang="html">
-  <div>
-    {{ value }}
+  <div class="d-flex flex-column justify-content-center text-center">
+    <div v-if="diplayLabel">
+      <div class="icon"><b-icon icon="shield" font-scale="1.7"></b-icon></div>
+    </div>
+    <div class="label-field" v-if="diplayLabel">Ville</div>
+    <div class="field-content">{{ value }}</div>
   </div>
 </template>
 
@@ -13,6 +17,9 @@ export default {
     field: {
       type: Object,
       required: true,
+    },
+    diplayLabel: {
+      type: Boolean,
     },
   },
   components: {

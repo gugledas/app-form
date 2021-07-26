@@ -1,15 +1,15 @@
 <template>
   <div>
     <b-container class="p-md-" fluid="lg">
-      <div>
-        <h5 class="titre mb-3 shadow-sm p-2">
-          Gestion du formulaire: <span class="form-title">{{ form.name }}</span>
-        </h5>
-      </div>
+      <div class="text-left"></div>
       <b-row align-h="center">
         <b-col class="" cols="12" lg="10" v-if="formDatas && formDatas.info">
           <transition name="fade">
             <div>
+              <title-bar
+                :conf="{ col: true, text: 'Gestion du formulaire' }"
+                :id="id"
+              ></title-bar>
               <nav-line :taille="id"></nav-line>
               <pages :level="stepsIndex"></pages>
             </div>
@@ -150,7 +150,7 @@
 </template>
 
 <script>
-//import axios from "axios";
+import TitleBar from "./TitleBar";
 import config from "./config/config.js";
 //import utilities from "./Utilities";
 import NavLine from "./NavLine.vue";
@@ -159,7 +159,7 @@ import { mapState, mapGetters } from "vuex";
 import pages from "./pages.vue";
 import reOrderStepes from "./ConfigsForms/reOrderStepes.vue";
 export default {
-  components: { pages, NavLine, reOrderStepes },
+  components: { pages, NavLine, reOrderStepes, TitleBar },
   props: {
     id: {
       type: String,

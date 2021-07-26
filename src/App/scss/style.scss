@@ -1,7 +1,7 @@
-@use "wbu-atomique/scss/atome/typography/_default.scss";
+@use "@stephane888/wbu-atomique/scss/atome/typography/_default.scss";
 @use '@braid/vue-formulate/themes/snow/snow.scss';
 @use './variables.scss' as *; //@use './field.scss'; //
-@use "wbu-atomique/scss/defaut/model/custom_bp.scss" as *;
+@use "@stephane888/wbu-atomique/scss/defaut/model/custom_bp.scss" as *;
 
 .super-hover {
   z-index: 99999;
@@ -13,7 +13,7 @@
 
 .app-form {
   font-size     : 1.8rem;
-  padding-top   : 5rem;
+ // padding-top   : 5rem;
   padding-bottom: 5rem;
   min-height    : 300px;
 
@@ -118,5 +118,37 @@
   .b-form-spinbutton {
     width    : auto !important;
     min-width: 18rem;
+  }
+  .block-title{
+    flex-wrap: wrap;
+    height: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgb(220, 219, 219);
+    .form-title {
+        letter-spacing: 2px;
+        margin-left: 10px;
+        font-weight: 600; 
+      }
+    .title-right {
+      font-size: 13px;
+      border: 1px solid #cecbcb;
+      padding: 7px;font-weight: bold;
+      border-radius: 7px;
+      cursor: pointer;
+  
+      transition: ease-in-out 0.2s;
+      &:hover {
+        color: white;
+        font-weight: bold;
+       background-color: #22262b;
+       border-color: #22262b;
+      }
+    }
+    @include media-max('XS') {
+        height: auto;
+      }
+   
   }
 }

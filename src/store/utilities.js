@@ -274,7 +274,7 @@ export default {
         resolvParent(priceFinal);
       });
     });
-  }, 
+  },
 
   saveDatas(state, getters, uid = 0, status = 2) {
     return new Promise((resolv) => {

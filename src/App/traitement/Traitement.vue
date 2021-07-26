@@ -1,10 +1,11 @@
 <template>
   <b-container fluid="md">
     <div>
-      <h5 class="titre mb-0 shadow-sm p-2">
-        Traitement :
-        <span class="form-title">{{ form.name }}</span>
-      </h5>
+      <title-bar
+        :conf="{ col: true, text: 'Traitement' }"
+        :id="id"
+        :showDevis="false"
+      ></title-bar>
     </div>
     <div class="appfom-container">
       <b-row align-h="center">
@@ -24,6 +25,8 @@
 </template>
 
 <script>
+import TitleBar from "../TitleBar.vue";
+
 //import axios from "axios";
 import config from "../config/config.js";
 //import utilities from "./Utilities";
@@ -35,7 +38,7 @@ import listBlocks from "./blocks/listBlocks.vue";
 //import pages from "./pages2.vue";
 
 export default {
-  components: { listBlocks },
+  components: { listBlocks, TitleBar },
   props: {
     id: {
       type: String,

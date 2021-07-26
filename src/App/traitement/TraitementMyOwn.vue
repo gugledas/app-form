@@ -2,11 +2,13 @@
   <div>
     <b-container fluid="lg">
       <div :checkUid="checkUid">
-        <h5 class="titre mb-3 shadow-sm p-2">
-          Mes devis :
-          <span class="form-title">{{ form.name }}</span>
-        </h5>
+        <title-bar
+          :conf="{ col: true, text: 'Mes Devis' }"
+          :id="id"
+          :showDevis="false"
+        ></title-bar>
       </div>
+
       <div class="appfom-container">
         <b-row align-h="center">
           <b-col class="" cols="12">
@@ -29,13 +31,13 @@
 //import axios from "axios";
 import config from "../config/config.js";
 //import utilities from "./Utilities";
-//import NavLine from "./NavLine.vue";
+import TitleBar from "../TitleBar.vue";
 import { mapState, mapGetters } from "vuex";
 import listBlocks from "./blocks/listBlocks.vue";
 //import pages from "./pages.vue";
 //import pages from "./pages2.vue";
 export default {
-  components: { listBlocks },
+  components: { listBlocks, TitleBar },
   props: {
     id: {
       type: String,

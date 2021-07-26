@@ -1,8 +1,8 @@
 <template>
   <div id="app" class="app-form">
     <div id="nav" v-if="$store.state.mode">
-      <router-link to="/"> Gestion des formlaires </router-link> |
-      <router-link to="/about">About</router-link>
+      <!-- <router-link to="/"> Gestion des formlaires </router-link> |
+      <router-link to="/about">About</router-link> -->
     </div>
     <router-view />
   </div>

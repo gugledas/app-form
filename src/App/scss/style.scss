@@ -1,154 +1,155 @@
+/** @format */
+
 @use "@stephane888/wbu-atomique/scss/atome/typography/_default.scss";
 @use '@braid/vue-formulate/themes/snow/snow.scss';
 @use './variables.scss' as *; //@use './field.scss'; //
 @use "@stephane888/wbu-atomique/scss/defaut/model/custom_bp.scss" as *;
 
 .super-hover {
-  z-index: 99999;
+	z-index: 99999;
 }
 
 .p-relative {
-  position: relative;
+	position: relative;
 }
-
 .app-form {
-  font-size     : 1.8rem;
- // padding-top   : 5rem;
-  padding-bottom: 5rem;
-  min-height    : 300px;
+	font-size: 1.8rem;
+	// padding-top   : 5rem;
+	padding-bottom: 5rem;
+	min-height: 300px;
+	.svg-content {
+		svg {
+			min-width: 40px;
+			font-size: 1.4rem !important;
+		}
+	}
 
-  .svg-content {
-    svg {
-      min-width: 40px;
-      font-size: 1.4rem !important;
-    }
-  }
+	.decrement {
+		font-size: 1.8rem;
+		line-height: 1;
+	}
 
-  .decrement {
-    font-size  : 1.8rem;
-    line-height: 1;
-  }
+	table {
+		.th-action {
+			width: 170px;
+		}
+	}
+	//
+	@import "./buttons.scss";
+	@import "./custom-control.scss";
+	@import "./field.scss";
+	@import "./home.scss";
 
-  table {
-    .th-action {
-      width: 170px;
-    }
-  }
-  //
-  @import "./buttons.scss";
-  @import "./custom-control.scss";
-  @import './field.scss';
+	.form-control {
+		height: 50px;
+	}
 
-  .form-control {
-    height: 50px;
-  }
+	.label {
+		color: inherit;
+		font-weight: inherit;
+		font-size: inherit;
+		white-space: inherit;
+		display: inline-block;
+		margin-bottom: 0.5rem;
+		font-size: 1.9rem;
+		text-align: left;
+	}
 
-  .label {
-    color        : inherit;
-    font-weight  : inherit;
-    font-size    : inherit;
-    white-space  : inherit;
-    display      : inline-block;
-    margin-bottom: 0.5rem;
-    font-size    : 1.9Rem;
-    text-align   : left;
-  }
+	.boutton-absolute {
+		position: absolute;
+		left: 0;
+		top: 0;
+		right: auto;
+		border: 1px solid #dee2e6;
+		background-color: #f8f9fa;
+		display: flex;
+		z-index: 10;
 
-  .boutton-absolute {
-    position        : absolute;
-    left            : 0;
-    top             : 0;
-    right           : auto;
-    border          : 1px solid #dee2e6;
-    background-color: #f8f9fa;
-    display         : flex;
-    z-index         : 10;
+		.btn {
+			border-radius: 0;
+			border: none;
+			background: transparent !important;
 
-    .btn {
-      border-radius: 0;
-      border       : none;
-      background   : transparent !important;
+			&:hover {
+				color: #000;
+			}
+		}
+	}
 
-      &:hover {
-        color: #000;
-      }
-    }
-  }
+	td {
+		.boutton-absolute {
+			border-bottom: 0;
+		}
+	}
 
-  td {
-    .boutton-absolute {
-      border-bottom: 0;
-    }
-  }
+	.full-block {
+		.boutton-absolute {
+			left: 0;
+			@include media-min("MD") {
+				left: calc(100% + 30px);
+			}
+		}
+	}
 
-  .full-block {
-    .boutton-absolute {
-      left: 0;
-      @include media-min('MD') {
-        left: calc(100% + 30px);
-      }
-    }
-  }
+	.min-height {
+		min-height: 50px;
+	}
+	//animation transition fade
+	.fade-enter-active,
+	.fade-leave-active {
+		transition: opacity 0.2s;
+	}
+	/* .fade-leave-active below version 2.1.8 */
+	.fade-enter,
+	.fade-leave-to {
+		opacity: 0;
+	}
+	// StepsPage.vue
+	.full-block {
+		height: auto;
+		background-color: #fff;
+		padding-top: 1rem;
+		padding-bottom: 1rem;
+	}
 
-  .min-height {
-    min-height: 50px;
-  }
-  //animation transition fade
-  .fade-enter-active,
-  .fade-leave-active {
-    transition: opacity 0.2s;
-  }
-  /* .fade-leave-active below version 2.1.8 */
-  .fade-enter,
-  .fade-leave-to {
-    opacity: 0;
-  }
-  // StepsPage.vue
-  .full-block {
-    height          : auto;
-    background-color: #FFF;
-    padding-top     : 1rem;
-    padding-bottom  : 1rem;
-  }
+	hr {
+		margin-bottom: $margin-bouton;
+	}
 
-  hr {
-    margin-bottom: $margin-bouton;
-  }
+	.b-form-spinbutton {
+		width: auto !important;
+		min-width: 18rem;
+	}
+	.block-title {
+		flex-wrap: wrap;
+		height: 40px;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		box-shadow: 0 2px 5px rgb(220, 219, 219);
+		.form-title {
+			letter-spacing: 2px;
+			margin-left: 10px;
+			font-weight: 600;
+		}
+		.title-right {
+			font-size: 13px;
+			border: 1px solid #cecbcb;
+			padding: 7px;
+			font-weight: bold;
+			border-radius: 7px;
+			cursor: pointer;
 
-  .b-form-spinbutton {
-    width    : auto !important;
-    min-width: 18rem;
-  }
-  .block-title{
-    flex-wrap: wrap;
-    height: 40px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 2px 5px rgb(220, 219, 219);
-    .form-title {
-        letter-spacing: 2px;
-        margin-left: 10px;
-        font-weight: 600; 
-      }
-    .title-right {
-      font-size: 13px;
-      border: 1px solid #cecbcb;
-      padding: 7px;font-weight: bold;
-      border-radius: 7px;
-      cursor: pointer;
-  
-      transition: ease-in-out 0.2s;
-      &:hover {
-        color: white;
-        font-weight: bold;
-       background-color: #22262b;
-       border-color: #22262b;
-      }
-    }
-    @include media-max('XS') {
-        height: auto;
-      }
-   
-  }
+			transition: ease-in-out 0.2s;
+			&:hover {
+				color: white;
+				font-weight: bold;
+				background-color: #22262b;
+				border-color: #22262b;
+			}
+		}
+		@include media-max("XS") {
+			height: auto;
+		}
+	}
 }

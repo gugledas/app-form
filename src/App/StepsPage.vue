@@ -1,7 +1,6 @@
 <template>
   <div>
     <b-container class="p-md-" fluid="lg">
-      <div class="text-left"></div>
       <b-row align-h="center">
         <b-col class="" cols="12" lg="10" v-if="formDatas && formDatas.info">
           <transition name="fade">

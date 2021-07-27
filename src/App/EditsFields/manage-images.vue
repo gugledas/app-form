@@ -56,6 +56,7 @@ export default {
   },
   methods: {
     handleImages(files) {
+      console.log("re", files);
       for (const i in files) {
         AjaxBasic.postFile(config.baseURl + this.url, files[i])
           .then((resolv) => {

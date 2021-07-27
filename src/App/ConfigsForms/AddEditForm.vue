@@ -22,6 +22,13 @@
               ></b-form-textarea>
             </b-form-group>
           </b-col>
+          <b-col cols="12">
+            <b-form-group label="image" label-for="description-input">
+              <manageImages
+                @ev_manage_images_img="ev_manage_images_img($event)"
+              ></manageImages>
+            </b-form-group>
+          </b-col>
         </b-row>
         <b-row align-h="end">
           <div class="mr-3">
@@ -30,6 +37,8 @@
             </b-button>
           </div>
         </b-row>
+        fro:
+        <pre>{{ form }}</pre>
       </form>
     </b-modal>
   </div>
@@ -37,6 +46,8 @@
 
 <script>
 //
+import manageImages from "../EditsFields/manage-images.vue";
+
 import config from "../config/config.js";
 export default {
   name: "AddEditForm",
@@ -44,7 +55,7 @@ export default {
     //
   },
   components: {
-    //
+    manageImages,
   },
   data() {
     return {
@@ -52,6 +63,7 @@ export default {
         forms: [],
         description: "",
         name: "",
+        img: "",
       },
     };
   },
@@ -65,6 +77,12 @@ export default {
     //
   },
   methods: {
+    ev_manage_images_img(data, form) {
+      console.log("file", data);
+      if (data.url) {
+        form.img = data.url;
+      }
+    },
     handleOk(bvModalEvt) {
       // Prevent modal from closing
       bvModalEvt.preventDefault();

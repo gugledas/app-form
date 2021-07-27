@@ -8,6 +8,14 @@ Vue.use(Vuex);
 import axios from "axios";
 export default new Vuex.Store({
   state: {
+    /* contient les information de la page d'afficha des formulaires */
+    pageInfo: {
+      title: "Quels travaux de rénovation souhaitez-vous",
+      video: "https://www.youtube.com/embed/tgbNymZ7vqY",
+      description:
+        "Vous pourriez ensuite entrer en relation avec les meilleurs professionels de notre réseau.",
+      showVideo: true,
+    },
     stepsIndex: 0,
     /**
      * true, si on est administrateur.

@@ -6,24 +6,51 @@
           <b-col cols="12" md="10" class="shadow d-flex justify-content-center">
             <div class="home-form_block">
               <div class="block-header">
+                <div class="config">
+                  <b-button
+                    class="config-btn"
+                    @click="settingform"
+                    v-if="$store.state.mode"
+                    v-b-tooltip.hover.v-dark
+                    title="Setting"
+                  >
+                    <b-icon icon="gear" class="setting-icon"></b-icon>
+                  </b-button>
+                </div>
                 <div class="content">
-                  <h1>Quels travaux de rénovation souhaitez-vous</h1>
+                  <h1>{{ pageInfo.title }}</h1>
                   <p>Décrivé votre projet et visualiser votre estimation.</p>
-                  <p>
-                    Vous pourriez ensuite entrer en relation avec les meilleurs
-                    professionels de notre réseau.
-                  </p>
-                  <div class="link">
-                    <a href="#" class="button-link">Comment sa marche?</a>
+                  <p>{{ pageInfo.description }}</p>
+                  <div class="link" @click="showHideVideo">
+                    <span href="#" class="button-link"
+                      >Comment sa marche?
+                      <b-icon
+                        icon="arrow-down"
+                        class="ml-2 setting-icon"
+                      ></b-icon>
+                    </span>
                   </div>
                 </div>
               </div>
-              <div class="video-center"></div>
+              <transition name="fade">
+                <div
+                  class="video-center"
+                  v-if="pageInfo.video.length && pageInfo.showVideo"
+                >
+                  <iframe
+                    title="YouTube video player"
+                    :src="pageInfo.video"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                  ></iframe>
+                </div>
+              </transition>
               <b-col cols="12" class="text-center my-5" v-if="!items.length">
                 <b-spinner
                   style="width: 8rem; height: 8rem"
                   label="Large Spinner"
-                  variant="info"
+                  variant="dark"
                   type="grow"
                 ></b-spinner>
               </b-col>
@@ -35,7 +62,7 @@
                   <div class="block_desc">
                     <span>{{ form.name }}</span>
                   </div>
-                  <div class="p-relative">
+                  <div>
                     <b-button-group class="home-button">
                       <b-button
                         variant="outline-primary"
@@ -86,7 +113,11 @@
                   </div>
                 </div>
 
-                <div class="block-plus" @click="newForm">
+                <div
+                  class="block-plus"
+                  v-if="$store.state.mode"
+                  @click="newForm"
+                >
                   <div class="horiz"></div>
                   <div class="verti"></div>
 
@@ -101,6 +132,7 @@
       </b-container>
     </div>
     <AddEditForm></AddEditForm>
+    <SettingForm></SettingForm>
   </div>
 </template>
 
@@ -115,6 +147,7 @@ export default {
   props: {},
   components: {
     AddEditForm: () => import("./ConfigsForms/AddEditForm.vue"),
+    SettingForm: () => import("./ConfigsForms/SettingForm.vue"),
   },
   data() {
     return {
@@ -138,11 +171,18 @@ export default {
   mounted() {},
   watch: {},
   computed: {
-    ...mapState(["items"]),
+    ...mapState(["items", "pageInfo"]),
   },
   methods: {
+    showHideVideo() {
+      this.$store.state.pageInfo.showVideo =
+        !this.$store.state.pageInfo.showVideo;
+    },
     newForm() {
       this.$bvModal.show("add-edit-form");
+    },
+    settingform() {
+      this.$bvModal.show("setting-form");
     },
     updateForm(id) {
       this.$router.push({ path: `/edit-form/${id}` });

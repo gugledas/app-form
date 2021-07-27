@@ -111,6 +111,11 @@
                       ></b-form-textarea>
                     </b-form-group>
                   </b-col>
+                  <b-col cols="12">
+                    <b-form-group label="image" label-for="description-input">
+                      <UploadImage :field="form"></UploadImage>
+                    </b-form-group>
+                  </b-col>
                 </b-row>
 
                 <hr class="my-3" />
@@ -158,7 +163,13 @@ import { mapState, mapGetters } from "vuex";
 import pages from "./pages.vue";
 import reOrderStepes from "./ConfigsForms/reOrderStepes.vue";
 export default {
-  components: { pages, NavLine, reOrderStepes, TitleBar },
+  components: {
+    pages,
+    NavLine,
+    reOrderStepes,
+    TitleBar,
+    UploadImage: () => import("./EditsFields/UploadImage.vue"),
+  },
   props: {
     id: {
       type: String,

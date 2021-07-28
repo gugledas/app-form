@@ -158,13 +158,13 @@ $w-list-block: 470px;
 			border-radius: 5px;
 		}
 		&-at {
-			background: #333333;
+			background: #dc3545;
 		}
 		&-sa {
-			background: rgb(32, 123, 73);
+			background: $primary_color;
 		}
 		&-ab {
-			background: $primary_color;
+			background: rgb(143, 143, 143);
 		}
 	}
 }

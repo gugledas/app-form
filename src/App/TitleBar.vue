@@ -1,5 +1,5 @@
 <template>
-  <b-row align-h="center" class="mb-4">
+  <b-row align-h="center" class="mb-2">
     <b-col :lg="conf.col ? '12' : '10'" cols="12">
       <div class="block-title pr-2">
         <div class="backButton" @click="returnHome" to="/">
@@ -10,12 +10,13 @@
             height="30px"
           />
         </div>
-        <h5 class="">
+        <h5 class="m-0">
           {{ conf.text }} :
           <span class="form-title">{{ form.name }}</span>
         </h5>
         <div>
           <h5
+            class="m-0"
             v-show="showDevis"
             :class="uid ? 'title-right' : ''"
             @click="seeDevis"

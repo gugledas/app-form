@@ -9,17 +9,17 @@
       ></b-icon>
     </div>
     <div v-if="!isBusy" class="titre-project-resume">
-      <b-col cols="12" sm="5" lg="3" class="notif">
+      <b-col cols="12" md="5" lg="3" class="notif">
         <span class="notif-alert notif-at">{{
           nombreStatus.rappel.length
         }}</span>
         <span>projet en attente de rappel</span></b-col
       >
-      <b-col cols="12" sm="5" lg="3" class="notif">
+      <b-col cols="12" md="5" lg="3" class="notif">
         <span class="notif-alert notif-sa">{{ nombreStatus.save.length }}</span>
         <span>projet sauvegardé,</span></b-col
       >
-      <b-col cols="12" sm="5" lg="4" class="notif" v-if="$store.state.mode">
+      <b-col cols="12" md="5" lg="3" class="notif" v-if="$store.state.mode">
         <span class="notif-ab notif-alert">{{
           nombreStatus.loose.length
         }}</span>

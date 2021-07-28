@@ -132,6 +132,8 @@
           </div>
         </b-col>
       </b-row>
+      is:
+      <pre>{{ form }}</pre>
     </b-container>
     <!-- -->
     <reOrderStepes />
@@ -208,6 +210,7 @@ export default {
       "priceAide",
     ]),
     ...mapGetters(["form", "formDatas"]),
+
     currentSteps() {
       var local = localStorage.getItem("allo");
       var recap = JSON.parse(local);
@@ -351,7 +354,7 @@ export default {
       event.preventDefault();
       // Exit when the form isn't valid
       this.demo = true;
-
+      this.saveToLocal();
       this.$nextTick(() => {
         this.$bvModal.hide("modal-prevent-closing");
       });

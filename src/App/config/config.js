@@ -36,6 +36,9 @@ export default {
   prepareDatasToSave(datas) {
     return Utilities.saveSteps(datas);
   },
+  prepareSettingForm(datas) {
+    return Utilities.settingForm(datas);
+  },
   /**
    * Prepare les données pour la sauvagarde.
    *

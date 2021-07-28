@@ -45,7 +45,7 @@
 import { mapState } from "vuex";
 //
 
-//import config from "../config/config.js";
+import config from "../config/config.js";
 export default {
   name: "AddEditForm",
   props: {
@@ -72,6 +72,9 @@ export default {
     ...mapState(["pageInfo"]),
   },
   methods: {
+    loadPageInfo() {
+      this.$store.dispatch("loadPageInfo");
+    },
     ev_manage_images_img(data, form) {
       console.log("file", data);
       if (data.url) {
@@ -85,15 +88,16 @@ export default {
       this.handleSubmit();
     },
     handleSubmit(event) {
+      var datas = { name: "pageInfo", value: this.pageInfo };
       event.preventDefault();
-      //   config.prepareDatasToSave(this.form).then((val) => {
-      //     config.saveForm(val).then(() => {
-      //       this.$nextTick(() => {
-      //         this.$bvModal.hide("setting-form");
-      //         window.location.reload();
-      //       });
-      //     });
-      //   });
+      config.prepareSettingForm(datas).then((val) => {
+        config.saveForm(val).then(() => {
+          this.$nextTick(() => {
+            this.$bvModal.hide("setting-form");
+            this.loadPageInfo();
+          });
+        });
+      });
     },
   },
 };

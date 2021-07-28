@@ -15,17 +15,18 @@ https://bezkoder.com/vue-axios-file-upload/
       @updatefiles="updatefiles"
     ></FilePond>
     <ul class="m-0 p-2 bg-light m-2">
-      <li v-for="(file, i) in myFilesPreview" :key="i" class="row mb-3">
-        <b-col sm="10"> {{ file.filename }} </b-col>
+      <b-row align-h="center" align-v="center" class="row mb-3" v-if="hasImg">
+        <b-col sm="10">
+          <img :src="baseURl + field.img" width:="40px" height="40px" /></b-col
+        >
+
         <b-col sm="2">
           <b-button size="sm" variant="outline-danger" @click="deleteFile">
             <b-icon icon="trash"></b-icon>
           </b-button>
         </b-col>
-      </li>
+      </b-row>
     </ul>
-    field:
-    <pre>{{ field }}</pre>
   </div>
 </template>
 
@@ -76,7 +77,17 @@ export default {
   watch: {
     //
   },
+
   computed: {
+    hasImg() {
+      if (this.field.img) {
+        if (this.field.img.length > 4) return true;
+      }
+      return false;
+    },
+    baseURl() {
+      return config.baseURl;
+    },
     myFilesPreview() {
       const myFilesPreview = [];
       if (this.field.img && this.field.img.length) {
@@ -96,7 +107,8 @@ export default {
   },
   methods: {
     addImages(response) {
-      this.field.img.push(response);
+      console.log("ime", response);
+      this.field.img = response.url;
     },
     retriveFiles() {
       this.myFilesPreview = [];
@@ -114,14 +126,14 @@ export default {
       }
     },
     setEmptyValue() {
-      this.field.img = [];
+      this.field.img = "";
     },
     handleFilePondInit: function () {
       console.log("FilePond has initialized");
       // FilePond instance methods are available on `this.$refs.pond`
     },
-    deleteFile(id) {
-      this.field.img.splice(id, 1);
+    deleteFile() {
+      this.field.img = "";
     },
     progressfiles(data) {
       console.log("progressfiles : ", data);

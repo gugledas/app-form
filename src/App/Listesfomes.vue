@@ -57,7 +57,7 @@
               <b-row class="block-option">
                 <div class="block" v-for="(form, index) in items" :key="index">
                   <div class="block_img">
-                    <img src="../../img/image.jpg" />
+                    <img :src="trueUrl(form)" />
                   </div>
                   <div class="block_desc">
                     <span>{{ form.name }}</span>
@@ -168,12 +168,27 @@ export default {
       ],
     };
   },
-  mounted() {},
+  mounted() {
+    this.loadPageInfo();
+  },
   watch: {},
   computed: {
     ...mapState(["items", "pageInfo"]),
   },
   methods: {
+    loadPageInfo() {
+      this.$store.dispatch("loadPageInfo");
+    },
+    trueUrl(form) {
+      var url = "/img/image.9a450909.jpg";
+
+      if (form.img) {
+        if (form.img.length) {
+          url = config.baseURl + form.img;
+        }
+      }
+      return url;
+    },
     showHideVideo() {
       this.$store.state.pageInfo.showVideo =
         !this.$store.state.pageInfo.showVideo;

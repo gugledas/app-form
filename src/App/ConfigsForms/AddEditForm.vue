@@ -36,8 +36,6 @@
             </b-button>
           </div>
         </b-row>
-        form:
-        <pre>{{ form }}</pre>
       </form>
     </b-modal>
   </div>

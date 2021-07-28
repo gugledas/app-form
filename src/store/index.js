@@ -14,7 +14,7 @@ export default new Vuex.Store({
       video: "https://www.youtube.com/embed/tgbNymZ7vqY",
       description:
         "Vous pourriez ensuite entrer en relation avec les meilleurs professionels de notre réseau.",
-      showVideo: true,
+      showVideo: false,
     },
     stepsIndex: 0,
     /**
@@ -184,6 +184,14 @@ export default new Vuex.Store({
     },
   },
   mutations: {
+    SET_PAGE_INFO(state, payload) {
+      var setting = null;
+      if (payload.length) setting = payload[0].value;
+      var type = typeof setting;
+      if (setting !== null && type === "string") {
+        state.pageInfo = JSON.parse(setting);
+      }
+    },
     // Ajouter une étapes dans le JSON global
     ADD_STEPS_DATAS(state, payload) {
       state.allStepsDatas.push(payload);
@@ -428,6 +436,21 @@ export default new Vuex.Store({
         .then((reponse) => {
           console.log("get loadStepsDatas: ", reponse);
           commit("SET_ITEMS", reponse.data);
+        })
+        .catch((error) => {
+          console.log("get error ", error);
+        });
+    },
+    /**
+     * Recupere les paramètres de la page qui liste les formulaires   en BD.
+     */
+    loadPageInfo({ commit }) {
+      var datas = "select * from `appformmanager_config`";
+      axios
+        .post(config.baseURl + "/query-ajax/select", datas)
+        .then((reponse) => {
+          console.log("get pageInfo: ", reponse);
+          commit("SET_PAGE_INFO", reponse.data);
         })
         .catch((error) => {
           console.log("get error ", error);

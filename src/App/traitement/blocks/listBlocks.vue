@@ -9,12 +9,22 @@
       ></b-icon>
     </div>
     <div v-if="!isBusy" class="titre-project-resume">
-      {{ nombreStatus.rappel.length }} projet en attente de rappel, <br />
-      {{ nombreStatus.save.length }} projet sauvegardé, <br />
-      <span v-if="$store.state.mode">
-        {{ nombreStatus.loose.length }} projet abandonné
-      </span>
-      <br />
+      <b-col cols="12" sm="5" lg="3" class="notif">
+        <span class="notif-alert notif-at">{{
+          nombreStatus.rappel.length
+        }}</span>
+        <span>projet en attente de rappel</span></b-col
+      >
+      <b-col cols="12" sm="5" lg="3" class="notif">
+        <span class="notif-alert notif-sa">{{ nombreStatus.save.length }}</span>
+        <span>projet sauvegardé,</span></b-col
+      >
+      <b-col cols="12" sm="5" lg="4" class="notif" v-if="$store.state.mode">
+        <span class="notif-ab notif-alert">{{
+          nombreStatus.loose.length
+        }}</span>
+        <span>projet abandonné</span></b-col
+      >
     </div>
     <b-row :trigger_perfom="trigger_perfom" class="list-block" v-if="!isBusy">
       <b-col v-for="(item, i) in traitementFormItemsDisplay" :key="i" md="12">

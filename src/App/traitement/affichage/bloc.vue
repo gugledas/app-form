@@ -1,6 +1,6 @@
 <template>
   <div class="block">
-    <b-button variant="danger" class="mb-2">
+    <b-button :variant="statusColor" class="mb-2">
       {{ displayStatus }}
     </b-button>
     <div class="date">{{ getDateDisplay }}</div>
@@ -52,6 +52,21 @@ export default {
   },
 
   computed: {
+    statusColor() {
+      var text = "";
+      switch (this.item.status) {
+        case "1":
+          text = "primary";
+          break;
+        case "0":
+          text = "danger";
+          break;
+        case "2":
+          text = "secondary";
+          break;
+      }
+      return text;
+    },
     displayStatus() {
       var text = "";
       switch (this.item.status) {

@@ -1,13 +1,147 @@
 ((typeof self !== 'undefined' ? self : this)["webpackJsonpappForm"] = (typeof self !== 'undefined' ? self : this)["webpackJsonpappForm"] || []).push([[8],{
 
-/***/ "1d37":
+/***/ "1ad8":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_8_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_8_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_8_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_LabelRow_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("cf2d");
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_8_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_8_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_8_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_LabelRow_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_8_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_8_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_8_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_LabelRow_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
-/* unused harmony reexport * */
+// ESM COMPAT FLAG
+__webpack_require__.r(__webpack_exports__);
 
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"57337f11-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/input/IncrementNumber.vue?vue&type=template&id=23e94c23&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:!_vm.validationField && _vm.mode ? 'mb-5' : ''},[(_vm.validationField)?_c('transition',{attrs:{"name":"fade"}},[_c('div',{staticClass:"spin-block"},[_c('ValidationProvider',{staticClass:"col-12 p-0",attrs:{"rules":_vm.field.require,"name":_vm.field.name},scopedSlots:_vm._u([{key:"default",fn:function(v){return [_c('b-form-spinbutton',{staticClass:"spin-button",staticStyle:{"width":"10rem"},attrs:{"id":"demo-sb","min":"1","max":"20","placeholder":"--","wrap":""},model:{value:(_vm.field.value),callback:function ($$v) {_vm.$set(_vm.field, "value", $$v)},expression:"field.value"}},[_c('template',{attrs:{"hasFocus":"false"},slot:"decrement"},[_c('div',{staticClass:"decrement"},[_c('span',{staticClass:"moins"},[_vm._v("-")])])]),_c('template',{attrs:{"hasFocus":"false"},slot:"increment"},[_c('div',{staticClass:"decrement"},[_c('span',{staticClass:"moins"},[_vm._v("+")])])])],2),_c('div',{staticClass:"text-danger"},_vm._l((v.errors),function(error,ii){return _c('small',{key:ii,staticClass:"d-block"},[_vm._v(" "+_vm._s(error)+" ")])}),0)]}}],null,false,2245541385)})],1)]):_vm._e()],1)}
+var staticRenderFns = []
+
+
+// CONCATENATED MODULE: ./src/App/input/IncrementNumber.vue?vue&type=template&id=23e94c23&
+
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/objectSpread2.js + 1 modules
+var objectSpread2 = __webpack_require__("5530");
+
+// EXTERNAL MODULE: ./node_modules/vuex/dist/vuex.esm.js
+var vuex_esm = __webpack_require__("2f62");
+
+// EXTERNAL MODULE: ./node_modules/vee-validate/dist/vee-validate.esm.js
+var vee_validate_esm = __webpack_require__("7bb1");
+
+// EXTERNAL MODULE: ./src/App/config/validation.js
+var validation = __webpack_require__("e412");
+
+// EXTERNAL MODULE: ./src/App/EditsFields/vee-validate-custom.js
+var vee_validate_custom = __webpack_require__("b6d1");
+
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/input/IncrementNumber.vue?vue&type=script&lang=js&
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+/* harmony default export */ var IncrementNumbervue_type_script_lang_js_ = ({
+  props: {
+    field: {
+      type: Object,
+      require: true
+    }
+  },
+  components: {
+    ValidationProvider: vee_validate_esm["b" /* ValidationProvider */]
+  },
+  data: function data() {
+    return {
+      value: 1
+    };
+  },
+  computed: Object(objectSpread2["a" /* default */])(Object(objectSpread2["a" /* default */])(Object(objectSpread2["a" /* default */])({}, Object(vuex_esm["b" /* mapGetters */])(["formDatas"])), Object(vuex_esm["c" /* mapState */])(["formDatasValidate", "mode"])), {}, {
+    validationField: function validationField() {
+      var status = true;
+
+      if (this.field.states.length) {
+        status = validation["b" /* validationRessource */].computedValidation(this.formDatas, this.field, this.formDatasValidate);
+        if (status === undefined) status = false;
+        this.setStatus(status);
+        return status;
+      } else {
+        this.setStatus(status);
+        return status;
+      }
+    }
+  }),
+  methods: {
+    setStatus: function setStatus(status) {
+      this.$set(this.field, "status", status);
+    }
+  }
+});
+// CONCATENATED MODULE: ./src/App/input/IncrementNumber.vue?vue&type=script&lang=js&
+ /* harmony default export */ var input_IncrementNumbervue_type_script_lang_js_ = (IncrementNumbervue_type_script_lang_js_); 
+// EXTERNAL MODULE: ./src/App/input/IncrementNumber.vue?vue&type=style&index=0&lang=scss&
+var IncrementNumbervue_type_style_index_0_lang_scss_ = __webpack_require__("efa3");
+
+// EXTERNAL MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
+var componentNormalizer = __webpack_require__("2877");
+
+// CONCATENATED MODULE: ./src/App/input/IncrementNumber.vue
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(componentNormalizer["a" /* default */])(
+  input_IncrementNumbervue_type_script_lang_js_,
+  render,
+  staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* harmony default export */ var IncrementNumber = __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
@@ -44,7 +178,7 @@
 /* unused harmony export required_if */
 /* unused harmony export size */
 /**
-  * vee-validate v3.4.8
+  * vee-validate v3.4.11
   * (c) 2021 Abdelrahman Awad
   * @license MIT
   */
@@ -77,7 +211,8 @@ var alpha$1 = {
     ar: /^[ءآأؤإئابةتثجحخدذرزسشصضطظعغفقكلمنهوىيًٌٍَُِّْٰ]*$/,
     az: /^[A-ZÇƏĞİıÖŞÜ]*$/i,
     el: /^[Α-ώ]*$/i,
-    ja: /[\u3000-\u303F]|[\u3040-\u309F]|[\u30A0-\u30FF]|[\uFF00-\uFFEF]|[\u4E00-\u9FAF]/g
+    ja: /^[A-Z\u3000-\u303F\u3040-\u309F\u30A0-\u30FF\uFF00-\uFFEF\u4E00-\u9FAF]*$/i,
+    he: /^[A-Z\u05D0-\u05EA']*$/i
 };
 var alphaSpaces = {
     en: /^[A-Z\s]*$/i,
@@ -103,7 +238,8 @@ var alphaSpaces = {
     ar: /^[ءآأؤإئابةتثجحخدذرزسشصضطظعغفقكلمنهوىيًٌٍَُِّْٰ\s]*$/,
     az: /^[A-ZÇƏĞİıÖŞÜ\s]*$/i,
     el: /^[Α-ώ\s]*$/i,
-    ja: /[\u3000-\u303F]|[\u3040-\u309F]|[\u30A0-\u30FF]|[\uFF00-\uFFEF]|[\u4E00-\u9FAF]/g
+    ja: /^[A-Z\u3000-\u303F\u3040-\u309F\u30A0-\u30FF\uFF00-\uFFEF\u4E00-\u9FAF\s]*$/i,
+    he: /^[A-Z\u05D0-\u05EA'\s]*$/i
 };
 var alphanumeric = {
     en: /^[0-9A-Z]*$/i,
@@ -129,7 +265,8 @@ var alphanumeric = {
     ar: /^[٠١٢٣٤٥٦٧٨٩0-9ءآأؤإئابةتثجحخدذرزسشصضطظعغفقكلمنهوىيًٌٍَُِّْٰ]*$/,
     az: /^[0-9A-ZÇƏĞİıÖŞÜ]*$/i,
     el: /^[0-9Α-ώ]*$/i,
-    ja: /[\u3000-\u303F]|[\u3040-\u309F]|[\u30A0-\u30FF]|[\uFF00-\uFFEF]|[\u4E00-\u9FAF]/g
+    ja: /^[0-9A-Z\u3000-\u303F\u3040-\u309F\u30A0-\u30FF\uFF00-\uFFEF\u4E00-\u9FAF]*$/i,
+    he: /^[0-9A-Z\u05D0-\u05EA']*$/i
 };
 var alphaDash = {
     en: /^[0-9A-Z_-]*$/i,
@@ -155,7 +292,8 @@ var alphaDash = {
     ar: /^[٠١٢٣٤٥٦٧٨٩0-9ءآأؤإئابةتثجحخدذرزسشصضطظعغفقكلمنهوىيًٌٍَُِّْٰ_-]*$/,
     az: /^[0-9A-ZÇƏĞİıÖŞÜ_-]*$/i,
     el: /^[0-9Α-ώ_-]*$/i,
-    ja: /[\u3000-\u303F]|[\u3040-\u309F]|[\u30A0-\u30FF]|[\uFF00-\uFFEF]|[\u4E00-\u9FAF]/g
+    ja: /^[0-9A-Z\u3000-\u303F\u3040-\u309F\u30A0-\u30FF\uFF00-\uFFEF\u4E00-\u9FAF_-]*$/i,
+    he: /^[0-9A-Z\u05D0-\u05EA'_-]*$/i
 };
 
 var validate$r = function (value, _a) {
@@ -780,167 +918,6 @@ var double = {
 
 /***/ }),
 
-/***/ "ab64":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-// ESM COMPAT FLAG
-__webpack_require__.r(__webpack_exports__);
-
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"4acd20fe-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/input/LabelRow.vue?vue&type=template&id=64a3bead&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:!_vm.validationField && _vm.mode ? 'mb-5' : ''},[(_vm.validationField)?_c('transition',{attrs:{"name":"fade"}},[_c('div',{staticClass:"row-content choice-section min-height"},[_c('b-row',{staticClass:"row-content__row"},[_c('b-col',{attrs:{"sm":"6"}},[_c('label',{staticClass:"label"},[_vm._v(_vm._s(_vm.field.label)+" ")])]),_c('b-col',{attrs:{"sm":"6"}},[_c('ValidationProvider',{staticClass:"d-block",attrs:{"rules":_vm.field.require,"name":_vm.field.name},scopedSlots:_vm._u([{key:"default",fn:function(v){return [_c('div',{staticClass:"input-field",attrs:{"sm":"6"}},[(_vm.field.prefixe)?_c('span',{staticClass:"input-field__unit"},[_vm._v(" "+_vm._s(_vm.field.prefixe)+" ")]):_vm._e(),_c('b-form-input',{staticClass:"input-field__input",attrs:{"type":_vm.field.type,"placeholder":"","name":_vm.field.name},model:{value:(_vm.field.value),callback:function ($$v) {_vm.$set(_vm.field, "value", $$v)},expression:"field.value"}}),(_vm.field.suffixe)?_c('span',{staticClass:"input-field__unit"},[_vm._v(" "+_vm._s(_vm.field.suffixe)+" ")]):_vm._e()],1),_c('div',{staticClass:"text-danger"},_vm._l((v.errors),function(error,ii){return _c('small',{key:ii,staticClass:"d-block"},[_vm._v(" "+_vm._s(error)+" ")])}),0)]}}],null,false,1242360762)})],1)],1)],1)]):_vm._e()],1)}
-var staticRenderFns = []
-
-
-// CONCATENATED MODULE: ./src/App/input/LabelRow.vue?vue&type=template&id=64a3bead&
-
-// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/objectSpread2.js + 1 modules
-var objectSpread2 = __webpack_require__("5530");
-
-// EXTERNAL MODULE: ./node_modules/vuex/dist/vuex.esm.js
-var vuex_esm = __webpack_require__("2f62");
-
-// EXTERNAL MODULE: ./node_modules/vee-validate/dist/vee-validate.esm.js
-var vee_validate_esm = __webpack_require__("7bb1");
-
-// EXTERNAL MODULE: ./src/App/config/validation.js
-var validation = __webpack_require__("e412");
-
-// EXTERNAL MODULE: ./src/App/EditsFields/vee-validate-custom.js
-var vee_validate_custom = __webpack_require__("b6d1");
-
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/input/LabelRow.vue?vue&type=script&lang=js&
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-
-/* harmony default export */ var LabelRowvue_type_script_lang_js_ = ({
-  props: {
-    field: {
-      type: Object,
-      require: true,
-      validator: function validator(val) {
-        return val.states !== undefined && val.states !== undefined ? true : false;
-      }
-    }
-  },
-  components: {
-    ValidationProvider: vee_validate_esm["b" /* ValidationProvider */]
-  },
-  data: function data() {
-    return {
-      value: 1
-    };
-  },
-  watch: {
-    value: function value() {
-      this.$emit("label-up-value", this.value);
-      this.$store.state.fields.value = this.options;
-      console.log("object", this.options);
-    }
-  },
-  computed: Object(objectSpread2["a" /* default */])(Object(objectSpread2["a" /* default */])(Object(objectSpread2["a" /* default */])({}, Object(vuex_esm["b" /* mapGetters */])(["formDatas"])), Object(vuex_esm["c" /* mapState */])(["formDatasValidate", "mode"])), {}, {
-    validationField: function validationField() {
-      var status = true;
-
-      if (this.field.states.length) {
-        status = validation["b" /* validationRessource */].computedValidation(this.formDatas, this.field, this.formDatasValidate); //console.log("update status : ", status);
-
-        if (status === undefined || status === null) status = this.field.status !== undefined ? this.field.status : false;
-        this.setStatus(status);
-        return status;
-      } else {
-        this.setStatus(status);
-        return status;
-      }
-    }
-  }),
-  methods: {
-    setStatus: function setStatus(status) {
-      this.$set(this.field, "status", status);
-    }
-  }
-});
-// CONCATENATED MODULE: ./src/App/input/LabelRow.vue?vue&type=script&lang=js&
- /* harmony default export */ var input_LabelRowvue_type_script_lang_js_ = (LabelRowvue_type_script_lang_js_); 
-// EXTERNAL MODULE: ./src/App/input/LabelRow.vue?vue&type=style&index=0&lang=scss&
-var LabelRowvue_type_style_index_0_lang_scss_ = __webpack_require__("1d37");
-
-// EXTERNAL MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
-var componentNormalizer = __webpack_require__("2877");
-
-// CONCATENATED MODULE: ./src/App/input/LabelRow.vue
-
-
-
-
-
-
-/* normalize component */
-
-var component = Object(componentNormalizer["a" /* default */])(
-  input_LabelRowvue_type_script_lang_js_,
-  render,
-  staticRenderFns,
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* harmony default export */ var LabelRow = __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
 /***/ "b6d1":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -962,7 +939,18 @@ Object(vee_validate__WEBPACK_IMPORTED_MODULE_1__[/* extend */ "c"])("alpha", vee
 
 /***/ }),
 
-/***/ "cf2d":
+/***/ "efa3":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_8_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_8_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_8_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_IncrementNumber_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("f90c");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_8_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_8_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_8_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_IncrementNumber_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_8_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_8_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_8_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_IncrementNumber_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
+/* unused harmony reexport * */
+
+
+/***/ }),
+
+/***/ "f90c":
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin

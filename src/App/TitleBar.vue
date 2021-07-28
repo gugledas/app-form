@@ -1,5 +1,5 @@
 <template>
-  <b-row align-h="center" class="mb-2">
+  <b-row align-h="center" class="">
     <b-col :lg="conf.col ? '12' : '10'" cols="12">
       <div class="block-title pr-2">
         <div class="backButton" @click="returnHome" to="/">

@@ -35,14 +35,14 @@ module.exports =
 /******/
 /******/ 	// object to store loaded CSS chunks
 /******/ 	var installedCssChunks = {
-/******/ 		1: 0
+/******/ 		2: 0
 /******/ 	}
 /******/
 /******/ 	// object to store loaded and loading chunks
 /******/ 	// undefined = chunk not loaded, null = chunk preloaded/prefetched
 /******/ 	// Promise = chunk loading, 0 = chunk loaded
 /******/ 	var installedChunks = {
-/******/ 		1: 0
+/******/ 		2: 0
 /******/ 	};
 /******/
 /******/
@@ -83,11 +83,11 @@ module.exports =
 /******/
 /******/
 /******/ 		// mini-css-extract-plugin CSS loading
-/******/ 		var cssChunks = {"2":1,"3":1,"4":1,"6":1,"7":1,"8":1,"9":1,"10":1,"11":1,"13":1,"14":1,"15":1,"16":1,"17":1,"18":1,"20":1};
+/******/ 		var cssChunks = {"1":1,"3":1,"4":1,"5":1,"7":1,"8":1,"9":1,"10":1,"11":1,"12":1,"14":1,"15":1,"16":1,"17":1,"18":1,"19":1,"20":1};
 /******/ 		if(installedCssChunks[chunkId]) promises.push(installedCssChunks[chunkId]);
 /******/ 		else if(installedCssChunks[chunkId] !== 0 && cssChunks[chunkId]) {
 /******/ 			promises.push(installedCssChunks[chunkId] = new Promise(function(resolve, reject) {
-/******/ 				var href = "css/" + ({}[chunkId]||chunkId) + "." + {"0":"31d6cfe0","2":"2d029869","3":"aeae6e44","4":"2e41ede7","5":"31d6cfe0","6":"5f515804","7":"3def3390","8":"b2742065","9":"63248bb6","10":"dd3fcea7","11":"e5f1a246","12":"31d6cfe0","13":"5451517c","14":"8d2429ae","15":"5686f708","16":"5686f708","17":"ac5b10c9","18":"42efe657","19":"31d6cfe0","20":"44ac9b6b","21":"31d6cfe0","22":"31d6cfe0","23":"31d6cfe0","24":"31d6cfe0","25":"31d6cfe0","26":"31d6cfe0","27":"31d6cfe0","28":"31d6cfe0","29":"31d6cfe0","30":"31d6cfe0","31":"31d6cfe0","32":"31d6cfe0","33":"31d6cfe0","34":"31d6cfe0","35":"31d6cfe0"}[chunkId] + ".css";
+/******/ 				var href = "css/" + ({}[chunkId]||chunkId) + "." + {"0":"31d6cfe0","1":"091974b3","3":"f4f07acd","4":"a508765e","5":"7c85a9a6","6":"31d6cfe0","7":"5f515804","8":"3def3390","9":"b2742065","10":"63248bb6","11":"dd3fcea7","12":"e5f1a246","13":"31d6cfe0","14":"5451517c","15":"8d2429ae","16":"5686f708","17":"5686f708","18":"ac5b10c9","19":"42efe657","20":"42efe657","21":"31d6cfe0","22":"31d6cfe0","23":"31d6cfe0","24":"31d6cfe0","25":"31d6cfe0","26":"31d6cfe0","27":"31d6cfe0","28":"31d6cfe0","29":"31d6cfe0","30":"31d6cfe0","31":"31d6cfe0","32":"31d6cfe0","33":"31d6cfe0","34":"31d6cfe0","35":"31d6cfe0","36":"31d6cfe0","37":"31d6cfe0"}[chunkId] + ".css";
 /******/ 				var fullhref = __webpack_require__.p + href;
 /******/ 				var existingLinkTags = document.getElementsByTagName("link");
 /******/ 				for(var i = 0; i < existingLinkTags.length; i++) {
@@ -844,6 +844,7 @@ var replace = ''.replace;
 var SUBSTITUTION_SYMBOLS = /\$([$&'`]|\d{1,2}|<[^>]*>)/g;
 var SUBSTITUTION_SYMBOLS_NO_NAMED = /\$([$&'`]|\d{1,2})/g;
 
+// `GetSubstitution` abstract operation
 // https://tc39.es/ecma262/#sec-getsubstitution
 module.exports = function (matched, str, position, captures, namedCaptures, replacement) {
   var tailPos = position + matched.length;
@@ -1631,6 +1632,21 @@ var BVToastPlugin = /*#__PURE__*/Object(_utils_plugins__WEBPACK_IMPORTED_MODULE_
 
 /***/ }),
 
+/***/ "107c":
+/***/ (function(module, exports, __webpack_require__) {
+
+var fails = __webpack_require__("d039");
+
+module.exports = fails(function () {
+  // babel-minify transpiles RegExp('.', 'g') -> /./g and it causes SyntaxError
+  var re = RegExp('(?<a>b)', (typeof '').charAt(5));
+  return re.exec('b').groups.a !== 'b' ||
+    'b'.replace(re, '$<a>c') !== 'bc';
+});
+
+
+/***/ }),
+
 /***/ "1148":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1668,14 +1684,26 @@ var toLength = __webpack_require__("50c4");
 var callRegExpExec = __webpack_require__("14c3");
 var regexpExec = __webpack_require__("9263");
 var stickyHelpers = __webpack_require__("9f7f");
+var fails = __webpack_require__("d039");
 
 var UNSUPPORTED_Y = stickyHelpers.UNSUPPORTED_Y;
 var arrayPush = [].push;
 var min = Math.min;
 var MAX_UINT32 = 0xFFFFFFFF;
 
+// Chrome 51 has a buggy "split" implementation when RegExp#exec !== nativeExec
+// Weex JS has frozen built-in prototypes, so use try / catch wrapper
+var SPLIT_WORKS_WITH_OVERWRITTEN_EXEC = !fails(function () {
+  // eslint-disable-next-line regexp/no-empty-group -- required for testing
+  var re = /(?:)/;
+  var originalExec = re.exec;
+  re.exec = function () { return originalExec.apply(this, arguments); };
+  var result = 'ab'.split(re);
+  return result.length !== 2 || result[0] !== 'a' || result[1] !== 'b';
+});
+
 // @@split logic
-fixRegExpWellKnownSymbolLogic('split', 2, function (SPLIT, nativeSplit, maybeCallNative) {
+fixRegExpWellKnownSymbolLogic('split', function (SPLIT, nativeSplit, maybeCallNative) {
   var internalSplit;
   if (
     'abbc'.split(/(b)*/)[1] == 'c' ||
@@ -1744,12 +1772,12 @@ fixRegExpWellKnownSymbolLogic('split', 2, function (SPLIT, nativeSplit, maybeCal
     //
     // NOTE: This cannot be properly polyfilled in engines that don't support
     // the 'y' flag.
-    function (regexp, limit) {
-      var res = maybeCallNative(internalSplit, regexp, this, limit, internalSplit !== nativeSplit);
+    function (string, limit) {
+      var res = maybeCallNative(internalSplit, this, string, limit, internalSplit !== nativeSplit);
       if (res.done) return res.value;
 
-      var rx = anObject(regexp);
-      var S = String(this);
+      var rx = anObject(this);
+      var S = String(string);
       var C = speciesConstructor(rx, RegExp);
 
       var unicodeMatching = rx.unicode;
@@ -1790,7 +1818,7 @@ fixRegExpWellKnownSymbolLogic('split', 2, function (SPLIT, nativeSplit, maybeCal
       return A;
     }
   ];
-}, UNSUPPORTED_Y);
+}, !SPLIT_WORKS_WITH_OVERWRITTEN_EXEC, UNSUPPORTED_Y);
 
 
 /***/ }),
@@ -3534,7 +3562,8 @@ var Utilities = {
           fields: {
             forms: forms,
             description: datas.description,
-            name: datas.name
+            name: datas.name,
+            img: datas.img
           },
           action: "update"
         };
@@ -3546,6 +3575,37 @@ var Utilities = {
           }];
         }
 
+        result.push(table1);
+      }
+
+      resolv(result);
+    });
+  },
+
+  /**
+   * Prepare les données de paramètres de la page de formulaires pour la sauvagarde.
+   */
+  settingForm: function settingForm(datas) {
+    return new Promise(function (resolv) {
+      //console.log("fdate : ", datas);
+      var value = "";
+      value = JSON.stringify(datas.value);
+      var result = [];
+
+      if (datas != "") {
+        //edition de la table contents
+        var table1 = {
+          table: "appformmanager_config",
+          fields: {
+            name: datas.name,
+            value: value
+          },
+          action: "update"
+        };
+        table1.where = [{
+          column: "name",
+          value: datas.name
+        }];
         result.push(table1);
       }
 
@@ -6406,8 +6466,10 @@ var fails = __webpack_require__("d039");
 
 // eslint-disable-next-line es/no-object-getownpropertysymbols -- required for testing
 module.exports = !!Object.getOwnPropertySymbols && !fails(function () {
-  return !String(Symbol()) ||
-    // Chrome 38 Symbol has incorrect toString conversion
+  var symbol = Symbol();
+  // Chrome 38 Symbol has incorrect toString conversion
+  // `get-own-property-symbols` polyfill symbols converted to object are not Symbol instances
+  return !String(symbol) || !(Object(symbol) instanceof Symbol) ||
     // Chrome 38-40 symbols are not inherited from DOM collections prototypes to instances
     !Symbol.sham && V8_VERSION && V8_VERSION < 41;
 });
@@ -7473,7 +7535,7 @@ var toObject = __webpack_require__("7b0b");
 
 var hasOwnProperty = {}.hasOwnProperty;
 
-module.exports = function hasOwn(it, key) {
+module.exports = Object.hasOwn || function hasOwn(it, key) {
   return hasOwnProperty.call(toObject(it), key);
 };
 
@@ -7581,6 +7643,7 @@ module.exports = false;
 "use strict";
 
 var fixRegExpWellKnownSymbolLogic = __webpack_require__("d784");
+var fails = __webpack_require__("d039");
 var anObject = __webpack_require__("825a");
 var toLength = __webpack_require__("50c4");
 var toInteger = __webpack_require__("a691");
@@ -7588,7 +7651,9 @@ var requireObjectCoercible = __webpack_require__("1d80");
 var advanceStringIndex = __webpack_require__("8aa5");
 var getSubstitution = __webpack_require__("0cb2");
 var regExpExec = __webpack_require__("14c3");
+var wellKnownSymbol = __webpack_require__("b622");
 
+var REPLACE = wellKnownSymbol('replace');
 var max = Math.max;
 var min = Math.min;
 
@@ -7596,10 +7661,33 @@ var maybeToString = function (it) {
   return it === undefined ? it : String(it);
 };
 
+// IE <= 11 replaces $0 with the whole match, as if it was $&
+// https://stackoverflow.com/questions/6024666/getting-ie-to-replace-a-regex-with-the-literal-string-0
+var REPLACE_KEEPS_$0 = (function () {
+  // eslint-disable-next-line regexp/prefer-escape-replacement-dollar-char -- required for testing
+  return 'a'.replace(/./, '$0') === '$0';
+})();
+
+// Safari <= 13.0.3(?) substitutes nth capture where n>m with an empty string
+var REGEXP_REPLACE_SUBSTITUTES_UNDEFINED_CAPTURE = (function () {
+  if (/./[REPLACE]) {
+    return /./[REPLACE]('a', '$0') === '';
+  }
+  return false;
+})();
+
+var REPLACE_SUPPORTS_NAMED_GROUPS = !fails(function () {
+  var re = /./;
+  re.exec = function () {
+    var result = [];
+    result.groups = { a: '7' };
+    return result;
+  };
+  return ''.replace(re, '$<a>') !== '7';
+});
+
 // @@replace logic
-fixRegExpWellKnownSymbolLogic('replace', 2, function (REPLACE, nativeReplace, maybeCallNative, reason) {
-  var REGEXP_REPLACE_SUBSTITUTES_UNDEFINED_CAPTURE = reason.REGEXP_REPLACE_SUBSTITUTES_UNDEFINED_CAPTURE;
-  var REPLACE_KEEPS_$0 = reason.REPLACE_KEEPS_$0;
+fixRegExpWellKnownSymbolLogic('replace', function (_, nativeReplace, maybeCallNative) {
   var UNSAFE_SUBSTITUTE = REGEXP_REPLACE_SUBSTITUTES_UNDEFINED_CAPTURE ? '$' : '$0';
 
   return [
@@ -7614,17 +7702,18 @@ fixRegExpWellKnownSymbolLogic('replace', 2, function (REPLACE, nativeReplace, ma
     },
     // `RegExp.prototype[@@replace]` method
     // https://tc39.es/ecma262/#sec-regexp.prototype-@@replace
-    function (regexp, replaceValue) {
+    function (string, replaceValue) {
       if (
-        (!REGEXP_REPLACE_SUBSTITUTES_UNDEFINED_CAPTURE && REPLACE_KEEPS_$0) ||
-        (typeof replaceValue === 'string' && replaceValue.indexOf(UNSAFE_SUBSTITUTE) === -1)
+        typeof replaceValue === 'string' &&
+        replaceValue.indexOf(UNSAFE_SUBSTITUTE) === -1 &&
+        replaceValue.indexOf('$<') === -1
       ) {
-        var res = maybeCallNative(nativeReplace, regexp, this, replaceValue);
+        var res = maybeCallNative(nativeReplace, this, string, replaceValue);
         if (res.done) return res.value;
       }
 
-      var rx = anObject(regexp);
-      var S = String(this);
+      var rx = anObject(this);
+      var S = String(string);
 
       var functionalReplace = typeof replaceValue === 'function';
       if (!functionalReplace) replaceValue = String(replaceValue);
@@ -7676,7 +7765,7 @@ fixRegExpWellKnownSymbolLogic('replace', 2, function (REPLACE, nativeReplace, ma
       return accumulatedResult + S.slice(nextSourcePosition);
     }
   ];
-});
+}, !REPLACE_SUPPORTS_NAMED_GROUPS || !REPLACE_KEEPS_$0 || REGEXP_REPLACE_SUBSTITUTES_UNDEFINED_CAPTURE);
 
 
 /***/ }),
@@ -7872,7 +7961,7 @@ var store = __webpack_require__("c6cd");
 (module.exports = function (key, value) {
   return store[key] || (store[key] = value !== undefined ? value : {});
 })('versions', []).push({
-  version: '3.12.1',
+  version: '3.15.2',
   mode: IS_PURE ? 'pure' : 'global',
   copyright: '© 2021 Denis Pushkarev (zloirock.ru)'
 });
@@ -39080,7 +39169,7 @@ module.exports = function (Iterable, NAME, IteratorConstructor, next, DEFAULT, I
     }
   }
 
-  // fix Array#{values, @@iterator}.name in V8 / FF
+  // fix Array.prototype.{ values, @@iterator }.name in V8 / FF
   if (DEFAULT == VALUES && nativeIterator && nativeIterator.name !== VALUES) {
     INCORRECT_VALUES_NAME = true;
     defaultIterator = function values() { return nativeIterator.call(this); };
@@ -39625,7 +39714,7 @@ var store = __webpack_require__("c6cd");
 
 var functionToString = Function.toString;
 
-// this helper broken in `3.4.1-3.4.4`, so we can't use `shared` helper
+// this helper broken in `core-js@3.4.1-3.4.4`, so we can't use `shared` helper
 if (typeof store.inspectSource != 'function') {
   store.inspectSource = function (it) {
     return functionToString.call(it);
@@ -40377,6 +40466,10 @@ module.exports = DESCRIPTORS ? function (object, key, value) {
 var regexpFlags = __webpack_require__("ad6d");
 var stickyHelpers = __webpack_require__("9f7f");
 var shared = __webpack_require__("5692");
+var create = __webpack_require__("7c73");
+var getInternalState = __webpack_require__("69f3").get;
+var UNSUPPORTED_DOT_ALL = __webpack_require__("fce3");
+var UNSUPPORTED_NCG = __webpack_require__("107c");
 
 var nativeExec = RegExp.prototype.exec;
 var nativeReplace = shared('native-string-replace', String.prototype.replace);
@@ -40396,12 +40489,24 @@ var UNSUPPORTED_Y = stickyHelpers.UNSUPPORTED_Y || stickyHelpers.BROKEN_CARET;
 // nonparticipating capturing group, copied from es5-shim's String#split patch.
 var NPCG_INCLUDED = /()??/.exec('')[1] !== undefined;
 
-var PATCH = UPDATES_LAST_INDEX_WRONG || NPCG_INCLUDED || UNSUPPORTED_Y;
+var PATCH = UPDATES_LAST_INDEX_WRONG || NPCG_INCLUDED || UNSUPPORTED_Y || UNSUPPORTED_DOT_ALL || UNSUPPORTED_NCG;
 
 if (PATCH) {
+  // eslint-disable-next-line max-statements -- TODO
   patchedExec = function exec(str) {
     var re = this;
-    var lastIndex, reCopy, match, i;
+    var state = getInternalState(re);
+    var raw = state.raw;
+    var result, reCopy, lastIndex, match, i, object, group;
+
+    if (raw) {
+      raw.lastIndex = re.lastIndex;
+      result = patchedExec.call(raw, str);
+      re.lastIndex = raw.lastIndex;
+      return result;
+    }
+
+    var groups = state.groups;
     var sticky = UNSUPPORTED_Y && re.sticky;
     var flags = regexpFlags.call(re);
     var source = re.source;
@@ -40451,6 +40556,14 @@ if (PATCH) {
           if (arguments[i] === undefined) match[i] = undefined;
         }
       });
+    }
+
+    if (match && groups) {
+      match.groups = object = create(null);
+      for (i = 0; i < groups.length; i++) {
+        group = groups[i];
+        object[group[0]] = match[group[1]];
+      }
     }
 
     return match;
@@ -40689,9 +40802,9 @@ var runtime = (function (exports) {
   // This is a polyfill for %IteratorPrototype% for environments that
   // don't natively support it.
   var IteratorPrototype = {};
-  IteratorPrototype[iteratorSymbol] = function () {
+  define(IteratorPrototype, iteratorSymbol, function () {
     return this;
-  };
+  });
 
   var getProto = Object.getPrototypeOf;
   var NativeIteratorPrototype = getProto && getProto(getProto(values([])));
@@ -40705,8 +40818,9 @@ var runtime = (function (exports) {
 
   var Gp = GeneratorFunctionPrototype.prototype =
     Generator.prototype = Object.create(IteratorPrototype);
-  GeneratorFunction.prototype = Gp.constructor = GeneratorFunctionPrototype;
-  GeneratorFunctionPrototype.constructor = GeneratorFunction;
+  GeneratorFunction.prototype = GeneratorFunctionPrototype;
+  define(Gp, "constructor", GeneratorFunctionPrototype);
+  define(GeneratorFunctionPrototype, "constructor", GeneratorFunction);
   GeneratorFunction.displayName = define(
     GeneratorFunctionPrototype,
     toStringTagSymbol,
@@ -40820,9 +40934,9 @@ var runtime = (function (exports) {
   }
 
   defineIteratorMethods(AsyncIterator.prototype);
-  AsyncIterator.prototype[asyncIteratorSymbol] = function () {
+  define(AsyncIterator.prototype, asyncIteratorSymbol, function () {
     return this;
-  };
+  });
   exports.AsyncIterator = AsyncIterator;
 
   // Note that simple async functions are implemented on top of
@@ -41015,13 +41129,13 @@ var runtime = (function (exports) {
   // iterator prototype chain incorrectly implement this, causing the Generator
   // object to not be returned from this call. This ensures that doesn't happen.
   // See https://github.com/facebook/regenerator/issues/274 for more details.
-  Gp[iteratorSymbol] = function() {
+  define(Gp, iteratorSymbol, function() {
     return this;
-  };
+  });
 
-  Gp.toString = function() {
+  define(Gp, "toString", function() {
     return "[object Generator]";
-  };
+  });
 
   function pushTryEntry(locs) {
     var entry = { tryLoc: locs[0] };
@@ -41340,14 +41454,19 @@ try {
 } catch (accidentalStrictMode) {
   // This module should not be running in strict mode, so the above
   // assignment should always work unless something is misconfigured. Just
-  // in case runtime.js accidentally runs in strict mode, we can escape
+  // in case runtime.js accidentally runs in strict mode, in modern engines
+  // we can explicitly access globalThis. In older engines we can escape
   // strict mode using a global Function call. This could conceivably fail
   // if a Content Security Policy forbids using Function, but in that case
   // the proper solution is to fix the accidental strict mode problem. If
   // you've misconfigured your bundler to force strict mode and applied a
   // CSP to forbid Function, and you're not willing to fix either of those
   // problems, please detail your unique predicament in a GitHub issue.
-  Function("r", "regeneratorRuntime = r")(runtime);
+  if (typeof globalThis === "object") {
+    globalThis.regeneratorRuntime = runtime;
+  } else {
+    Function("r", "regeneratorRuntime = r")(runtime);
+  }
 }
 
 
@@ -41907,19 +42026,14 @@ module.exports = Axios;
 /***/ "9f7f":
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-
-
 var fails = __webpack_require__("d039");
 
 // babel-minify transpiles RegExp('a', 'y') -> /a/y and it causes SyntaxError,
-// so we use an intermediate function.
-function RE(s, f) {
+var RE = function (s, f) {
   return RegExp(s, f);
-}
+};
 
 exports.UNSUPPORTED_Y = fails(function () {
-  // babel-minify transpiles RegExp('a', 'y') -> /a/y and it causes SyntaxError
   var re = RE('a', 'y');
   re.lastIndex = 2;
   return re.exec('abcd') != null;
@@ -42471,7 +42585,7 @@ __webpack_require__.d(__webpack_exports__, "b", function() { return /* reexport 
 
 // UNUSED EXPORTS: ButtonSave, ButtonDelete
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"4acd20fe-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!../wbuutilities/src/Buttons/ButtonSave.vue?vue&type=template&id=29246a2e&scoped=true&lang=html&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"57337f11-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!../wbuutilities/src/Buttons/ButtonSave.vue?vue&type=template&id=29246a2e&scoped=true&lang=html&
 var ButtonSavevue_type_template_id_29246a2e_scoped_true_lang_html_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('b-button',{attrs:{"variant":"outline-success","size":"sm"},on:{"click":_vm.onSubmit}},[_c('span',[_vm._v(_vm._s(_vm.texte))]),(_vm.running)?_c('b-icon',{staticClass:"ml-2",attrs:{"icon":"arrow-clockwise","animation":"spin-pulse"}}):_vm._e()],1)],1)}
 var staticRenderFns = []
 
@@ -42550,7 +42664,7 @@ var component = Object(componentNormalizer["a" /* default */])(
 )
 
 /* harmony default export */ var ButtonSave = (component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"4acd20fe-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!../wbuutilities/src/Buttons/ButtonDelete.vue?vue&type=template&id=0b82f270&scoped=true&lang=html&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"57337f11-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!../wbuutilities/src/Buttons/ButtonDelete.vue?vue&type=template&id=0b82f270&scoped=true&lang=html&
 var ButtonDeletevue_type_template_id_0b82f270_scoped_true_lang_html_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('b-button',{attrs:{"variant":"outline-danger","size":"sm"},on:{"click":_vm.DeleteFile}},[_c('span',[_vm._v(" "+_vm._s(_vm.texte)+" ")]),(_vm.running)?_c('b-icon',{staticClass:"ml-2",attrs:{"icon":"arrow-clockwise","animation":"spin-pulse"}}):_vm._e()],1)],1)}
 var ButtonDeletevue_type_template_id_0b82f270_scoped_true_lang_html_staticRenderFns = []
 
@@ -46501,8 +46615,8 @@ var AjaxToastBootStrap = Object(objectSpread2["a" /* default */])(Object(objectS
       }
     } //
     else if (error.error && error.error.statusText) {
-        title = decodeURI(error.error.statusText);
-      }
+      title = decodeURI(error.error.statusText);
+    }
 
     return title;
   }
@@ -47647,7 +47761,8 @@ var NEW_ITERATOR_PROTOTYPE = IteratorPrototype == undefined || fails(function ()
 
 if (NEW_ITERATOR_PROTOTYPE) IteratorPrototype = {};
 
-// 25.1.2.1.1 %IteratorPrototype%[@@iterator]()
+// `%IteratorPrototype%[@@iterator]()` method
+// https://tc39.es/ecma262/#sec-%iteratorprototype%-@@iterator
 if ((!IS_PURE || NEW_ITERATOR_PROTOTYPE) && !has(IteratorPrototype, ITERATOR)) {
   createNonEnumerableProperty(IteratorPrototype, ITERATOR, returnThis);
 }
@@ -51638,47 +51753,7 @@ var createNonEnumerableProperty = __webpack_require__("9112");
 var SPECIES = wellKnownSymbol('species');
 var RegExpPrototype = RegExp.prototype;
 
-var REPLACE_SUPPORTS_NAMED_GROUPS = !fails(function () {
-  // #replace needs built-in support for named groups.
-  // #match works fine because it just return the exec results, even if it has
-  // a "grops" property.
-  var re = /./;
-  re.exec = function () {
-    var result = [];
-    result.groups = { a: '7' };
-    return result;
-  };
-  return ''.replace(re, '$<a>') !== '7';
-});
-
-// IE <= 11 replaces $0 with the whole match, as if it was $&
-// https://stackoverflow.com/questions/6024666/getting-ie-to-replace-a-regex-with-the-literal-string-0
-var REPLACE_KEEPS_$0 = (function () {
-  // eslint-disable-next-line regexp/prefer-escape-replacement-dollar-char -- required for testing
-  return 'a'.replace(/./, '$0') === '$0';
-})();
-
-var REPLACE = wellKnownSymbol('replace');
-// Safari <= 13.0.3(?) substitutes nth capture where n>m with an empty string
-var REGEXP_REPLACE_SUBSTITUTES_UNDEFINED_CAPTURE = (function () {
-  if (/./[REPLACE]) {
-    return /./[REPLACE]('a', '$0') === '';
-  }
-  return false;
-})();
-
-// Chrome 51 has a buggy "split" implementation when RegExp#exec !== nativeExec
-// Weex JS has frozen built-in prototypes, so use try / catch wrapper
-var SPLIT_WORKS_WITH_OVERWRITTEN_EXEC = !fails(function () {
-  // eslint-disable-next-line regexp/no-empty-group -- required for testing
-  var re = /(?:)/;
-  var originalExec = re.exec;
-  re.exec = function () { return originalExec.apply(this, arguments); };
-  var result = 'ab'.split(re);
-  return result.length !== 2 || result[0] !== 'a' || result[1] !== 'b';
-});
-
-module.exports = function (KEY, length, exec, sham) {
+module.exports = function (KEY, exec, FORCED, SHAM) {
   var SYMBOL = wellKnownSymbol(KEY);
 
   var DELEGATES_TO_SYMBOL = !fails(function () {
@@ -51715,12 +51790,7 @@ module.exports = function (KEY, length, exec, sham) {
   if (
     !DELEGATES_TO_SYMBOL ||
     !DELEGATES_TO_EXEC ||
-    (KEY === 'replace' && !(
-      REPLACE_SUPPORTS_NAMED_GROUPS &&
-      REPLACE_KEEPS_$0 &&
-      !REGEXP_REPLACE_SUBSTITUTES_UNDEFINED_CAPTURE
-    )) ||
-    (KEY === 'split' && !SPLIT_WORKS_WITH_OVERWRITTEN_EXEC)
+    FORCED
   ) {
     var nativeRegExpMethod = /./[SYMBOL];
     var methods = exec(SYMBOL, ''[KEY], function (nativeMethod, regexp, str, arg2, forceStringMethod) {
@@ -51735,25 +51805,13 @@ module.exports = function (KEY, length, exec, sham) {
         return { done: true, value: nativeMethod.call(str, regexp, arg2) };
       }
       return { done: false };
-    }, {
-      REPLACE_KEEPS_$0: REPLACE_KEEPS_$0,
-      REGEXP_REPLACE_SUBSTITUTES_UNDEFINED_CAPTURE: REGEXP_REPLACE_SUBSTITUTES_UNDEFINED_CAPTURE
     });
-    var stringMethod = methods[0];
-    var regexMethod = methods[1];
 
-    redefine(String.prototype, KEY, stringMethod);
-    redefine(RegExpPrototype, SYMBOL, length == 2
-      // 21.2.5.8 RegExp.prototype[@@replace](string, replaceValue)
-      // 21.2.5.11 RegExp.prototype[@@split](string, limit)
-      ? function (string, arg) { return regexMethod.call(string, this, arg); }
-      // 21.2.5.6 RegExp.prototype[@@match](string)
-      // 21.2.5.9 RegExp.prototype[@@search](string)
-      : function (string) { return regexMethod.call(string, this); }
-    );
+    redefine(String.prototype, KEY, methods[0]);
+    redefine(RegExpPrototype, SYMBOL, methods[1]);
   }
 
-  if (sham) createNonEnumerableProperty(RegExpPrototype[SYMBOL], 'sham', true);
+  if (SHAM) createNonEnumerableProperty(RegExpPrototype[SYMBOL], 'sham', true);
 };
 
 
@@ -53532,8 +53590,6 @@ var external_commonjs_vue_commonjs2_vue_root_Vue_default = /*#__PURE__*/__webpac
 
 
 
-
-
 /**
  * Permet de formater les champs drupal avec les equivalence bootstrap vuejs.
  */
@@ -53556,64 +53612,40 @@ var formatFieldsBootstrap_formatField = /*#__PURE__*/function () {
 
   Object(createClass["a" /* default */])(formatField, [{
     key: "format",
-    value: function () {
-      var _format = Object(asyncToGenerator["a" /* default */])( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-        var fields;
-        return regeneratorRuntime.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                _context.next = 2;
-                return this.getFields();
+    value: function format() {
+      var fields = this.getFields();
+      return new Promise(function (resolv, reject) {
+        if (fields.data && fields.data.fields) {
+          var formatFields = [];
 
-              case 2:
-                fields = _context.sent;
-                return _context.abrupt("return", new Promise(function (resolv, reject) {
-                  if (fields.data && fields.data.fields) {
-                    var formatFields = [];
+          var _loop = function _loop(i) {
+            formatFields.push({
+              props: {},
+              render: function render(createElement) {
+                var renderField = [];
 
-                    var _loop = function _loop(i) {
-                      formatFields.push({
-                        props: {},
-                        render: function render(createElement) {
-                          var renderField = [];
+                switch (fields.data.fields[i].type) {
+                  case "string":
+                    //utilities.modelsFields[i] = "";
+                    renderField.push(InputBootstrap.string(createElement, fields.data.fields[i]));
+                    break;
+                }
 
-                          switch (fields.data.fields[i].type) {
-                            case "string":
-                              //utilities.modelsFields[i] = "";
-                              renderField.push(InputBootstrap.string(createElement, fields.data.fields[i]));
-                              break;
-                          }
+                return createElement("div", renderField);
+              }
+            });
+          };
 
-                          return createElement("div", renderField);
-                        }
-                      });
-                    };
-
-                    for (var i in fields.data.fields) {
-                      _loop(i);
-                    }
-
-                    resolv(formatFields);
-                  } else {
-                    reject("Aucune donnée disponible");
-                  }
-                }));
-
-              case 4:
-              case "end":
-                return _context.stop();
-            }
+          for (var i in fields.data.fields) {
+            _loop(i);
           }
-        }, _callee, this);
-      }));
 
-      function format() {
-        return _format.apply(this, arguments);
-      }
-
-      return format;
-    }()
+          resolv(formatFields);
+        } else {
+          reject("Aucune donnée disponible");
+        }
+      });
+    }
     /**
      * Get fileds in drupal.
      * @returns
@@ -53729,7 +53761,8 @@ var SUBCLASSING = false;
 var Internal, OwnPromiseCapability, PromiseWrapper, nativeThen;
 
 var FORCED = isForced(PROMISE, function () {
-  var GLOBAL_CORE_JS_PROMISE = inspectSource(PromiseConstructor) !== String(PromiseConstructor);
+  var PROMISE_CONSTRUCTOR_SOURCE = inspectSource(PromiseConstructor);
+  var GLOBAL_CORE_JS_PROMISE = PROMISE_CONSTRUCTOR_SOURCE !== String(PromiseConstructor);
   // V8 6.6 (Node 10 and Chrome 66) have a bug with resolving custom thenables
   // https://bugs.chromium.org/p/chromium/issues/detail?id=830565
   // We can't detect it synchronously, so just check versions
@@ -53739,7 +53772,7 @@ var FORCED = isForced(PROMISE, function () {
   // We can't use @@species feature detection in V8 since it causes
   // deoptimization and performance degradation
   // https://github.com/zloirock/core-js/issues/679
-  if (V8_VERSION >= 51 && /native code/.test(PromiseConstructor)) return false;
+  if (V8_VERSION >= 51 && /native code/.test(PROMISE_CONSTRUCTOR_SOURCE)) return false;
   // Detect correctness of subclassing with @@species support
   var promise = new PromiseConstructor(function (resolve) { resolve(1); });
   var FakePromise = function (exec) {
@@ -54315,7 +54348,8 @@ var PromiseCapability = function (C) {
   this.reject = aFunction(reject);
 };
 
-// 25.4.1.5 NewPromiseCapability(C)
+// `NewPromiseCapability` abstract operation
+// https://tc39.es/ecma262/#sec-newpromisecapability
 module.exports.f = function (C) {
   return new PromiseCapability(C);
 };
@@ -57101,6 +57135,9 @@ wbuutilities__WEBPACK_IMPORTED_MODULE_8__[/* AjaxToastBootStrap */ "b"].$bvModal
   prepareDatasToSave: function prepareDatasToSave(datas) {
     return _Utilities_js__WEBPACK_IMPORTED_MODULE_9__[/* default */ "a"].saveSteps(datas);
   },
+  prepareSettingForm: function prepareSettingForm(datas) {
+    return _Utilities_js__WEBPACK_IMPORTED_MODULE_9__[/* default */ "a"].settingForm(datas);
+  },
 
   /**
    * Prepare les données pour la sauvagarde.
@@ -57644,12 +57681,12 @@ Vue.use(BVToastPlugin);
 const vm = new Vue();
 console.log("log Vue :  ", vm, "\n $bvToast : ", vm.$bvToast);
 */
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"4acd20fe-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App.vue?vue&type=template&id=5988978c&
-var Appvue_type_template_id_5988978c_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"app-form",attrs:{"id":"app"}},[(_vm.$store.state.mode)?_c('div',{attrs:{"id":"nav"}},[_c('router-link',{attrs:{"to":"/"}},[_vm._v(" Gestion des formlaires ")]),_vm._v(" | "),_c('router-link',{attrs:{"to":"/about"}},[_vm._v("About")])],1):_vm._e(),_c('router-view')],1)}
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"57337f11-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App.vue?vue&type=template&id=819a9116&
+var Appvue_type_template_id_819a9116_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"app-form",attrs:{"id":"app"}},[(_vm.$store.state.mode)?_c('div',{attrs:{"id":"nav"}}):_vm._e(),_c('router-view')],1)}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/App.vue?vue&type=template&id=5988978c&
+// CONCATENATED MODULE: ./src/App.vue?vue&type=template&id=819a9116&
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App.vue?vue&type=script&lang=js&
 //
@@ -57686,7 +57723,7 @@ var componentNormalizer = __webpack_require__("2877");
 
 var component = Object(componentNormalizer["a" /* default */])(
   src_Appvue_type_script_lang_js_,
-  Appvue_type_template_id_5988978c_render,
+  Appvue_type_template_id_819a9116_render,
   staticRenderFns,
   false,
   null,
@@ -57704,7 +57741,7 @@ var is_url_default = /*#__PURE__*/__webpack_require__.n(is_url);
 var non_secure = __webpack_require__("ee2b");
 var non_secure_default = /*#__PURE__*/__webpack_require__.n(non_secure);
 
-// CONCATENATED MODULE: ./node_modules/@braid/vue-formulate/node_modules/is-plain-object/index.es.js
+// CONCATENATED MODULE: ./node_modules/is-plain-object/index.es.js
 /*!
  * isobject <https://github.com/jonschlinkert/isobject>
  *
@@ -57832,6 +57869,13 @@ external_commonjs_vue_commonjs2_vue_root_Vue_default.a.use(vuex_esm["a" /* defau
 
 /* harmony default export */ var store = (new vuex_esm["a" /* default */].Store({
   state: {
+    /* contient les information de la page d'afficha des formulaires */
+    pageInfo: {
+      title: "Quels travaux de rénovation souhaitez-vous",
+      video: "https://www.youtube.com/embed/tgbNymZ7vqY",
+      description: "Vous pourriez ensuite entrer en relation avec les meilleurs professionels de notre réseau.",
+      showVideo: false
+    },
     stepsIndex: 0,
 
     /**
@@ -58024,6 +58068,16 @@ external_commonjs_vue_commonjs2_vue_root_Vue_default.a.use(vuex_esm["a" /* defau
     }
   },
   mutations: {
+    SET_PAGE_INFO: function SET_PAGE_INFO(state, payload) {
+      var setting = null;
+      if (payload.length) setting = payload[0].value;
+
+      var type = Object(esm_typeof["a" /* default */])(setting);
+
+      if (setting !== null && type === "string") {
+        state.pageInfo = JSON.parse(setting);
+      }
+    },
     // Ajouter une étapes dans le JSON global
     ADD_STEPS_DATAS: function ADD_STEPS_DATAS(state, payload) {
       state.allStepsDatas.push(payload);
@@ -58339,10 +58393,24 @@ external_commonjs_vue_commonjs2_vue_root_Vue_default.a.use(vuex_esm["a" /* defau
     },
 
     /**
+     * Recupere les paramètres de la page qui liste les formulaires   en BD.
+     */
+    loadPageInfo: function loadPageInfo(_ref12) {
+      var commit = _ref12.commit;
+      var datas = "select * from `appformmanager_config`";
+      axios_default.a.post(config["a" /* default */].baseURl + "/query-ajax/select", datas).then(function (reponse) {
+        console.log("get pageInfo: ", reponse);
+        commit("SET_PAGE_INFO", reponse.data);
+      }).catch(function (error) {
+        console.log("get error ", error);
+      });
+    },
+
+    /**
      * Recupere les formulaires soumis en BD.
      */
-    loadTraitementDatas: function loadTraitementDatas(_ref12, payload) {
-      var commit = _ref12.commit;
+    loadTraitementDatas: function loadTraitementDatas(_ref13, payload) {
+      var commit = _ref13.commit;
       commit("SET_TRAITEMENT_ITEMS", []);
       return new Promise(function (resolv, reject) {
         var uid = payload.uid ? payload.uid : null;
@@ -58370,39 +58438,39 @@ external_commonjs_vue_commonjs2_vue_root_Vue_default.a.use(vuex_esm["a" /* defau
     /**
      * Permet de modifier la structure du formulaire.
      */
-    setItems: function setItems(_ref13, payload) {
-      var commit = _ref13.commit;
+    setItems: function setItems(_ref14, payload) {
+      var commit = _ref14.commit;
       commit("SET_ITEMS", payload);
     },
 
     /**
      *  --
      */
-    setFormDatasValidate: function setFormDatasValidate(_ref14, payload) {
-      var commit = _ref14.commit;
+    setFormDatasValidate: function setFormDatasValidate(_ref15, payload) {
+      var commit = _ref15.commit;
       commit("SET_FORM_DATAS_VALIDATE", payload);
     },
 
     /**
      *  --
      */
-    setStepsIndexs: function setStepsIndexs(_ref15, payload) {
-      var commit = _ref15.commit;
+    setStepsIndexs: function setStepsIndexs(_ref16, payload) {
+      var commit = _ref16.commit;
       commit("SET_STEPS_INDEXS", payload);
     },
 
     /**
      *  --
      */
-    setStatusStepsIndex: function setStatusStepsIndex(_ref16, payload) {
-      var commit = _ref16.commit;
+    setStatusStepsIndex: function setStatusStepsIndex(_ref17, payload) {
+      var commit = _ref17.commit;
       commit("SET_STATUS_STEPS_INDEX", payload);
     },
 
     /**
      * Enregistre les données et cree le compte utilisateur.
      */
-    saveDatasUser: function saveDatasUser(_ref17) {
+    saveDatasUser: function saveDatasUser(_ref18) {
       var _arguments = arguments,
           _this = this;
 
@@ -58412,7 +58480,7 @@ external_commonjs_vue_commonjs2_vue_root_Vue_default.a.use(vuex_esm["a" /* defau
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                commit = _ref17.commit, state = _ref17.state, getters = _ref17.getters;
+                commit = _ref18.commit, state = _ref18.state, getters = _ref18.getters;
                 status = _arguments.length > 1 && _arguments[1] !== undefined ? _arguments[1] : 0;
                 self = _this, datas = [], url = null, msg = "";
                 /**
@@ -58520,17 +58588,17 @@ external_commonjs_vue_commonjs2_vue_root_Vue_default.a.use(vuex_esm["a" /* defau
                     msg = msgCreate([config["a" /* default */].messages.devisRappel, config["a" /* default */].messages.devisCreateUser, config["a" /* default */].messages.devisEnd]);
                   } // Connexion d'un utilisateur
                   else {
-                      datas = {
-                        name: [{
-                          value: state.userlogin.name.value
-                        }],
-                        password: [{
-                          value: state.userlogin.password.value
-                        }]
-                      };
-                      url = "/appformmanager/user";
-                      msg = msgCreate([config["a" /* default */].messages.devisRappel]);
-                    }
+                    datas = {
+                      name: [{
+                        value: state.userlogin.name.value
+                      }],
+                      password: [{
+                        value: state.userlogin.password.value
+                      }]
+                    };
+                    url = "/appformmanager/user";
+                    msg = msgCreate([config["a" /* default */].messages.devisRappel]);
+                  }
 
                   drupal_vuejs["a" /* drupalUtilities */].post(url, datas).then(function (resp) {
                     //console.log("drupalUtilities : ", resp);
@@ -58577,7 +58645,6 @@ external_commonjs_vue_commonjs2_vue_root_Vue_default.a.use(vuex_esm["a" /* defau
                 break;
 
               case 23:
-                // si l'utilisateur est connecté.
                 utilities["a" /* default */].saveDatas(state, getters, getters.uid, status).then(function () {
                   if (status) displayMsg(msgCreate([config["a" /* default */].messages.devisSave]));else displayMsg(msgCreate([config["a" /* default */].messages.devisRappel]));
                 });
@@ -58590,10 +58657,10 @@ external_commonjs_vue_commonjs2_vue_root_Vue_default.a.use(vuex_esm["a" /* defau
         }, _callee3);
       }))();
     },
-    saveDatas: function saveDatas(_ref18) {
-      var commit = _ref18.commit,
-          state = _ref18.state,
-          getters = _ref18.getters;
+    saveDatas: function saveDatas(_ref19) {
+      var commit = _ref19.commit,
+          state = _ref19.state,
+          getters = _ref19.getters;
       var uid = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
 
       if (!uid) {
@@ -58607,14 +58674,14 @@ external_commonjs_vue_commonjs2_vue_root_Vue_default.a.use(vuex_esm["a" /* defau
         }
       });
     },
-    getCurrentUser: function getCurrentUser(_ref19) {
-      var commit = _ref19.commit;
+    getCurrentUser: function getCurrentUser(_ref20) {
+      var commit = _ref20.commit;
       drupal_vuejs["c" /* users */].getCurrentUser().then(function (resp) {
         commit("SET_USER", resp);
       });
     },
-    setCachesUser: function setCachesUser(_ref20, user) {
-      var commit = _ref20.commit;
+    setCachesUser: function setCachesUser(_ref21, user) {
+      var commit = _ref21.commit;
       commit("SET_CACHEUSER", user);
     }
   },
@@ -58631,7 +58698,7 @@ var web_dom_collections_iterator = __webpack_require__("ddb0");
 
 // CONCATENATED MODULE: ./node_modules/vue-router/dist/vue-router.esm.js
 /*!
-  * vue-router v3.5.1
+  * vue-router v3.5.2
   * (c) 2021 Evan You
   * @license MIT
   */
@@ -60093,7 +60160,7 @@ function createMatcher (
     createRouteMap([route || parentOrRoute], pathList, pathMap, nameMap, parent);
 
     // add aliases of parent
-    if (parent) {
+    if (parent && parent.alias.length) {
       createRouteMap(
         // $flow-disable-line route is defined if parent is
         parent.alias.map(function (alias) { return ({ path: alias, children: [route] }); }),
@@ -61150,7 +61217,13 @@ var HTML5History = /*@__PURE__*/(function (History) {
 
 function getLocation (base) {
   var path = window.location.pathname;
-  if (base && path.toLowerCase().indexOf(base.toLowerCase()) === 0) {
+  var pathLowerCase = path.toLowerCase();
+  var baseLowerCase = base.toLowerCase();
+  // base="/a" shouldn't turn path="/app" into "/a/pp"
+  // https://github.com/vuejs/vue-router/issues/3555
+  // so we ensure the trailing slash in the base
+  if (base && ((pathLowerCase === baseLowerCase) ||
+    (pathLowerCase.indexOf(cleanPath(baseLowerCase + '/')) === 0))) {
     path = path.slice(base.length);
   }
   return (path || '/') + window.location.search + window.location.hash
@@ -61635,7 +61708,7 @@ function createHref (base, fullPath, mode) {
 }
 
 VueRouter.install = install;
-VueRouter.version = '3.5.1';
+VueRouter.version = '3.5.2';
 VueRouter.isNavigationFailure = isNavigationFailure;
 VueRouter.NavigationFailureType = NavigationFailureType;
 VueRouter.START_LOCATION = START;
@@ -61646,12 +61719,12 @@ if (inBrowser && window.Vue) {
 
 /* harmony default export */ var vue_router_esm = (VueRouter);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"4acd20fe-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/Listesfomes.vue?vue&type=template&id=606cd95c&lang=html&
-var Listesfomesvue_type_template_id_606cd95c_lang_html_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('b-button',{directives:[{name:"b-modal",rawName:"v-b-modal.add-edit-form",modifiers:{"add-edit-form":true}}],attrs:{"variant":"outline-info"}},[_vm._v(" + ")]),_c('b-table',{attrs:{"items":_vm.items,"fields":_vm.fields},scopedSlots:_vm._u([{key:"cell(action)",fn:function(data){return [_c('div',{staticClass:"p-relative"},[_c('b-button-group',{staticClass:"boutton-absolute"},[_c('b-button',{directives:[{name:"b-tooltip",rawName:"v-b-tooltip.hover.v-primary",modifiers:{"hover":true,"v-primary":true}}],attrs:{"variant":"outline-primary","title":"Estimer mes travaux"},on:{"click":function($event){return _vm.voirForm(data.item.id)}}},[_c('b-icon',{attrs:{"icon":"eye"}})],1),_c('b-button',{directives:[{name:"b-tooltip",rawName:"v-b-tooltip.hover.v-secondary",modifiers:{"hover":true,"v-secondary":true}}],attrs:{"variant":"outline-secondary","title":"voir mes devis"},on:{"click":function($event){return _vm.updateMyOwnForm(data.item.id)}}},[_c('b-icon',{attrs:{"icon":"newspaper"}})],1),(_vm.$store.state.mode)?_c('b-button',{directives:[{name:"b-tooltip",rawName:"v-b-tooltip.hover.v-warning",modifiers:{"hover":true,"v-warning":true}}],attrs:{"variant":"outline-warning","title":"Modifier"},on:{"click":function($event){return _vm.updateForm(data.item.id)}}},[_c('b-icon',{attrs:{"icon":"pencil"}})],1):_vm._e(),(_vm.$store.state.mode)?_c('b-button',{directives:[{name:"b-tooltip",rawName:"v-b-tooltip.hover.v-success",modifiers:{"hover":true,"v-success":true}}],attrs:{"variant":"outline-success","title":"Voir les soumissions"},on:{"click":function($event){return _vm.showResult(data.item.id)}}},[_c('b-icon',{attrs:{"icon":"server"}})],1):_vm._e(),(_vm.$store.state.mode)?_c('b-button',{directives:[{name:"b-tooltip",rawName:"v-b-tooltip.hover.v-danger",modifiers:{"hover":true,"v-danger":true}}],attrs:{"variant":"outline-danger","title":"Supprimer le formulaire "},on:{"click":function($event){return _vm.deleteForm(data.item.id)}}},[_c('b-icon',{attrs:{"icon":"trash"}})],1):_vm._e()],1)],1)]}}])}),_c('AddEditForm')],1)}
-var Listesfomesvue_type_template_id_606cd95c_lang_html_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"57337f11-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/Listesfomes.vue?vue&type=template&id=e1b5b9e0&lang=html&
+var Listesfomesvue_type_template_id_e1b5b9e0_lang_html_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('div',{staticClass:"home-form"},[_c('b-container',{attrs:{"fluid":"lg"}},[_c('b-row',{attrs:{"align-h":"center"}},[_c('b-col',{staticClass:"shadow d-flex justify-content-center",attrs:{"cols":"12","md":"10"}},[_c('div',{staticClass:"home-form_block"},[_c('div',{staticClass:"block-header"},[_c('div',{staticClass:"config"},[(_vm.$store.state.mode)?_c('b-button',{directives:[{name:"b-tooltip",rawName:"v-b-tooltip.hover.v-dark",modifiers:{"hover":true,"v-dark":true}}],staticClass:"config-btn",attrs:{"title":"Setting"},on:{"click":_vm.settingform}},[_c('b-icon',{staticClass:"setting-icon",attrs:{"icon":"gear"}})],1):_vm._e()],1),_c('div',{staticClass:"content"},[_c('h1',[_vm._v(_vm._s(_vm.pageInfo.title))]),_c('p',[_vm._v("Décrivé votre projet et visualiser votre estimation.")]),_c('p',[_vm._v(_vm._s(_vm.pageInfo.description))]),_c('div',{staticClass:"link",on:{"click":_vm.showHideVideo}},[_c('span',{staticClass:"button-link",attrs:{"href":"#"}},[_vm._v("Comment sa marche? "),_c('b-icon',{staticClass:"ml-2 setting-icon",attrs:{"icon":"arrow-down"}})],1)])])]),_c('transition',{attrs:{"name":"fade"}},[(_vm.pageInfo.video.length && _vm.pageInfo.showVideo)?_c('div',{staticClass:"video-center"},[_c('iframe',{attrs:{"title":"YouTube video player","src":_vm.pageInfo.video,"frameborder":"0","allow":"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture","allowfullscreen":""}})]):_vm._e()]),(!_vm.items.length)?_c('b-col',{staticClass:"text-center my-5",attrs:{"cols":"12"}},[_c('b-spinner',{staticStyle:{"width":"8rem","height":"8rem"},attrs:{"label":"Large Spinner","variant":"dark","type":"grow"}})],1):_vm._e(),_c('b-row',{staticClass:"block-option"},[_vm._l((_vm.items),function(form,index){return _c('div',{key:index,staticClass:"block"},[_c('div',{staticClass:"block_img"},[_c('img',{attrs:{"src":_vm.trueUrl(form)}})]),_c('div',{staticClass:"block_desc"},[_c('span',[_vm._v(_vm._s(form.name))])]),_c('div',[_c('b-button-group',{staticClass:"home-button"},[_c('b-button',{directives:[{name:"b-tooltip",rawName:"v-b-tooltip.hover.v-primary",modifiers:{"hover":true,"v-primary":true}}],attrs:{"variant":"outline-primary","title":"Estimer mes travaux"},on:{"click":function($event){return _vm.voirForm(form.id)}}},[_c('b-icon',{attrs:{"icon":"eye"}})],1),_c('b-button',{directives:[{name:"b-tooltip",rawName:"v-b-tooltip.hover.v-secondary",modifiers:{"hover":true,"v-secondary":true}}],attrs:{"variant":"outline-secondary","title":"voir mes devis"},on:{"click":function($event){return _vm.updateMyOwnForm(form.id)}}},[_c('b-icon',{attrs:{"icon":"newspaper"}})],1),(_vm.$store.state.mode)?_c('b-button',{directives:[{name:"b-tooltip",rawName:"v-b-tooltip.hover.v-warning",modifiers:{"hover":true,"v-warning":true}}],attrs:{"variant":"outline-warning","title":"Modifier"},on:{"click":function($event){return _vm.updateForm(form.id)}}},[_c('b-icon',{attrs:{"icon":"pencil"}})],1):_vm._e(),(_vm.$store.state.mode)?_c('b-button',{directives:[{name:"b-tooltip",rawName:"v-b-tooltip.hover.v-success",modifiers:{"hover":true,"v-success":true}}],attrs:{"variant":"outline-success","title":"Voir les soumissions"},on:{"click":function($event){return _vm.showResult(form.id)}}},[_c('b-icon',{attrs:{"icon":"server"}})],1):_vm._e(),(_vm.$store.state.mode)?_c('b-button',{directives:[{name:"b-tooltip",rawName:"v-b-tooltip.hover.v-danger",modifiers:{"hover":true,"v-danger":true}}],attrs:{"variant":"outline-danger","title":"Supprimer le formulaire "},on:{"click":function($event){return _vm.deleteForm(form.id)}}},[_c('b-icon',{attrs:{"icon":"trash"}})],1):_vm._e()],1)],1)])}),(_vm.$store.state.mode)?_c('div',{staticClass:"block-plus",on:{"click":_vm.newForm}},[_c('div',{staticClass:"horiz"}),_c('div',{staticClass:"verti"}),_c('div',{staticClass:"block_desc"},[_c('span',[_vm._v("Nouveau Formulaire")])])]):_vm._e()],2)],1)])],1)],1)],1),_c('AddEditForm'),_c('SettingForm')],1)}
+var Listesfomesvue_type_template_id_e1b5b9e0_lang_html_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/App/Listesfomes.vue?vue&type=template&id=606cd95c&lang=html&
+// CONCATENATED MODULE: ./src/App/Listesfomes.vue?vue&type=template&id=e1b5b9e0&lang=html&
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/objectSpread2.js + 1 modules
 var objectSpread2 = __webpack_require__("5530");
@@ -61726,6 +61799,84 @@ var wbuutilities = __webpack_require__("a76e");
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -61734,7 +61885,10 @@ var wbuutilities = __webpack_require__("a76e");
   props: {},
   components: {
     AddEditForm: function AddEditForm() {
-      return __webpack_require__.e(/* import() */ 30).then(__webpack_require__.bind(null, "d2d6"));
+      return __webpack_require__.e(/* import() */ 31).then(__webpack_require__.bind(null, "d2d6"));
+    },
+    SettingForm: function SettingForm() {
+      return __webpack_require__.e(/* import() */ 32).then(__webpack_require__.bind(null, "c0e4"));
     }
   },
   data: function data() {
@@ -61752,10 +61906,35 @@ var wbuutilities = __webpack_require__("a76e");
       }]
     };
   },
-  mounted: function mounted() {},
+  mounted: function mounted() {
+    this.loadPageInfo();
+  },
   watch: {},
-  computed: Object(objectSpread2["a" /* default */])({}, Object(vuex_esm["c" /* mapState */])(["items"])),
+  computed: Object(objectSpread2["a" /* default */])({}, Object(vuex_esm["c" /* mapState */])(["items", "pageInfo"])),
   methods: {
+    loadPageInfo: function loadPageInfo() {
+      this.$store.dispatch("loadPageInfo");
+    },
+    trueUrl: function trueUrl(form) {
+      var url = "/img/image.9a450909.jpg";
+
+      if (form.img) {
+        if (form.img.length) {
+          url = config["a" /* default */].baseURl + form.img;
+        }
+      }
+
+      return url;
+    },
+    showHideVideo: function showHideVideo() {
+      this.$store.state.pageInfo.showVideo = !this.$store.state.pageInfo.showVideo;
+    },
+    newForm: function newForm() {
+      this.$bvModal.show("add-edit-form");
+    },
+    settingform: function settingform() {
+      this.$bvModal.show("setting-form");
+    },
     updateForm: function updateForm(id) {
       this.$router.push({
         path: "/edit-form/".concat(id)
@@ -61777,6 +61956,7 @@ var wbuutilities = __webpack_require__("a76e");
       });
     },
     deleteForm: function deleteForm(id) {
+      console.log("object", id);
       wbuutilities["b" /* AjaxToastBootStrap */].modalConfirmDelete().then(function (value) {
         if (value) {
           config["a" /* default */].deleteForm(id).then(function () {
@@ -61799,8 +61979,8 @@ var wbuutilities = __webpack_require__("a76e");
 
 var Listesfomes_component = Object(componentNormalizer["a" /* default */])(
   App_Listesfomesvue_type_script_lang_js_,
-  Listesfomesvue_type_template_id_606cd95c_lang_html_render,
-  Listesfomesvue_type_template_id_606cd95c_lang_html_staticRenderFns,
+  Listesfomesvue_type_template_id_e1b5b9e0_lang_html_render,
+  Listesfomesvue_type_template_id_e1b5b9e0_lang_html_staticRenderFns,
   false,
   null,
   null,
@@ -61832,14 +62012,14 @@ var routes = [{
   name: "Edition du formulaire",
   props: true,
   component: function component() {
-    return Promise.all(/* import() */[__webpack_require__.e(2), __webpack_require__.e(3)]).then(__webpack_require__.bind(null, "7817"));
+    return Promise.all(/* import() */[__webpack_require__.e(3), __webpack_require__.e(4)]).then(__webpack_require__.bind(null, "7817"));
   }
 }, {
   path: "/traitement-my-own/:id",
   name: "Traitement du résultat",
   props: true,
   component: function component() {
-    return __webpack_require__.e(/* import() */ 4).then(__webpack_require__.bind(null, "0690"));
+    return __webpack_require__.e(/* import() */ 5).then(__webpack_require__.bind(null, "0690"));
   }
 }, {
   path: "/*",
@@ -61984,6 +62164,20 @@ CancelToken.source = function source() {
 };
 
 module.exports = CancelToken;
+
+
+/***/ }),
+
+/***/ "fce3":
+/***/ (function(module, exports, __webpack_require__) {
+
+var fails = __webpack_require__("d039");
+
+module.exports = fails(function () {
+  // babel-minify transpiles RegExp('.', 's') -> /./s and it causes SyntaxError
+  var re = RegExp('.', (typeof '').charAt(0));
+  return !(re.dotAll && re.exec('\n') && re.flags === 's');
+});
 
 
 /***/ }),
@@ -62349,12 +62543,12 @@ module.exports = CancelToken;
               }
             } // Cas des champs text et number.
             else if (field.prix.cout && field.value !== null && field.value !== "") {
-                if (!isNaN(field.value)) {
-                  price += parseInt(field.prix.cout) * parseInt(field.value);
-                } else {
-                  price += parseInt(field.prix.cout);
-                }
+              if (!isNaN(field.value)) {
+                price += parseInt(field.prix.cout) * parseInt(field.value);
+              } else {
+                price += parseInt(field.prix.cout);
               }
+            }
 
             resolv(price);
           } else {

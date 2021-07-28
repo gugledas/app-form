@@ -6,11 +6,12 @@
 .home-form {
 	&_block {
 		padding: 15px;
-		max-width: 720px;
+		max-width: 630px;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
+
 		.block-option {
 			display: flex;
 			flex-wrap: wrap;
@@ -24,7 +25,7 @@
 				flex-direction: column;
 				align-items: center;
 				padding: 13px 10px;
-				width: 250px;
+				width: calc(50% - 45px);
 				min-height: 225px;
 				box-shadow: 0 4px 13px #dcdbdb;
 				transition: 0.19s;
@@ -53,8 +54,8 @@
 				&_img {
 					margin-bottom: 11px;
 					img {
-						width: 216px;
-						height: 170px;
+						width: 230px;
+						height: 158px;
 					}
 				}
 				&_desc {
@@ -117,6 +118,7 @@
 		}
 		.block-header {
 			width: 100%;
+
 			margin: 20px 0;
 			.config {
 				position: absolute;
@@ -128,12 +130,14 @@
 					background-color: transparent;
 					color: #000;
 				}
-				.setting-icon {
-					display: inline;
-				}
+				// .setting-icon {
+				// 	&:hover {
+				// 		color: white;
+				// 	}
+				// }
 			}
 			.content {
-				padding: 10px 0 0 50px;
+				padding: 10px 8px 0;
 				color: #000;
 				h1 {
 					font-size: 22px;
@@ -153,7 +157,8 @@
 						border-bottom: 2px solid $primary_color;
 						padding-bottom: 2px;
 						cursor: pointer;
-						display: inline-block;
+						display: inline-flex;
+						align-items: baseline;
 						white-space: nowrap;
 						&:hover {
 							text-decoration: none;

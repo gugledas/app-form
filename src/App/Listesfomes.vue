@@ -23,7 +23,7 @@
                   <p>{{ pageInfo.description }}</p>
                   <div class="link" @click="showHideVideo">
                     <span href="#" class="button-link"
-                      >Comment sa marche?
+                      ><span>Comment sa marche?</span>
                       <b-icon
                         icon="arrow-down"
                         class="ml-2 setting-icon"

@@ -19,8 +19,8 @@
                 </div>
                 <div class="content">
                   <h1>{{ pageInfo.title }}</h1>
-                  <p>Décrivé votre projet et visualiser votre estimation.</p>
-                  <p>{{ pageInfo.description }}</p>
+
+                  <p v-html="pageInfo.description"></p>
                   <div class="link" @click="showHideVideo">
                     <span href="#" class="button-link"
                       ><span>Comment sa marche?</span>
@@ -56,10 +56,10 @@
               </b-col>
               <b-row class="block-option">
                 <div class="block" v-for="(form, index) in items" :key="index">
-                  <div class="block_img">
+                  <div class="block_img" @click="updateMyOwnForm(form.id)">
                     <img :src="trueUrl(form)" />
                   </div>
-                  <div class="block_desc">
+                  <div class="block_desc" @click="updateMyOwnForm(form.id)">
                     <span>{{ form.name }}</span>
                   </div>
                   <div>
@@ -180,7 +180,8 @@ export default {
       this.$store.dispatch("loadPageInfo");
     },
     trueUrl(form) {
-      var url = "/img/image.9a450909.jpg";
+      var url =
+        "https://www.mesdepanneurs.fr/sites/mesdepanneurs.fr/files/field/image/travaux-renovation-maison.jpeg";
 
       if (form.img) {
         if (form.img.length) {

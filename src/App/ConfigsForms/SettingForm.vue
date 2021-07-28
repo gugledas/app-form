@@ -16,11 +16,11 @@
           </b-col>
           <b-col cols="10">
             <b-form-group label="Description" label-for="description-input">
-              <b-form-textarea
+              <ckeditor
+                :editor="editor"
                 v-model="pageInfo.description"
-                rows="4"
-                required
-              ></b-form-textarea>
+                :config="editorConfig"
+              ></ckeditor>
             </b-form-group>
           </b-col>
           <b-col cols="12">
@@ -44,16 +44,22 @@
 <script>
 import { mapState } from "vuex";
 //
-
+import CKEditor from "@ckeditor/ckeditor5-vue2";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import config from "../config/config.js";
 export default {
   name: "AddEditForm",
   props: {
     //
   },
-  components: {},
+  components: { ckeditor: CKEditor.component },
   data() {
     return {
+      editor: ClassicEditor,
+      editorData: "",
+      editorConfig: {
+        // The configuration of the editor.
+      },
       form: {
         forms: [],
         description: "",

@@ -13,7 +13,7 @@ export default new Vuex.Store({
       title: "Quels travaux de rénovation souhaitez-vous",
       video: "https://www.youtube.com/embed/tgbNymZ7vqY",
       description:
-        "Vous pourriez ensuite entrer en relation avec les meilleurs professionels de notre réseau.",
+        "<p>Décrivé votre projet et visualiser votre estimation.&nbsp;</p><p>Vous pourriez ensuite entrer en relation avec les meilleurs professionels de notre réseau.</p>",
       showVideo: false,
     },
     stepsIndex: 0,

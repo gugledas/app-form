@@ -5,6 +5,12 @@
 @use './variables.scss' as *; //@use './field.scss'; //
 @use "@stephane888/wbu-atomique/scss/defaut/model/custom_bp.scss" as *;
 
+.app-form-shadow {
+	box-shadow: 0;
+	@include media-min("SM") {
+		box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 15%);
+	}
+}
 .super-hover {
 	z-index: 99999;
 }

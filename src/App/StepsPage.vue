@@ -132,8 +132,6 @@
           </div>
         </b-col>
       </b-row>
-      is:
-      <pre>{{ form }}</pre>
     </b-container>
     <!-- -->
     <reOrderStepes />

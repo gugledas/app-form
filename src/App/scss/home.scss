@@ -5,13 +5,15 @@
 
 .home-form {
 	&_block {
-		padding: 15px;
+		padding: 0;
 		max-width: 630px;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
-
+		@include media-min("MD") {
+			padding: 15px;
+		}
 		.block-option {
 			display: flex;
 			flex-wrap: wrap;
@@ -25,11 +27,14 @@
 				flex-direction: column;
 				align-items: center;
 				padding: 13px 10px;
-				width: calc(50% - 45px);
+				width: calc(100% - 45px);
 				min-height: 225px;
 				box-shadow: 0 4px 13px #dcdbdb;
 				transition: 0.19s;
 				margin: 22px;
+				@include media-min("SM") {
+					width: calc(50% - 45px);
+				}
 				.home-button {
 					position: absolute;
 					transition: 0.19s;
@@ -53,6 +58,7 @@
 				}
 				&_img {
 					margin-bottom: 11px;
+					cursor: pointer;
 					img {
 						width: 230px;
 						height: 158px;
@@ -61,6 +67,8 @@
 				&_desc {
 					font-size: 17px;
 					font-weight: bold;
+					cursor: pointer;
+
 					// min-width  : 230px;
 					text-align: center;
 					color: #2d2b2b;
@@ -119,7 +127,7 @@
 		.block-header {
 			width: 100%;
 
-			margin: 20px 0;
+			margin: 0 0 20px;
 			.config {
 				position: absolute;
 				right: 7px;

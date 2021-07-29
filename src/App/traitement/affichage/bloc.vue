@@ -17,7 +17,7 @@
       </div>
     </div>
     <b-row class="d-flex liste-fields" align-h="center">
-      <b-col md="4" v-for="(field, i) in itemFields" :key="i">
+      <b-col cols="4" v-for="(field, i) in itemFields" :key="i">
         <component
           v-bind:is="getTemplatesFiles(field.type)"
           :field="field"

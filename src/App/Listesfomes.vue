@@ -3,7 +3,11 @@
     <div class="home-form">
       <b-container fluid="lg">
         <b-row align-h="center">
-          <b-col cols="12" md="10" class="shadow d-flex justify-content-center">
+          <b-col
+            cols="12"
+            md="10"
+            class="app-form-shadow d-flex justify-content-center"
+          >
             <div class="home-form_block">
               <div class="block-header">
                 <div class="config">

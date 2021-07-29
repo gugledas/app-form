@@ -56,10 +56,10 @@
               </b-col>
               <b-row class="block-option">
                 <div class="block" v-for="(form, index) in items" :key="index">
-                  <div class="block_img" @click="updateMyOwnForm(form.id)">
+                  <div class="block_img" @click="voirForm(form.id)">
                     <img :src="trueUrl(form)" />
                   </div>
-                  <div class="block_desc" @click="updateMyOwnForm(form.id)">
+                  <div class="block_desc" @click="voirForm(form.id)">
                     <span>{{ form.name }}</span>
                   </div>
                   <div>

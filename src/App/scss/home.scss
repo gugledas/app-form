@@ -35,6 +35,35 @@
 				@include media-min("SM") {
 					width: calc(50% - 45px);
 				}
+				.form-stats {
+					position: absolute;
+					top: 20px;
+					left: 20px;
+					// margin: -7px;
+					// background: aliceblue;
+					&__btn {
+						min-width: 30px;
+						height: 26px;
+						font-size: 13px;
+						border: none;
+						margin: 0px 5px;
+						font-weight: bold;
+						background-color: rgba(255, 255, 255, 0.72);
+
+						&:hover {
+							color: black;
+						}
+					}
+					&__red {
+						color: rgb(213, 63, 63);
+					}
+					&__bleu {
+						color: rgb(31, 112, 233);
+					}
+					&__gris {
+						color: rgb(135, 135, 135);
+					}
+				}
 				.home-button {
 					position: absolute;
 					transition: 0.19s;
@@ -77,6 +106,9 @@
 					transform: scale(102%);
 					.home-button {
 						left: calc(100% + -30px);
+					}
+					.form-stats__btn {
+						background-color: white;
 					}
 				}
 			}

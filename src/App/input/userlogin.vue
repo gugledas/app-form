@@ -121,15 +121,55 @@
             </small>
           </div>
         </ValidationProvider>
+        <b-row class="rs-login" v-if="current_tab === 'register'">
+          <b-col
+            cols="12"
+            md="6"
+            class="p-4 rs-login__btn rs-login__btn--face"
+            @click="initFacebookLogin"
+          >
+            <b-icon icon="facebook " class="mr-3"> </b-icon>Créer avec
+            facebook</b-col
+          >
+          <b-col
+            cols="12"
+            md="6"
+            class="p-4 rs-login__btn rs-login__btn--google"
+            @click="initGoogleLogin"
+            ><b-icon icon="google" class="mr-3"></b-icon> Créer avec
+            Google</b-col
+          >
+        </b-row>
+        <b-row class="rs-login" v-if="current_tab === 'login'">
+          <b-col
+            cols="12"
+            md="6"
+            class="p-4 rs-login__btn rs-login__btn--face"
+            @click="initFacebookLogin"
+          >
+            <b-icon icon="facebook " class="mr-3"> </b-icon>login via
+            facebook</b-col
+          >
+          <b-col
+            cols="12"
+            md="6"
+            class="p-4 rs-login__btn rs-login__btn--google"
+            @click="initGoogleLogin"
+            ><b-icon icon="google" class="mr-3"></b-icon>login via Google</b-col
+          >
+        </b-row>
       </form>
     </transition>
   </div>
 </template>
 
 <script>
+var FB = window.FB;
+var gapi = window.gapi;
 import { mapState, mapGetters } from "vuex";
 import { ValidationProvider } from "vee-validate";
 import "../EditsFields/vee-validate-custom.js";
+
 //import { drupalFormFields } from "drupal-vuejs";
 import testrenjsx from "../testrenjsx.vue";
 export default {
@@ -155,11 +195,13 @@ export default {
       fieldsRegisterRender: [],
       modelsFields: {},
       testrenjsx: testrenjsx,
+      mediaBtn: true,
     };
   },
   mounted() {
-    this.initValue();
-    this.setRefs();
+    // this.initValue();
+    // this.setRefs();
+    this.loadScript();
   },
   watch: {
     //
@@ -180,6 +222,13 @@ export default {
     },
   },
   methods: {
+    loadScript() {
+      this.$nextTick(() => {
+        this.mediaBtn = false;
+        this.loadGapi();
+        this.loadFB();
+      });
+    },
     final_click_h2() {
       alert("final_click_h2");
     },
@@ -240,10 +289,158 @@ export default {
       this.userlogin.tabIndex = val;
       self.setRefs();
     },
+    /* facebook login methods */
+    getFacebookLoginStatus() {
+      var self = this;
+      FB.getLoginStatus(function (reponse) {
+        self.facebookStatusCallback(reponse);
+      });
+    },
+    facebookStatusCallback(reponse) {
+      console.log("status", reponse);
+      console.log(
+        reponse.status == "connected"
+          ? "je suis connecté avec facebook"
+          : "Pas connecté avec facebook"
+      );
+    },
+    initFacebookLogin() {
+      var self = this;
+      var scope = "email,public_profile";
+      FB.login(
+        function (response) {
+          self.facebookStatusCallback(response);
+        },
+        { scope: scope }
+      );
+    },
+    /* google login methods */
+    initGoogle() {
+      var self = this;
+      var gapi = window.gapi;
+      gapi.load("auth2", function () {
+        var client_id =
+          "666466407349-oanmp950m4pp4arec1fcp8okvj6so4cj.apps.googleusercontent.com";
+        gapi.auth2
+          .init({
+            client_id: client_id,
+            scope: "email profile",
+          })
+          .then(function (res) {
+            self.onGoogleSignIn(res);
+          });
+      });
+    },
+    initGoogleLogin() {
+      var self = this;
+
+      var auth = gapi.auth2.getAuthInstance();
+      auth
+        .signIn({
+          client_id: "",
+          scope: "email profile openid",
+        })
+        .then(
+          function (res) {
+            self.onGoogleSignIn(res);
+          },
+          function (error) {
+            self.onGoogleFaillure(error);
+          }
+        );
+    },
+    onGoogleSignIn(res) {
+      var status = gapi.auth2.getAuthInstance().isSignedIn.get();
+      console.log(
+        status
+          ? "Je suis connecté avec google"
+          : "je ne suis pas connecté avec google"
+      );
+      if (status) {
+        var profile = res.getBasicProfile();
+        console.log("ID: " + profile.getId()); // Do not send to your backend! Use an ID token instead.
+        console.log("Name: " + profile.getName());
+        console.log("Image URL: " + profile.getImageUrl());
+        console.log("Email: " + profile.getEmail());
+      }
+    },
+    onGoogleFaillure(Error) {
+      console.log("Échec de la connexion", Error);
+    },
+    loadGapi() {
+      var head = document.getElementsByTagName("head")[0];
+      var gapi = document.createElement("script");
+
+      head.appendChild(gapi);
+      gapi.id = "gapi-jsgo";
+      gapi.setAttribute("async", "");
+      gapi.setAttribute("defer", "");
+      gapi.onload = () => {
+        this.initGoogle();
+      };
+      gapi.src = "https://apis.google.com/js/platform.js?onload=";
+    },
+    loadFB() {
+      var self = this;
+      var FB = window.FB;
+      var head = document.getElementsByTagName("head")[0];
+      var facebook = document.createElement("script");
+      head.appendChild(facebook);
+      facebook.id = "facebook-jssdk";
+      facebook.setAttribute("async", "");
+      facebook.setAttribute("defer", "");
+
+      facebook.onload = () => {
+        initFB();
+      };
+      facebook.src = "https://connect.facebook.net/en_US/sdk.js";
+      function initFB() {
+        FB.init({
+          appId: "215214177170922",
+          cookie: true,
+          xfbml: true,
+          version: "v11.0",
+        });
+
+        FB.AppEvents.logPageView();
+        self.getFacebookLoginStatus();
+      }
+    },
   },
 };
 </script>
 <style lang="scss">
+@use "@stephane888/wbu-atomique/scss/defaut/model/custom_bp.scss" as *;
+
+.rs-login {
+  display: flex;
+  justify-content: space-between;
+  font-size: 15px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 15px;
+  &__btn {
+    cursor: pointer;
+    text-align: center;
+    margin: 5px 1px;
+    color: white;
+    transition: ease 0.2s;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    @include media-min("MD") {
+      max-width: 220px;
+    }
+    &--face {
+      background: #007bff;
+    }
+    &--google {
+      background: #ff5353;
+    }
+  }
+}
+
 .form-userlogin legend {
   border: none;
 }

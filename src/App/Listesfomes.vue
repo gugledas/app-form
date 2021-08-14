@@ -36,7 +36,7 @@
                     <span href="#" class="button-link">
                       <span> Comment sa marche ? </span>
                       <b-icon
-                        icon="arrow-down"
+                        :icon="pageInfo.showVideo ? 'arrow-up' : 'arrow-down'"
                         class="ml-2 setting-icon"
                       ></b-icon>
                     </span>
@@ -70,6 +70,44 @@
               </b-col>
               <b-row class="block-option">
                 <div class="block" v-for="(form, index) in items" :key="index">
+                  <!-- -->
+                  <div class="form-stats">
+                    <b-spinner
+                      v-if="false"
+                      style="width: 2rem; height: 2rem"
+                      label="Large Spinner"
+                      variant="warning"
+                      class="ml-2"
+                      type="grow"
+                    ></b-spinner>
+                    <div v-if="true">
+                      <b-button
+                        variant=""
+                        class="form-stats__btn form-stats__red"
+                        v-b-tooltip.hover.v-danger
+                        title="2 Dévis en Attente"
+                      >
+                        <span>2</span>
+                      </b-button>
+                      <b-button
+                        variant=""
+                        class="form-stats__btn form-stats__bleu"
+                        v-b-tooltip.hover.v-primary
+                        title="2 Dévis sauvegardé"
+                      >
+                        <span>2</span>
+                      </b-button>
+                      <b-button
+                        v-if="$store.state.mode"
+                        variant=""
+                        class="form-stats__btn form-stats__gris"
+                        v-b-tooltip.hover.v-secondary
+                        title="2 Dévis en Attente"
+                      >
+                        <span>2</span>
+                      </b-button>
+                    </div>
+                  </div>
                   <div
                     class="block_img"
                     @click="
@@ -91,7 +129,7 @@
                   >
                     <span> {{ form.name }} </span>
                   </div>
-                  <!-- -->
+
                   <div>
                     <b-button-group class="home-button">
                       <b-button

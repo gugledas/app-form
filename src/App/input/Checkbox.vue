@@ -35,8 +35,9 @@
                     <label
                       class="m-0 w-100"
                       :for="`checkbox-a${field.name}${i}`"
-                      >{{ item.text }}</label
                     >
+                      {{ item.text }}
+                    </label>
                   </b-col>
                   <b-col class="input-list__input">
                     <b-form-checkbox

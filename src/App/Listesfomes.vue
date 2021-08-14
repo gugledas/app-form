@@ -23,11 +23,18 @@
                 </div>
                 <div class="content">
                   <h1>{{ pageInfo.title }}</h1>
+                  <p
+                    v-html="pageInfo.description"
+                    v-if="pageInfo.description && pageInfo.description !== ''"
+                  ></p>
 
-                  <p v-html="pageInfo.description"></p>
-                  <div class="link" @click="showHideVideo">
-                    <span href="#" class="button-link"
-                      ><span>Comment sa marche?</span>
+                  <div
+                    class="link"
+                    @click="showHideVideo"
+                    v-if="pageInfo.video && pageInfo.video !== ''"
+                  >
+                    <span href="#" class="button-link">
+                      <span> Comment sa marche ? </span>
                       <b-icon
                         icon="arrow-down"
                         class="ml-2 setting-icon"
@@ -36,7 +43,10 @@
                   </div>
                 </div>
               </div>
-              <transition name="fade">
+              <transition
+                name="fade"
+                v-if="pageInfo.video && pageInfo.video !== ''"
+              >
                 <div
                   class="video-center"
                   v-if="pageInfo.video.length && pageInfo.showVideo"
@@ -60,12 +70,28 @@
               </b-col>
               <b-row class="block-option">
                 <div class="block" v-for="(form, index) in items" :key="index">
-                  <div class="block_img" @click="voirForm(form.id)">
+                  <div
+                    class="block_img"
+                    @click="
+                      !$store.state.mode
+                        ? updateMyOwnForm(form.id)
+                        : showResult(form.id)
+                    "
+                  >
                     <img :src="trueUrl(form)" />
                   </div>
-                  <div class="block_desc" @click="voirForm(form.id)">
-                    <span>{{ form.name }}</span>
+                  <!-- -->
+                  <div
+                    class="block_desc"
+                    @click="
+                      !$store.state.mode
+                        ? updateMyOwnForm(form.id)
+                        : showResult(form.id)
+                    "
+                  >
+                    <span> {{ form.name }} </span>
                   </div>
+                  <!-- -->
                   <div>
                     <b-button-group class="home-button">
                       <b-button

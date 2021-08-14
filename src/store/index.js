@@ -620,7 +620,7 @@ export default new Vuex.Store({
                 resp.reponse.config.url !== resp.reponse.request.responseURL
               ) {
                 users.getCurrentUser().then((userData) => {
-                  console.log(" utilisateur : ", userData);
+                  console.log(" Utilisateur : ", userData);
                   if (userData.uid && userData.uid[0].value)
                     utilities
                       .saveDatas(state, getters, userData.uid[0].value, status)

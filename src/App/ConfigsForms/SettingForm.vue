@@ -25,7 +25,7 @@
           </b-col>
           <b-col cols="12">
             <b-form-group label="vidéo " label-for="description-input">
-              <b-form-input v-model="pageInfo.video" required></b-form-input>
+              <b-form-input v-model="pageInfo.video"></b-form-input>
             </b-form-group>
           </b-col>
         </b-row>

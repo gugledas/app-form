@@ -5,6 +5,8 @@ import { drupalUtilities, users } from "drupal-vuejs";
 import config from "../App/config/config.js";
 
 Vue.use(Vuex);
+drupalUtilities.TestDomain = "http://lesroisdelareno.kksa";
+users.TestDomain = "http://lesroisdelareno.kksa";
 import axios from "axios";
 export default new Vuex.Store({
   state: {
@@ -432,7 +434,7 @@ export default new Vuex.Store({
     loadStepsDatas({ commit }) {
       var datas = "select * from `appformmanager_fomrs`";
       axios
-        .post(config.baseURl + "/query-ajax/select", datas)
+        .post(config.BaseUrl() + "/query-ajax/select", datas)
         .then((reponse) => {
           console.log("get loadStepsDatas: ", reponse);
           commit("SET_ITEMS", reponse.data);
@@ -447,7 +449,7 @@ export default new Vuex.Store({
     loadPageInfo({ commit }) {
       var datas = "select * from `appformmanager_config`";
       axios
-        .post(config.baseURl + "/query-ajax/select", datas)
+        .post(config.BaseUrl() + "/query-ajax/select", datas)
         .then((reponse) => {
           console.log("get pageInfo: ", reponse);
           commit("SET_PAGE_INFO", reponse.data);
@@ -611,9 +613,8 @@ export default new Vuex.Store({
           }
 
           drupalUtilities
-            .post(url, datas)
+            .dPost(url, datas)
             .then((resp) => {
-              //console.log("drupalUtilities : ", resp);
               //On verifie s'il y'a eut redirection.
               if (
                 resp.reponse &&

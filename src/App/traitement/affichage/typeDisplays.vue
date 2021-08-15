@@ -30,7 +30,7 @@ export default {
   data() {
     return {
       vale: [],
-      baseURl: config.baseURl,
+      baseURl: config.BaseUrl(),
     };
   },
   watch: {

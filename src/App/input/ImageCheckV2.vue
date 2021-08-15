@@ -72,7 +72,7 @@ export default {
     ValidationProvider,
   },
   data: () => {
-    return { formValues: {}, baseUrl: config.baseURl };
+    return { formValues: {}, baseUrl: config.BaseUrl() };
   },
   computed: {
     ...mapGetters(["formDatas"]),

@@ -4,34 +4,19 @@ import { BVToastPlugin } from "bootstrap-vue";
 import Vue from "vue";
 Vue.use(BVToastPlugin);
 
-const vm = new Vue();
-//console.log("Module Vue :  ", vm, "\n $bvToast : ", vm.$bvToast);
-AjaxToastBootStrap.$bvToast = vm.$bvToast;
-AjaxToastBootStrap.$bvModal = vm.$bvModal;
 export default {
-  baseURl: window.location.host.includes("localhost")
-    ? "http://lesroisdelareno.kksa"
-    : window.location.origin,
+  ...AjaxToastBootStrap,
+  TestDomain: "http://lesroisdelareno.kksa",
   typeSelection: ["radio", "select", "checkbox"],
   getData(datas, mode = false) {
     //var datas = "select * from `appformmanager_fomrs`";
-    return AjaxToastBootStrap.post(
-      this.baseURl + "/query-ajax/select",
-      datas,
-      {},
-      mode
-    );
+    return this.bPost("/query-ajax/select", datas, {}, mode);
   },
   /**
    * Permet d'ajouter et d'editer un formulaire.
    */
   saveForm(datas, mode = false) {
-    return AjaxToastBootStrap.post(
-      this.baseURl + "/query-ajax/insert-update",
-      datas,
-      {},
-      mode
-    );
+    return this.bPost("/query-ajax/insert-update", datas, {}, mode);
   },
   prepareDatasToSave(datas) {
     return Utilities.saveSteps(datas);
@@ -99,12 +84,7 @@ export default {
       ],
     };
     result.push(table1);
-    return AjaxToastBootStrap.post(
-      this.baseURl + "/query-ajax/insert-update",
-      result,
-      {},
-      mode
-    );
+    return this.bPost("/query-ajax/insert-update", result, {}, mode);
   },
   /**
    *
@@ -130,15 +110,10 @@ export default {
       ],
     };
     result.push(table1);
-    return AjaxToastBootStrap.post(
-      this.baseURl + "/query-ajax/insert-update",
-      result,
-      {},
-      mode
-    );
+    return this.bPost("/query-ajax/insert-update", result, {}, mode);
   },
   modalSuccess(body, conf) {
-    return AjaxToastBootStrap.modalSuccess(body, conf);
+    return this.modalSuccess(body, conf);
   },
   getMysqlDateToFrench(data) {
     if (data && data != "") {

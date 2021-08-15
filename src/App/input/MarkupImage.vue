@@ -31,7 +31,7 @@ export default {
     ...mapState(["formDatasValidate", "mode"]),
     img_url_format() {
       if (this.field.imgUrl && this.field.imgUrl !== undefined)
-        return config.baseURl + this.field.imgUrl;
+        return config.BaseUrl() + this.field.imgUrl;
       return null;
     },
     validationField() {

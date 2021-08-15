@@ -12,7 +12,7 @@
             class="item"
             :class="[current_tab === 'register' ? 'active' : '']"
           >
-            Creer un compte
+            Creer un compte ...
           </li>
           <li
             @click="select_tab('login')"
@@ -22,6 +22,7 @@
             Se connecter
           </li>
         </ul>
+
         <ValidationProvider
           v-slot="v"
           rules="required"
@@ -121,27 +122,9 @@
             </small>
           </div>
         </ValidationProvider>
-        <b-row class="rs-login" v-if="current_tab === 'register'">
-          <b-col
-            cols="12"
-            md="6"
-            :class="mediaBtn ? '' : 'bg-light'"
-            class="p-4 rs-login__btn rs-login__btn--face"
-            @click="initFacebookLogin"
-          >
-            <b-icon icon="facebook " class="mr-3"> </b-icon>Créer avec
-            facebook</b-col
-          >
-          <b-col
-            cols="12"
-            md="6"
-            :class="mediaBtn ? '' : 'bg-light'"
-            class="p-4 rs-login__btn rs-login__btn--google"
-            @click="initGoogleLogin"
-            ><b-icon icon="google" class="mr-3"></b-icon> Créer avec
-            Google</b-col
-          >
-        </b-row>
+        <div class="text-center sepation-login">
+          <strong class="sepation-login-text">Ou</strong>
+        </div>
         <b-row class="rs-login" v-if="current_tab === 'login'">
           <b-col
             cols="12"
@@ -150,9 +133,8 @@
             class="p-4 rs-login__btn rs-login__btn--face"
             @click="initFacebookLogin"
           >
-            <b-icon icon="facebook " class="mr-3"> </b-icon>login via
-            facebook</b-col
-          >
+            <b-icon icon="facebook " class="mr-3"> </b-icon>login via facebook
+          </b-col>
           <b-col
             cols="12"
             md="6"
@@ -161,6 +143,25 @@
             @click="initGoogleLogin"
             ><b-icon icon="google" class="mr-3"></b-icon>login via Google</b-col
           >
+        </b-row>
+        <b-row class="rs-login" v-if="current_tab === 'register'">
+          <b-col
+            cols="12"
+            md="6"
+            :class="mediaBtn ? '' : 'bg-light'"
+            class="p-4 rs-login__btn rs-login__btn--face"
+            @click="initFacebookLogin"
+          >
+            <b-icon icon="facebook " class="mr-3"> </b-icon>Créer avec facebook
+          </b-col>
+          <b-col
+            cols="12"
+            md="6"
+            :class="mediaBtn ? '' : 'bg-light'"
+            class="p-4 rs-login__btn rs-login__btn--google"
+            @click="initGoogleLogin"
+            ><b-icon icon="google" class="mr-3"></b-icon> Créer avec Google
+          </b-col>
         </b-row>
       </form>
     </transition>
@@ -318,7 +319,7 @@ export default {
     /* google login methods */
 
     initGoogleLogin() {
-      logingoogle.initLogin();
+      logingoogle.typeOfLogin(false);
     },
   },
 };
@@ -326,6 +327,28 @@ export default {
 <style lang="scss">
 @use "@stephane888/wbu-atomique/scss/defaut/model/custom_bp.scss" as *;
 
+.sepation-login {
+  margin-top: 4rem;
+  margin-bottom: 2rem;
+  position: relative;
+  &::before {
+    position: absolute;
+    content: "";
+    top: 50%;
+    bottom: auto;
+    left: 0;
+    right: 0;
+    border: none;
+    border-bottom: 1px solid #ccc;
+  }
+  &-text {
+    display: inline-block;
+    padding: 0 1rem;
+    background: #fff;
+    position: relative;
+    z-index: 2;
+  }
+}
 .rs-login {
   display: flex;
   justify-content: space-between;

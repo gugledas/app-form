@@ -71,7 +71,7 @@
               <b-row class="block-option">
                 <div class="block" v-for="(form, index) in items" :key="index">
                   <!-- -->
-                  <div class="form-stats">
+                  <div class="form-stats" :number="getStatisqueByNumber(form)">
                     <b-spinner
                       v-if="false"
                       style="width: 2rem; height: 2rem"
@@ -85,26 +85,26 @@
                         variant=""
                         class="form-stats__btn form-stats__red"
                         v-b-tooltip.hover.v-danger
-                        title="2 Dévis en Attente"
+                        title=" Dévis en Attente"
                       >
-                        <span>2</span>
+                        <span> {{ form.onWaitNumber }} </span>
                       </b-button>
                       <b-button
                         variant=""
                         class="form-stats__btn form-stats__bleu"
                         v-b-tooltip.hover.v-primary
-                        title="2 Dévis sauvegardé"
+                        title=" Dévis sauvegardé"
                       >
-                        <span>2</span>
+                        <span> {{ form.onSave }} </span>
                       </b-button>
                       <b-button
                         v-if="$store.state.mode"
                         variant=""
                         class="form-stats__btn form-stats__gris"
                         v-b-tooltip.hover.v-secondary
-                        title="2 Dévis en Attente"
+                        title="Dévis en Attente"
                       >
-                        <span>2</span>
+                        <span>{{ form.onCancel }}</span>
                       </b-button>
                     </div>
                   </div>
@@ -208,8 +208,6 @@
 import { mapState } from "vuex";
 import config from "./config/config.js";
 
-import { AjaxToastBootStrap } from "wbuutilities";
-
 export default {
   name: "Listesfomes",
   props: {},
@@ -253,7 +251,7 @@ export default {
 
       if (form.img) {
         if (form.img.length) {
-          url = config.baseURl + form.img;
+          url = config.BaseUrl() + form.img;
         }
       }
       return url;
@@ -282,10 +280,30 @@ export default {
     },
     deleteForm(id) {
       console.log("object", id);
-      AjaxToastBootStrap.modalConfirmDelete().then((value) => {
+      config.modalConfirmDelete().then((value) => {
         if (value) {
           config.deleteForm(id).then(() => {
             window.location.reload();
+          });
+        }
+      });
+    },
+    getStatisqueByNumber(form) {
+      var sql =
+        "select count(*) as nombre, status from `appformmanager_datas` where appformmanager_forms = (select id from `appformmanager_fomrs` where id=" +
+        form.id +
+        ") group by status";
+      config.bPost("/query-ajax/select", sql, {}, false).then((resp) => {
+        if (resp.data.length) {
+          console.log("resp.data ", resp.data);
+          resp.data.forEach((item) => {
+            if (item.status === "0") {
+              form.onWaitNumber = item.nombre;
+            } else if (item.status === "1") {
+              form.onSave = item.nombre;
+            } else if (item.status === "2") {
+              form.onCancel = item.nombre;
+            }
           });
         }
       });

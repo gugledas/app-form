@@ -59,7 +59,7 @@ export default {
     return {
       myFiles: [],
       server: {
-        url: config.baseURl + "/filesmanager/files",
+        url: config.BaseUrl() + "/filesmanager/files",
         process: {
           onload: (res) => {
             // select the right value in the response here and return
@@ -86,7 +86,7 @@ export default {
       return false;
     },
     baseURl() {
-      return config.baseURl;
+      return config.BaseUrl();
     },
     myFilesPreview() {
       const myFilesPreview = [];
@@ -94,7 +94,7 @@ export default {
         for (const f in this.field.img) {
           const file = this.field.img[f];
           myFilesPreview.push({
-            source: config.baseURl + file.url,
+            source: config.BaseUrl() + file.url,
             options: { type: "local" },
             filename: file.filename,
           });
@@ -116,7 +116,7 @@ export default {
         for (const f in this.field.img) {
           const file = this.field.img[f];
           this.myFilesPreview.push({
-            source: config.baseURl + file.url,
+            source: config.BaseUrl() + file.url,
             options: { type: "local" },
             filename: file.filename,
           });

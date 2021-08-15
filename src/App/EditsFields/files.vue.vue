@@ -56,7 +56,7 @@ export default {
     return {
       myFiles: [],
       server: {
-        url: config.baseURl + "/filesmanager/files",
+        url: config.BaseUrl() + "/filesmanager/files",
         process: {
           onload: (res) => {
             // select the right value in the response here and return
@@ -81,7 +81,7 @@ export default {
         for (const f in this.field.value) {
           const file = this.field.value[f];
           myFilesPreview.push({
-            source: config.baseURl + file.url,
+            source: config.BaseUrl() + file.url,
             options: { type: "local" },
             filename: file.filename,
           });
@@ -102,7 +102,7 @@ export default {
         for (const f in this.field.value) {
           const file = this.field.value[f];
           this.myFilesPreview.push({
-            source: config.baseURl + file.url,
+            source: config.BaseUrl() + file.url,
             options: { type: "local" },
             filename: file.filename,
           });

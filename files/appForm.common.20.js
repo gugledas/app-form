@@ -25,12 +25,12 @@
 // ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"16091a90-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/EditsFields/UploadImage.vue?vue&type=template&id=6ce3215e&lang=html&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"5e17eb6a-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/EditsFields/UploadImage.vue?vue&type=template&id=4086669a&lang=html&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('FilePond',{ref:"pond",attrs:{"name":"file__upload","label-idle":"Ajouter une image ici...","allow-multiple":false,"accepted-file-types":"image/jpeg, image/png","server":_vm.server,"files":_vm.myFiles},on:{"processfile":_vm.handleFileProcess,"updatefiles":_vm.updatefiles}}),_c('ul',{staticClass:"m-0 p-2 bg-light m-2"},[(_vm.hasImg)?_c('b-row',{staticClass:"row mb-3",attrs:{"align-h":"center","align-v":"center"}},[_c('b-col',{attrs:{"sm":"10"}},[_c('img',{attrs:{"src":_vm.baseURl + _vm.field.img,"width:":"40px","height":"40px"}})]),_c('b-col',{attrs:{"sm":"2"}},[_c('b-button',{attrs:{"size":"sm","variant":"outline-danger"},on:{"click":_vm.deleteFile}},[_c('b-icon',{attrs:{"icon":"trash"}})],1)],1)],1):_vm._e()],1)],1)}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/App/EditsFields/UploadImage.vue?vue&type=template&id=6ce3215e&lang=html&
+// CONCATENATED MODULE: ./src/App/EditsFields/UploadImage.vue?vue&type=template&id=4086669a&lang=html&
 
 // EXTERNAL MODULE: ./node_modules/vue-filepond/dist/vue-filepond.js
 var vue_filepond = __webpack_require__("1501");
@@ -103,7 +103,7 @@ var FilePond = vue_filepond_default()();
     return {
       myFiles: [],
       server: {
-        url: config["a" /* default */].baseURl + "/filesmanager/files",
+        url: config["a" /* default */].BaseUrl() + "/filesmanager/files",
         process: {
           onload: function onload(res) {
             // select the right value in the response here and return
@@ -129,7 +129,7 @@ var FilePond = vue_filepond_default()();
       return false;
     },
     baseURl: function baseURl() {
-      return config["a" /* default */].baseURl;
+      return config["a" /* default */].BaseUrl();
     },
     myFilesPreview: function myFilesPreview() {
       var myFilesPreview = [];
@@ -138,7 +138,7 @@ var FilePond = vue_filepond_default()();
         for (var f in this.field.img) {
           var file = this.field.img[f];
           myFilesPreview.push({
-            source: config["a" /* default */].baseURl + file.url,
+            source: config["a" /* default */].BaseUrl() + file.url,
             options: {
               type: "local"
             },
@@ -164,7 +164,7 @@ var FilePond = vue_filepond_default()();
         for (var f in this.field.img) {
           var file = this.field.img[f];
           this.myFilesPreview.push({
-            source: config["a" /* default */].baseURl + file.url,
+            source: config["a" /* default */].BaseUrl() + file.url,
             options: {
               type: "local"
             },

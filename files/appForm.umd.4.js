@@ -53,8 +53,7 @@ var requireObjectCoercible = __webpack_require__("1d80");
 var correctIsRegExpLogic = __webpack_require__("ab13");
 var IS_PURE = __webpack_require__("c430");
 
-// eslint-disable-next-line es/no-string-prototype-startswith -- safe
-var $startsWith = ''.startsWith;
+var nativeStartsWith = ''.startsWith;
 var min = Math.min;
 
 var CORRECT_IS_REGEXP_LOGIC = correctIsRegExpLogic('startsWith');
@@ -65,15 +64,15 @@ var MDN_POLYFILL_BUG = !IS_PURE && !CORRECT_IS_REGEXP_LOGIC && !!function () {
 }();
 
 // `String.prototype.startsWith` method
-// https://tc39.es/ecma262/#sec-string.prototype.startswith
+// https://tc39.github.io/ecma262/#sec-string.prototype.startswith
 $({ target: 'String', proto: true, forced: !MDN_POLYFILL_BUG && !CORRECT_IS_REGEXP_LOGIC }, {
   startsWith: function startsWith(searchString /* , position = 0 */) {
     var that = String(requireObjectCoercible(this));
     notARegExp(searchString);
     var index = toLength(min(arguments.length > 1 ? arguments[1] : undefined, that.length));
     var search = String(searchString);
-    return $startsWith
-      ? $startsWith.call(that, search, index)
+    return nativeStartsWith
+      ? nativeStartsWith.call(that, search, index)
       : that.slice(index, index + search.length) === search;
   }
 });
@@ -86,7 +85,7 @@ $({ target: 'String', proto: true, forced: !MDN_POLYFILL_BUG && !CORRECT_IS_REGE
 
 "use strict";
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"16091a90-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/vue-upload-drop-images/dist/vue-upload-drop-images.vue?vue&type=template&id=44324f62&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"5e17eb6a-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/vue-upload-drop-images/dist/vue-upload-drop-images.vue?vue&type=template&id=44324f62&scoped=true&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"container",on:{"dragover":function($event){$event.preventDefault();return _vm.dragOver.apply(null, arguments)},"dragleave":function($event){$event.preventDefault();return _vm.dragLeave.apply(null, arguments)},"drop":function($event){$event.preventDefault();return _vm.drop($event)}}},[_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.dropped == 2),expression:"dropped == 2"}],staticClass:"drop"}),_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.error),expression:"error"}],staticClass:"error"},[_vm._v(" "+_vm._s(_vm.error)+" ")]),_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.Imgs.length == 0),expression:"Imgs.length == 0"}],staticClass:"beforeUpload"},[_c('input',{ref:"uploadInput",staticStyle:{"z-index":"1"},attrs:{"type":"file","accept":"image/*","multiple":""},on:{"change":_vm.previewImgs}}),_c('svg',{staticClass:"icon",attrs:{"xmlns":"http://www.w3.org/2000/svg","viewBox":"0 0 24 24"}},[_c('title',[_vm._v("Upload Image")]),_c('g',{attrs:{"id":"Upload_Image","data-name":"Upload Image"}},[_c('g',{attrs:{"id":"_Group_","data-name":"<Group>"}},[_c('g',{attrs:{"id":"_Group_2","data-name":"<Group>"}},[_c('g',{attrs:{"id":"_Group_3","data-name":"<Group>"}},[_c('circle',{staticStyle:{"fill":"none","stroke":"#303c42","stroke-linecap":"round","stroke-linejoin":"round"},attrs:{"id":"_Path_","data-name":"<Path>","cx":"18.5","cy":"16.5","r":"5"}})]),_c('polyline',{staticStyle:{"fill":"none","stroke":"#303c42","stroke-linecap":"round","stroke-linejoin":"round"},attrs:{"id":"_Path_2","data-name":"<Path>","points":"16.5 15.5 18.5 13.5 20.5 15.5"}}),_c('line',{staticStyle:{"fill":"none","stroke":"#303c42","stroke-linecap":"round","stroke-linejoin":"round"},attrs:{"id":"_Path_3","data-name":"<Path>","x1":"18.5","y1":"13.5","x2":"18.5","y2":"19.5"}})]),_c('g',{attrs:{"id":"_Group_4","data-name":"<Group>"}},[_c('polyline',{staticStyle:{"fill":"none","stroke":"#303c42","stroke-linecap":"round","stroke-linejoin":"round"},attrs:{"id":"_Path_4","data-name":"<Path>","points":"0.6 15.42 6 10.02 8.98 13"}}),_c('polyline',{staticStyle:{"fill":"none","stroke":"#303c42","stroke-linecap":"round","stroke-linejoin":"round"},attrs:{"id":"_Path_5","data-name":"<Path>","points":"17.16 11.68 12.5 7.02 7.77 11.79"}}),_c('circle',{staticStyle:{"fill":"none","stroke":"#303c42","stroke-linecap":"round","stroke-linejoin":"round"},attrs:{"id":"_Path_6","data-name":"<Path>","cx":"8","cy":"6.02","r":"1.5"}}),_c('path',{staticStyle:{"fill":"none","stroke":"#303c42","stroke-linecap":"round","stroke-linejoin":"round"},attrs:{"id":"_Path_7","data-name":"<Path>","d":"M19.5,11.6V4A1.5,1.5,0,0,0,18,2.5H2A1.5,1.5,0,0,0,.5,4V15A1.5,1.5,0,0,0,2,16.5H13.5"}})])])])]),_c('p',{staticClass:"mainMessage"},[_vm._v(" "+_vm._s(_vm.uploadMsg ? _vm.uploadMsg : "Click to upload or drop your images here")+" ")])]),_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.Imgs.length > 0),expression:"Imgs.length > 0"}],staticClass:"imgsPreview"},[_c('button',{staticClass:"clearButton",attrs:{"type":"button"},on:{"click":_vm.reset}},[_vm._v(" "+_vm._s(_vm.clearAll ? _vm.clearAll : "clear All")+" ")]),_vm._l((_vm.Imgs),function(img,i){return _c('div',{key:i,staticClass:"imageHolder"},[_c('img',{attrs:{"src":img}}),_c('span',{staticClass:"delete",staticStyle:{"color":"white"},on:{"click":function($event){return _vm.deleteImg(--i)}}},[_c('svg',{staticClass:"icon",attrs:{"xmlns":"http://www.w3.org/2000/svg","fill":"none","viewBox":"0 0 24 24","stroke":"currentColor"}},[_c('path',{attrs:{"stroke-linecap":"round","stroke-linejoin":"round","stroke-width":"2","d":"M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"}})])]),(++i == _vm.Imgs.length)?_c('div',{staticClass:"plus",on:{"click":_vm.append}},[_vm._v("+")]):_vm._e()])})],2)])}
 var staticRenderFns = []
 
@@ -329,7 +328,7 @@ var createProperty = __webpack_require__("8418");
 var getIteratorMethod = __webpack_require__("35a1");
 
 // `Array.from` method implementation
-// https://tc39.es/ecma262/#sec-array.from
+// https://tc39.github.io/ecma262/#sec-array.from
 module.exports = function from(arrayLike /* , mapfn = undefined, thisArg = undefined */) {
   var O = toObject(arrayLike);
   var C = typeof this == 'function' ? this : Array;
@@ -368,8 +367,8 @@ module.exports = function from(arrayLike /* , mapfn = undefined, thisArg = undef
 /***/ (function(module, exports) {
 
 // a string of all valid unicode whitespaces
-module.exports = '\u0009\u000A\u000B\u000C\u000D\u0020\u00A0\u1680\u2000\u2001\u2002' +
-  '\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u202F\u205F\u3000\u2028\u2029\uFEFF';
+// eslint-disable-next-line max-len
+module.exports = '\u0009\u000A\u000B\u000C\u000D\u0020\u00A0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u202F\u205F\u3000\u2028\u2029\uFEFF';
 
 
 /***/ }),
@@ -396,13 +395,13 @@ var createMethod = function (TYPE) {
 
 module.exports = {
   // `String.prototype.{ trimLeft, trimStart }` methods
-  // https://tc39.es/ecma262/#sec-string.prototype.trimstart
+  // https://tc39.github.io/ecma262/#sec-string.prototype.trimstart
   start: createMethod(1),
   // `String.prototype.{ trimRight, trimEnd }` methods
-  // https://tc39.es/ecma262/#sec-string.prototype.trimend
+  // https://tc39.github.io/ecma262/#sec-string.prototype.trimend
   end: createMethod(2),
   // `String.prototype.trim` method
-  // https://tc39.es/ecma262/#sec-string.prototype.trim
+  // https://tc39.github.io/ecma262/#sec-string.prototype.trim
   trim: createMethod(3)
 };
 
@@ -2506,25 +2505,6 @@ var version = '3.4.11';
 
 /***/ }),
 
-/***/ "9bdd":
-/***/ (function(module, exports, __webpack_require__) {
-
-var anObject = __webpack_require__("825a");
-var iteratorClose = __webpack_require__("2a62");
-
-// call something on iterator step with safe closing on error
-module.exports = function (iterator, fn, value, ENTRIES) {
-  try {
-    return ENTRIES ? fn(anObject(value)[0], value[1]) : fn(value);
-  } catch (error) {
-    iteratorClose(iterator);
-    throw error;
-  }
-};
-
-
-/***/ }),
-
 /***/ "a15b":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2541,7 +2521,7 @@ var ES3_STRINGS = IndexedObject != Object;
 var STRICT_METHOD = arrayMethodIsStrict('join', ',');
 
 // `Array.prototype.join` method
-// https://tc39.es/ecma262/#sec-array.prototype.join
+// https://tc39.github.io/ecma262/#sec-array.prototype.join
 $({ target: 'Array', proto: true, forced: ES3_STRINGS || !STRICT_METHOD }, {
   join: function join(separator) {
     return nativeJoin.call(toIndexedObject(this), separator === undefined ? ',' : separator);
@@ -2731,7 +2711,7 @@ function __spreadArray(to, from, pack) {
             ar[i] = from[i];
         }
     }
-    return to.concat(ar || from);
+    return to.concat(ar || Array.prototype.slice.call(from));
 }
 
 function __await(v) {
@@ -2972,7 +2952,7 @@ function tslib_es6_spreadArray(to, from, pack) {
             ar[i] = from[i];
         }
     }
-    return to.concat(ar || from);
+    return to.concat(ar || Array.prototype.slice.call(from));
 }
 
 function tslib_es6_await(v) {
@@ -3149,12 +3129,11 @@ var from = __webpack_require__("4df4");
 var checkCorrectnessOfIteration = __webpack_require__("1c7e");
 
 var INCORRECT_ITERATION = !checkCorrectnessOfIteration(function (iterable) {
-  // eslint-disable-next-line es/no-array-from -- required for testing
   Array.from(iterable);
 });
 
 // `Array.from` method
-// https://tc39.es/ecma262/#sec-array.from
+// https://tc39.github.io/ecma262/#sec-array.from
 $({ target: 'Array', stat: true, forced: INCORRECT_ITERATION }, {
   from: from
 });
@@ -3201,7 +3180,7 @@ var NumberPrototype = NativeNumber.prototype;
 var BROKEN_CLASSOF = classof(create(NumberPrototype)) == NUMBER;
 
 // `ToNumber` abstract operation
-// https://tc39.es/ecma262/#sec-tonumber
+// https://tc39.github.io/ecma262/#sec-tonumber
 var toNumber = function (argument) {
   var it = toPrimitive(argument, false);
   var first, third, radix, maxCode, digits, length, index, code;
@@ -3230,7 +3209,7 @@ var toNumber = function (argument) {
 };
 
 // `Number` constructor
-// https://tc39.es/ecma262/#sec-number-constructor
+// https://tc39.github.io/ecma262/#sec-number-constructor
 if (isForced(NUMBER, !NativeNumber(' 0o1') || !NativeNumber('0b1') || NativeNumber('+0x1'))) {
   var NumberWrapper = function Number(value) {
     var it = arguments.length < 1 ? 0 : value;
@@ -3245,9 +3224,7 @@ if (isForced(NUMBER, !NativeNumber(' 0o1') || !NativeNumber('0b1') || NativeNumb
     'MAX_VALUE,MIN_VALUE,NaN,NEGATIVE_INFINITY,POSITIVE_INFINITY,' +
     // ES2015 (in case, if modules with ES2015 Number statics required before):
     'EPSILON,isFinite,isInteger,isNaN,isSafeInteger,MAX_SAFE_INTEGER,' +
-    'MIN_SAFE_INTEGER,parseFloat,parseInt,isInteger,' +
-    // ESNext
-    'fromString,range'
+    'MIN_SAFE_INTEGER,parseFloat,parseInt,isInteger'
   ).split(','), j = 0, key; keys.length > j; j++) {
     if (has(NativeNumber, key = keys[j]) && !has(NumberWrapper, key)) {
       defineProperty(NumberWrapper, key, getOwnPropertyDescriptor(NativeNumber, key));
@@ -3258,6 +3235,29 @@ if (isForced(NUMBER, !NativeNumber(' 0o1') || !NativeNumber('0b1') || NativeNumb
   redefine(global, NUMBER, NumberWrapper);
 }
 
+
+/***/ }),
+
+/***/ "bee2":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return _createClass; });
+function _defineProperties(target, props) {
+  for (var i = 0; i < props.length; i++) {
+    var descriptor = props[i];
+    descriptor.enumerable = descriptor.enumerable || false;
+    descriptor.configurable = true;
+    if ("value" in descriptor) descriptor.writable = true;
+    Object.defineProperty(target, descriptor.key, descriptor);
+  }
+}
+
+function _createClass(Constructor, protoProps, staticProps) {
+  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+  if (staticProps) _defineProperties(Constructor, staticProps);
+  return Constructor;
+}
 
 /***/ }),
 
@@ -3275,17 +3275,19 @@ var toIndexedObject = __webpack_require__("fc6a");
 var createProperty = __webpack_require__("8418");
 var wellKnownSymbol = __webpack_require__("b622");
 var arrayMethodHasSpeciesSupport = __webpack_require__("1dde");
+var arrayMethodUsesToLength = __webpack_require__("ae40");
 
 var HAS_SPECIES_SUPPORT = arrayMethodHasSpeciesSupport('slice');
+var USES_TO_LENGTH = arrayMethodUsesToLength('slice', { ACCESSORS: true, 0: 0, 1: 2 });
 
 var SPECIES = wellKnownSymbol('species');
 var nativeSlice = [].slice;
 var max = Math.max;
 
 // `Array.prototype.slice` method
-// https://tc39.es/ecma262/#sec-array.prototype.slice
+// https://tc39.github.io/ecma262/#sec-array.prototype.slice
 // fallback for not array-like ES3 strings and DOM objects
-$({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT }, {
+$({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT || !USES_TO_LENGTH }, {
   slice: function slice(start, end) {
     var O = toIndexedObject(this);
     var length = toLength(O.length);

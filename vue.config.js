@@ -15,7 +15,7 @@ module.exports = {
   //pour construire une app avec plusieurs pages.
   //pages:undefined,
   css: {
-    sourceMap: envModeDev ? false : false,
+    sourceMap: envModeDev ? true : false,
     /*
     loaderOptions: {
       css: {

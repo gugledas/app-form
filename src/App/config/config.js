@@ -6,7 +6,7 @@ Vue.use(BVToastPlugin);
 
 export default {
   ...AjaxToastBootStrap,
-  TestDomain: "http://lesroisdelareno.kksa",
+  TestDomain: "http://lesroisdelareno.habeuk.com",
   typeSelection: ["radio", "select", "checkbox"],
   getData(datas, mode = false) {
     //var datas = "select * from `appformmanager_fomrs`";
@@ -112,7 +112,7 @@ export default {
     result.push(table1);
     return this.bPost("/query-ajax/insert-update", result, {}, mode);
   },
-  modalSuccess(body, conf) {
+  CustomModalSuccess(body, conf) {
     return this.modalSuccess(body, conf);
   },
   getMysqlDateToFrench(data) {

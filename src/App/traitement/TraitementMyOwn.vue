@@ -132,25 +132,6 @@ export default {
           //
         });
       });
-      /*
-      utilities.saveSteps(datas).then((reponse) => {
-        var forms = JSON.stringify(reponse[0].fields);
-        localStorage.setItem("allo", JSON.stringify(forms));
-        console.log("savesteps: ", reponse);
-        axios
-          .post(
-            "http://lesroisdelareno.kksa" + "/query-ajax/insert-update",
-            reponse
-          )
-          .then(function (response) {
-            console.log("post response ", response);
-            self.$store.dispatch("setFormId", self.id);
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-      });
-      /**/
     },
     resetValue() {
       this.$store.getters.formDatas.selected = "";

@@ -328,7 +328,7 @@ export default {
           ],
         };
         config.saveForm([dataUpdate], this.$store.state.mode).then(() => {
-          config.modalSuccess(
+          config.CustomModalSuccess(
             "Vous serrez rappellé par un specialiste dans les plus bref delais.",
             {
               title: "Status du devis mise à jour",

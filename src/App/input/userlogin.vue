@@ -173,6 +173,7 @@ import { mapState, mapGetters } from "vuex";
 import { ValidationProvider } from "vee-validate";
 import "../EditsFields/vee-validate-custom.js";
 import { loginfacebook, logingoogle } from "drupal-vuejs";
+import config from "../config/config.js";
 
 //import { drupalFormFields } from "drupal-vuejs";
 import testrenjsx from "../testrenjsx.vue";
@@ -206,12 +207,14 @@ export default {
     };
   },
   mounted() {
-    // this.initValue();
-    // this.setRefs();
-    loginfacebook.appId = "215214177170922";
-    loginfacebook.clien_id =
-      "666466407349-oanmp950m4pp4arec1fcp8okvj6so4cj.apps.googleusercontent.com";
+    this.TryToLoginWithFacebook();
+    this.TryToLoginWithGoogle();
+    loginfacebook.appId = 889256191665205;
     this.loadScript();
+    //
+    logingoogle.client_id =
+      "90673796165-fndv3eu9tog6b9g5p8camiueffcfdc8p.apps.googleusercontent.com";
+    logingoogle.loadGapi();
   },
   watch: {
     //
@@ -240,6 +243,85 @@ export default {
         logingoogle.loadGapi();
         this.mediaBtn = true;
       });
+    },
+    /**
+     * Ecoute un evenement afin de determiner si l'utilisateur a clique sur le bonton de connexion et que le processus soit terminé.
+     */
+    TryToLoginWithFacebook() {
+      document.addEventListener(
+        "wbu-fb-status-change",
+        () => {
+          this.isBusy = true;
+
+          console.log("TryToLoginWithFacebook", this.isBusy);
+
+          config
+            .post("/login-rx-vuejs/facebook-check", loginfacebook.user)
+            .then((resp) => {
+              console.log("TryToLoginWithFacebook resp : ", resp);
+              if (
+                resp.reponse &&
+                resp.reponse.config.url !== resp.reponse.request.responseURL
+              ) {
+                //window.location.assign(resp.reponse.request.responseURL);
+                console.log("user is connect : ", resp.reponse);
+                //on connecte l'utilisateur:
+                this.$store.dispatch("getCurrentUser").then(() => {
+                  //save form
+                  setTimeout(() => {
+                    this.$store.dispatch("saveDatasUser");
+                  }, 600);
+                });
+              }
+              // il faut s'assurer que les données sont ok.
+              else if (resp.data) {
+                if (resp.data.createuser) {
+                  this.stepe = "final-fb-register";
+                }
+              }
+            });
+        },
+        false
+      );
+    },
+    /**
+     * Ecoute un evenement afin de determiner si l'utilisateur a clique sur le bonton de connexion et que le processus soit terminé.
+     */
+    TryToLoginWithGoogle() {
+      document.addEventListener(
+        "wbu-gl-status-change",
+        () => {
+          this.IsBusy();
+          console.log("TryToLoginWithGoogle :", logingoogle.user);
+
+          config
+            .post("/login-rx-vuejs/google-check", logingoogle.user)
+            .then((resp) => {
+              console.log("TryToLoginWithGoogle resp : ", resp);
+              if (
+                resp.reponse &&
+                resp.reponse.config.url !== resp.reponse.request.responseURL
+              ) {
+                //window.location.assign(resp.reponse.request.responseURL);
+                console.log("user is connect : ", resp.reponse);
+                //on connecte l'utilisateur:
+                this.$store.dispatch("getCurrentUser").then(() => {
+                  //save form
+                  setTimeout(() => {
+                    this.$store.dispatch("saveDatasUser");
+                  }, 600);
+                });
+              }
+              // Il faut s'assurer que les données sont ok.
+              else if (resp.data) {
+                if (resp.data.createuser) {
+                  this.stepe = "final-gl-register";
+                }
+              }
+            });
+        },
+        false
+      );
     },
     final_click_h2() {
       alert("final_click_h2");

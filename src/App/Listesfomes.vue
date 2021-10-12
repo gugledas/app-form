@@ -85,7 +85,8 @@
                         variant=""
                         class="form-stats__btn form-stats__red"
                         v-b-tooltip.hover.v-danger
-                        title=" Dévis en Attente"
+                        title="Projet en attente de rappel"
+                        v-if="form.onWaitNumber"
                       >
                         <span> {{ form.onWaitNumber }} </span>
                       </b-button>
@@ -93,16 +94,17 @@
                         variant=""
                         class="form-stats__btn form-stats__bleu"
                         v-b-tooltip.hover.v-primary
-                        title=" Dévis sauvegardé"
+                        title="Projet sauvegardé"
+                        v-if="form.onSave"
                       >
                         <span> {{ form.onSave }} </span>
                       </b-button>
                       <b-button
-                        v-if="$store.state.mode"
                         variant=""
                         class="form-stats__btn form-stats__gris"
                         v-b-tooltip.hover.v-secondary
-                        title="Dévis en Attente"
+                        title="Projet abandonné"
+                        v-if="form.onCancel"
                       >
                         <span>{{ form.onCancel }}</span>
                       </b-button>
@@ -289,20 +291,28 @@ export default {
       });
     },
     getStatisqueByNumber(form) {
+      if (!this.$store.getters.uid) return;
       var sql =
         "select count(*) as nombre, status from `appformmanager_datas` where appformmanager_forms = (select id from `appformmanager_fomrs` where id=" +
         form.id +
         ") group by status";
+      if (!this.$store.state.mode)
+        sql =
+          "select count(*) as nombre, status from `appformmanager_datas` where uid=" +
+          this.$store.getters.uid +
+          " and appformmanager_forms = (select id from `appformmanager_fomrs` where id=" +
+          form.id +
+          ") group by status";
       config.bPost("/query-ajax/select", sql, {}, false).then((resp) => {
         if (resp.data.length) {
-          console.log("resp.data ", resp.data);
+          //console.log("resp.data ", resp.data);
           resp.data.forEach((item) => {
             if (item.status === "0") {
-              form.onWaitNumber = item.nombre;
+              this.$set(form, "onWaitNumber", item.nombre);
             } else if (item.status === "1") {
-              form.onSave = item.nombre;
+              this.$set(form, "onSave", item.nombre);
             } else if (item.status === "2") {
-              form.onCancel = item.nombre;
+              this.$set(form, "onCancel", item.nombre);
             }
           });
         }

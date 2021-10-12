@@ -5,17 +5,16 @@ import { drupalUtilities, users } from "drupal-vuejs";
 import config from "../App/config/config.js";
 
 Vue.use(Vuex);
-drupalUtilities.TestDomain = "http://lesroisdelareno.kksa";
-users.TestDomain = "http://lesroisdelareno.kksa";
+drupalUtilities.TestDomain = "http://lesroisdelareno.habeuk.com";
+users.TestDomain = "http://lesroisdelareno.habeuk.com";
 import axios from "axios";
 export default new Vuex.Store({
   state: {
     /* contient les information de la page d'afficha des formulaires */
     pageInfo: {
-      title: "Quels travaux de rénovation souhaitez-vous",
-      video: "https://www.youtube.com/embed/tgbNymZ7vqY",
-      description:
-        "<p>Décrivé votre projet et visualiser votre estimation.&nbsp;</p><p>Vous pourriez ensuite entrer en relation avec les meilleurs professionels de notre réseau.</p>",
+      title: "",
+      video: "",
+      description: "",
       showVideo: false,
     },
     stepsIndex: 0,
@@ -561,7 +560,7 @@ export default new Vuex.Store({
        * @param { Boolean } statusMsg
        */
       var displayMsg = (msg, title = "Devis sauvegardé", statusMsg = true) => {
-        config.modalSuccess(msg, {
+        config.CustomModalSuccess(msg, {
           title: title,
           footerClass: "d-none",
           headerBgVariant: statusMsg ? "success" : "danger",
@@ -679,12 +678,13 @@ export default new Vuex.Store({
             });
         }
       }
-      // si l'utilisateur est connecté.
-      else
+      // Si l'utilisateur est connecté.
+      else {
         utilities.saveDatas(state, getters, getters.uid, status).then(() => {
           if (status) displayMsg(msgCreate([config.messages.devisSave]));
           else displayMsg(msgCreate([config.messages.devisRappel]));
         });
+      }
     },
     saveDatas({ commit, state, getters }, uid = 0) {
       if (!uid) {
@@ -698,7 +698,7 @@ export default new Vuex.Store({
       });
     },
     getCurrentUser({ commit }) {
-      users.getCurrentUser().then((resp) => {
+      return users.getCurrentUser().then((resp) => {
         commit("SET_USER", resp);
       });
     },

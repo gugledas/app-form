@@ -1,11 +1,28 @@
 <template lang="html">
   <div :class="!validationField && mode ? 'mb-5' : ''">
-    <transition v-if="validationField" name="fade">
+    <transition v-if="validationField && (!uid || (uid && mode))" name="fade">
       <form
         ref="form_userlogin"
         @submit.stop.prevent="handleSubmit"
         class="form-userlogin choice-section min-height"
       >
+        <ul class="d-flex p-0 mx-0 select-tab">
+          <li
+            @click="select_tab('register')"
+            class="item"
+            :class="[current_tab === 'register' ? 'active' : '']"
+          >
+            Creer un compte ...
+          </li>
+          <li
+            @click="select_tab('login')"
+            class="item"
+            :class="[current_tab !== 'register' ? 'active' : '']"
+          >
+            Se connecter
+          </li>
+        </ul>
+
         <ValidationProvider
           v-slot="v"
           rules="required"
@@ -13,7 +30,12 @@
           name="Nom"
           ref="userlogin_name"
         >
-          <b-form-group label="Nom">
+          <div class="login-form">
+            <label class="label d-flex align-items-center">
+              <span>{{ field.label }}</span>
+            </label>
+          </div>
+          <b-form-group :label="nomDisplay">
             <b-form-input
               v-model="userlogin.name.value"
               type="text"
@@ -27,7 +49,7 @@
           </div>
         </ValidationProvider>
         <!-- -->
-        <b-form-group label="Prenom">
+        <b-form-group label="Prenom" v-if="current_tab === 'register'">
           <b-form-input
             v-model="userlogin.prenom.value"
             type="text"
@@ -41,6 +63,7 @@
           class="d-block"
           name="Telephone"
           ref="userlogin_tel"
+          v-if="current_tab === 'register'"
         >
           <b-form-group label="Telephone">
             <b-form-input
@@ -62,6 +85,7 @@
           class="d-block"
           name="Email"
           ref="userlogin_email"
+          v-if="current_tab === 'register'"
         >
           <b-form-group label="Email">
             <b-form-input
@@ -76,18 +100,86 @@
             </small>
           </div>
         </ValidationProvider>
-        <!-- -->
+
+        <ValidationProvider
+          v-slot="v"
+          rules="required"
+          class="d-block"
+          name="Password"
+          ref="userlogin_password"
+          v-if="current_tab === 'login'"
+        >
+          <b-form-group label="Mot de passe">
+            <b-form-input
+              v-model="userlogin.password.value"
+              type="password"
+              @input="input($event, 'password')"
+            ></b-form-input>
+          </b-form-group>
+          <div class="text-danger">
+            <small v-for="(error, ii) in v.errors" :key="ii" class="d-block">
+              {{ error }}
+            </small>
+          </div>
+        </ValidationProvider>
+        <div class="text-center sepation-login">
+          <strong class="sepation-login-text">Ou</strong>
+        </div>
+        <b-row class="rs-login" v-if="current_tab === 'login'">
+          <b-col
+            cols="12"
+            md="6"
+            :class="mediaBtn ? '' : 'bg-light'"
+            class="p-4 rs-login__btn rs-login__btn--face"
+            @click="initFacebookLogin"
+          >
+            <b-icon icon="facebook " class="mr-3"> </b-icon>login via facebook
+          </b-col>
+          <b-col
+            cols="12"
+            md="6"
+            class="p-4 rs-login__btn rs-login__btn--google"
+            :class="mediaBtn ? '' : 'bg-light'"
+            @click="initGoogleLogin"
+            ><b-icon icon="google" class="mr-3"></b-icon>login via Google</b-col
+          >
+        </b-row>
+        <b-row class="rs-login" v-if="current_tab === 'register'">
+          <b-col
+            cols="12"
+            md="6"
+            :class="mediaBtn ? '' : 'bg-light'"
+            class="p-4 rs-login__btn rs-login__btn--face"
+            @click="initFacebookLogin"
+          >
+            <b-icon icon="facebook " class="mr-3"> </b-icon>Créer avec facebook
+          </b-col>
+          <b-col
+            cols="12"
+            md="6"
+            :class="mediaBtn ? '' : 'bg-light'"
+            class="p-4 rs-login__btn rs-login__btn--google"
+            @click="initGoogleLogin"
+            ><b-icon icon="google" class="mr-3"></b-icon> Créer avec Google
+          </b-col>
+        </b-row>
       </form>
     </transition>
   </div>
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapGetters } from "vuex";
 import { ValidationProvider } from "vee-validate";
 import "../EditsFields/vee-validate-custom.js";
+import { loginfacebook, logingoogle } from "drupal-vuejs";
+import config from "../config/config.js";
+
+//import { drupalFormFields } from "drupal-vuejs";
+import testrenjsx from "../testrenjsx.vue";
+//import facebook from "drupal-vuejs/src/App/rx/facebook";
 export default {
-  name: "userlogin",
+  name: "userloginV2",
   props: {
     field: {
       type: Object,
@@ -104,30 +196,144 @@ export default {
   },
   data() {
     return {
-      //
+      tabIndex: 0,
+      current_tab: "register",
+      fieldsRegisterRender: [],
+      modelsFields: {},
+      testrenjsx: testrenjsx,
+      mediaBtn: true,
+      userFacebook: "",
+      userGoogle: "",
     };
   },
   mounted() {
-    this.setRefs();
-    this.initValue();
+    this.TryToLoginWithFacebook();
+    this.TryToLoginWithGoogle();
+    loginfacebook.appId = 889256191665205;
+    this.loadScript();
+    //
+    logingoogle.client_id =
+      "90673796165-fndv3eu9tog6b9g5p8camiueffcfdc8p.apps.googleusercontent.com";
+    logingoogle.loadGapi();
   },
   watch: {
     //
   },
   computed: {
     ...mapState(["userlogin", "mode"]),
-    MajRefs() {
-      if (this.userlogin) {
-        this.setRefs();
-        return true;
-      }
-      return false;
-    },
+    ...mapGetters(["uid"]),
+
     validationField() {
       return true;
     },
+    nomDisplay() {
+      if (this.current_tab === "register") {
+        return "Nom";
+      } else {
+        return "Login ou email";
+      }
+    },
   },
   methods: {
+    loadScript() {
+      //var self = this
+      this.$nextTick(() => {
+        this.mediaBtn = false;
+        loginfacebook.chargement();
+        logingoogle.loadGapi();
+        this.mediaBtn = true;
+      });
+    },
+    /**
+     * Ecoute un evenement afin de determiner si l'utilisateur a clique sur le bonton de connexion et que le processus soit terminé.
+     */
+    TryToLoginWithFacebook() {
+      document.addEventListener(
+        "wbu-fb-status-change",
+        () => {
+          this.isBusy = true;
+
+          console.log("TryToLoginWithFacebook", this.isBusy);
+
+          config
+            .post("/login-rx-vuejs/facebook-check", loginfacebook.user)
+            .then((resp) => {
+              console.log("TryToLoginWithFacebook resp : ", resp);
+              if (
+                resp.reponse &&
+                resp.reponse.config.url !== resp.reponse.request.responseURL
+              ) {
+                //window.location.assign(resp.reponse.request.responseURL);
+                console.log("user is connect : ", resp.reponse);
+                //on connecte l'utilisateur:
+                this.$store.dispatch("getCurrentUser").then(() => {
+                  //save form
+                  setTimeout(() => {
+                    this.$store.dispatch("saveDatasUser");
+                  }, 600);
+                });
+              }
+              // il faut s'assurer que les données sont ok.
+              else if (resp.data) {
+                if (resp.data.createuser) {
+                  this.stepe = "final-fb-register";
+                }
+              }
+            });
+        },
+        false
+      );
+    },
+    /**
+     * Ecoute un evenement afin de determiner si l'utilisateur a clique sur le bonton de connexion et que le processus soit terminé.
+     */
+    TryToLoginWithGoogle() {
+      document.addEventListener(
+        "wbu-gl-status-change",
+        () => {
+          this.IsBusy();
+          console.log("TryToLoginWithGoogle :", logingoogle.user);
+
+          config
+            .post("/login-rx-vuejs/google-check", logingoogle.user)
+            .then((resp) => {
+              console.log("TryToLoginWithGoogle resp : ", resp);
+              if (
+                resp.reponse &&
+                resp.reponse.config.url !== resp.reponse.request.responseURL
+              ) {
+                //window.location.assign(resp.reponse.request.responseURL);
+                console.log("user is connect : ", resp.reponse);
+                //on connecte l'utilisateur:
+                this.$store.dispatch("getCurrentUser").then(() => {
+                  //save form
+                  setTimeout(() => {
+                    this.$store.dispatch("saveDatasUser");
+                  }, 600);
+                });
+              }
+              // Il faut s'assurer que les données sont ok.
+              else if (resp.data) {
+                if (resp.data.createuser) {
+                  this.stepe = "final-gl-register";
+                }
+              }
+            });
+        },
+        false
+      );
+    },
+    final_click_h2() {
+      alert("final_click_h2");
+    },
+    /*
+    async getFiledRegisterUser() {
+      const drupalFormField = new drupalFormFields("user", "user", this);
+      this.fieldsRegisterRender = await drupalFormField.format();
+      console.log("fieldsRegisterRender : ", this.fieldsRegisterRender);
+      this.modelsFields = drupalFormField.modelsFields;
+    },
+    /**/
     handleOk(event) {
       event.preventDefault();
       this.handleSubmit();
@@ -143,9 +349,13 @@ export default {
       });
     },
     setRefs() {
-      this.userlogin.name.ref = this.$refs.userlogin_name;
-      this.userlogin.telephone.ref = this.$refs.userlogin_tel;
-      this.userlogin.email.ref = this.$refs.userlogin_email;
+      this.$nextTick(() => {
+        //alert("Dd");
+        this.userlogin.name.ref = this.$refs.userlogin_name;
+        this.userlogin.telephone.ref = this.$refs.userlogin_tel;
+        this.userlogin.email.ref = this.$refs.userlogin_email;
+        this.userlogin.password.ref = this.$refs.userlogin_password;
+      });
     },
     input(value, field) {
       this.field.value[field].value = value;
@@ -157,20 +367,125 @@ export default {
           prenom: { value: "", label: "Prenom" },
           telephone: { value: "", label: "Telephone" },
           email: { value: "", label: "Email" },
+          password: { value: "", label: "Password" },
         });
       } else if (this.field.value.name) {
         this.userlogin.name.value = this.field.value.name.value;
         this.userlogin.prenom.value = this.field.value.prenom.value;
         this.userlogin.telephone.value = this.field.value.telephone.value;
         this.userlogin.email.value = this.field.value.email.value;
+        this.userlogin.password.value = this.field.value.password.value;
       }
+    },
+    select_tab(val) {
+      var self = this;
+      this.current_tab = val;
+      this.userlogin.tabIndex = val;
+      self.setRefs();
+    },
+    /* facebook login methods */
+    getFacebookLoginStatus() {
+      loginfacebook.getUserStatus();
+    },
+    facebookStatusCallback(reponse) {
+      console.log("status", reponse);
+      console.log(
+        reponse.status == "connected"
+          ? "je suis connecté avec facebook"
+          : "Pas connecté avec facebook"
+      );
+    },
+    initFacebookLogin() {
+      loginfacebook.openPopup();
+    },
+    /* google login methods */
+
+    initGoogleLogin() {
+      logingoogle.typeOfLogin(false);
     },
   },
 };
 </script>
 <style lang="scss">
+@use "@stephane888/wbu-atomique/scss/defaut/model/custom_bp.scss" as *;
+
+.sepation-login {
+  margin-top: 4rem;
+  margin-bottom: 2rem;
+  position: relative;
+  &::before {
+    position: absolute;
+    content: "";
+    top: 50%;
+    bottom: auto;
+    left: 0;
+    right: 0;
+    border: none;
+    border-bottom: 1px solid #ccc;
+  }
+  &-text {
+    display: inline-block;
+    padding: 0 1rem;
+    background: #fff;
+    position: relative;
+    z-index: 2;
+  }
+}
+.rs-login {
+  display: flex;
+  justify-content: space-between;
+  font-size: 15px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 15px;
+  &__btn {
+    cursor: pointer;
+    text-align: center;
+    margin: 5px 1px;
+    color: white;
+    transition: ease 0.2s;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    @include media-min("MD") {
+      max-width: 220px;
+    }
+    &--face {
+      background: #007bff;
+    }
+    &--google {
+      background: #ff5353;
+    }
+  }
+}
+
 .form-userlogin legend {
   border: none;
+}
+
+.login-form {
+  margin-bottom: 5rem;
+}
+
+.select-tab {
+  list-style: none;
+  margin-bottom: 5rem;
+
+  .item {
+    padding: 1rem 2rem;
+    cursor: pointer;
+    width: 50%;
+    border-bottom: 1px solid #cce;
+    text-align: center;
+    background: rgb(240 248 255);
+    &.active {
+      border-bottom: 0px solid #cce;
+      background: #007bff;
+      color: #fff;
+      font-weight: 600;
+    }
+  }
 }
 </style>
 

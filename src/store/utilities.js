@@ -7,54 +7,101 @@ export default {
    * @param forms array etape du formualire;
    * @param i indice de letape encours.
    */
-  selectNextState(forms, i) {
+  /*
+  selectNextStateOld(forms, i) {
     var j = i + 1;
     this.forms = forms;
-    for (const k in this.forms) {
-      let kk = parseInt(k);
-      if (kk >= j) {
-        j = null;
-        const form = this.forms[k];
-        if (this.validateState(form.states)) {
-          //console.log("etape valide : ", k);
-          return kk;
-        } else {
-          //console.log("etape non valide : ", k);
+    return new Promise(resolv => {
+      for (const k in this.forms) {
+        let kk = parseInt(k);
+        if (kk >= j) {
+          const form = this.forms[k];
+
+          this.validateState(form.states).then(rep => {
+            console.log("selectNextState : ", kk, " response : ", rep);
+            if (rep) resolv(kk);
+          });
+        }
+        var ii = kk + 1;
+        if (this.forms.length === ii) {
+          console.log("selectNextState END : ", kk);
+          resolv(null);
         }
       }
-    }
-    return j;
+      if (!forms) {
+        resolv(null);
+      }
+    });
+  },
+  /**/
+  /**
+   * Selectionne l'indice de la prochaine etape valide.
+   * @param forms array etape du formualire;
+   * @param i indice de letape encours.
+   */
+  selectNextState(forms, i) {
+    var k = i + 1;
+    this.forms = forms;
+    var self = this;
+    return new Promise((resolvParent) => {
+      const loop = function (j) {
+        return new Promise((resolv) => {
+          if (!forms[j]) {
+            resolv(null);
+          }
+          self.validateState(forms[j].states).then((rep) => {
+            //console.log("selectNextState : ", j, " response : ", rep);
+            if (rep) {
+              resolv(j);
+            } else {
+              resolv(loop(j + 1));
+            }
+          });
+        });
+      };
+      loop(k).then((r) => {
+        resolvParent(r);
+      });
+    });
   },
 
   validateState(states) {
-    if (!states || states.length === 0) return true;
-    for (const k in this.forms) {
-      const form = this.forms[k];
-      for (const s in states) {
-        const state = states[s];
-        if (state.action === "visible") {
-          // Identification de l'etape;
-          if (form.info.name === state.state_name) {
-            // Recherche du champs.
-            for (const f in form.fields) {
-              const field = form.fields[f];
-              // Identification du champs.
-              if (field.name === state.name) {
-                // action à verifier
-                if (state.operator === "egal") {
-                  //console.log("state :: ", state.value, "\n", field.value);
-                  if (field.value) {
-                    return field.value.includes(state.value) ? true : false;
-                  } else {
-                    return false;
+    return new Promise((resolv) => {
+      if (!states || states.length === 0) resolv(true);
+      for (const k in this.forms) {
+        const form = this.forms[k];
+        for (const s in states) {
+          const state = states[s];
+          if (state.action === "visible") {
+            // Identification de l'etape;
+            if (form.info.name === state.state_name) {
+              // Recherche du champs.
+              for (const f in form.fields) {
+                const field = form.fields[f];
+                // Identification du champs.
+                if (field.name === state.name) {
+                  // action à verifier
+                  if (state.operator === "egal") {
+                    //console.log("state :: ", state.value, "\n", field.value);
+                    if (field.value) {
+                      resolv(field.value.includes(state.value) ? true : false);
+                    } else {
+                      resolv(false);
+                    }
                   }
                 }
               }
             }
+          } else {
+            resolv(true);
           }
         }
+        var ii = parseInt(k) + 1;
+        if (this.forms.length === ii) {
+          resolv(true);
+        }
       }
-    }
+    });
   },
   getFieldInForms(state_name, field_name) {
     for (const i in this.forms) {
@@ -73,7 +120,7 @@ export default {
    * Permet de recuperer le prix pour une etape.
    * deux methode de calcul sont definit, une methode UI et une methode code.
    */
-  async getPriceStape(formDatas, forms) {
+  async getPriceStape(formDatas, forms, type_cout = "prix_utilisables") {
     var self = this;
     var price = 0;
     this.forms = forms;
@@ -85,21 +132,28 @@ export default {
           field.prix.complex_logique === undefined ||
           !field.prix.complex_logique
         ) {
-          price += await this.getPriceForField(field);
+          price += await this.getPriceForField(field, false, 0, type_cout);
           // si cest un champs composé.
           if (field.prix && field.prix.components.length) {
-            var price2 = await this.getPriceFieldInState(forms, field);
+            var price2 = await this.getPriceFieldInState(
+              forms,
+              field,
+              0,
+              type_cout
+            );
             if (price2) {
               price += price2 * price;
             }
           }
-        } else if (field.prix.complex_logique) {
-          if (field.none__) {
-            self;
+        } else if (
+          field.prix.complex_logique &&
+          field.prix.action === type_cout
+        ) {
+          if (self) {
+            const datas_logique = await eval(field.prix.datas_logique);
+            console.log(" Field.prix : ", datas_logique);
+            price += parseInt(datas_logique);
           }
-          const datas_logique = await eval(field.prix.datas_logique);
-          console.log(" Field.prix : ", datas_logique);
-          price += parseInt(datas_logique);
         }
       }
     }
@@ -108,7 +162,12 @@ export default {
   /**
    * Il faut s'assurer au prealable que field.prix.components est definit.
    */
-  async getPriceFieldInState(forms, field, priceFinal = 0) {
+  async getPriceFieldInState(
+    forms,
+    field,
+    priceFinal = 0,
+    type_cout = "prix_utilisables"
+  ) {
     return new Promise((resolvParent) => {
       //on parcout les options de prix.
       const getFieldInState = () => {
@@ -140,10 +199,12 @@ export default {
       };
       getFieldInState().then((fieldState) => {
         if (fieldState)
-          this.getPriceForField(fieldState, true).then((priceField) => {
-            priceFinal += priceField;
-            resolvParent(priceFinal);
-          });
+          this.getPriceForField(fieldState, true, 0, type_cout).then(
+            (priceField) => {
+              priceFinal += priceField;
+              resolvParent(priceFinal);
+            }
+          );
         else resolvParent(priceFinal);
       });
       //
@@ -152,16 +213,26 @@ export default {
   /**
    * Retorune toujours un entier.
    */
-  getPriceForField(field, use = false, priceFinal = 0) {
+  getPriceForField(
+    field,
+    use = false,
+    priceFinal = 0,
+    type_cout = "prix_utilisables"
+  ) {
     return new Promise((resolvParent) => {
       const execution = (price = 0) => {
         return new Promise((resolv) => {
-          if (field.prix && (field.prix.action === "prix_utilisables" || use)) {
+          if (
+            field.prix &&
+            (field.prix.action === type_cout || use) &&
+            field.status
+          ) {
             var typeDatas = typeof field.value;
+            //console.log("getPriceForField field : ", typeDatas);
             // Cas des champs type selection.
             if (config.typeSelection.includes(field.type)) {
               for (const fp in field.options) {
-                if (typeDatas === Object) {
+                if (typeDatas === "object") {
                   if (
                     field.value.includes(field.options[fp].value) &&
                     field.options[fp].cout
@@ -192,14 +263,6 @@ export default {
         });
       };
       execution().then((priceField) => {
-        console.log(
-          field.name,
-          " :: ",
-          priceField,
-          " :: ",
-          field.value,
-          "\n\n"
-        );
         if (!isNaN(priceField)) {
           priceFinal += priceField;
         } else {
@@ -213,12 +276,18 @@ export default {
     });
   },
 
-  saveDatas(state, getters, uid = 0) {
+  saveDatas(state, getters, uid = 0, status = 2) {
     return new Promise((resolv) => {
       config
-        .saveStepsDatas(state.idSoumission, getters.form, state.price, uid)
+        .saveStepsDatas(
+          state.idSoumission,
+          getters.form,
+          state.price,
+          uid,
+          status
+        )
         .then((val) => {
-          config.saveForm(val).then((response) => {
+          config.saveForm(val, state.mode).then((response) => {
             resolv(response);
           });
         });

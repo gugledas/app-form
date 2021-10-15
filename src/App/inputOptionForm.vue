@@ -12,6 +12,10 @@
     <InputFiles :field="fields" v-if="type == 'file'"></InputFiles>
     <inputRecap :field="fields" v-if="type == 'recapitulatif'"></inputRecap>
     <inputUserLogin :field="fields" v-if="type == 'userlogin'"></inputUserLogin>
+    <inputAideFinanciere
+      :field="fields"
+      v-if="type == 'input-aide-financiere'"
+    ></inputAideFinanciere>
 
     <!-- if is type select -->
     <form-select v-if="type == 'select'" :fields="fields"></form-select>
@@ -77,6 +81,7 @@ export default {
     FormMarkup: () => import("./formulaire/FormMarkup.vue"),
     inputRecap: () => import("./EditsFields/inputRecap.vue"),
     inputUserLogin: () => import("./EditsFields/inputUserLogin.vue"),
+    inputAideFinanciere: () => import("./EditsFields/inputAideFinanciere.vue"),
   },
   props: {
     type: {

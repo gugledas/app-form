@@ -8,11 +8,22 @@ https://ckeditor.com/docs/ckeditor5/latest/builds/guides/integration/frameworks/
         <compositeHeaderField :field="field"></compositeHeaderField>
       </b-col>
       <b-col sm="12">
-        <ckeditor
-          :editor="editor"
-          v-model="field.value"
-          :config="editorConfig"
-        ></ckeditor>
+        <b-form-group>
+          <ckeditor
+            :editor="editor"
+            v-model="field.value"
+            :config="editorConfig"
+          ></ckeditor>
+        </b-form-group>
+      </b-col>
+      <b-col sm="12">
+        <b-form-group label="Coeficient pour estimation de prix en %">
+          <b-form-input
+            v-model="field.percent"
+            required
+            type="number"
+          ></b-form-input>
+        </b-form-group>
       </b-col>
     </b-row>
   </div>
@@ -52,7 +63,9 @@ export default {
     };
   },
   mounted() {
-    //
+    if (this.field.percent === undefined) {
+      this.$set(this.field, "percent", 20);
+    }
   },
   watch: {
     //

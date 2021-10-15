@@ -30,7 +30,12 @@
         ></b-form-input>
       </b-form-group>
       <!-- ! -->
-      <div v-if="field.prix.action === 'prix_utilisables'">
+      <div
+        v-if="
+          field.prix.action === 'prix_utilisables' ||
+          field.prix.action === 'aide_financiere'
+        "
+      >
         <div class="mb-3">
           <b-button variant="outline-primary" size="sm" @click="addCondition">
             + Ajouter une condition
@@ -87,7 +92,7 @@
             </b-form-group>
             <!-- -->
             <b-form-group
-              label="si champs "
+              label="si champs"
               label-size="sm"
               label-cols="4"
               v-if="component.state_name !== '' && !field.prix.complex_logique"
@@ -95,6 +100,32 @@
               <b-form-select
                 v-model="component.name"
                 :options="listeDesChamps(component)"
+                size="sm"
+              ></b-form-select>
+            </b-form-group>
+            <!-- Dans certains cas on besoin de definir l'option. -->
+            <b-form-group
+              label="Option specifique"
+              label-cols="6"
+              label-cols-md="6"
+              label-cols-sm="3"
+            >
+              <b-form-checkbox
+                size="lg"
+                v-model="component.specific_option"
+              ></b-form-checkbox>
+            </b-form-group>
+            <!--  -->
+            <b-form-group
+              label="Selectionner la valeur"
+              label-cols="6"
+              label-cols-md="6"
+              label-cols-sm="3"
+              v-if="component.specific_option"
+            >
+              <b-form-select
+                v-model="component.value"
+                :options="component.options"
                 size="sm"
               ></b-form-select>
             </b-form-group>
@@ -184,7 +215,7 @@ export default {
       const fields = [];
       const ValidationInst = new ValidationInstance();
       ValidationInst.listeDesChamps(component, this.form, fields);
-      //component.options = ValidationInst.StepeValidationOptions;
+      component.options = ValidationInst.StepeValidationOptions;
       return fields;
     },
     deleteState(i) {

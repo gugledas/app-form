@@ -90,7 +90,7 @@
                   label-cols="4"
                   v-if="
                     condition.operator == 'egal' &&
-                    form_validation_options.length === 0
+                    (!condition.options || condition.options.length === 0)
                   "
                 >
                   <b-form-input
@@ -105,12 +105,13 @@
                   label-cols="4"
                   v-if="
                     condition.operator == 'egal' &&
-                    form_validation_options.length > 0
+                    condition.options &&
+                    condition.options.length > 0
                   "
                 >
                   <b-form-select
                     v-model="condition.value"
-                    :options="form_validation_options"
+                    :options="condition.options"
                     size="sm"
                   ></b-form-select>
                 </b-form-group>
@@ -129,6 +130,9 @@
         </b-card-body>
       </b-collapse>
     </b-card>
+    <pre>
+      {{ formDatas.states }}
+    </pre>
   </div>
 </template>
 <script>
@@ -221,7 +225,8 @@ export default {
           for (const i in form.fields) {
             const field = form.fields[i];
             if (condition.name == field.name && field.options.length) {
-              this.put_form_validation_options(field.options);
+              //this.put_form_validation_options(field.options);
+              condition.options = field.options;
             }
             fields.push({ text: field.label, value: field.name });
           }

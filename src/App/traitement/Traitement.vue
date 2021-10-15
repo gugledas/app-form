@@ -1,35 +1,44 @@
 <template>
-  <div>
-    <b-container class="bv-example-row bg-light p-4" fluid="lg">
-      <div>
-        <h5 class="titre mb-3 shadow-sm p-2">
-          Traitement :
-          <span class="form-title">{{ form.name }}</span>
-        </h5>
-      </div>
+  <b-container fluid="md">
+    <div>
+      <title-bar
+        :conf="{ col: true, text: 'Traitement' }"
+        :id="id"
+        :showDevis="false"
+      ></title-bar>
+    </div>
+    <div class="appfom-container">
       <b-row align-h="center">
         <b-col class="" cols="12">
-          <list-table
+          <listBlocks
             :liste_fields_check="ListeFieldsCheck"
             :liste_fields_display="ListeFieldsDisplay"
-          ></list-table>
+            :totalRows="totalRows"
+            :isBusy="isBusy"
+            :perPage="perPage"
+            @ev-change-pagination="ChangePagination"
+          ></listBlocks>
         </b-col>
       </b-row>
-    </b-container>
-  </div>
+    </div>
+  </b-container>
 </template>
 
 <script>
+import TitleBar from "../TitleBar.vue";
+
 //import axios from "axios";
 import config from "../config/config.js";
 //import utilities from "./Utilities";
 //import NavLine from "./NavLine.vue";
 import { mapState, mapGetters } from "vuex";
-import ListTable from "./ListTable.vue";
+//import ListTable from "./ListTable.vue";
+import listBlocks from "./blocks/listBlocks.vue";
 //import pages from "./pages.vue";
 //import pages from "./pages2.vue";
+
 export default {
-  components: { ListTable },
+  components: { listBlocks, TitleBar },
   props: {
     id: {
       type: String,
@@ -37,7 +46,11 @@ export default {
     },
   },
   data: () => {
-    return {};
+    return {
+      totalRows: 0,
+      isBusy: false,
+      perPage: 20,
+    };
   },
   watch: {
     stepsId() {
@@ -45,10 +58,8 @@ export default {
     },
   },
   mounted() {
-    this.$store.dispatch("loadTraitementDatas", this.id).then(() => {
-      this.$store.dispatch("setTraitId", this.id);
-      this.$store.dispatch("setFormId", this.id);
-    });
+    this.loadDatas();
+    this.getTotalRows();
   },
   computed: {
     ...mapState(["traitementId"]),
@@ -56,21 +67,36 @@ export default {
     ListeFieldsDisplay() {
       const fieldsDisplay = [
         {
-          label: "Id",
-          key: "id",
+          label: "Date",
+          key: "created",
+          formatter: function (val) {
+            return config.getMysqlDateToFrench(val);
+          },
         },
         {
-          label: "Status du formulaire",
-          key: "status",
-        },
-        {
-          label: "Price",
-          key: "price",
-        },
-        {
-          label: "#Action",
+          label: "Que souhaitez vous faire",
           key: "action",
           stickyColumn: true,
+          thStyle: { minWidth: "170px" },
+          tdClass: ["bg-light"],
+        },
+        {
+          label: "Status",
+          key: "status",
+          thStyle: { minWidth: "140px" },
+        },
+        {
+          label: "Prix",
+          key: "price",
+          thStyle: { minWidth: "120px" },
+          formatter: (value) => {
+            return value + " €";
+          },
+        },
+        {
+          label: "Utilisateur",
+          key: "uid",
+          thStyle: { minWidth: "220px" },
         },
       ];
       for (const i in this.form.forms) {
@@ -80,7 +106,11 @@ export default {
           const field = form.fields[f];
           // console.log(field);
           if (field.display_field) {
-            fieldsDisplay.push({ label: field.label, key: field.name });
+            fieldsDisplay.push({
+              label: field.label,
+              key: field.name,
+              thStyle: { minWidth: "220px" },
+            });
           }
         }
       }
@@ -116,26 +146,6 @@ export default {
           //
         });
       });
-      /*
-      utilities.saveSteps(datas).then((reponse) => {
-        var forms = JSON.stringify(reponse[0].fields);
-        localStorage.setItem("allo", JSON.stringify(forms));
-        console.log("savesteps: ", reponse);
-
-        axios
-          .post(
-            "http://lesroisdelareno.kksa" + "/query-ajax/insert-update",
-            reponse
-          )
-          .then(function (response) {
-            console.log("post response ", response);
-            self.$store.dispatch("setFormId", self.id);
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-      });
-      /**/
     },
 
     resetValue() {
@@ -164,6 +174,35 @@ export default {
         this.$bvModal.hide("modal-prevent-closing");
       });
     },
+    getTotalRows() {
+      var datas =
+        "select count(*) as nombres from `appformmanager_datas` where `appformmanager_forms` = " +
+        this.id;
+      config.getData(datas).then((resp) => {
+        if (resp.data[0] && resp.data[0].nombres) {
+          this.totalRows = parseInt(resp.data[0].nombres);
+        }
+        console.log("resp[0].nombres : ", resp.data[0]);
+      });
+    },
+    loadDatas(pagination = 0) {
+      this.isBusy = true;
+      var pag = null;
+      if (pagination) pag = (pagination - 1) * this.perPage;
+      this.$store
+        .dispatch("loadTraitementDatas", {
+          id: this.id,
+          pagination: pag,
+        })
+        .then(() => {
+          this.$store.dispatch("setTraitId", this.id);
+          this.$store.dispatch("setFormId", this.id);
+          this.isBusy = false;
+        });
+    },
+    ChangePagination(val) {
+      this.loadDatas(val);
+    },
   },
 };
 </script>
@@ -182,4 +221,5 @@ export default {
     margin: 5px;
   }
 }
+@import "./affichage/traitement.scss";
 </style>

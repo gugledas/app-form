@@ -6,9 +6,6 @@
           <img src="../../../public/long-arrow-alt-left-solid.svg" alt="" />
         </div>
       </b-col>
-      <div v-for="(field, i) in formDatas.fields" :key="i" class="col-12">
-        <display-fields :type="field.type" :id="i"></display-fields>
-      </div>
       <div
         class="help-container"
         v-if="formDatas.info.headerTitle && formDatas.info.description"
@@ -20,6 +17,10 @@
           </p>
         </div>
       </div>
+      <div v-for="(field, i) in formDatas.fields" :key="i" class="col-12">
+        <display-fields :type="field.type" :id="i"></display-fields>
+      </div>
+
       <b-col cols="12" class="form-nav-bouton" v-if="StatusStepsIndexs">
         <button
           class="next-bouton"
@@ -36,14 +37,14 @@
       </b-col>
       <b-col cols="12" v-if="!StatusStepsIndexs" class="form-nav-bouton">
         <b-row>
-          <b-col cols="6">
-            <button class="next-bouton" @click="Save">
+          <b-col v-if="uid">
+            <button class="next-bouton" @click="SaveByUser(1)">
               <b-icon icon="server"></b-icon>
               Enregistrer
             </button>
           </b-col>
-          <b-col cols="6">
-            <button class="next-bouton" @click="SaveByUser">
+          <b-col>
+            <button class="next-bouton" @click="SaveByUser(0)">
               <b-icon icon="server"></b-icon>
               Me rappeller
             </button>
@@ -87,7 +88,7 @@ export default {
   },
   computed: {
     ...mapState(["mode", "stepsIndex", "StatusStepsIndexs", "price"]),
-    ...mapGetters(["formDatas", "form"]),
+    ...mapGetters(["formDatas", "form", "uid"]),
     stepsState() {
       var state = false;
       if (this.$store.getters.form.forms.length - 1 > this.level) {
@@ -101,19 +102,15 @@ export default {
       if (this.stepsState) {
         this.$store.dispatch("stepsIndex", this.stepsIndex);
         if (!this.mode) {
-          this.Save();
+          this.$store.dispatch("saveDatas");
         }
       }
     },
     back() {
       this.$store.dispatch("stepsBack");
-      //this.$store.state.stepsIndex--;
     },
-    Save() {
-      this.$store.dispatch("saveDatas");
-    },
-    SaveByUser() {
-      this.$store.dispatch("saveDatasUser");
+    SaveByUser(status) {
+      this.$store.dispatch("saveDatasUser", status);
     },
   },
 };
@@ -137,7 +134,7 @@ export default {
   right: 15px;
   top: 15%;
   max-width: 163px;
-  background-color: rgba(164, 207, 208, 0.3);
+  background-color: rgba(126, 149, 191, 0.3);
   padding: 10px;
   .help-block {
     font-weight: 300;
@@ -224,7 +221,7 @@ export default {
         &--active {
           opacity: 1;
           &:hover {
-            background: rgb(9, 94, 94);
+            background: rgb(14, 75, 140);
           }
         }
         &--disable {

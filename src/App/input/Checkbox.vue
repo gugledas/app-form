@@ -35,8 +35,9 @@
                     <label
                       class="m-0 w-100"
                       :for="`checkbox-a${field.name}${i}`"
-                      >{{ item.text }}</label
                     >
+                      {{ item.text }}
+                    </label>
                   </b-col>
                   <b-col class="input-list__input">
                     <b-form-checkbox
@@ -86,18 +87,28 @@ export default {
     ...mapGetters(["formDatas"]),
     ...mapState(["formDatasValidate", "mode"]),
     validationField() {
-      if (this.field.states && this.field.states.length) {
-        var status = Validation.computedValidation(
+      var status = true;
+      if (this.field.states.length) {
+        status = Validation.computedValidation(
           this.formDatas,
           this.field,
           this.formDatasValidate
         );
-        if (status !== undefined) return status;
+        //console.log("update status : ", status);
+        if (status === undefined || status === null)
+          status = this.field.status !== undefined ? this.field.status : false;
+        this.setStatus(status);
+        return status;
+      } else {
+        this.setStatus(status);
+        return status;
       }
-      return true;
     },
   },
   methods: {
+    setStatus(status) {
+      this.$set(this.field, "status", status);
+    },
     changeValue(val) {
       this.field.value = val;
     },

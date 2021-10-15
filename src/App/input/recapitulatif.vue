@@ -3,10 +3,10 @@
     <transition v-if="validationField" name="fade">
       <div class="row-content choice-section min-height">
         <b-row class="row-content__row">
-          <b-col sm="6" class="mb-3">
+          <b-col sm="12" class="mb-3">
             <label class="label d-flex align-items-center">
               <span class="price-info label">{{ field.label }} :</span>
-              <span class="price-info price">{{ price }}</span>
+              <span class="price-info price">{{ priceEstimation }}</span>
               <span class="price-info currency">€</span>
             </label>
           </b-col>
@@ -47,21 +47,43 @@ export default {
   computed: {
     ...mapState(["price", "mode"]),
     validationField() {
+      this.setStatus(true);
+      this.setPrice();
       return true;
+    },
+    priceEstimation() {
+      const price = this.price;
+      if (price > 0) {
+        if (this.field.percent) {
+          var percent = parseInt(this.field.percent);
+          if (percent > 0) {
+            percent = (price * percent) / 100 + price;
+            return price + " - " + percent;
+          }
+        }
+      }
+      return price;
     },
   },
   methods: {
-    //
+    setStatus(status) {
+      this.$set(this.field, "status", status);
+    },
+    setPrice() {
+      this.field.prix = {
+        cout: this.price,
+      };
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
 .price-info {
-  white-space: nowrap;
   margin-right: 1rem;
   &.price {
     margin-right: 0.5rem;
+    font-weight: 600;
   }
 }
 .text-description {

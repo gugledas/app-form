@@ -31,6 +31,12 @@ const routes = [
     component: () => import("../App/traitement/Traitement.vue"),
   },
   {
+    path: "/traitement-my-own/:id",
+    name: "Traitement du résultat",
+    props: true,
+    component: () => import("../App/traitement/TraitementMyOwn.vue"),
+  },
+  {
     path: "/*",
     redirect: "/",
   },

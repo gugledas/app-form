@@ -1,45 +1,40 @@
 <template>
-  <div>
-    <div class="simple-champ">
-      <div class="label-title">{{ fields.label }}</div>
-      <div class="label-title flex-wrap" v-if="val.length">
-        <div class="label-title col-12" v-for="(item, i) in val" :key="i">
-          <img
-            v-if="item.img"
-            :srcset="baseURl + item.img"
-            :alt="item.test"
-            width="60px"
-            height="45px"
-            class="mr-2"
-          />
-          <strong v-if="fields.type != 'checkboximg'">{{ item }}</strong>
-          <strong v-if="fields.type == 'checkboximg'">{{ item.text }}</strong>
-        </div>
-      </div>
+  <div class="simple-champ" :class="field.type">
+    <div class="label-title">{{ field.label }}</div>
+    <div class="label-title flex-wrap" v-if="field.value">
+      <component
+        :is="getTemplatesFiles()"
+        :field="field"
+        :currentDevis="currentDevis"
+        class="content-field"
+      ></component>
     </div>
-    <!-- {{ val }} <br />
-    {{ fields }} -->
   </div>
 </template>
 
 <script>
 import config from "../../config/config.js";
+import traitementDisplay from "./traitement-display.js";
+
 export default {
   props: {
-    fields: {
+    field: {
       type: Object,
       required: true,
+    },
+    currentDevis: {
+      type: Object,
     },
   },
   components: {},
   data() {
     return {
       vale: [],
-      baseURl: config.baseURl,
+      baseURl: config.BaseUrl(),
     };
   },
   watch: {
-    // fields: {
+    // field: {
     //   handle() {
     //     this.formatValue();
     //     console.log("all");
@@ -48,8 +43,8 @@ export default {
     // },
   },
   mounted() {
-    // var option = this.fields.options;
-    // var val = this.fields.value;
+    // var option = this.field.options;
+    // var val = this.field.value;
     // if (val != null && val != undefined) {
     //   if (option.length) {
     //     this.formatValue();
@@ -58,44 +53,34 @@ export default {
   },
   computed: {
     val() {
-      var option = this.fields.options;
-      var val = this.fields.value;
+      var option = this.field.options;
+      var val = this.field.value;
       var typeValue = typeof val;
       var valeur = [];
+
       for (let i = 0; i < option.length; i++) {
-        if (typeValue == "object") {
+        if (typeValue == "object" && val !== null) {
+          //console.log("object", val);
           if (val.includes(option[i].value)) {
             valeur.push(option[i].text);
           }
         }
       }
       if (option.length && typeValue == "string" && val.length) {
-        if (this.fields.type === "checkboximg") {
+        if (this.field.type === "checkboximg") {
           for (let item of option) {
             if (item.value == val) valeur.push(item);
           }
         } else valeur.push(val);
       }
-      if (this.fields.options.length < 1 && val !== null) valeur.push(val);
+      if (this.field.options.length < 1 && val !== null) valeur.push(val);
       return valeur;
     },
   },
-  methods: {},
+  methods: {
+    getTemplatesFiles() {
+      return traitementDisplay.getTemplatesFiles(this.field.type);
+    },
+  },
 };
 </script>
-
-<style lang="scss">
-.simple-champ {
-  display: flex;
-  .label-title {
-    background: #f5f5f5;
-    padding: 5px;
-    border: 1px solid #dedcdc;
-    margin: 1px 0;
-    //width: 100%;
-    flex: auto;
-    display: flex;
-    align-items: center;
-  }
-}
-</style>

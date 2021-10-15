@@ -8,7 +8,7 @@
       hide-footer
     >
       <form ref="form" @submit="handleSubmit">
-        <b-row>
+        <b-row class="p-3">
           <b-col cols="8">
             <b-form-group label="name" label-for="name-input">
               <b-form-input v-model="form.name" required></b-form-input>
@@ -20,6 +20,12 @@
                 v-model="form.description"
                 required
               ></b-form-textarea>
+            </b-form-group>
+          </b-col>
+
+          <b-col cols="12">
+            <b-form-group label="image" label-for="description-input">
+              <UploadImage :field="form"></UploadImage>
             </b-form-group>
           </b-col>
         </b-row>
@@ -36,7 +42,10 @@
 </template>
 
 <script>
+//import { mapState } from "vuex";
 //
+//import manageImages from "../EditsFields/manage-images.vue";
+
 import config from "../config/config.js";
 export default {
   name: "AddEditForm",
@@ -44,7 +53,7 @@ export default {
     //
   },
   components: {
-    //
+    UploadImage: () => import("../EditsFields/UploadImage.vue"),
   },
   data() {
     return {
@@ -52,6 +61,7 @@ export default {
         forms: [],
         description: "",
         name: "",
+        img: {},
       },
     };
   },
@@ -61,10 +71,14 @@ export default {
   watch: {
     //
   },
-  computed: {
-    //
-  },
+  computed: {},
   methods: {
+    ev_manage_images_img(data, form) {
+      console.log("file", data);
+      if (data.url) {
+        form.img = data.url;
+      }
+    },
     handleOk(bvModalEvt) {
       // Prevent modal from closing
       bvModalEvt.preventDefault();

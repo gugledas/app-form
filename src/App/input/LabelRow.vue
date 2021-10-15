@@ -82,42 +82,29 @@ export default {
     ...mapGetters(["formDatas"]),
     ...mapState(["formDatasValidate", "mode"]),
     validationField() {
+      var status = true;
       if (this.field.states.length) {
-        /*
-        for (const i in this.formDatas.fields) {
-          const field = this.formDatas.fields[i];
-          if (field.name !== this.field.name) {
-            for (const j in this.field.states) {
-              const state = this.field.states[j];
-              if (field.name === state.name) {
-                // visible
-                if (state.action === "visible") {
-                  if (field.value === "" && state.operator === "not_empty")
-                    return false;
-                  else if (field.value !== "" && state.operator === "empty")
-                    return false;
-                  else if (
-                    state.operator === "validated" &&
-                    this.formDatasValidate[field.name]
-                  )
-                    return this.formDatasValidate[field.name].valid;
-                }
-              }
-            }
-          }
-        }
-        /**/
-        var status = Validation.computedValidation(
+        status = Validation.computedValidation(
           this.formDatas,
           this.field,
           this.formDatasValidate
         );
-        if (status !== undefined) return status;
+        //console.log("update status : ", status);
+        if (status === undefined || status === null)
+          status = this.field.status !== undefined ? this.field.status : false;
+        this.setStatus(status);
+        return status;
+      } else {
+        this.setStatus(status);
+        return status;
       }
-      return true;
     },
   },
-  methods: {},
+  methods: {
+    setStatus(status) {
+      this.$set(this.field, "status", status);
+    },
+  },
 };
 </script>
 

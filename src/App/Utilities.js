@@ -18,6 +18,7 @@ const Utilities = {
             forms: forms,
             description: datas.description,
             name: datas.name,
+            img: datas.img,
           },
           action: "update",
         };
@@ -30,6 +31,38 @@ const Utilities = {
           ];
         }
 
+        result.push(table1);
+      }
+      resolv(result);
+    });
+  },
+  /**
+   * Prepare les données de paramètres de la page de formulaires pour la sauvagarde.
+   */
+  settingForm: function (datas) {
+    return new Promise((resolv) => {
+      //console.log("fdate : ", datas);
+      var value = "";
+
+      value = JSON.stringify(datas.value);
+
+      var result = [];
+      if (datas != "") {
+        //edition de la table contents
+        var table1 = {
+          table: "appformmanager_config",
+          fields: {
+            name: datas.name,
+            value: value,
+          },
+          action: "update",
+        };
+        table1.where = [
+          {
+            column: "name",
+            value: datas.name,
+          },
+        ];
         result.push(table1);
       }
       resolv(result);
@@ -73,6 +106,7 @@ const Utilities = {
       { value: "file", text: "Ajout de fichiers" },
       { value: "recapitulatif", text: "Recapitulatif du montant" },
       { value: "userlogin", text: "Connexion utilisateur" },
+      { value: "input-aide-financiere", text: "Aide financiere" },
     ];
   },
   array_move(arr, old_index, new_index) {

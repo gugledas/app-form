@@ -15,7 +15,6 @@
 </template>
 
 <script>
-import { AjaxBasic } from "wbuutilities";
 import UploadImages from "vue-upload-drop-images";
 import config from "../config/config.js";
 export default {
@@ -50,14 +49,16 @@ export default {
   computed: {
     img_url_format() {
       if (this.img_url && this.img_url !== undefined)
-        return config.baseURl + this.img_url;
+        return config.BaseUrl() + this.img_url;
       return null;
     },
   },
   methods: {
     handleImages(files) {
+      console.log("re", files);
       for (const i in files) {
-        AjaxBasic.postFile(config.baseURl + this.url, files[i])
+        config
+          .postFile(config.BaseUrl() + this.url, files[i])
           .then((resolv) => {
             this.$emit("ev_manage_images_img", resolv);
           })

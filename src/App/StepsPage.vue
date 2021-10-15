@@ -1,15 +1,14 @@
 <template>
   <div>
-    <b-container class="p-md-5" fluid="lg">
-      <div>
-        <h5 class="titre mb-3 shadow-sm p-2">
-          Gestion du formulaire: <span class="form-title">{{ form.name }}</span>
-        </h5>
-      </div>
+    <b-container class="p-md-" fluid="lg">
       <b-row align-h="center">
         <b-col class="" cols="12" lg="10" v-if="formDatas && formDatas.info">
           <transition name="fade">
             <div>
+              <title-bar
+                :conf="{ col: true, text: 'Gestion du formulaire' }"
+                :id="id"
+              ></title-bar>
               <nav-line :taille="id"></nav-line>
               <pages :level="stepsIndex"></pages>
             </div>
@@ -58,6 +57,14 @@
             >
               Enregistrer
             </b-button>
+            <b-button
+              squared
+              variant="dark"
+              @click="exportJson"
+              class="shadow-md d-block w-100"
+            >
+              Export to json
+            </b-button>
 
             <b-modal
               id="modal-prevent-closing"
@@ -104,6 +111,11 @@
                       ></b-form-textarea>
                     </b-form-group>
                   </b-col>
+                  <b-col cols="12">
+                    <b-form-group label="image" label-for="description-input">
+                      <UploadImage :field="form"></UploadImage>
+                    </b-form-group>
+                  </b-col>
                 </b-row>
 
                 <hr class="my-3" />
@@ -123,10 +135,12 @@
     </b-container>
     <!-- -->
     <reOrderStepes />
+    <!--
     <b-row class="m-0" v-if="mode">
       <b-col cols="4">
         <b-card class="mt-3 text-left d-none-0" header="Price">
-          <pre class="text-left"> {{ price }} </pre>
+          <pre class="text-left">Prix: {{ price }} </pre>
+          <pre class="text-left">Prix aide: {{ priceAide }} </pre>
         </b-card>
       </b-col>
       <b-col cols="4">
@@ -135,11 +149,12 @@
         </b-card>
       </b-col>
     </b-row>
+      -->
   </div>
 </template>
 
 <script>
-//import axios from "axios";
+import TitleBar from "./TitleBar";
 import config from "./config/config.js";
 //import utilities from "./Utilities";
 import NavLine from "./NavLine.vue";
@@ -148,7 +163,13 @@ import { mapState, mapGetters } from "vuex";
 import pages from "./pages.vue";
 import reOrderStepes from "./ConfigsForms/reOrderStepes.vue";
 export default {
-  components: { pages, NavLine, reOrderStepes },
+  components: {
+    pages,
+    NavLine,
+    reOrderStepes,
+    TitleBar,
+    UploadImage: () => import("./EditsFields/UploadImage.vue"),
+  },
   props: {
     id: {
       type: String,
@@ -178,8 +199,16 @@ export default {
     this.$store.dispatch("setFormId", this.id);
   },
   computed: {
-    ...mapState(["stepsIndex", "allStepsDatas", "fields", "price", "mode"]),
+    ...mapState([
+      "stepsIndex",
+      "allStepsDatas",
+      "fields",
+      "price",
+      "mode",
+      "priceAide",
+    ]),
     ...mapGetters(["form", "formDatas"]),
+
     currentSteps() {
       var local = localStorage.getItem("allo");
       var recap = JSON.parse(local);
@@ -235,38 +264,41 @@ export default {
     },
     saveToLocal() {
       config.prepareDatasToSave(this.form).then((val) => {
-        config.saveForm(val).then(() => {
+        config.saveForm(val, this.mode).then(() => {
           //
         });
       });
     },
-
-    back() {
-      this.$store.state.stepsIndex--;
-      // this.$store.state.formDatas = this.currentSteps;
-      // this.$store.state.fields = this.currentSteps.fields[0];
-      //
-      this.$store.state.formDatas =
-        this.allStepsDatas[this.$store.state.stepsIndex];
-      this.$store.state.fields = this.$store.state.formDatas.fields[0];
-      console.log("back");
-    },
-    suivant() {
-      var local = localStorage.getItem("allo");
-      var recap = JSON.parse(local);
-      var base = this.$store.state.stepsIndex;
-      if (recap.length >= 1 && base < recap.length - 1) {
-        console.log("local0", recap.length);
-        this.$store.state.stepsIndex++;
-        this.$store.state.formDatas =
-          this.allStepsDatas[this.$store.state.stepsIndex];
-        this.$store.state.fields = this.$store.state.formDatas.fields[0];
-      }
-      console.log("base", this.currentSteps.length);
-    },
-    preview() {
-      this.demo = !this.demo;
-      console.log("prev", this.demo);
+    exportJson() {
+      var nameFile = window
+        .prompt("Veuillez renseigner le nom du fichier", "test")
+        .toLowerCase();
+      // Console.log("name", nameFile + ".json");
+      const data = JSON.stringify(this.form);
+      const blob = new Blob([data], { type: "text/plain" });
+      const e = document.createEvent("MouseEvents"),
+        a = document.createElement("a");
+      a.download = nameFile + ".json";
+      a.href = window.URL.createObjectURL(blob);
+      a.dataset.downloadurl = ["text/json", a.download, a.href].join(":");
+      e.initEvent(
+        "click",
+        true,
+        false,
+        window,
+        0,
+        0,
+        0,
+        0,
+        0,
+        false,
+        false,
+        false,
+        false,
+        0,
+        null
+      );
+      a.dispatchEvent(e);
     },
 
     clearFormDatas() {
@@ -299,6 +331,8 @@ export default {
           field.value = null;
         } else if (TypeArray.includes(field.type)) {
           field.value = [];
+        } else if (field.type === "userlogin") {
+          field.value = null;
         }
       }
     },
@@ -318,7 +352,7 @@ export default {
       event.preventDefault();
       // Exit when the form isn't valid
       this.demo = true;
-
+      this.saveToLocal();
       this.$nextTick(() => {
         this.$bvModal.hide("modal-prevent-closing");
       });

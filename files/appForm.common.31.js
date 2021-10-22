@@ -1,63 +1,171 @@
 ((typeof self !== 'undefined' ? self : this)["webpackJsonpappForm"] = (typeof self !== 'undefined' ? self : this)["webpackJsonpappForm"] || []).push([[31],{
 
-/***/ "./node_modules/cache-loader/dist/cjs.js?!./node_modules/babel-loader/lib/index.js!./node_modules/cache-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./src/App/ConfigsForms/StepConfiguration.vue?vue&type=script&lang=js&":
-/*!********************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/ConfigsForms/StepConfiguration.vue?vue&type=script&lang=js& ***!
-  \********************************************************************************************************************************************************************************************************************************************************************/
-/*! exports provided: default */
+/***/ "d2d6":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _siteweb_AppVuejs_app_form_node_modules_babel_runtime_helpers_esm_objectSpread2__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/objectSpread2 */ \"./node_modules/@babel/runtime/helpers/esm/objectSpread2.js\");\n/* harmony import */ var core_js_modules_es_function_name_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! core-js/modules/es.function.name.js */ \"./node_modules/core-js/modules/es.function.name.js\");\n/* harmony import */ var core_js_modules_es_function_name_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_function_name_js__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var core_js_modules_es_array_includes_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! core-js/modules/es.array.includes.js */ \"./node_modules/core-js/modules/es.array.includes.js\");\n/* harmony import */ var core_js_modules_es_array_includes_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_includes_js__WEBPACK_IMPORTED_MODULE_2__);\n/* harmony import */ var core_js_modules_es_string_includes_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! core-js/modules/es.string.includes.js */ \"./node_modules/core-js/modules/es.string.includes.js\");\n/* harmony import */ var core_js_modules_es_string_includes_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_string_includes_js__WEBPACK_IMPORTED_MODULE_3__);\n/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vuex */ \"./node_modules/vuex/dist/vuex.esm.js\");\n/* harmony import */ var snake_case__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! snake-case */ \"./node_modules/snake-case/dist.es2015/index.js\");\n/* harmony import */ var _ValidationEtapes_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./ValidationEtapes.vue */ \"./src/App/ConfigsForms/ValidationEtapes.vue\");\n\n\n\n\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n\n\n\n/* harmony default export */ __webpack_exports__[\"default\"] = ({\n  name: \"StepConfiguration\",\n  props: {\n    idModal: {\n      type: String,\n      default: \"step-configuration\"\n    }\n  },\n  components: {\n    ValidationEtapes: _ValidationEtapes_vue__WEBPACK_IMPORTED_MODULE_6__[\"default\"]\n  },\n  data: function data() {\n    return {\n      isOpen: false,\n      readonly: true,\n      state_name: true\n    };\n  },\n  mounted: function mounted() {//\n  },\n  watch: {//\n  },\n  computed: Object(_siteweb_AppVuejs_app_form_node_modules_babel_runtime_helpers_esm_objectSpread2__WEBPACK_IMPORTED_MODULE_0__[\"default\"])(Object(_siteweb_AppVuejs_app_form_node_modules_babel_runtime_helpers_esm_objectSpread2__WEBPACK_IMPORTED_MODULE_0__[\"default\"])(Object(_siteweb_AppVuejs_app_form_node_modules_babel_runtime_helpers_esm_objectSpread2__WEBPACK_IMPORTED_MODULE_0__[\"default\"])({}, Object(vuex__WEBPACK_IMPORTED_MODULE_4__[\"mapState\"])([\"mode\"])), Object(vuex__WEBPACK_IMPORTED_MODULE_4__[\"mapGetters\"])([\"formDatas\", \"form\"])), {}, {\n    ListNameforms: function ListNameforms() {\n      var lists = [];\n\n      for (var i in this.form.forms) {\n        lists.push(this.form.forms[i].info.name);\n      }\n\n      return lists;\n    }\n  }),\n  methods: {\n    openPopUp: function openPopUp() {\n      this.isOpen = !this.isOpen;\n    },\n    handleOk: function handleOk(event) {\n      // Prevent modal from closing\n      event.preventDefault(); // Trigger submit handler\n\n      this.handleSubmit();\n    },\n    handleSubmit: function handleSubmit(event) {\n      var _this = this;\n\n      event.preventDefault(); // Hide the modal manually\n\n      this.$nextTick(function () {\n        _this.$bvModal.hide(_this.idModal);\n      });\n    },\n    resetModal: function resetModal() {//this.type = null;\n    },\n    input: function input() {\n      if (this.readonly && this.formDatas.info.name.length <= 32) {\n        var valName = Object(snake_case__WEBPACK_IMPORTED_MODULE_5__[\"snakeCase\"])(this.formDatas.info.title);\n\n        if (this.ListNameforms.includes(valName)) {\n          this.state_name = false;\n        } else {\n          this.state_name = true;\n        }\n\n        this.formDatas.info.name = valName;\n      }\n    },\n    toogleReadOnly: function toogleReadOnly() {\n      if (this.readonly) this.readonly = false;else this.readonly = true;\n    }\n  }\n});\n\n//# sourceURL=webpack://appForm/./src/App/ConfigsForms/StepConfiguration.vue?./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options");
+// ESM COMPAT FLAG
+__webpack_require__.r(__webpack_exports__);
 
-/***/ }),
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"5e17eb6a-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/ConfigsForms/AddEditForm.vue?vue&type=template&id=7f068a3c&scoped=true&lang=html&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('b-modal',{ref:"modal",attrs:{"id":"add-edit-form","title":"Creer un nouveau formulaire","hide-footer":""},on:{"ok":_vm.handleOk}},[_c('form',{ref:"form",on:{"submit":_vm.handleSubmit}},[_c('b-row',{staticClass:"p-3"},[_c('b-col',{attrs:{"cols":"8"}},[_c('b-form-group',{attrs:{"label":"name","label-for":"name-input"}},[_c('b-form-input',{attrs:{"required":""},model:{value:(_vm.form.name),callback:function ($$v) {_vm.$set(_vm.form, "name", $$v)},expression:"form.name"}})],1)],1),_c('b-col',{attrs:{"cols":"8"}},[_c('b-form-group',{attrs:{"label":"Description","label-for":"description-input"}},[_c('b-form-textarea',{attrs:{"required":""},model:{value:(_vm.form.description),callback:function ($$v) {_vm.$set(_vm.form, "description", $$v)},expression:"form.description"}})],1)],1),_c('b-col',{attrs:{"cols":"12"}},[_c('b-form-group',{attrs:{"label":"image","label-for":"description-input"}},[_c('UploadImage',{attrs:{"field":_vm.form}})],1)],1)],1),_c('b-row',{attrs:{"align-h":"end"}},[_c('div',{staticClass:"mr-3"},[_c('b-button',{staticClass:"mr-2",attrs:{"type":"submit","variant":"primary"}},[_vm._v(" Ajouter ")])],1)])],1)])],1)}
+var staticRenderFns = []
 
-/***/ "./node_modules/cache-loader/dist/cjs.js?{\"cacheDirectory\":\"node_modules/.cache/vue-loader\",\"cacheIdentifier\":\"4630ba02-vue-loader-template\"}!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/cache-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./src/App/ConfigsForms/StepConfiguration.vue?vue&type=template&id=ec3e8a40&scoped=true&lang=html&":
-/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"4630ba02-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/ConfigsForms/StepConfiguration.vue?vue&type=template&id=ec3e8a40&scoped=true&lang=html& ***!
-  \**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"render\", function() { return render; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"staticRenderFns\", function() { return staticRenderFns; });\nvar render = function() {\n  var _vm = this\n  var _h = _vm.$createElement\n  var _c = _vm._self._c || _h\n  return _c(\n    \"b-modal\",\n    {\n      attrs: {\n        size: \"lg\",\n        id: _vm.idModal,\n        title: \"Configuration de l'etape\",\n        \"hide-footer\": \"\"\n      },\n      on: { ok: _vm.handleOk },\n      model: {\n        value: _vm.isOpen,\n        callback: function($$v) {\n          _vm.isOpen = $$v\n        },\n        expression: \"isOpen\"\n      }\n    },\n    [\n      _c(\n        \"form\",\n        {\n          ref: \"forme\",\n          on: {\n            submit: _vm.handleSubmit,\n            reset: _vm.resetModal,\n            hidden: _vm.resetModal\n          }\n        },\n        [\n          _c(\n            \"b-form-group\",\n            {\n              attrs: { label: \"Titre\", \"invalid-feedback\": \"Name is required\" }\n            },\n            [\n              _c(\n                \"b-input-group\",\n                [\n                  _c(\"b-form-input\", {\n                    attrs: { required: \"\" },\n                    on: { input: _vm.input },\n                    model: {\n                      value: _vm.formDatas.info.title,\n                      callback: function($$v) {\n                        _vm.$set(_vm.formDatas.info, \"title\", $$v)\n                      },\n                      expression: \"formDatas.info.title\"\n                    }\n                  }),\n                  _c(\"b-form-input\", {\n                    attrs: {\n                      required: \"\",\n                      readonly: _vm.readonly,\n                      state: _vm.state_name\n                    },\n                    on: { dblclick: _vm.toogleReadOnly },\n                    model: {\n                      value: _vm.formDatas.info.name,\n                      callback: function($$v) {\n                        _vm.$set(_vm.formDatas.info, \"name\", $$v)\n                      },\n                      expression: \"formDatas.info.name\"\n                    }\n                  })\n                ],\n                1\n              )\n            ],\n            1\n          ),\n          _c(\n            \"b-form-group\",\n            {\n              attrs: {\n                label: \"Titre texte d'aide\",\n                \"invalid-feedback\": \"the header title is required\"\n              }\n            },\n            [\n              _c(\"b-form-input\", {\n                model: {\n                  value: _vm.formDatas.info.headerTitle,\n                  callback: function($$v) {\n                    _vm.$set(_vm.formDatas.info, \"headerTitle\", $$v)\n                  },\n                  expression: \"formDatas.info.headerTitle\"\n                }\n              })\n            ],\n            1\n          ),\n          _c(\n            \"b-form-group\",\n            {\n              attrs: {\n                label: \"Texte d'aide\",\n                \"invalid-feedback\": \"the header title is required\"\n              }\n            },\n            [\n              _c(\"b-form-input\", {\n                model: {\n                  value: _vm.formDatas.info.description,\n                  callback: function($$v) {\n                    _vm.$set(_vm.formDatas.info, \"description\", $$v)\n                  },\n                  expression: \"formDatas.info.description\"\n                }\n              })\n            ],\n            1\n          ),\n          _c(\"ValidationEtapes\", {\n            attrs: { currentFormDatas: _vm.formDatas }\n          }),\n          _c(\"hr\"),\n          _c(\"b-row\", { attrs: { \"align-h\": \"end\" } }, [\n            _c(\n              \"div\",\n              { staticClass: \"mr-3\" },\n              [\n                _c(\n                  \"b-button\",\n                  {\n                    attrs: {\n                      type: \"submit\",\n                      variant: \"outline-info\",\n                      size: \"sm\"\n                    }\n                  },\n                  [\n                    _c(\"b-icon\", { attrs: { icon: \"plus\" } }),\n                    _vm._v(\" Mettre à jour \")\n                  ],\n                  1\n                )\n              ],\n              1\n            )\n          ])\n        ],\n        1\n      )\n    ]\n  )\n}\nvar staticRenderFns = []\nrender._withStripped = true\n\n\n\n//# sourceURL=webpack://appForm/./src/App/ConfigsForms/StepConfiguration.vue?./node_modules/cache-loader/dist/cjs.js?%7B%22cacheDirectory%22:%22node_modules/.cache/vue-loader%22,%22cacheIdentifier%22:%224630ba02-vue-loader-template%22%7D!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options");
+// CONCATENATED MODULE: ./src/App/ConfigsForms/AddEditForm.vue?vue&type=template&id=7f068a3c&scoped=true&lang=html&
 
-/***/ }),
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.iterator.js
+var es_array_iterator = __webpack_require__("e260");
 
-/***/ "./src/App/ConfigsForms/StepConfiguration.vue":
-/*!****************************************************!*\
-  !*** ./src/App/ConfigsForms/StepConfiguration.vue ***!
-  \****************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.object.to-string.js
+var es_object_to_string = __webpack_require__("d3b7");
 
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _StepConfiguration_vue_vue_type_template_id_ec3e8a40_scoped_true_lang_html___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./StepConfiguration.vue?vue&type=template&id=ec3e8a40&scoped=true&lang=html& */ \"./src/App/ConfigsForms/StepConfiguration.vue?vue&type=template&id=ec3e8a40&scoped=true&lang=html&\");\n/* harmony import */ var _StepConfiguration_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./StepConfiguration.vue?vue&type=script&lang=js& */ \"./src/App/ConfigsForms/StepConfiguration.vue?vue&type=script&lang=js&\");\n/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ \"./node_modules/vue-loader/lib/runtime/componentNormalizer.js\");\n\n\n\n\n\n/* normalize component */\n\nvar component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__[\"default\"])(\n  _StepConfiguration_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[\"default\"],\n  _StepConfiguration_vue_vue_type_template_id_ec3e8a40_scoped_true_lang_html___WEBPACK_IMPORTED_MODULE_0__[\"render\"],\n  _StepConfiguration_vue_vue_type_template_id_ec3e8a40_scoped_true_lang_html___WEBPACK_IMPORTED_MODULE_0__[\"staticRenderFns\"],\n  false,\n  null,\n  \"ec3e8a40\",\n  null\n  \n)\n\n/* hot reload */\nif (false) { var api; }\ncomponent.options.__file = \"src/App/ConfigsForms/StepConfiguration.vue\"\n/* harmony default export */ __webpack_exports__[\"default\"] = (component.exports);\n\n//# sourceURL=webpack://appForm/./src/App/ConfigsForms/StepConfiguration.vue?");
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.promise.js
+var es_promise = __webpack_require__("e6cf");
 
-/***/ }),
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.string.iterator.js
+var es_string_iterator = __webpack_require__("3ca3");
 
-/***/ "./src/App/ConfigsForms/StepConfiguration.vue?vue&type=script&lang=js&":
-/*!*****************************************************************************!*\
-  !*** ./src/App/ConfigsForms/StepConfiguration.vue?vue&type=script&lang=js& ***!
-  \*****************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+// EXTERNAL MODULE: ./node_modules/core-js/modules/web.dom-collections.iterator.js
+var web_dom_collections_iterator = __webpack_require__("ddb0");
 
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _node_modules_cache_loader_dist_cjs_js_ref_12_0_node_modules_babel_loader_lib_index_js_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_StepConfiguration_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/cache-loader/dist/cjs.js??ref--12-0!../../../node_modules/babel-loader/lib!../../../node_modules/cache-loader/dist/cjs.js??ref--0-0!../../../node_modules/vue-loader/lib??vue-loader-options!./StepConfiguration.vue?vue&type=script&lang=js& */ \"./node_modules/cache-loader/dist/cjs.js?!./node_modules/babel-loader/lib/index.js!./node_modules/cache-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./src/App/ConfigsForms/StepConfiguration.vue?vue&type=script&lang=js&\");\n/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__[\"default\"] = (_node_modules_cache_loader_dist_cjs_js_ref_12_0_node_modules_babel_loader_lib_index_js_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_StepConfiguration_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__[\"default\"]); \n\n//# sourceURL=webpack://appForm/./src/App/ConfigsForms/StepConfiguration.vue?");
+// EXTERNAL MODULE: ./src/App/config/config.js
+var config = __webpack_require__("f158");
 
-/***/ }),
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/ConfigsForms/AddEditForm.vue?vue&type=script&lang=js&
 
-/***/ "./src/App/ConfigsForms/StepConfiguration.vue?vue&type=template&id=ec3e8a40&scoped=true&lang=html&":
-/*!*********************************************************************************************************!*\
-  !*** ./src/App/ConfigsForms/StepConfiguration.vue?vue&type=template&id=ec3e8a40&scoped=true&lang=html& ***!
-  \*********************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _node_modules_cache_loader_dist_cjs_js_cacheDirectory_node_modules_cache_vue_loader_cacheIdentifier_4630ba02_vue_loader_template_node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_StepConfiguration_vue_vue_type_template_id_ec3e8a40_scoped_true_lang_html___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/cache-loader/dist/cjs.js?{\"cacheDirectory\":\"node_modules/.cache/vue-loader\",\"cacheIdentifier\":\"4630ba02-vue-loader-template\"}!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/cache-loader/dist/cjs.js??ref--0-0!../../../node_modules/vue-loader/lib??vue-loader-options!./StepConfiguration.vue?vue&type=template&id=ec3e8a40&scoped=true&lang=html& */ \"./node_modules/cache-loader/dist/cjs.js?{\\\"cacheDirectory\\\":\\\"node_modules/.cache/vue-loader\\\",\\\"cacheIdentifier\\\":\\\"4630ba02-vue-loader-template\\\"}!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/cache-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./src/App/ConfigsForms/StepConfiguration.vue?vue&type=template&id=ec3e8a40&scoped=true&lang=html&\");\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"render\", function() { return _node_modules_cache_loader_dist_cjs_js_cacheDirectory_node_modules_cache_vue_loader_cacheIdentifier_4630ba02_vue_loader_template_node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_StepConfiguration_vue_vue_type_template_id_ec3e8a40_scoped_true_lang_html___WEBPACK_IMPORTED_MODULE_0__[\"render\"]; });\n\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"staticRenderFns\", function() { return _node_modules_cache_loader_dist_cjs_js_cacheDirectory_node_modules_cache_vue_loader_cacheIdentifier_4630ba02_vue_loader_template_node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_StepConfiguration_vue_vue_type_template_id_ec3e8a40_scoped_true_lang_html___WEBPACK_IMPORTED_MODULE_0__[\"staticRenderFns\"]; });\n\n\n\n//# sourceURL=webpack://appForm/./src/App/ConfigsForms/StepConfiguration.vue?");
+
+
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//import { mapState } from "vuex";
+//
+//import manageImages from "../EditsFields/manage-images.vue";
+
+/* harmony default export */ var AddEditFormvue_type_script_lang_js_ = ({
+  name: "AddEditForm",
+  props: {//
+  },
+  components: {
+    UploadImage: function UploadImage() {
+      return Promise.all(/* import() */[__webpack_require__.e(1), __webpack_require__.e(20)]).then(__webpack_require__.bind(null, "9353"));
+    }
+  },
+  data: function data() {
+    return {
+      form: {
+        forms: [],
+        description: "",
+        name: "",
+        img: {}
+      }
+    };
+  },
+  mounted: function mounted() {//
+  },
+  watch: {//
+  },
+  computed: {},
+  methods: {
+    ev_manage_images_img: function ev_manage_images_img(data, form) {
+      console.log("file", data);
+
+      if (data.url) {
+        form.img = data.url;
+      }
+    },
+    handleOk: function handleOk(bvModalEvt) {
+      // Prevent modal from closing
+      bvModalEvt.preventDefault(); // Trigger submit handler
+
+      this.handleSubmit();
+    },
+    handleSubmit: function handleSubmit(event) {
+      var _this = this;
+
+      event.preventDefault();
+      config["a" /* default */].prepareDatasToSave(this.form).then(function (val) {
+        config["a" /* default */].saveForm(val).then(function () {
+          _this.$nextTick(function () {
+            _this.$bvModal.hide("add-edit-form");
+
+            window.location.reload();
+          });
+        });
+      });
+    }
+  }
+});
+// CONCATENATED MODULE: ./src/App/ConfigsForms/AddEditForm.vue?vue&type=script&lang=js&
+ /* harmony default export */ var ConfigsForms_AddEditFormvue_type_script_lang_js_ = (AddEditFormvue_type_script_lang_js_); 
+// EXTERNAL MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
+var componentNormalizer = __webpack_require__("2877");
+
+// CONCATENATED MODULE: ./src/App/ConfigsForms/AddEditForm.vue
+
+
+
+
+
+/* normalize component */
+
+var component = Object(componentNormalizer["a" /* default */])(
+  ConfigsForms_AddEditFormvue_type_script_lang_js_,
+  render,
+  staticRenderFns,
+  false,
+  null,
+  "7f068a3c",
+  null
+  
+)
+
+/* harmony default export */ var AddEditForm = __webpack_exports__["default"] = (component.exports);
 
 /***/ })
 
 }]);
+//# sourceMappingURL=appForm.common.31.js.map

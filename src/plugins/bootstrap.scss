@@ -1,5 +1,9 @@
-$body-bg       : #ffffff;
-$body-color    : #111;
+$body-bg: #ffffff;
+$body-color: #111;
 $font-size-base: 1.4rem;
-@import 'bootstrap/scss/bootstrap.scss';
-@import 'bootstrap-vue/src/index.scss';
+// @import 'bootstrap/scss/bootstrap.scss';
+// @import "bootstrap/scss/bootstrap-grid.scss";
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/mixins";
+@import "bootstrap-vue/src/index.scss";

@@ -16,7 +16,7 @@ const routes = [
     path: "/edit-form/:id",
     name: "Edition du formulaire",
     props: true,
-    component: () => import("../App/StepsPage.vue"),
+    component: () => import("../App/EditFormDevis.vue"),
   },
   {
     path: "/estimation-devis/:id",

@@ -1,5 +1,5 @@
 <template>
-  <div class="element-center full-block shadow">
+  <div class="element-center full-block">
     <div class="choice-section text-right">
       <b-row align-h="end">
         <b-col>
@@ -48,7 +48,7 @@
       </b-button-group>
     </div>
     <!-- center container -->
-    <forms :level="level"></forms>
+    <forms></forms>
     <!-- editions/configs -->
     <div v-if="mode">
       <add-form-field
@@ -73,12 +73,6 @@ export default {
     StepConfiguration: () => import("./ConfigsForms/StepConfiguration.vue"),
     cloneCurrentStepe: () => import("./ConfigsForms/cloneCurrentStepe.vue"),
     forms,
-  },
-  props: {
-    level: {
-      type: Number,
-      default: 0,
-    },
   },
   data: () => {
     return {
@@ -107,8 +101,8 @@ export default {
     },
   },
   computed: {
-    ...mapState(["mode", "stepsIndex", "stepsIndexs"]),
-    ...mapGetters(["formDatas", "form"]),
+    ...mapState(["mode", "stepsIndex", "stepsIndexs", "form"]),
+    ...mapGetters(["formDatas"]),
 
     taille() {
       if (this.fields.options.length) {
@@ -123,7 +117,6 @@ export default {
       for (var i = all.length - 1; i >= 0; i--) {
         if (i === r) {
           all.splice(i, 1);
-          console.log("iiippp");
           this.$store.state.stepsIndex = this.form.forms.length - 1;
         }
       }

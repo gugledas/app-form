@@ -8,8 +8,13 @@ export default {
   ...AjaxToastBootStrap,
   TestDomain: "http://lesroisdelareno.habeuk.com",
   typeSelection: ["radio", "select", "checkbox"],
+  /**
+   * Permet de recuperer les données en BD.
+   * @param {*} datas
+   * @param {*} mode
+   * @returns
+   */
   getData(datas, mode = false) {
-    //var datas = "select * from `appformmanager_fomrs`";
     return this.bPost("/query-ajax/select", datas, {}, mode);
   },
   /**
@@ -18,8 +23,81 @@ export default {
   saveForm(datas, mode = false) {
     return this.bPost("/query-ajax/insert-update", datas, {}, mode);
   },
+  /**
+   * Preparation de la sauvagarde du formulaire d'edition.
+   * Cela se fait en 3 etapes:
+   * - on sauvegarde les données de bases
+   * - on supprime toutes les etapes concernant ce dernier
+   * - on ajoute les nouvelles etapes.
+   *
+   * @param {*} datas
+   * @returns
+   */
   prepareDatasToSave(datas) {
-    return Utilities.saveSteps(datas);
+    return new Promise((resolv) => {
+      var forms = "";
+      forms = JSON.stringify([]);
+      var result = [];
+      /**
+       * On prepare la suppression des anciennes etapes.
+       */
+      if (datas.id) {
+        var deleteData = {
+          table: "appformmanager_fomrs_steps",
+          action: "delete",
+          fields: {},
+          where: [
+            {
+              column: "formid",
+              value: datas.id,
+            },
+          ],
+        };
+        result.push(deleteData);
+      }
+      /**
+       * On prepare la sauvegarde pour la table : appformmanager_fomrs
+       */
+      if (datas != "") {
+        //edition de la table contents
+        var table1 = {
+          table: "appformmanager_fomrs",
+          fields: {
+            forms: forms,
+            description: datas.description,
+            name: datas.name,
+            img: datas.img,
+          },
+          action: "update",
+        };
+        if (datas.id) {
+          table1.where = [
+            {
+              column: "id",
+              value: datas.id,
+            },
+          ];
+        }
+        result.push(table1);
+        /**
+         * Sauvegarde des etapes.
+         */
+        if (datas.forms && datas.id) {
+          datas.forms.forEach((step, id) => {
+            var tableStep = {
+              table: "appformmanager_fomrs_steps",
+              fields: {
+                formid: datas.id,
+                step: JSON.stringify(step),
+                order: id,
+              },
+            };
+            result.push(tableStep);
+          });
+        }
+      }
+      resolv(result);
+    });
   },
   prepareSettingForm(datas) {
     return Utilities.settingForm(datas);
@@ -39,11 +117,11 @@ export default {
       //console.log("fdate : ", datas);
       var forms = "";
       if (datas.forms) {
-        forms = JSON.stringify(datas.forms);
+        forms = JSON.stringify([]);
       }
       var result = [];
       if (datas != "") {
-        //edition de la table contents
+        // Edition de la table contents.
         var table1 = {
           table: "appformmanager_datas",
           fields: {

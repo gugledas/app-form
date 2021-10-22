@@ -34,8 +34,7 @@ import config from "../config/config.js";
 import TitleBar from "../TitleBar.vue";
 import { mapState, mapGetters } from "vuex";
 import listBlocks from "./blocks/listBlocks.vue";
-//import pages from "./pages.vue";
-//import pages from "./pages2.vue";
+
 export default {
   components: { listBlocks, TitleBar },
   props: {

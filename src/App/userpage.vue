@@ -51,7 +51,7 @@
 
 <script>
 import { mapState, mapGetters } from "vuex";
-import pages from "./pages.vue";
+import pages from "./FormStep.vue";
 import TitleBar from "./TitleBar.vue";
 export default {
   name: "userpage",
@@ -77,8 +77,8 @@ export default {
     //
   },
   computed: {
-    ...mapState(["stepsIndex", "allStepsDatas", "fields", "price"]),
-    ...mapGetters(["form", "formDatas", "uid"]),
+    ...mapState(["stepsIndex", "allStepsDatas", "fields", "price", "form"]),
+    ...mapGetters(["formDatas", "uid"]),
   },
   methods: {
     returnHome() {

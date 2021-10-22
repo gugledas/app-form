@@ -1,11 +1,12 @@
 <template lang="html">
   <ValidationObserver v-slot="v" class="center-container">
     <b-row class="block-container" align-h="center">
-      <b-col cols="12" class="text-left" v-if="level > 0">
+      <b-col cols="12" class="text-left" v-if="stepsIndex > 0">
         <div class="backButton" @click="back">
           <img src="../../../public/long-arrow-alt-left-solid.svg" alt="" />
         </div>
       </b-col>
+      <!-- entete -->
       <div
         class="help-container"
         v-if="formDatas.info.headerTitle && formDatas.info.description"
@@ -17,6 +18,7 @@
           </p>
         </div>
       </div>
+      <!-- liste de champs -->
       <div v-for="(field, i) in formDatas.fields" :key="i" class="col-12">
         <display-fields :type="field.type" :id="i"></display-fields>
       </div>
@@ -64,12 +66,6 @@ import { mapGetters, mapState } from "vuex";
 
 export default {
   name: "forms",
-  props: {
-    level: {
-      type: Number,
-      default: 0,
-    },
-  },
   components: {
     ValidationObserver,
     DisplayFields,
@@ -87,11 +83,11 @@ export default {
     //
   },
   computed: {
-    ...mapState(["mode", "stepsIndex", "StatusStepsIndexs", "price"]),
-    ...mapGetters(["formDatas", "form", "uid"]),
+    ...mapState(["form", "mode", "stepsIndex", "StatusStepsIndexs", "price"]),
+    ...mapGetters(["formDatas", "uid"]),
     stepsState() {
       var state = false;
-      if (this.$store.getters.form.forms.length - 1 > this.level) {
+      if (this.form.forms && this.form.forms.length - 1 > this.level) {
         state = true;
       }
       return state;

@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapState } from "vuex";
 import Utilities from "../Utilities.js";
 export default {
   name: "reOrderStepes",
@@ -76,7 +76,7 @@ export default {
     //
   },
   computed: {
-    ...mapGetters(["form"]),
+    ...mapState(["form"]),
   },
   methods: {
     moveToDown(i) {

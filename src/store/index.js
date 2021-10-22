@@ -7,7 +7,6 @@ import config from "../App/config/config.js";
 Vue.use(Vuex);
 drupalUtilities.TestDomain = "http://lesroisdelareno.habeuk.com";
 users.TestDomain = "http://lesroisdelareno.habeuk.com";
-import axios from "axios";
 export default new Vuex.Store({
   state: {
     /* contient les information de la page d'afficha des formulaires */
@@ -31,10 +30,7 @@ export default new Vuex.Store({
      * contient les etapes d'un formulaire
      */
     allStepsDatas: [],
-    /**
-     * Contient l'information d'une etape du formulaire selectionné.
-     */
-    //formDatas: {},
+
     fields: {},
     field: {},
     /**
@@ -106,6 +102,15 @@ export default new Vuex.Store({
      * Contient.
      */
     CachesUser: {},
+    /**
+     * Contient le formulaire selectionné par le client.
+     */
+    form: {
+      id: "",
+      forms: "",
+      description: "",
+      name: "",
+    },
   },
   getters: {
     /**
@@ -131,38 +136,12 @@ export default new Vuex.Store({
       return items;
     },
     /**
-     * Contient le formulaire selectionné par le client.
-     */
-    form: (state) => {
-      if (state.items.length && state.formId !== null) {
-        for (const i in state.items) {
-          if (state.items[i].id === state.formId) {
-            const form = state.items[i];
-            var TypeDonnee = typeof form.forms;
-            if (form.forms && form.forms !== "" && TypeDonnee === "string") {
-              form.forms = JSON.parse(form.forms);
-            } else if (form.forms === "") {
-              form.forms = [];
-            }
-            return form;
-          }
-        }
-      } else
-        return {
-          id: "",
-          forms: "",
-          description: "",
-          name: "",
-        };
-    },
-
-    /**
      * Contient l'information d'une etape du formulaire selectionné.
      * par defaut, etape 0;
      */
-    formDatas: (state, getters) => {
-      if (getters.form.forms) {
-        return getters.form.forms[state.stepsIndex];
+    formDatas: (state) => {
+      if (state.form.forms && state.form.forms[state.stepsIndex]) {
+        return state.form.forms[state.stepsIndex];
       } else {
         return {
           info: {
@@ -246,8 +225,6 @@ export default new Vuex.Store({
       for (let i in raq.hauteur) {
         sh[i] = raq.hauteur[i];
       }
-      console.log("ADD_FIELDS : ", getters);
-      //state.formDatas.fields.push(sh);
     },
 
     SUIVANT(state) {
@@ -255,6 +232,10 @@ export default new Vuex.Store({
     },
     SET_ITEMS(state, payload) {
       state.items = payload;
+      console.log("payload : ", payload);
+    },
+    SET_CURRRENT_FORM(state, payload) {
+      state.form = payload;
     },
     SET_TRAITEMENT_ITEMS(state, payload) {
       state.traitementItems = payload;
@@ -266,6 +247,10 @@ export default new Vuex.Store({
     SET_TRAIT_ID(state, payload) {
       state.traitementId = payload;
     },
+    /**
+     * Cette function doit etre supprimer.
+     * @param {*} state
+     */
     SET_FORM(state) {
       for (const i in state.items) {
         if (state.items[i].id === state.formId) {
@@ -280,7 +265,7 @@ export default new Vuex.Store({
       state.stepsIndex = i;
     },
     SET_FORM_DATAS_VALIDATE(state, value) {
-      console.log(" MAJ de SET_FORM_DATAS_VALIDATE ");
+      //console.log(" MAJ de SET_FORM_DATAS_VALIDATE ");
       state.formDatasValidate = value;
     },
     SET_STEPS_INDEXS(state, value) {
@@ -363,7 +348,7 @@ export default new Vuex.Store({
         await commit("STEPS_INDEX", new_index);
         commit("ADD_STEPS_INDEXS", new_index);
         // On verifie si on est sur la derniere etape.
-        if (getters.form.forms.length === new_index + 1) {
+        if (getters.form.forms && getters.form.forms.length === new_index + 1) {
           commit("SET_STATUS_STEPS_INDEX", false);
         }
       } else {
@@ -430,32 +415,89 @@ export default new Vuex.Store({
     /**
      * Recupere les formulaires en BD.
      */
-    loadStepsDatas({ commit }) {
-      var datas = "select * from `appformmanager_fomrs`";
-      axios
-        .post(config.BaseUrl() + "/query-ajax/select", datas)
-        .then((reponse) => {
-          console.log("get loadStepsDatas: ", reponse);
-          commit("SET_ITEMS", reponse.data);
-        })
-        .catch((error) => {
-          console.log("get error ", error);
-        });
+    loadFormsDatas({ commit }) {
+      commit("SET_ITEMS", []);
+      var datas =
+        "select f.id,f.name,f.description,f.img,f.forms from `appformmanager_fomrs` as f ";
+      config.getData(datas).then((reponse) => {
+        commit("SET_ITEMS", reponse.data);
+      });
     },
     /**
-     * Recupere les paramètres de la page qui liste les formulaires   en BD.
+     * Charge les etpes du formulaire selectionnée.
+     * Pour reduire la charge direct de chargement on va decouper le chargement par bloc.;
+     * @param {*} param0
+     * @param {*} payload
+     */
+    loadStepsDatas({ commit, state }, payload) {
+      commit("SET_CURRRENT_FORM", {});
+      const nbreItems = 10;
+      const loadProgressiveDate = (pagination = 0) => {
+        return new Promise((resolv) => {
+          var datas =
+            " select f.id,f.name,f.description,f.img,f.forms, st.step from `appformmanager_fomrs` as f ";
+          datas +=
+            " left join appformmanager_fomrs_steps as st ON st.formid = f.id ";
+          datas += " where f.id='" + payload.formId + "'";
+          datas +=
+            " order by st.order ASC limit " +
+            nbreItems +
+            " OFFSET " +
+            pagination;
+          config.getData(datas).then((rep) => {
+            if (rep.data[0] && rep.data[0].id) {
+              // Ce bloc est à supprimer.
+              rep.data[0].forms = JSON.parse(rep.data[0].forms);
+              if (
+                rep.data[0] &&
+                rep.data[0].forms &&
+                rep.data[0].forms.length > 0
+              ) {
+                alert("not clen");
+                commit("SET_CURRRENT_FORM", rep.data[0]);
+                resolv("null");
+                return false;
+              }
+              //si cest le premier passage, on met en place le formulaire avec quelques champs.
+              if (!pagination) {
+                var steps = [];
+                rep.data.forEach((step) => {
+                  steps.push(JSON.parse(step.step));
+                });
+                var result = {
+                  id: rep.data[0].id,
+                  name: rep.data[0].name,
+                  description: rep.data[0].description,
+                  img: rep.data[0].img,
+                  forms: steps,
+                };
+                commit("SET_CURRRENT_FORM", result);
+              } else {
+                console.log("Autre requet : ", rep.data);
+                rep.data.forEach((step) => {
+                  state.form.forms.push(JSON.parse(step.step));
+                });
+              }
+              // Si le resultat est egal au nombre d'element il est possible que des données existe encore.
+              if (nbreItems === rep.data.length) {
+                pagination += nbreItems;
+                resolv(loadProgressiveDate(pagination));
+              } else resolv(null);
+            } else resolv(null);
+          });
+        });
+      };
+      return loadProgressiveDate();
+    },
+    /**
+     * Recupere les paramètres de la page d'entrée.
      */
     loadPageInfo({ commit }) {
       var datas = "select * from `appformmanager_config`";
-      axios
-        .post(config.BaseUrl() + "/query-ajax/select", datas)
-        .then((reponse) => {
-          console.log("get pageInfo: ", reponse);
-          commit("SET_PAGE_INFO", reponse.data);
-        })
-        .catch((error) => {
-          console.log("get error ", error);
-        });
+      config.getData(datas).then((reponse) => {
+        console.log("get pageInfo: ", reponse);
+        commit("SET_PAGE_INFO", reponse.data);
+      });
     },
     /**
      * Recupere les formulaires soumis en BD.

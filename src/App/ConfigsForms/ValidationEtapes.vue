@@ -184,19 +184,7 @@ export default {
     ...mapGetters(["formDatas", "form"]),
     listeDesEtapes() {
       const etapes = [];
-      /*
-      if (this.form && this.form.forms.length > 1) {
-        for (const i in this.form.forms) {
-          const form = this.form.forms[i];
-          if (
-            form.info.name !== "" &&
-            form.info.name !== this.formDatas.info.name
-          ) {
-            etapes.push({ text: form.info.title, value: form.info.name });
-          }
-        }
-      }
-      /**/
+
       Validation.listesEtapes(this.form, this.formDatas, etapes);
       return etapes;
     },

@@ -56,8 +56,8 @@ export default {
   watch: {},
   mounted() {},
   computed: {
-    ...mapState(["stepsIndex"]),
-    ...mapGetters(["form", "uid"]),
+    ...mapState(["stepsIndex", "form"]),
+    ...mapGetters(["uid"]),
   },
   methods: {
     returnHome() {

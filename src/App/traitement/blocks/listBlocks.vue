@@ -190,8 +190,8 @@ export default {
   },
 
   computed: {
-    ...mapState(["items", "CachesUser"]),
-    ...mapGetters(["traitementFormItems", "form"]),
+    ...mapState(["items", "CachesUser", "form"]),
+    ...mapGetters(["traitementFormItems"]),
     trigger_perfom() {
       if (this.traitementFormItems.length) {
         this.getTraitementFormItems();

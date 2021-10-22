@@ -83,8 +83,8 @@ export default {
     //
   },
   computed: {
-    ...mapState(["mode"]),
-    ...mapGetters(["formDatas", "form"]),
+    ...mapState(["mode", "form"]),
+    ...mapGetters(["formDatas"]),
     ListNameforms() {
       const lists = [];
       for (const i in this.form.forms) {

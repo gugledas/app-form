@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from "vuex";
+import { mapState } from "vuex";
 
 export default {
   props: { taille: { require: true } },
@@ -45,11 +45,10 @@ export default {
     }
   },
   computed: {
-    ...mapState(["stepsIndex"]),
-    ...mapGetters(["form"]),
+    ...mapState(["stepsIndex", "form"]),
     idLevel() {
       var id = [];
-      if (this.form.forms.length) {
+      if (this.form.forms && this.form.forms.length) {
         for (let i in this.form.forms) {
           id.push(i);
         }

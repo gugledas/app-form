@@ -34,8 +34,6 @@ import config from "../config/config.js";
 import { mapState, mapGetters } from "vuex";
 //import ListTable from "./ListTable.vue";
 import listBlocks from "./blocks/listBlocks.vue";
-//import pages from "./pages.vue";
-//import pages from "./pages2.vue";
 
 export default {
   components: { listBlocks, TitleBar },
@@ -62,8 +60,8 @@ export default {
     this.getTotalRows();
   },
   computed: {
-    ...mapState(["traitementId"]),
-    ...mapGetters(["traitementFormItems", "form"]),
+    ...mapState(["traitementId", "form"]),
+    ...mapGetters(["traitementFormItems"]),
     ListeFieldsDisplay() {
       const fieldsDisplay = [
         {

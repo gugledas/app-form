@@ -3,7 +3,7 @@
     size="lg"
     id="modal-addForm"
     ref="addForm"
-    title="Ajouter des champs dans la page"
+    title="Ajouter des champs dans l'etape"
     hide-footer
     v-model="isOpen"
     @ok="handleOk"

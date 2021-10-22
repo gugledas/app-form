@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
 import { snakeCase } from "snake-case";
 import ValidationEtapes from "./ValidationEtapes.vue";
 export default {
@@ -80,7 +80,8 @@ export default {
     //
   },
   computed: {
-    ...mapGetters(["form", "formDatas"]),
+    ...mapState(["form"]),
+    ...mapGetters(["formDatas"]),
     watchFormDatas() {
       if (this.formDatas.fields) {
         this.getCurrentForm(JSON.stringify(this.formDatas));

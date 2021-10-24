@@ -1,0 +1,23 @@
+.list-small {
+  font-size: 80%;
+  .item-vertical {
+    padding: 0;
+    padding-bottom: 0.3rem;
+    margin-bottom: 0.3rem;
+    border: none;
+    border-bottom: 1px solid #ebebeb;
+    margin-left: 0.8rem;
+    margin-right: 0.8rem;
+
+    background: transparent;
+    .item {
+      width: calc(100% - 90px);
+      padding-right: 0.5rem;
+      + .item {
+        width: 90px;
+        text-align: right;
+        font-weight: 600;
+      }
+    }
+  }
+}

@@ -19,6 +19,12 @@ const routes = [
     component: () => import("../App/EditFormDevis.vue"),
   },
   {
+    path: "/gestion-fields",
+    name: "Gestion des formulaires",
+    props: true,
+    component: () => import("../App/GestionFields.vue"),
+  },
+  {
     path: "/estimation-devis/:id",
     name: "Estimation du devis",
     props: true,

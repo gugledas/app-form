@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import TitleBar from "../TitleBar.vue";
+import TitleBar from "../components/TitleBar.vue";
 
 //import axios from "axios";
 import config from "../config/config.js";

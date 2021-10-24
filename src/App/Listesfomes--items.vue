@@ -123,7 +123,7 @@
 <script>
 import { mapState } from "vuex";
 import AddEditForm from "./ConfigsForms/AddEditForm.vue";
-import loaderIcon from "./ConfigsForms/loaderIcon.vue";
+import loaderIcon from "./components/loaderIcon.vue";
 import config from "./config/config.js";
 
 export default {

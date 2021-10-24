@@ -4,15 +4,15 @@
       <div class="block-title pr-2">
         <div class="backButton" @click="returnHome" to="/">
           <img
-            src="../../public/long-arrow-alt-left-solid.svg"
+            src="../../../public/long-arrow-alt-left-solid.svg"
             alt=""
             width="55px"
             height="30px"
           />
         </div>
         <h5 class="m-0">
-          {{ conf.text }} :
-          <span class="form-title">{{ form.name }}</span>
+          {{ conf.text }}
+          <span class="form-title" v-if="form.name"> : {{ form.name }}</span>
         </h5>
         <div>
           <h5
@@ -34,8 +34,6 @@ import { mapGetters, mapState } from "vuex";
 
 export default {
   props: {
-    taille: { require: true },
-    id: { require: true },
     showDevis: { type: Boolean, default: true },
     conf: {
       type: Object,
@@ -47,14 +45,11 @@ export default {
       },
     },
   },
-  components: {},
   data() {
     return {
       value: 1,
     };
   },
-  watch: {},
-  mounted() {},
   computed: {
     ...mapState(["stepsIndex", "form"]),
     ...mapGetters(["uid"]),
@@ -69,5 +64,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss"></style>

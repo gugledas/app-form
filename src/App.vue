@@ -7,6 +7,9 @@
   </div>
 </template>
 <script>
+import Vue from "vue";
+import loaderIcon from "./App/components/loaderIcon.vue";
+Vue.component("loaderIcon", loaderIcon);
 export default {
   name: "App",
 };
@@ -17,5 +20,6 @@ export default {
   box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 15%);
   padding: 2rem;
   position: relative;
+  min-height: 100vh;
 }
 </style>

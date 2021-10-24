@@ -31,7 +31,7 @@
 //import axios from "axios";
 import config from "../config/config.js";
 //import utilities from "./Utilities";
-import TitleBar from "../TitleBar.vue";
+import TitleBar from "../components/TitleBar.vue";
 import { mapState, mapGetters } from "vuex";
 import listBlocks from "./blocks/listBlocks.vue";
 

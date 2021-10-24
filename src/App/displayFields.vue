@@ -250,6 +250,7 @@ export default {
       }
     },
     editFormField() {
+      //remove this line.
       this.$refs.editFormField.openAddFormFieldPopUp();
       this.fields = this.formDatas.fields[this.id];
     },

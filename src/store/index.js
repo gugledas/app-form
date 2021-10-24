@@ -31,7 +31,6 @@ export default new Vuex.Store({
      */
     allStepsDatas: [],
 
-    fields: {},
     field: {},
     /**
      * Contient la liste des formulaire soumis recuperer de la BD.
@@ -111,6 +110,22 @@ export default new Vuex.Store({
       description: "",
       name: "",
     },
+    /**
+     * Contient la liste des champs.
+     */
+    fields: [],
+    /**
+     * Permet de filtrer les champs reçu.
+     */
+    filtre: {
+      formid: "",
+    },
+    /**
+     * - permet d'afficher un loader, si necessaire.
+     */
+    loaders: {
+      GestionField: false,
+    },
   },
   getters: {
     /**
@@ -189,42 +204,6 @@ export default new Vuex.Store({
         },
         fields: [],
       };
-      state.fields = {
-        type: "checkbox",
-        title: "",
-        label: "Plusieurs choix possible.",
-        name: "",
-        value: [],
-        selected: "",
-        imgUrl: "",
-        require: true,
-        options: [],
-      };
-    },
-    RESET_FIELDS(state) {
-      state.fields = {
-        type: "checkbox",
-        title: "",
-        label: "",
-        name: "",
-        value: [],
-        selected: "",
-        imgUrl: "",
-        require: true,
-        options: [],
-      };
-    },
-    ADD_FIELDS(getters, payload) {
-      class proto {
-        constructor(hauteur) {
-          this.hauteur = hauteur;
-        }
-      }
-      var raq = new proto(payload);
-      var sh = {};
-      for (let i in raq.hauteur) {
-        sh[i] = raq.hauteur[i];
-      }
     },
 
     SUIVANT(state) {
@@ -309,16 +288,16 @@ export default new Vuex.Store({
     SET_CACHEUSER(state, user) {
       state.CachesUser["uid" + user.uid] = user.user;
     },
+    SET_FIELDS(state, fields) {
+      fields.forEach((item) => {
+        state.fields.push(item);
+      });
+    },
   },
   actions: {
     addSetpsDatas({ commit }, payload) {
       commit("ADD_STEPS_DATAS", payload);
       commit("RESET_FORM_DATAS");
-    },
-    addFields({ commit }, payload) {
-      //console.log("objecte", payload);
-      commit("ADD_FIELDS", payload);
-      commit("RESET_FIELDS");
     },
     /**
      * Elle definit la logique permettant de passer à une autre etape.
@@ -419,7 +398,7 @@ export default new Vuex.Store({
       commit("SET_ITEMS", []);
       var datas =
         "select f.id,f.name,f.description,f.img,f.forms from `appformmanager_fomrs` as f ";
-      config.getData(datas).then((reponse) => {
+      return config.getData(datas).then((reponse) => {
         commit("SET_ITEMS", reponse.data);
       });
     },
@@ -746,6 +725,26 @@ export default new Vuex.Store({
     },
     setCachesUser({ commit }, user) {
       commit("SET_CACHEUSER", user);
+    },
+    /**
+     * Recupere les champs.
+     * @param {*} param0
+     */
+    GetFields({ commit, state }, payload = "") {
+      state.loaders.GestionField = true;
+      var datas = " select * from `appformmanager_fields` as f ";
+      if (payload.id) {
+        datas += " where f.id='" + payload.id + "'";
+      } else {
+        state.fields = [];
+        if (state.filtre.formid.length > 0) {
+          datas += " where f.formid='" + state.filtre.formid + "'";
+        }
+      }
+      return config.getData(datas).then((reponse) => {
+        commit("SET_FIELDS", reponse.data);
+        state.loaders.GestionField = false;
+      });
     },
   },
   modules: {},

@@ -99,6 +99,55 @@ export default {
       resolv(result);
     });
   },
+  /**
+   * Prepare data to save.
+   *
+   * @param {*} field
+   * @param {*} uid
+   * @returns
+   */
+  prepareFieldToSave(field, uid) {
+    return new Promise((resolv) => {
+      var table1 = {
+        table: "appformmanager_fields",
+        fields: {
+          machine_name: field.name,
+          formid: field.formid,
+          jsonfield: JSON.stringify(field),
+          uid: uid,
+        },
+        action: "update",
+      };
+      if (field.id) {
+        table1.where = [
+          {
+            column: "id",
+            value: field.id,
+          },
+        ];
+      }
+      resolv([table1]);
+    });
+  },
+  /**
+   *
+   * @param {*} field
+   * @returns
+   */
+  deleteField(field) {
+    var deleteData = {
+      table: "appformmanager_fields",
+      action: "delete",
+      fields: {},
+      where: [
+        {
+          column: "machine_name",
+          value: field.name,
+        },
+      ],
+    };
+    return this.saveForm([deleteData]);
+  },
   prepareSettingForm(datas) {
     return Utilities.settingForm(datas);
   },

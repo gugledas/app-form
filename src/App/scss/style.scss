@@ -1,9 +1,10 @@
 /** @format */
 
 @use "@stephane888/wbu-atomique/scss/atome/typography/_default.scss";
-@use '@braid/vue-formulate/themes/snow/snow.scss';
-@use './variables.scss' as *; //@use './field.scss'; //
+@use "@braid/vue-formulate/themes/snow/snow.scss";
+@use "./variables.scss" as *; //@use './field.scss'; //
 @use "@stephane888/wbu-atomique/scss/defaut/model/custom_bp.scss" as *;
+@use "./list-small.scss";
 
 .app-form-shadow {
   box-shadow: 0;

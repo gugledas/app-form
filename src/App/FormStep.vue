@@ -123,6 +123,7 @@ export default {
       //this.$store.dispatch("deleteStepsInAllSteps");
     },
     addFormField() {
+      //remove this line
       this.$refs.formField.openAddFormFieldPopUp();
     },
     configSteps() {

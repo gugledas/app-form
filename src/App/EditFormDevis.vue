@@ -139,7 +139,7 @@
 </template>
 
 <script>
-import TitleBar from "./TitleBar";
+import TitleBar from "./components/TitleBar.vue";
 import config from "./config/config.js";
 //import utilities from "./Utilities";
 import NavLine from "./NavLine.vue";
@@ -147,7 +147,7 @@ import { mapState, mapGetters } from "vuex";
 
 import FormStep from "./FormStep.vue";
 import reOrderStepes from "./ConfigsForms/reOrderStepes.vue";
-import loaderIcon from "./ConfigsForms/loaderIcon.vue";
+import loaderIcon from "./components/loaderIcon.vue";
 export default {
   components: {
     FormStep,

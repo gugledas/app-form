@@ -303,11 +303,11 @@ export default new Vuex.Store({
      * Elle definit la logique permettant de passer à une autre etape.
      * apres, la MAJ de l'etape, les calculs de couts doivent patiente jusqu'à la MAJ de formDatasValidate et executé la suite du code.
      */
-    async stepsIndex({ commit, getters }, i) {
+    async stepsIndex({ commit, getters, state }, i) {
       // on determine le cout de l'etape:
       const price = await utilities.getPriceStape(
         getters.formDatas,
-        getters.form.forms
+        state.form.forms
       );
       if (price > 0) {
         commit("AJOUT_PRIX_STEPS", price);
@@ -315,19 +315,19 @@ export default new Vuex.Store({
       // On determine le cout d'aide de l'etape.
       const priceAide = await utilities.getPriceStape(
         getters.formDatas,
-        getters.form.forms,
+        state.form.forms,
         "aide_financiere"
       );
       if (priceAide > 0) {
         commit("AJOUT_PRIX_AIDE_STEPS", priceAide);
       }
       //
-      const new_index = await utilities.selectNextState(getters.form.forms, i);
+      const new_index = await utilities.selectNextState(state.form.forms, i);
       if (new_index) {
         await commit("STEPS_INDEX", new_index);
         commit("ADD_STEPS_INDEXS", new_index);
         // On verifie si on est sur la derniere etape.
-        if (getters.form.forms && getters.form.forms.length === new_index + 1) {
+        if (state.form.forms && state.form.forms.length === new_index + 1) {
           commit("SET_STATUS_STEPS_INDEX", false);
         }
       } else {
@@ -349,7 +349,7 @@ export default new Vuex.Store({
       //remove price states
       const price = await utilities.getPriceStape(
         getters.formDatas,
-        getters.form.forms
+        state.form.forms
       );
       if (price > 0) {
         console.log("Retranche prix : ", price);
@@ -358,7 +358,7 @@ export default new Vuex.Store({
       //remove price states aide
       const priceAide = await utilities.getPriceStape(
         getters.formDatas,
-        getters.form.forms,
+        state.form.forms,
         "aide_financiere"
       );
       console.log(
@@ -446,6 +446,66 @@ export default new Vuex.Store({
                 resolv(loadProgressiveDate(pagination));
               } else resolv(null);
             });
+        });
+      };
+      return loadProgressiveDate();
+    },
+    loadStepsDatas0({ commit, state }, payload) {
+      commit("SET_CURRRENT_FORM", {});
+      const nbreItems = 10;
+      const loadProgressiveDate = (pagination = 0) => {
+        return new Promise((resolv) => {
+          var datas =
+            " select f.id,f.name,f.description,f.img,f.forms, st.step from `appformmanager_fomrs` as f ";
+          datas +=
+            " left join appformmanager_fomrs_steps as st ON st.formid = f.id ";
+          datas += " where f.id='" + payload.formId + "'";
+          datas +=
+            " order by st.order ASC limit " +
+            nbreItems +
+            " OFFSET " +
+            pagination;
+          config.getData(datas).then((rep) => {
+            if (rep.data[0] && rep.data[0].id) {
+              // Ce bloc est à supprimer.
+              rep.data[0].forms = JSON.parse(rep.data[0].forms);
+              if (
+                rep.data[0] &&
+                rep.data[0].forms &&
+                rep.data[0].forms.length > 0
+              ) {
+                alert("not clen");
+                commit("SET_CURRRENT_FORM", rep.data[0]);
+                resolv("null");
+                return false;
+              }
+              //si cest le premier passage, on met en place le formulaire avec quelques champs.
+              if (!pagination) {
+                var steps = [];
+                rep.data.forEach((step) => {
+                  steps.push(JSON.parse(step.step));
+                });
+                var result = {
+                  id: rep.data[0].id,
+                  name: rep.data[0].name,
+                  description: rep.data[0].description,
+                  img: rep.data[0].img,
+                  forms: steps,
+                };
+                commit("SET_CURRRENT_FORM", result);
+              } else {
+                console.log("Autre requet : ", rep.data);
+                rep.data.forEach((step) => {
+                  state.form.forms.push(JSON.parse(step.step));
+                });
+              }
+              // Si le resultat est egal au nombre d'element il est possible que des données existe encore.
+              if (nbreItems === rep.data.length) {
+                pagination += nbreItems;
+                resolv(loadProgressiveDate(pagination));
+              } else resolv(null);
+            } else resolv(null);
+          });
         });
       };
       return loadProgressiveDate();
@@ -626,7 +686,7 @@ export default new Vuex.Store({
                   console.log(" Utilisateur : ", userData);
                   if (userData.uid && userData.uid[0].value)
                     utilities
-                      .saveDatas(state, getters, userData.uid[0].value, status)
+                      .saveDatas(state, userData.uid[0].value, status)
                       .then(() => {
                         displayMsg(msg);
                       });
@@ -637,7 +697,7 @@ export default new Vuex.Store({
                 });
               } else if (resp.data) {
                 var uid = resp.data.uid[0].value;
-                utilities.saveDatas(state, getters, uid, status).then(() => {
+                utilities.saveDatas(state, uid, status).then(() => {
                   displayMsg(msg);
                 });
               }
@@ -693,7 +753,7 @@ export default new Vuex.Store({
       if (!uid) {
         uid = getters.uid;
       }
-      utilities.saveDatas(state, getters, uid).then((response) => {
+      utilities.saveDatas(state, uid).then((response) => {
         //console.log("Données stocké du store", response);
         if (state.idSoumission === null) {
           commit("SET_ID_SOUMISSION", response.data[0].result);

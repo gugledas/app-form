@@ -2,6 +2,7 @@
   <b-container class="bv-example-row p-5" fluid="lg">
     <div>
       <title-bar :id="id"></title-bar>
+      <loaderIcon :busy="isComplete"></loaderIcon>
       <b-row align-h="center">
         <transition name="fade">
           <b-col class="" cols="12" lg="10" v-if="formDatas && formDatas.info">
@@ -36,6 +37,12 @@ export default {
   },
   mounted() {
     this.$store.dispatch("setFormId", this.id);
+    /**
+     * Cette function charge progressivement les données.
+     */
+    this.$store.dispatch("loadStepsDatas", { formId: this.id }).then(() => {
+      this.busy = false;
+    });
   },
   watch: {
     //
@@ -43,6 +50,15 @@ export default {
   computed: {
     ...mapState(["stepsIndex", "allStepsDatas", "fields", "price", "form"]),
     ...mapGetters(["formDatas", "uid"]),
+    /**
+     * La fonction qui charge les données(loadStepsDatas) le fait de maniere progressive, ainsi il faut verifier s'il ya deja les données.
+     * s'il ya deja des champs à afficher,enleve le loading, ou si on a rien trouvé (busy est revenu à false;)
+     */
+    isComplete() {
+      if ((this.formDatas && this.formDatas.fields.length) || !this.busy) {
+        return false;
+      } else return true;
+    },
   },
   methods: {
     returnHome() {

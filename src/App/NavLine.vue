@@ -59,7 +59,6 @@ export default {
   methods: {
     loadSteps(i) {
       this.$store.state.stepsIndex = i;
-
       localStorage.setItem("step", i);
       localStorage.setItem("id", this.taille);
     },

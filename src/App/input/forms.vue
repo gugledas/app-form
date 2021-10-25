@@ -86,18 +86,21 @@ export default {
     ...mapState(["form", "mode", "stepsIndex", "StatusStepsIndexs", "price"]),
     ...mapGetters(["formDatas", "uid"]),
     stepsState() {
-      var state = false;
-      if (this.form.forms && this.form.forms.length - 1 > this.level) {
-        state = true;
+      if (
+        this.form.forms &&
+        this.form.forms.length - 1 > this.$store.state.stepsIndex
+      ) {
+        return true;
       }
-      return state;
+      return false;
     },
   },
   methods: {
     suivant() {
       if (this.stepsState) {
         this.$store.dispatch("stepsIndex", this.stepsIndex);
-        if (!this.mode) {
+        var f = true;
+        if (!this.mode || f) {
           this.$store.dispatch("saveDatas");
         }
       }

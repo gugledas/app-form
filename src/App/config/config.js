@@ -173,7 +173,7 @@ export default {
     return Utilities.settingForm(datas);
   },
   /**
-   * Prepare les données pour la sauvagarde.
+   * Prepare les données de soumissions pour la sauvagarde.
    *
    * @param {*} id
    * @param {*} datas
@@ -182,20 +182,19 @@ export default {
    * @param {*} status
    * @returns
    */
-  saveStepsDatas(id, datas, price, uid = 0, status = 2) {
+  saveStepsDatas(state, uid = 0, status = 2) {
     return new Promise((resolv) => {
-      //console.log("fdate : ", datas);
-      var forms = "";
-      if (datas.forms) {
-        forms = JSON.stringify([]);
-      }
+      const datas = state.form;
+      const id = state.idSoumission;
+      const price = state.price;
+      // console.log("saveStepsDatas : ", datas);
       var result = [];
       if (datas != "") {
         // Edition de la table contents.
         var table1 = {
           table: "appformmanager_datas",
           fields: {
-            datas: forms,
+            datas: JSON.stringify([]),
             appformmanager_forms: datas.id,
             uid: uid,
             price: price,
@@ -203,7 +202,7 @@ export default {
           },
           action: "update",
         };
-
+        // si l'identifiant du devis de soumissions existe deja.
         if (id !== null) {
           table1.where = [
             {
@@ -211,8 +210,43 @@ export default {
               value: id,
             },
           ];
+          result.push({
+            table: "appformmanager_datas_steps",
+            action: "delete",
+            fields: {},
+            where: [
+              {
+                column: "datasid",
+                value: id,
+              },
+            ],
+          });
+          state.stepsIndexs.forEach((i) => {
+            result.push({
+              table: "appformmanager_datas_steps",
+              fields: {
+                order: i,
+                step: JSON.stringify(datas.forms[i]),
+                datasid: id,
+              },
+              action: "update",
+            });
+          });
+        } else {
+          // Dans ce cas, il faut ajouter les données dans la table appformmanager_datas et recuperer son indice afin d'ajouter les données de l'etape.
+          table1.childstable = {
+            colum_id_name: "datasid",
+            tables: [
+              {
+                table: "appformmanager_datas_steps",
+                fields: {
+                  order: 0,
+                  step: JSON.stringify(datas.forms[0]),
+                },
+              },
+            ],
+          };
         }
-
         result.push(table1);
       }
       resolv(result);

@@ -14,7 +14,7 @@
           @click="row.toggleDetails"
           v-if="!row.detailsShowing"
         >
-          Edit
+          Modifier
         </b-button>
       </template>
       <template #row-details="row">
@@ -48,13 +48,6 @@
           <b-form-group label="cout (€)">
             <b-form-input type="number" v-model="row.item.cout"></b-form-input>
           </b-form-group>
-
-          <b-button type="reset" variant="dark" size="sm" class="mx-2">
-            Reset
-          </b-button>
-          <b-button variant="danger" size="sm" @click="deleteOption(row.index)">
-            delete
-          </b-button>
           <b-button
             type="submit"
             variant="primary"
@@ -62,7 +55,10 @@
             size="sm"
             @click="row.item.value.length ? allo(row) : ''"
           >
-            ok
+            Modifier
+          </b-button>
+          <b-button variant="danger" size="sm" @click="deleteOption(row.index)">
+            Supprimer
           </b-button>
         </b-form>
       </template>
@@ -92,14 +88,20 @@ export default {
     return {
       fieldSimple: [
         {
-          label: "label",
+          label: "Etiquetes",
           key: "text",
         },
         {
-          label: "value",
+          label: "Valeur",
           key: "value",
         },
-
+        {
+          label: "Prix",
+          key: "cout",
+          formatter(value) {
+            if (value) return value + " €";
+          },
+        },
         {
           label: "",
           key: "action",

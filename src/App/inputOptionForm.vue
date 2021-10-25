@@ -161,3 +161,12 @@ export default {
   },
 };
 </script>
+<style lang="scss">
+legend {
+  font-weight: 600;
+}
+.form-control,
+.custom-select {
+  font-weight: 300;
+}
+</style>

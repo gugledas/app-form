@@ -33,7 +33,7 @@
 
 <script>
 import { snakeCase } from "snake-case";
-import ValidationFields from "../EditsFields/ValidationFields";
+import ValidationFields from "../EditsFields/ValidationFields.vue";
 import manageImages from "../EditsFields/manage-images.vue";
 export default {
   name: "FormMarkup",

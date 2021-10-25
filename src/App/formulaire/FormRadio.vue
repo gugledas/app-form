@@ -4,78 +4,90 @@
       <b-col sm="12">
         <compositeHeaderField :field="fields"></compositeHeaderField>
       </b-col>
+      <b-col sm="12">
+        <b-card no-body border-0 class="mb-4">
+          <b-card-body>
+            <b-row>
+              <!-- form option -->
+              <b-col cols="12">
+                <h5 class="mb-3">Gerer les valeurs</h5>
+                <b-form @submit="onPush" @reset="onReset">
+                  <b-form-group
+                    id="option-label"
+                    label="Option label"
+                    label-for="input-option-label"
+                  >
+                    <b-input-group>
+                      <b-form-input
+                        v-model="inputOptions.text"
+                        id="option-label"
+                        placeholder="Enter label"
+                        required
+                        @input="automaticValue"
+                      ></b-form-input>
+                      <b-form-input
+                        v-model="inputOptions.value"
+                        id="option-val"
+                        placeholder="Enter value of option"
+                        required
+                        :readonly="readonlyValue"
+                        @dblclick="toogleReadOnlyValue"
+                      ></b-form-input>
+                    </b-input-group>
+                  </b-form-group>
+                  <b-form-group label="Cout €">
+                    <b-form-input
+                      v-model="inputOptions.cout"
+                      placeholder="Enter label"
+                      type="number"
+                    ></b-form-input>
+                  </b-form-group>
 
+                  <b-button
+                    type="submit"
+                    variant="primary"
+                    size="sm"
+                    class="mr-2"
+                  >
+                    Ajouter
+                  </b-button>
+                  <b-button type="reset" variant="danger" size="sm">
+                    Re-initialiser
+                  </b-button>
+                </b-form>
+                <div class="bg-light p-1"></div>
+                <!--  -->
+              </b-col>
+              <b-col v-if="fields.options.length" sm="12"
+                ><b-card no-body class="mb-1" v-if="true">
+                  <b-card-header header-tag="header" class="p-1" role="tab">
+                    <b-button block v-b-toggle.accordion-option variant="info">
+                      Voir les valeurs
+                    </b-button>
+                  </b-card-header>
+                  <b-collapse
+                    id="accordion-option"
+                    accordion="my-accordion"
+                    role="tabpanel"
+                  >
+                    <b-card-body class="p-2">
+                      <option-table :options="fields.options"></option-table>
+                    </b-card-body>
+                  </b-collapse> </b-card
+              ></b-col>
+            </b-row>
+          </b-card-body>
+        </b-card>
+      </b-col>
+      <!-- Valeur par defaut -->
       <b-col cols="7">
-        <b-form-group label="value">
+        <b-form-group label="Selectionner une valeur par defaut">
           <b-form-select
             v-model="fields.value"
             :options="fields.options"
-            placeholder="choose default value"
           ></b-form-select>
         </b-form-group>
       </b-col>
-
-      <!-- form option -->
-      <b-col cols="12">
-        <label>Options</label>
-        <b-form @submit="onPush" @reset="onReset" class="border p-3">
-          <b-form-group
-            id="option-label"
-            label="Option label"
-            label-for="input-option-label"
-          >
-            <b-input-group>
-              <b-form-input
-                v-model="inputOptions.text"
-                id="option-label"
-                placeholder="Enter label"
-                required
-                @input="automaticValue"
-              ></b-form-input>
-              <b-form-input
-                v-model="inputOptions.value"
-                id="option-val"
-                placeholder="Enter value of option"
-                required
-                :readonly="readonlyValue"
-                @dblclick="toogleReadOnlyValue"
-              ></b-form-input>
-            </b-input-group>
-          </b-form-group>
-          <b-form-group label="Cout €">
-            <b-form-input
-              v-model="inputOptions.cout"
-              placeholder="Enter label"
-              type="number"
-            ></b-form-input>
-          </b-form-group>
-
-          <b-button type="submit" variant="primary" size="sm" class="mr-2">
-            Push
-          </b-button>
-          <b-button type="reset" variant="danger" size="sm">Reset</b-button>
-        </b-form>
-        <div class="bg-light p-1"></div>
-
-        <!--  -->
-      </b-col>
-      <b-col v-if="fields.options.length"
-        ><b-card no-body class="mb-1" v-if="true">
-          <b-card-header header-tag="header" class="p-1" role="tab">
-            <b-button block v-b-toggle.accordion-option variant="dark">
-              See options
-            </b-button>
-          </b-card-header>
-          <b-collapse
-            id="accordion-option"
-            accordion="my-accordion"
-            role="tabpanel"
-          >
-            <b-card-body class="p-2">
-              <option-table :options="fields.options"></option-table>
-            </b-card-body>
-          </b-collapse> </b-card
-      ></b-col>
     </b-row>
 
     <ValidationFields :field="fields"></ValidationFields>

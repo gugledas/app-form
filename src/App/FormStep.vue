@@ -59,6 +59,7 @@
       <StepConfiguration ref="StepConfiguration"></StepConfiguration>
       <cloneCurrentStepe />
     </div>
+    <pre> {{ formDatas }} </pre>
   </div>
 </template>
 

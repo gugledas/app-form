@@ -192,6 +192,9 @@ export default {
     this.$store.dispatch("loadStepsDatas", { formId: this.id }).then(() => {
       this.busy = false;
     });
+    setTimeout(() => {
+      console.log("form", this.form);
+    }, 5000);
   },
   computed: {
     ...mapState([

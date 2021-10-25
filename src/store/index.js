@@ -410,60 +410,42 @@ export default new Vuex.Store({
      */
     loadStepsDatas({ commit, state }, payload) {
       commit("SET_CURRRENT_FORM", {});
-      const nbreItems = 10;
       const loadProgressiveDate = (pagination = 0) => {
         return new Promise((resolv) => {
-          var datas =
-            " select f.id,f.name,f.description,f.img,f.forms, st.step from `appformmanager_fomrs` as f ";
-          datas +=
-            " left join appformmanager_fomrs_steps as st ON st.formid = f.id ";
-          datas += " where f.id='" + payload.formId + "'";
-          datas +=
-            " order by st.order ASC limit " +
-            nbreItems +
-            " OFFSET " +
-            pagination;
-          config.getData(datas).then((rep) => {
-            if (rep.data[0] && rep.data[0].id) {
-              // Ce bloc est à supprimer.
-              rep.data[0].forms = JSON.parse(rep.data[0].forms);
-              if (
-                rep.data[0] &&
-                rep.data[0].forms &&
-                rep.data[0].forms.length > 0
-              ) {
-                alert("not clen");
-                commit("SET_CURRRENT_FORM", rep.data[0]);
-                resolv("null");
-                return false;
-              }
-              //si cest le premier passage, on met en place le formulaire avec quelques champs.
-              if (!pagination) {
-                var steps = [];
-                rep.data.forEach((step) => {
-                  steps.push(JSON.parse(step.step));
-                });
-                var result = {
-                  id: rep.data[0].id,
-                  name: rep.data[0].name,
-                  description: rep.data[0].description,
-                  img: rep.data[0].img,
-                  forms: steps,
-                };
-                commit("SET_CURRRENT_FORM", result);
-              } else {
-                console.log("Autre requet : ", rep.data);
-                rep.data.forEach((step) => {
-                  state.form.forms.push(JSON.parse(step.step));
-                });
-              }
-              // Si le resultat est egal au nombre d'element il est possible que des données existe encore.
-              if (nbreItems === rep.data.length) {
-                pagination += nbreItems;
+          config
+            .getData(
+              payload,
+              false,
+              "/appformmanager/getforms-steps/" + pagination
+            )
+            .then((rep) => {
+              console.log("response : ", rep);
+              if (rep.data && rep.data[0] && rep.data[0].id) {
+                //si cest le premier passage, on met en place le formulaire avec quelques champs.
+                if (!pagination) {
+                  var steps = [];
+                  rep.data.forEach((step) => {
+                    steps.push(step.step);
+                  });
+                  var result = {
+                    id: rep.data[0].id,
+                    name: rep.data[0].name,
+                    description: rep.data[0].description,
+                    img: rep.data[0].img,
+                    forms: steps,
+                  };
+                  commit("SET_CURRRENT_FORM", result);
+                } else {
+                  console.log("Autre requet : ", rep.data);
+                  rep.data.forEach((step) => {
+                    state.form.forms.push(step.step);
+                  });
+                }
+                // on incremente de +1
+                pagination += 1;
                 resolv(loadProgressiveDate(pagination));
               } else resolv(null);
-            } else resolv(null);
-          });
+            });
         });
       };
       return loadProgressiveDate();

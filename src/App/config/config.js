@@ -6,7 +6,7 @@ Vue.use(BVToastPlugin);
 
 export default {
   ...AjaxToastBootStrap,
-  TestDomain: "http://lesroisdelareno.habeuk.com",
+  TestDomain: "http://v2lesroisdelareno.kksa", //"http://lesroisdelareno.habeuk.com",
   typeSelection: ["radio", "select", "checkbox"],
   /**
    * Permet de recuperer les données en BD.
@@ -14,8 +14,8 @@ export default {
    * @param {*} mode
    * @returns
    */
-  getData(datas, mode = false) {
-    return this.bPost("/query-ajax/select", datas, {}, mode);
+  getData(datas, mode = false, url = "/query-ajax/select") {
+    return this.bPost(url, datas, {}, mode);
   },
   /**
    * Permet d'ajouter et d'editer un formulaire.
@@ -42,8 +42,8 @@ export default {
        * On prepare la suppression des anciennes etapes.
        */
       if (datas.id) {
-        var deleteData = {
-          table: "appformmanager_fomrs_steps",
+        result.push({
+          table: "appformmanager_steps",
           action: "delete",
           fields: {},
           where: [
@@ -52,8 +52,18 @@ export default {
               value: datas.id,
             },
           ],
-        };
-        result.push(deleteData);
+        });
+        result.push({
+          table: "appformmanager_steps_fields",
+          action: "delete",
+          fields: {},
+          where: [
+            {
+              column: "formid",
+              value: datas.id,
+            },
+          ],
+        });
       }
       /**
        * On prepare la sauvegarde pour la table : appformmanager_fomrs
@@ -84,15 +94,26 @@ export default {
          */
         if (datas.forms && datas.id) {
           datas.forms.forEach((step, id) => {
-            var tableStep = {
-              table: "appformmanager_fomrs_steps",
+            result.push({
+              table: "appformmanager_steps",
               fields: {
                 formid: datas.id,
-                step: JSON.stringify(step),
-                order: id,
+                stepid: id,
+                info: JSON.stringify(step.info),
+                states: JSON.stringify(step.states),
               },
-            };
-            result.push(tableStep);
+            });
+            step.fields.forEach((field) => {
+              result.push({
+                table: "appformmanager_steps_fields",
+                fields: {
+                  formid: datas.id,
+                  stepid: id,
+                  defaultjson: JSON.stringify(field),
+                  machine_name: field.name,
+                },
+              });
+            });
           });
         }
       }

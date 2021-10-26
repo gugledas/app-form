@@ -55,11 +55,12 @@
         :isOpen="modalFormFieldIsOpen"
         ref="formField"
         :nouveau="true"
+        id-modal="form-step"
       ></add-form-field>
       <StepConfiguration ref="StepConfiguration"></StepConfiguration>
       <cloneCurrentStepe />
     </div>
-    <pre> {{ formDatas }} </pre>
+    <pre> formDatas : {{ formDatas }} </pre>
   </div>
 </template>
 
@@ -70,7 +71,6 @@ import forms from "./input/forms.vue";
 
 export default {
   components: {
-    AddFormField: () => import("./AddFormField.vue"),
     StepConfiguration: () => import("./ConfigsForms/StepConfiguration.vue"),
     cloneCurrentStepe: () => import("./ConfigsForms/cloneCurrentStepe.vue"),
     forms,

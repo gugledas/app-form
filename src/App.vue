@@ -9,7 +9,10 @@
 <script>
 import Vue from "vue";
 import loaderIcon from "./App/components/loaderIcon.vue";
+import AddFormField from "./App/AddFormField.vue";
 Vue.component("loaderIcon", loaderIcon);
+Vue.component("AddFormField", AddFormField);
+alert("App.vue22");
 export default {
   name: "App",
 };

@@ -419,7 +419,7 @@ export default new Vuex.Store({
               "/appformmanager/getforms-steps/" + pagination
             )
             .then((rep) => {
-              console.log("response : ", rep);
+              //console.log("response : ", rep);
               if (rep.data && rep.data[0] && rep.data[0].id) {
                 //si cest le premier passage, on met en place le formulaire avec quelques champs.
                 if (!pagination) {
@@ -436,7 +436,7 @@ export default new Vuex.Store({
                   };
                   commit("SET_CURRRENT_FORM", result);
                 } else {
-                  console.log("Autre requet : ", rep.data);
+                  //console.log("Autre requet : ", rep.data);
                   rep.data.forEach((step) => {
                     state.form.forms.push(step.step);
                   });

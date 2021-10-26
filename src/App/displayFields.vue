@@ -1,31 +1,13 @@
 <template>
   <div>
     <div>
-      <!-- fields value: {{ formDatas.fields[id].value }}-- fields selected:{{
-          formDatas.fields[id].selected
-        }} -->
       <!-- affiche sur le cas du type codepostal -->
       <b-row align-h="center" v-if="type == 'codepostal'">
         <b-col>
           <autocomplete :field="formDatas.fields[id]"></autocomplete>
         </b-col>
       </b-row>
-      <!-- affiche pour le cas du type checkbox image -->
-      <!--
-        <b-row align-h="center" class="m-0" v-if="type == 'checkboximg'">
-          <div
-            v-for="(img, i) in formDatas.fields[id].options"
-            :key="i"
-            @click="getImage(i)"
-          >
-            <imageCheck
-              :description="img.label"
-              :isActive="img.isActive"
-              :urlImage="baseUrl + img.img"
-            />
-          </div>
-        </b-row>
-      -->
+
       <ImageCheck
         :field="formDatas.fields[id]"
         v-if="type == 'checkboximg'"
@@ -38,7 +20,6 @@
       ></label-row>
 
       <!-- affiche sur le cas du type markup label up -->
-
       <label-up
         v-if="type == 'numberup'"
         :field="formDatas.fields[id]"
@@ -49,7 +30,6 @@
       </b-row>
 
       <!-- affiche sur le cas du type markup title && image -->
-
       <markup-title
         v-if="type == 'markuptitle'"
         :field="formDatas.fields[id]"
@@ -60,17 +40,9 @@
       ></markup-image>
 
       <!-- affiche pour le cas du type radio -->
-
-      <radio v-if="type == 'radio'" :field="formDatas.fields[id]"></radio>
-
-      <!-- affiche pour le cas du type input
-
-      <InputText
-        :field="formDatas.fields[id]"
-        v-if="type == 'input'"
-      ></InputText>
-      -->
-      <!-- affiche pour le cas du type select -->
+      <div v-if="type == 'radio'">
+        <radio :field="formDatas.fields[id]"></radio>
+      </div>
 
       <select-display
         v-if="type == 'select'"
@@ -78,14 +50,12 @@
       ></select-display>
 
       <!-- affiche pour le cas du type checkbox -->
-
       <checkbox
         v-if="type == 'checkbox'"
         :field="confirmStructureField(formDatas.fields[id])"
       ></checkbox>
 
       <!-- affiche pour le cas du type radio with description -->
-
       <radio-desc
         v-if="type == 'radiodesc'"
         :field="formDatas.fields[id]"
@@ -98,11 +68,13 @@
         :field="formDatas.fields[id]"
         v-if="type == 'recapitulatif'"
       ></recapitulatif>
+
       <!-- -->
       <userlogin
         :field="formDatas.fields[id]"
         v-if="type == 'userlogin'"
       ></userlogin>
+
       <!-- -->
       <AideFinanciere
         :field="formDatas.fields[id]"
@@ -120,7 +92,6 @@
         >
           <b-icon icon="pencil" font-scale="1" class=""></b-icon>
         </b-button>
-
         <b-button
           class="border-0"
           size="sm"
@@ -130,7 +101,6 @@
           title="Supprimer ce champs"
           ><b-icon icon="trash" font-scale="1" class=""></b-icon
         ></b-button>
-
         <b-button
           class="border-0"
           size="sm"
@@ -140,7 +110,6 @@
           title="Deplacer vers le haut"
           ><b-icon icon="arrow-bar-up" font-scale="1" class=""></b-icon
         ></b-button>
-
         <b-button
           class="border-0"
           size="sm"
@@ -163,23 +132,17 @@
       </div>
     </div>
 
-    <add-form-field
-      :isOpen="isOpen"
-      ref="editFormField"
-      :fields="fields"
-      :nouveau="false"
-    ></add-form-field>
+    <pre> id: {{ id }} {{ fields }} </pre>
   </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
-import AddFormField from "./AddFormField.vue";
+
 import Utilities from "./Utilities.js";
 
 export default {
   components: {
-    AddFormField,
     ImageCheck: () => import("./input/ImageCheckV2.vue"),
     IncrementNumber: () => import("./input/IncrementNumber.vue"),
     //InputText: () => import("./input/InputText.vue"),
@@ -213,7 +176,6 @@ export default {
       typeFieldSelected: null,
       option: {},
       fields: Utilities.field(),
-      //datas to check form validity
       labelState: null,
     };
   },
@@ -250,8 +212,9 @@ export default {
       }
     },
     editFormField() {
-      //remove this line.
-      this.$refs.editFormField.openAddFormFieldPopUp();
+      var idModel = "modal-addForm--edit";
+      console.log("open modal : ", idModel);
+      this.$bvModal.show(idModel);
       this.fields = this.formDatas.fields[this.id];
     },
     deleteField() {
@@ -262,7 +225,6 @@ export default {
           console.log("iiippp");
         }
       }
-      //this.fields = this.formDatas.fields[this.id];
     },
     moveToDown() {
       const idN = this.id + 1;
@@ -273,7 +235,6 @@ export default {
       Utilities.array_move(this.formDatas.fields, this.id, idP);
     },
     cloneField() {
-      //console.log("this.formDatas.fields : ", this.formDatas.fields[this.id]);
       const field = JSON.stringify(this.formDatas.fields[this.id]);
       this.formDatas.fields.push(JSON.parse(field));
     },

@@ -3,7 +3,7 @@
     size="lg"
     :id="'modal-addForm--' + idModal"
     ref="addForm"
-    title="Ajouter des champs dans l'etape"
+    title="Ajouter un champs dans le gestionnaire de champs"
     hide-footer
     @ok="handleOk"
     :content-class="['mange-add-field']"

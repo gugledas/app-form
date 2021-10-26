@@ -1,12 +1,13 @@
 <template>
   <b-modal
     size="lg"
-    id="modal-addForm"
+    :id="'modal-addForm--' + idModal"
     ref="addForm"
-    title="Ajouter des champs dans l'etape"
+    title="Ajouter un champs dans cette etape"
     hide-footer
     v-model="isOpen"
     @ok="handleOk"
+    :content-class="['mange-add-field']"
   >
     <form
       ref="forme"
@@ -14,45 +15,80 @@
       @reset="resetModal"
       @hidden="resetModal"
     >
-      <b-row>
-        <b-col cols="7">
+      <b-row class="">
+        <b-col md="6">
           <b-form-group
             label="Sélectionner un type de champs"
-            label-for="type-input"
             invalid-feedback="type is required"
+            v-if="!dynamicfield"
           >
             <b-form-select
               v-model="fields.type"
               :options="typeOptions"
-              id="type-input"
+              required
+            ></b-form-select>
+          </b-form-group>
+          <b-form-group
+            label="Formulaire"
+            invalid-feedback="type is required"
+            v-if="dynamicfield"
+          >
+            <b-form-select
+              v-model="typeFormId"
+              :options="formItems"
+              required
+            ></b-form-select>
+          </b-form-group>
+        </b-col>
+        <b-col md="6">
+          <b-form-group>
+            <b-form-checkbox switch size="lg" v-model="dynamicfield">
+              Champs dynamique
+            </b-form-checkbox>
+          </b-form-group>
+          <b-form-group
+            label="Sélectionner un sous group"
+            invalid-feedback="type is required"
+            label-cols-md="6"
+            v-if="dynamicfield"
+          >
+            <b-form-select
+              v-model="fields.type"
+              :options="typeOptions"
               required
             ></b-form-select>
           </b-form-group>
         </b-col>
       </b-row>
       <!-- !-->
-      <div>
+      <div class="content-config-field">
         <input-option-form
+          v-if="!dynamicfield"
           :type="fields.type"
           :fields="fields"
         ></input-option-form>
+        <div v-if="dynamicfield">
+          <hr />
+        </div>
       </div>
 
       <b-row align-h="end">
         <div class="mr-3">
-          <b-button type="submit" variant="primary" class="mr-2">{{
-            nameButtonOk
-          }}</b-button>
+          <b-button type="submit" variant="primary" class="mr-2">
+            {{ nameButtonOk }}
+          </b-button>
         </div>
       </b-row>
     </form>
+    <pre> formId {{ formId }} </pre>
   </b-modal>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
 import inputOptionForm from "./inputOptionForm.vue";
 import Utilities from "./Utilities.js";
+import config from "./config/config";
 export default {
   components: { inputOptionForm },
   props: {
@@ -72,23 +108,55 @@ export default {
       type: String,
       default: "",
     },
+    idModal: {
+      type: [String, Number],
+      required: true,
+    },
   },
   data: () => {
     return {
       isOpen: false,
       typeFieldSelected: null,
       type: null,
-
       //datas to check form validity
       labelState: null,
-      typeOptions: Utilities.typeOptions(),
+      typeOptions: [],
+      dynamicfield: true,
+      typeFormId: "",
     };
   },
-  watch: {},
+  mounted() {
+    this.typeFormId = this.formId;
+    console.log(" Chargement de modal AddFormField : ", this.idModal);
+    this.$root.$on("bv::modal::show", (bvEvent, modalId) => {
+      console.log(
+        " Modal is about to be shown",
+        bvEvent,
+        "\n id modal : ",
+        modalId
+      );
+    });
+  },
+  watch: {
+    dynamicfield() {
+      this.watchDynamicFields();
+    },
+    typeFormId() {
+      this.loadDynamicFields();
+    },
+  },
   computed: {
     ...mapGetters(["formDatas"]),
+    ...mapState(["items", "formId"]),
     nameButtonOk() {
       return this.nouveau ? "Ajouter" : "Mettre à jour";
+    },
+    formItems() {
+      var r = [];
+      this.items.forEach((item) => {
+        r.push({ text: item.name, value: item.id });
+      });
+      return r;
     },
   },
   methods: {
@@ -107,11 +175,6 @@ export default {
       this.formDatas.fields.push(sh);
       Utilities.resetField(this.fields);
     },
-    //
-    openAddFormFieldPopUp() {
-      this.isOpen = !this.isOpen;
-    },
-
     resetModal() {
       this.type = null;
     },
@@ -123,8 +186,6 @@ export default {
     },
     handleSubmit(event) {
       event.preventDefault();
-      // Exit when the form isn't valid
-
       this.isOpen = !this.isOpen;
       if (this.nouveau) {
         this.optionAddToFields();
@@ -136,6 +197,36 @@ export default {
         this.$bvModal.hide("modal-prevent-closing");
       });
     },
+    /**
+     * Charge les options en function du choix de l'utilisateur.
+     */
+    watchDynamicFields() {
+      if (this.dynamicfield) {
+        this.loadDynamicFields();
+      } else this.typeOptions = Utilities.typeOptions();
+    },
+    loadDynamicFields() {
+      console.log("loadDynamicFields");
+      var data = " select * from appformmanager_fields ";
+      if (this.typeFormId) {
+        data += " where formid='" + this.typeFormId + "'";
+      }
+      config.getData(data).then((resp) => {
+        var results = [];
+        resp.data.forEach((item) => {
+          var jsonfield = JSON.parse(item.jsonfield);
+          results.push({ value: item.machine_name, text: jsonfield.label });
+        });
+        this.typeOptions = results;
+      });
+    },
   },
 };
 </script>
+<style lang="scss">
+.mange-add-field {
+  .content-config-field {
+    min-height: 300px;
+  }
+}
+</style>

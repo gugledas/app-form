@@ -64,7 +64,7 @@ export default {
   },
   methods: {
     editerField() {
-      this.$bvModal.show("modal-addForm--edit" + this.row.index);
+      this.$bvModal.show("modal-addForm--edit" + this.id);
     },
     /**
      * --

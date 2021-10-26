@@ -55,12 +55,18 @@
       </b-col>
     </b-row>
     <getStatusValidation :validation-observer="v"></getStatusValidation>
+    <add-form-field
+      :fields="{}"
+      :nouveau="false"
+      :id-modal="'edit'"
+    ></add-form-field>
   </ValidationObserver>
 </template>
 
 <script>
 import { ValidationObserver } from "vee-validate";
 import DisplayFields from "../displayFields.vue";
+
 import getStatusValidation from "../EditsFields/getStatusValidation.vue";
 import { mapGetters, mapState } from "vuex";
 

@@ -26,7 +26,6 @@
         ></component>
       </template>
     </b-table>
-    <pre> fieldsRender :  {{ fieldsRender }} </pre>
   </div>
 </template>
 

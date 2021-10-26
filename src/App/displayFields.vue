@@ -1,31 +1,13 @@
+<!-- Ce fichier gerer l'affichege et la configuration des champs -->
 <template>
   <div>
     <div>
-      <!-- fields value: {{ formDatas.fields[id].value }}-- fields selected:{{
-          formDatas.fields[id].selected
-        }} -->
-      <!-- affiche sur le cas du type codepostal -->
       <b-row align-h="center" v-if="type == 'codepostal'">
         <b-col>
           <autocomplete :field="formDatas.fields[id]"></autocomplete>
         </b-col>
       </b-row>
-      <!-- affiche pour le cas du type checkbox image -->
-      <!--
-        <b-row align-h="center" class="m-0" v-if="type == 'checkboximg'">
-          <div
-            v-for="(img, i) in formDatas.fields[id].options"
-            :key="i"
-            @click="getImage(i)"
-          >
-            <imageCheck
-              :description="img.label"
-              :isActive="img.isActive"
-              :urlImage="baseUrl + img.img"
-            />
-          </div>
-        </b-row>
-      -->
+
       <ImageCheck
         :field="formDatas.fields[id]"
         v-if="type == 'checkboximg'"
@@ -164,10 +146,10 @@
     </div>
 
     <add-form-field
-      :isOpen="isOpen"
       ref="editFormField"
-      :fields="fields"
+      :field="field"
       :nouveau="false"
+      :id-modal="'edit' + id"
     ></add-form-field>
   </div>
 </template>
@@ -209,11 +191,9 @@ export default {
   },
   data: () => {
     return {
-      isOpen: false,
       typeFieldSelected: null,
       option: {},
-      fields: Utilities.field(),
-      //datas to check form validity
+      field: {},
       labelState: null,
     };
   },
@@ -250,9 +230,11 @@ export default {
       }
     },
     editFormField() {
-      //remove this line.
-      this.$refs.editFormField.openAddFormFieldPopUp();
-      this.fields = this.formDatas.fields[this.id];
+      // Remove this line.
+      var idModel = "modal-addForm--edit" + this.id;
+      console.log("open modal : ", idModel);
+      this.$bvModal.show(idModel);
+      this.field = this.formDatas.fields[this.id];
     },
     deleteField() {
       var all = this.formDatas.fields;
@@ -262,7 +244,6 @@ export default {
           console.log("iiippp");
         }
       }
-      //this.fields = this.formDatas.fields[this.id];
     },
     moveToDown() {
       const idN = this.id + 1;

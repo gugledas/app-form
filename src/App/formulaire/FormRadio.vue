@@ -98,6 +98,7 @@
 import { snakeCase } from "snake-case";
 import ValidationFields from "../EditsFields/ValidationFields";
 import OptionTable from "../OptionTable.vue";
+import compositeHeaderField from "../EditsFields/compositeHeaderField.vue";
 export default {
   props: {
     fields: {
@@ -116,8 +117,7 @@ export default {
   components: {
     ValidationFields,
     OptionTable,
-    compositeHeaderField: () =>
-      import("../EditsFields/compositeHeaderField.vue"),
+    compositeHeaderField,
   },
   data() {
     return {

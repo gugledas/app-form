@@ -71,17 +71,6 @@ export default {
     DisplayFields,
     getStatusValidation,
   },
-  data() {
-    return {
-      //
-    };
-  },
-  mounted() {
-    //
-  },
-  watch: {
-    //
-  },
   computed: {
     ...mapState(["form", "mode", "stepsIndex", "StatusStepsIndexs", "price"]),
     ...mapGetters(["formDatas", "uid"]),

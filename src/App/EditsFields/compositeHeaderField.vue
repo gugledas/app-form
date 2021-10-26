@@ -73,16 +73,17 @@ export default {
   },
   methods: {
     input() {
-      if (
-        this.readonly &&
-        (this.field.label.length <= 32 || this.field.name.length <= 32)
-      ) {
-        this.field.name = snakeCase(this.field.label);
+      if (!this.field.override) {
+        if (
+          this.readonly &&
+          (this.field.label.length <= 32 || this.field.name.length <= 32)
+        ) {
+          this.field.name = snakeCase(this.field.label);
+        }
       }
     },
     toogleReadOnly() {
-      if (this.readonly) this.readonly = false;
-      else this.readonly = true;
+      if (!this.field.override) this.readonly = !this.readonly;
     },
   },
 };

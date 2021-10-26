@@ -104,15 +104,22 @@ export default {
               },
             });
             step.fields.forEach((field) => {
-              result.push({
+              const f = {
                 table: "appformmanager_steps_fields",
                 fields: {
                   formid: datas.id,
                   stepid: id,
-                  defaultjson: JSON.stringify(field),
                   machine_name: field.name,
                 },
-              });
+              };
+              if (field.override) {
+                if (field.override.label !== field.label) {
+                  f.fields.label = field.label;
+                }
+              } else {
+                f.fields.defaultjson = JSON.stringify(field);
+              }
+              result.push(f);
             });
           });
         }

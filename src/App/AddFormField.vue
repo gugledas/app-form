@@ -41,22 +41,10 @@
           </b-form-group>
         </b-col>
         <b-col md="6">
-          <b-form-group>
+          <b-form-group :isOverride="isOverride">
             <b-form-checkbox switch size="lg" v-model="dynamicfield">
               Champs dynamique
             </b-form-checkbox>
-          </b-form-group>
-          <b-form-group
-            label="Sélectionner un sous group"
-            invalid-feedback="type is required"
-            label-cols-md="6"
-            v-if="dynamicfield"
-            class="d-none"
-          >
-            <b-form-select
-              v-model="field.type"
-              :options="typeOptions"
-            ></b-form-select>
           </b-form-group>
         </b-col>
       </b-row>
@@ -69,6 +57,16 @@
         ></input-option-form>
         <div v-if="dynamicfield">
           <hr />
+          <b-form-group
+            label="Sélectionner le champs dynamique"
+            invalid-feedback="type is required"
+          >
+            <b-form-select
+              v-model="field.name"
+              :options="OptionDynamicsField"
+              @change="selectDynamicLabel"
+            ></b-form-select>
+          </b-form-group>
           <compositeHeaderField :field="field"></compositeHeaderField>
         </div>
       </div>
@@ -81,6 +79,7 @@
         </div>
       </b-row>
     </form>
+
     <pre> field {{ field }} </pre>
   </b-modal>
 </template>
@@ -123,15 +122,10 @@ export default {
       //datas to check form validity
       labelState: null,
       typeOptions: Utilities.typeOptions(),
+      OptionDynamicsField: [],
       dynamicfield: false,
       typeFormId: "",
     };
-  },
-  mounted() {
-    this.typeFormId = this.formId;
-    if (this.field.override) {
-      this.dynamicfield = true;
-    }
   },
   watch: {
     dynamicfield() {
@@ -154,8 +148,21 @@ export default {
       });
       return r;
     },
+    isOverride() {
+      this.init();
+      if (this.field.override) {
+        return true;
+      }
+      return false;
+    },
   },
   methods: {
+    init() {
+      this.typeFormId = this.formId;
+      if (this.field.override) {
+        this.dynamicfield = true;
+      }
+    },
     optionAddToFields() {
       class proto {
         constructor(hauteur) {
@@ -212,8 +219,12 @@ export default {
           var jsonfield = JSON.parse(item.jsonfield);
           results.push({ value: item.machine_name, text: jsonfield.label });
         });
-        // this.typeOptions = results;
-        // on injecte cette liste dans le bon select.
+        this.OptionDynamicsField = results;
+      });
+    },
+    selectDynamicLabel(val) {
+      this.OptionDynamicsField.forEach((option) => {
+        if (option.value == val) this.field.label = option.text;
       });
     },
   },
@@ -222,7 +233,8 @@ export default {
 <style lang="scss">
 .mange-add-field {
   .content-config-field {
-    min-height: 300px;
+    min-height: 150px;
+    margin-bottom: 3rem;
   }
 }
 </style>

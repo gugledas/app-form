@@ -146,7 +146,7 @@
     </div>
 
     <add-form-field
-      ref="editFormField"
+      :ref="'editFormField' + id"
       :field="field"
       :nouveau="false"
       :id-modal="'edit' + id"
@@ -230,11 +230,9 @@ export default {
       }
     },
     editFormField() {
-      // Remove this line.
       var idModel = "modal-addForm--edit" + this.id;
-      console.log("open modal : ", idModel);
-      this.$bvModal.show(idModel);
       this.field = this.formDatas.fields[this.id];
+      this.$bvModal.show(idModel);
     },
     deleteField() {
       var all = this.formDatas.fields;

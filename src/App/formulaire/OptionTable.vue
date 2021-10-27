@@ -2,7 +2,7 @@
   <div>
     <b-table
       :items="options"
-      :fields="fields"
+      :fields="defaultOptions"
       responsive
       head-variant="light"
       :outlined="true"
@@ -48,6 +48,9 @@
           <b-form-group label="cout (€)">
             <b-form-input type="number" v-model="row.item.cout"></b-form-input>
           </b-form-group>
+          <div v-if="row.item.img">
+            <img :src="row.item.img" style="width=100px;" />
+          </div>
           <b-button
             type="submit"
             variant="primary"
@@ -72,15 +75,13 @@ import { snakeCase } from "snake-case";
 export default {
   name: "OptionsTable",
   props: {
+    field: {
+      type: Object,
+      required: true,
+    },
     desc: {
       type: Boolean,
-      default: false,
-    },
-    options: {
-      type: Array,
-      default: function () {
-        return [];
-      },
+      required: true,
     },
   },
   components: {},
@@ -120,19 +121,17 @@ export default {
           label: "desc",
           key: "description",
         },
-
         {
           label: "",
           key: "action",
         },
       ],
       readonlyValue: true,
+      options: this.field.options,
     };
   },
-  mounted() {},
-  watch: {},
   computed: {
-    fields() {
+    defaultOptions() {
       if (this.desc) {
         return this.fieldDesc;
       } else return this.fieldSimple;
@@ -148,13 +147,6 @@ export default {
         this.options[row.index].value = snakeCase(this.options[row.index].text);
       }
     },
-    ArrayValue() {
-      if (this.arrayValue.length) {
-        this.fields.value = this.arrayValue;
-      } else {
-        this.fields.value = [];
-      }
-    },
     onPush(event) {
       event.preventDefault();
     },
@@ -166,8 +158,6 @@ export default {
     },
     deleteOption(index) {
       var all = this.options;
-      console.log("i", all, index);
-
       for (var i = all.length - 1; i >= 0; i--) {
         if (i === index) {
           all.splice(i, 1);
@@ -178,5 +168,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped></style>

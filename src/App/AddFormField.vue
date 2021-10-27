@@ -63,11 +63,11 @@
       <!-- !-->
       <div class="content-config-field">
         <input-option-form
-          v-if="!dynamicfield || !field.override"
+          v-if="!dynamicfield"
           :type="field.type"
-          :fields="field"
+          :field="field"
         ></input-option-form>
-        <div v-if="dynamicfield || field.override">
+        <div v-if="dynamicfield">
           <hr />
           <compositeHeaderField :field="field"></compositeHeaderField>
         </div>
@@ -122,13 +122,16 @@ export default {
       type: null,
       //datas to check form validity
       labelState: null,
-      typeOptions: [],
-      dynamicfield: true,
+      typeOptions: Utilities.typeOptions(),
+      dynamicfield: false,
       typeFormId: "",
     };
   },
   mounted() {
     this.typeFormId = this.formId;
+    if (this.field.override) {
+      this.dynamicfield = true;
+    }
   },
   watch: {
     dynamicfield() {
@@ -209,7 +212,8 @@ export default {
           var jsonfield = JSON.parse(item.jsonfield);
           results.push({ value: item.machine_name, text: jsonfield.label });
         });
-        this.typeOptions = results;
+        // this.typeOptions = results;
+        // on injecte cette liste dans le bon select.
       });
     },
   },

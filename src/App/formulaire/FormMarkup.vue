@@ -5,29 +5,29 @@
         <b-form-group label="Label" invalid-feedback="Name is required">
           <b-input-group>
             <b-form-input
-              v-model="fields.label"
+              v-model="field.label"
               @input="input"
               required
             ></b-form-input>
             <b-form-input
               required
-              v-model="fields.name"
+              v-model="field.name"
               :readonly="readonly"
               @dblclick="toogleReadOnly"
             ></b-form-input>
           </b-input-group>
         </b-form-group>
       </b-col>
-      <b-col sm="12" v-if="fields.type == 'markupimage'">
+      <b-col sm="12" v-if="field.type == 'markupimage'">
         <b-form-group label="Url de l'image">
-          <b-form-input v-model="fields.imgUrl" id="image-url"></b-form-input>
+          <b-form-input v-model="field.imgUrl" id="image-url"></b-form-input>
         </b-form-group>
         <manageImages
           @ev_manage_images_img="ev_manage_images_img($event)"
         ></manageImages>
       </b-col>
     </b-row>
-    <ValidationFields :field="fields"></ValidationFields>
+    <ValidationFields :field="field"></ValidationFields>
   </div>
 </template>
 
@@ -42,7 +42,7 @@ export default {
       type: Boolean,
       default: true,
     },
-    fields: {
+    field: {
       type: Object,
       required: true,
       validator: function (val) {
@@ -76,17 +76,17 @@ export default {
   methods: {
     ev_manage_images_img(data) {
       if (data.url) {
-        this.fields.imgUrl = data.url;
+        this.field.imgUrl = data.url;
       }
     },
     inputValue() {
       if (this.value.length) {
-        return (this.fields.value = Number(this.value));
+        return (this.field.value = Number(this.value));
       }
     },
     input() {
-      if (this.readonly && this.fields.name.length <= 32) {
-        this.fields.name = snakeCase(this.fields.label);
+      if (this.readonly && this.field.name.length <= 32) {
+        this.field.name = snakeCase(this.field.label);
       }
     },
     toogleReadOnly() {

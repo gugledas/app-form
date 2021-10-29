@@ -2,7 +2,7 @@
   <b-container fluid="md">
     <div>
       <title-bar
-        :conf="{ col: true, text: 'Traitement : ' }"
+        :conf="{ col: true, text: 'Traitement devis : ' + titreDevis }"
         :id="id"
         :showDevis="false"
       ></title-bar>
@@ -115,6 +115,11 @@ export default {
         lists.push(this.ListeFieldsDisplay[i].key);
       }
       return lists;
+    },
+    titreDevis() {
+      if (this.traitementItems.length) {
+        return this.traitementItems[0].name;
+      } else return "";
     },
   },
   methods: {

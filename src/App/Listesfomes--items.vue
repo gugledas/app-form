@@ -162,7 +162,7 @@ export default {
     /**
      * uniquement pour les tests
      */
-    this.$store.dispatch("setCurrentUser", { uid: [{ value: 7 }] });
+    //this.$store.dispatch("setCurrentUser", { uid: [{ value: 7 }] });
   },
   computed: {
     ...mapState(["items"]),

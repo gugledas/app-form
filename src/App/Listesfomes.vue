@@ -19,15 +19,3 @@ export default {
   },
 };
 </script>
-
-<!--
- //nom du fichier en pascal.
- //<template>
- - le nom des attributs en kebab-case;
- - la valeur des attributs et des variables en camelCase;
- - function en PascalCase
- //props, data
- - variable en camelCase
- //methods
- - variable en PascalCase
--->

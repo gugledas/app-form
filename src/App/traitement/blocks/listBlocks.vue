@@ -58,7 +58,7 @@
       v-model="showModal"
       ref="modal"
       size="lg"
-      :title="'Résultat du formulaire'"
+      :title="'Résultat du formulaire ...'"
       scrollable
       class="super-hover"
       cancelTitle="Quitter"
@@ -103,6 +103,7 @@
           </b-card>
         </b-col>
       </b-row>
+
       <template #modal-footer>
         <div class="d-flex">
           <div class="w-100">
@@ -133,7 +134,7 @@
 </template>
 <script>
 import { mapState, mapGetters } from "vuex";
-import Utilities from "../../../store/utilities";
+//import Utilities from "../../../store/utilities";
 import config from "../../config/config";
 
 import { users } from "drupal-vuejs";
@@ -176,7 +177,7 @@ export default {
       validSteps2: [],
       traitementFormItemsDisplay: [],
       /**
-       * L'id du formulaire selectionné.
+       * L'id du devis selectionné.
        */
       currentDataId: null,
       /**
@@ -345,30 +346,44 @@ export default {
       this.$emit("ev-change-pagination", val);
     },
     getValideStepe(id) {
-      var self = this;
+      //var self = this;
       this.showModal = !this.showModal;
       this.validSteps2 = [];
       this.currentDataId = this.traitementFormItems[id].id;
       this.currentDevis = this.traitementFormItems[id];
-      const forms = this.traitementFormItems[id].datas;
-      this.validSteps2.push(forms[0]);
-      function execution(i) {
-        const loop = function (i) {
-          return new Promise((resolv) => {
-            Utilities.selectNextState(forms, i).then((rep) => {
-              resolv(rep);
+      this.validSteps2 = this.traitementFormItems[id].datas;
+      console.log("id : ", this.currentDataId);
+      if (!this.traitementFormItems[id]["all-steps-loaded"]) {
+        this.$store
+          .dispatch("loadAllStepOfDevis", {
+            DevisId: this.currentDataId,
+          })
+          .then((steps) => {
+            steps.forEach((row) => {
+              this.traitementFormItems[id].datas.push(row.step);
             });
           });
-        };
-        loop(i).then((kk) => {
-          if (kk && kk < 250) {
-            self.validSteps2.push(forms[kk]);
-            // Console.log("kk : ", kk);
-            execution(kk);
-          }
-        });
+        this.traitementFormItems[id]["all-steps-loaded"] = true;
       }
-      execution(0);
+
+      // this.validSteps2.push(forms[0]);
+      // function execution(i) {
+      //   const loop = function (i) {
+      //     return new Promise((resolv) => {
+      //       Utilities.selectNextState(forms, i).then((rep) => {
+      //         resolv(rep);
+      //       });
+      //     });
+      //   };
+      //   loop(i).then((kk) => {
+      //     if (kk && kk < 250) {
+      //       self.validSteps2.push(forms[kk]);
+      //       // Console.log("kk : ", kk);
+      //       execution(kk);
+      //     }
+      //   });
+      // }
+      // execution(0);
     },
   },
 };

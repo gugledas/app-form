@@ -129,26 +129,11 @@ export default new Vuex.Store({
   },
   getters: {
     /**
-     * Contient la liste des différents formulaire soumis d'un type de formulaire.
+     * Contient la liste des devis pour un formulaire.
+     *
      */
     traitementFormItems: (state) => {
-      const items = [];
-      var allitems = state.traitementItems;
-      if (allitems.length && state.traitementId !== null) {
-        for (let i = 0; i < allitems.length; i++) {
-          if (allitems[i].appformmanager_forms == state.traitementId) {
-            const form = allitems[i];
-            var TypeDonnee = typeof form.datas;
-            if (form.datas && form.datas !== "" && TypeDonnee === "string") {
-              form.datas = JSON.parse(form.datas);
-            } else if (form.datas === "") {
-              form.datas = [];
-            }
-            items.push(form);
-          }
-        }
-      }
-      return items;
+      return state.traitementItems;
     },
     /**
      * Contient l'information d'une etape du formulaire selectionné.
@@ -524,24 +509,65 @@ export default new Vuex.Store({
     loadTraitementDatas({ commit }, payload) {
       commit("SET_TRAITEMENT_ITEMS", []);
       return new Promise((resolv, reject) => {
+        var url = "/appformmanager/getdevis/0";
+        config
+          .getData(payload, false, url)
+          .then((reponse) => {
+            console.log("get traitement Items: ", reponse);
+            commit("SET_TRAITEMENT_ITEMS", reponse.data);
+            resolv(reponse.data);
+          })
+          .catch((error) => {
+            reject(error);
+          });
+      });
+    },
+
+    /**
+     * charge de maniere progressive les etapes d'un devis.
+     */
+    loadAllStepOfDevis({ state }, payload) {
+      return new Promise((resolv, reject) => {
+        var url = "/appformmanager/getdevis-steps/0";
+        config
+          .getData(payload, false, url)
+          .then((reponse) => {
+            console.log("all step of devis : ", reponse);
+            console.log("state.traitementItems : ", state.traitementItems);
+            resolv(reponse.data);
+          })
+          .catch((error) => {
+            reject(error);
+          });
+      });
+    },
+    /**
+     * Recupere les formulaires soumis en BD.
+     */
+    loadTraitementDatas00({ commit }, payload) {
+      commit("SET_TRAITEMENT_ITEMS", []);
+      return new Promise((resolv, reject) => {
         var uid = payload.uid ? payload.uid : null;
         var id = payload.id ? payload.id : null;
         var pagination = payload.pagination ? payload.pagination : 0;
         //console.log("loadTraitementDatas uid : ", uid, " id : ", id);
-        var datas =
-          " select * from `appformmanager_datas` where `appformmanager_forms` = " +
-          id;
+        var sqlrequest =
+          " select dv.price, dv.status, dv.domaineid, dv.created, dv.uid, st.step from `appformmanager_datas`";
+        sqlrequest +=
+          " inner join appformmanager_datas_steps as st ON st.datasid = dv.id ";
+        sqlrequest += " where dv.appformmanager_forms= " + id;
+        sqlrequest += " and st.order=0 ";
         if (uid) {
-          datas += " AND `uid` = " + uid;
+          sqlrequest += " AND dv.`uid` = " + uid;
         }
         if (pagination)
-          datas += " order by id DESC limit 20 OFFSET " + pagination;
-        else datas += " order by id DESC limit 20";
+          sqlrequest += " order by id DESC limit 20 OFFSET " + pagination;
+        else sqlrequest += " order by id DESC limit 20";
         config
-          .getData(datas)
+          .getData(sqlrequest)
           .then((reponse) => {
             //console.log("get traitement Items: ", reponse);
-            commit("SET_TRAITEMENT_ITEMS", reponse.data);
+            //commit("SET_TRAITEMENT_ITEMS", reponse.data);
             resolv(reponse.data);
           })
           .catch((error) => {

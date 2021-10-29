@@ -6,7 +6,7 @@
       <div class="block" v-for="(form, index) in items" :key="index">
         <div class="form-stats" :number="getStatisqueByNumber(form)">
           <!-- Affiche les status -->
-          <div>
+          <div class="position-absolute">
             <b-button
               variant=""
               class="form-stats__btn form-stats__red"
@@ -159,6 +159,10 @@ export default {
         this.busy = false;
       }, 500);
     });
+    /**
+     * uniquement pour les tests
+     */
+    this.$store.dispatch("setCurrentUser", { uid: [{ value: 7 }] });
   },
   computed: {
     ...mapState(["items"]),

@@ -2,7 +2,7 @@
   <b-container fluid="md">
     <div>
       <title-bar
-        :conf="{ col: true, text: 'Traitement' }"
+        :conf="{ col: true, text: 'Traitement : ' }"
         :id="id"
         :showDevis="false"
       ></title-bar>
@@ -26,13 +26,8 @@
 
 <script>
 import TitleBar from "../components/TitleBar.vue";
-
-//import axios from "axios";
 import config from "../config/config.js";
-//import utilities from "./Utilities";
-//import NavLine from "./NavLine.vue";
 import { mapState, mapGetters } from "vuex";
-//import ListTable from "./ListTable.vue";
 import listBlocks from "./blocks/listBlocks.vue";
 
 export default {
@@ -60,7 +55,7 @@ export default {
     this.getTotalRows();
   },
   computed: {
-    ...mapState(["traitementId", "form"]),
+    ...mapState(["traitementId", "form", "traitementItems"]),
     ...mapGetters(["traitementFormItems"]),
     ListeFieldsDisplay() {
       const fieldsDisplay = [
@@ -189,7 +184,7 @@ export default {
       if (pagination) pag = (pagination - 1) * this.perPage;
       this.$store
         .dispatch("loadTraitementDatas", {
-          id: this.id,
+          formId: this.id,
           pagination: pag,
         })
         .then(() => {

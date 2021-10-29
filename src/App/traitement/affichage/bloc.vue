@@ -91,7 +91,7 @@ export default {
     itemFields() {
       const fields = [];
       for (const i in this.item) {
-        if (this.item[i].type) fields.push(this.item[i]);
+        if (this.item[i] && this.item[i].type) fields.push(this.item[i]);
       }
       return fields;
     },

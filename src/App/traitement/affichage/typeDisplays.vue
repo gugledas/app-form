@@ -33,24 +33,6 @@ export default {
       baseURl: config.BaseUrl(),
     };
   },
-  watch: {
-    // field: {
-    //   handle() {
-    //     this.formatValue();
-    //     console.log("all");
-    //   },
-    //   deep: true,
-    // },
-  },
-  mounted() {
-    // var option = this.field.options;
-    // var val = this.field.value;
-    // if (val != null && val != undefined) {
-    //   if (option.length) {
-    //     this.formatValue();
-    //   }
-    // }
-  },
   computed: {
     val() {
       var option = this.field.options;

@@ -111,7 +111,7 @@
       v-model="showModal"
       ref="modal"
       size="lg"
-      :title="'Résultat du formulaire'"
+      :title="'Résultat du formulaire ...'"
       scrollable
       class="super-hover"
       cancelTitle="Quitter"

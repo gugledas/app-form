@@ -32,13 +32,13 @@ const routes = [
   },
   {
     path: "/traitement/:id",
-    name: "Traitement du résultat",
+    name: "Traitement du devis",
     props: true,
     component: () => import("../App/traitement/Traitement.vue"),
   },
   {
     path: "/traitement-my-own/:id",
-    name: "Traitement du résultat",
+    name: "Traitement du devis",
     props: true,
     component: () => import("../App/traitement/TraitementMyOwn.vue"),
   },

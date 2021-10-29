@@ -276,12 +276,14 @@ export default {
     });
   },
 
-  saveDatas(state, getters, uid = 0, status = 2) {
+  saveDatas(state, uid = 0, status = 2) {
     return new Promise((resolv) => {
       config.saveStepsDatas(state, uid, status).then((val) => {
-        config.saveForm(val, state.mode).then((response) => {
-          resolv(response);
-        });
+        config
+          .saveForm(val, state.mode, "/appformmanager/save-soumissions")
+          .then((response) => {
+            resolv(response);
+          });
       });
     });
   },

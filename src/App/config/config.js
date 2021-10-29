@@ -20,8 +20,8 @@ export default {
   /**
    * Permet d'ajouter et d'editer un formulaire.
    */
-  saveForm(datas, mode = false) {
-    return this.bPost("/query-ajax/insert-update", datas, {}, mode);
+  saveForm(datas, mode = false, url = "/query-ajax/insert-update") {
+    return this.bPost(url, datas, {}, mode);
   },
   /**
    * Preparation de la sauvagarde du formulaire d'edition.
@@ -227,6 +227,16 @@ export default {
                 value: id,
               },
             ],
+          });
+          // stepsIndexs ne contient pas le premier indice, on l'ajoute en dur.
+          result.push({
+            table: "appformmanager_datas_steps",
+            fields: {
+              order: 0,
+              step: JSON.stringify(datas.forms[0]),
+              datasid: id,
+            },
+            action: "update",
           });
           state.stepsIndexs.forEach((i) => {
             result.push({

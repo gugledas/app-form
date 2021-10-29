@@ -23,6 +23,31 @@
           </li>
         </ul>
 
+        <b-row class="rs-login">
+          <b-col cols="12" md="12">
+            <loginGoogle
+              idHtml="app-form-login"
+              class="mb-3"
+              @ev_logingoogle="ev_logingoogle"
+              :returnUidInfo="true"
+            ></loginGoogle>
+          </b-col>
+          <b-col
+            cols="12"
+            md="12"
+            :class="mediaBtn ? '' : 'bg-light'"
+            class="p-3 rs-login__btn rs-login__btn--face border"
+            @click="initFacebookLogin"
+          >
+            <b-icon icon="facebook " class="mr-3"> </b-icon> Se connecter avec
+            facebook
+          </b-col>
+        </b-row>
+
+        <div class="text-center sepation-login">
+          <strong class="sepation-login-text">Ou</strong>
+        </div>
+
         <ValidationProvider
           v-slot="v"
           rules="required"
@@ -122,47 +147,6 @@
             </small>
           </div>
         </ValidationProvider>
-        <div class="text-center sepation-login">
-          <strong class="sepation-login-text">Ou</strong>
-        </div>
-        <b-row class="rs-login" v-if="current_tab === 'login'">
-          <b-col
-            cols="12"
-            md="6"
-            :class="mediaBtn ? '' : 'bg-light'"
-            class="p-4 rs-login__btn rs-login__btn--face"
-            @click="initFacebookLogin"
-          >
-            <b-icon icon="facebook " class="mr-3"> </b-icon>login via facebook
-          </b-col>
-          <b-col
-            cols="12"
-            md="6"
-            class="p-4 rs-login__btn rs-login__btn--google"
-            :class="mediaBtn ? '' : 'bg-light'"
-            @click="initGoogleLogin"
-            ><b-icon icon="google" class="mr-3"></b-icon>login via Google</b-col
-          >
-        </b-row>
-        <b-row class="rs-login" v-if="current_tab === 'register'">
-          <b-col
-            cols="12"
-            md="6"
-            :class="mediaBtn ? '' : 'bg-light'"
-            class="p-4 rs-login__btn rs-login__btn--face"
-            @click="initFacebookLogin"
-          >
-            <b-icon icon="facebook " class="mr-3"> </b-icon>Créer avec facebook
-          </b-col>
-          <b-col
-            cols="12"
-            md="6"
-            :class="mediaBtn ? '' : 'bg-light'"
-            class="p-4 rs-login__btn rs-login__btn--google"
-            @click="initGoogleLogin"
-            ><b-icon icon="google" class="mr-3"></b-icon> Créer avec Google
-          </b-col>
-        </b-row>
       </form>
     </transition>
   </div>
@@ -172,7 +156,7 @@
 import { mapState, mapGetters } from "vuex";
 import { ValidationProvider } from "vee-validate";
 import "../EditsFields/vee-validate-custom.js";
-import { loginfacebook, logingoogle } from "drupal-vuejs";
+import { loginfacebook, loginGoogle } from "drupal-vuejs";
 import config from "../config/config.js";
 
 //import { drupalFormFields } from "drupal-vuejs";
@@ -193,6 +177,7 @@ export default {
   },
   components: {
     ValidationProvider,
+    loginGoogle,
   },
   data() {
     return {
@@ -208,13 +193,8 @@ export default {
   },
   mounted() {
     this.TryToLoginWithFacebook();
-    this.TryToLoginWithGoogle();
     loginfacebook.appId = 889256191665205;
     this.loadScript();
-    //
-    logingoogle.client_id =
-      "90673796165-fndv3eu9tog6b9g5p8camiueffcfdc8p.apps.googleusercontent.com";
-    logingoogle.loadGapi();
   },
   watch: {
     //
@@ -240,7 +220,6 @@ export default {
       this.$nextTick(() => {
         this.mediaBtn = false;
         loginfacebook.chargement();
-        logingoogle.loadGapi();
         this.mediaBtn = true;
       });
     },
@@ -252,9 +231,7 @@ export default {
         "wbu-fb-status-change",
         () => {
           this.isBusy = true;
-
           console.log("TryToLoginWithFacebook", this.isBusy);
-
           config
             .post("/login-rx-vuejs/facebook-check", loginfacebook.user)
             .then((resp) => {
@@ -284,56 +261,7 @@ export default {
         false
       );
     },
-    /**
-     * Ecoute un evenement afin de determiner si l'utilisateur a clique sur le bonton de connexion et que le processus soit terminé.
-     */
-    TryToLoginWithGoogle() {
-      document.addEventListener(
-        "wbu-gl-status-change",
-        () => {
-          this.IsBusy();
-          console.log("TryToLoginWithGoogle :", logingoogle.user);
 
-          config
-            .post("/login-rx-vuejs/google-check", logingoogle.user)
-            .then((resp) => {
-              console.log("TryToLoginWithGoogle resp : ", resp);
-              if (
-                resp.reponse &&
-                resp.reponse.config.url !== resp.reponse.request.responseURL
-              ) {
-                //window.location.assign(resp.reponse.request.responseURL);
-                console.log("user is connect : ", resp.reponse);
-                //on connecte l'utilisateur:
-                this.$store.dispatch("getCurrentUser").then(() => {
-                  //save form
-                  setTimeout(() => {
-                    this.$store.dispatch("saveDatasUser");
-                  }, 600);
-                });
-              }
-              // Il faut s'assurer que les données sont ok.
-              else if (resp.data) {
-                if (resp.data.createuser) {
-                  this.stepe = "final-gl-register";
-                }
-              }
-            });
-        },
-        false
-      );
-    },
-    final_click_h2() {
-      alert("final_click_h2");
-    },
-    /*
-    async getFiledRegisterUser() {
-      const drupalFormField = new drupalFormFields("user", "user", this);
-      this.fieldsRegisterRender = await drupalFormField.format();
-      console.log("fieldsRegisterRender : ", this.fieldsRegisterRender);
-      this.modelsFields = drupalFormField.modelsFields;
-    },
-    /**/
     handleOk(event) {
       event.preventDefault();
       this.handleSubmit();
@@ -398,10 +326,9 @@ export default {
     initFacebookLogin() {
       loginfacebook.openPopup();
     },
-    /* google login methods */
-
-    initGoogleLogin() {
-      logingoogle.typeOfLogin(false);
+    ev_logingoogle(user) {
+      console.log("user : ", user);
+      this.$store.dispatch("setCurrentUser", user);
     },
   },
 };
@@ -432,30 +359,32 @@ export default {
   }
 }
 .rs-login {
-  display: flex;
-  justify-content: space-between;
-  font-size: 15px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 15px;
+  font-size: 14px;
+  .buttton-google-aouth {
+    * {
+      font-size: inherit;
+      line-height: inherit;
+      font-family: inherit;
+      color: #4c4c4c;
+    }
+  }
   &__btn {
     cursor: pointer;
     text-align: center;
     margin: 5px 1px;
-    color: white;
     transition: ease 0.2s;
-    font-weight: bold;
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: inherit;
     @include media-min("MD") {
-      max-width: 220px;
+      max-width: 300px;
     }
-    &--face {
-      background: #007bff;
-    }
-    &--google {
-      background: #ff5353;
+    &:hover {
+      border-color: #d2e3fc;
+      background: rgba(66, 133, 244, 0.04);
     }
   }
 }

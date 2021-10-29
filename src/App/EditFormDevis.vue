@@ -185,7 +185,7 @@ export default {
   },
   mounted() {
     this.$store.dispatch("setFormId", this.id);
-    this.$store.dispatch("loadFormsDatas").then();
+    this.$store.dispatch("loadFormsDatas");
     this.busy = true;
     /**
      * Cette function charge progressivement les données.

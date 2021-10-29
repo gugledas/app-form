@@ -23,7 +23,7 @@
             v-if="!dynamicfield"
           >
             <b-form-select
-              v-model="fields.type"
+              v-model="field.type"
               :options="typeOptions"
               required
             ></b-form-select>
@@ -41,22 +41,10 @@
           </b-form-group>
         </b-col>
         <b-col md="6">
-          <b-form-group>
+          <b-form-group :isOverride="isOverride">
             <b-form-checkbox switch size="lg" v-model="dynamicfield">
               Champs dynamique
             </b-form-checkbox>
-          </b-form-group>
-          <b-form-group
-            label="Sélectionner un sous group"
-            invalid-feedback="type is required"
-            label-cols-md="6"
-            v-if="dynamicfield"
-          >
-            <b-form-select
-              v-model="fields.type"
-              :options="typeOptions"
-              required
-            ></b-form-select>
           </b-form-group>
         </b-col>
       </b-row>
@@ -64,11 +52,22 @@
       <div class="content-config-field">
         <input-option-form
           v-if="!dynamicfield"
-          :type="fields.type"
-          :fields="fields"
+          :type="field.type"
+          :field="field"
         ></input-option-form>
         <div v-if="dynamicfield">
           <hr />
+          <b-form-group
+            label="Sélectionner le champs dynamique"
+            invalid-feedback="type is required"
+          >
+            <b-form-select
+              v-model="field.name"
+              :options="OptionDynamicsField"
+              @change="selectDynamicLabel"
+            ></b-form-select>
+          </b-form-group>
+          <compositeHeaderField :field="field"></compositeHeaderField>
         </div>
       </div>
 
@@ -80,24 +79,26 @@
         </div>
       </b-row>
     </form>
-    <pre> formId {{ formId }} </pre>
+
+    <pre> field {{ field }} </pre>
   </b-modal>
 </template>
 
 <script>
 import { mapGetters, mapState } from "vuex";
 import inputOptionForm from "./inputOptionForm.vue";
+import compositeHeaderField from "./EditsFields/compositeHeaderField.vue";
 import Utilities from "./Utilities.js";
 import config from "./config/config";
 export default {
-  components: { inputOptionForm },
+  components: { inputOptionForm, compositeHeaderField },
   props: {
     nouveau: {
       type: Boolean,
       require: true,
       default: true,
     },
-    fields: {
+    field: {
       type: Object,
       default: function () {
         return Utilities.field();
@@ -120,22 +121,11 @@ export default {
       type: null,
       //datas to check form validity
       labelState: null,
-      typeOptions: [],
-      dynamicfield: true,
+      typeOptions: Utilities.typeOptions(),
+      OptionDynamicsField: [],
+      dynamicfield: false,
       typeFormId: "",
     };
-  },
-  mounted() {
-    this.typeFormId = this.formId;
-    console.log(" Chargement de modal AddFormField : ", this.idModal);
-    this.$root.$on("bv::modal::show", (bvEvent, modalId) => {
-      console.log(
-        " Modal is about to be shown",
-        bvEvent,
-        "\n id modal : ",
-        modalId
-      );
-    });
   },
   watch: {
     dynamicfield() {
@@ -158,22 +148,34 @@ export default {
       });
       return r;
     },
+    isOverride() {
+      this.init();
+      if (this.field.override) {
+        return true;
+      }
+      return false;
+    },
   },
   methods: {
+    init() {
+      this.typeFormId = this.formId;
+      if (this.field.override) {
+        this.dynamicfield = true;
+      }
+    },
     optionAddToFields() {
-      //this.$store.dispatch("addFields", this.fields);
       class proto {
         constructor(hauteur) {
           this.hauteur = hauteur;
         }
       }
-      const protoD = new proto(this.fields);
+      const protoD = new proto(this.field);
       var sh = {};
       for (let i in protoD.hauteur) {
         sh[i] = protoD.hauteur[i];
       }
       this.formDatas.fields.push(sh);
-      Utilities.resetField(this.fields);
+      Utilities.resetField(this.field);
     },
     resetModal() {
       this.type = null;
@@ -191,7 +193,7 @@ export default {
         this.optionAddToFields();
       }
       // Push the name to submitted names
-      this.$emit("input_to_add", this.fields);
+      this.$emit("input_to_add", this.field);
       // Hide the modal manually
       this.$nextTick(() => {
         this.$bvModal.hide("modal-prevent-closing");
@@ -217,7 +219,12 @@ export default {
           var jsonfield = JSON.parse(item.jsonfield);
           results.push({ value: item.machine_name, text: jsonfield.label });
         });
-        this.typeOptions = results;
+        this.OptionDynamicsField = results;
+      });
+    },
+    selectDynamicLabel(val) {
+      this.OptionDynamicsField.forEach((option) => {
+        if (option.value == val) this.field.label = option.text;
       });
     },
   },
@@ -226,7 +233,8 @@ export default {
 <style lang="scss">
 .mange-add-field {
   .content-config-field {
-    min-height: 300px;
+    min-height: 150px;
+    margin-bottom: 3rem;
   }
 }
 </style>

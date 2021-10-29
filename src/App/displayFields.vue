@@ -1,7 +1,9 @@
+<!-- Ce fichier gerer l'affichege et la configuration des champs -->
 <template>
   <div>
     <div>
       <!-- affiche sur le cas du type codepostal -->
+
       <b-row align-h="center" v-if="type == 'codepostal'">
         <b-col>
           <autocomplete :field="formDatas.fields[id]"></autocomplete>
@@ -132,7 +134,12 @@
       </div>
     </div>
 
-    <pre> id: {{ id }} {{ fields }} </pre>
+    <add-form-field
+      :ref="'editFormField' + id"
+      :field="field"
+      :nouveau="false"
+      :id-modal="'edit' + id"
+    ></add-form-field>
   </div>
 </template>
 
@@ -172,10 +179,9 @@ export default {
   },
   data: () => {
     return {
-      isOpen: false,
       typeFieldSelected: null,
       option: {},
-      fields: Utilities.field(),
+      field: {},
       labelState: null,
     };
   },
@@ -212,10 +218,9 @@ export default {
       }
     },
     editFormField() {
-      var idModel = "modal-addForm--edit";
-      console.log("open modal : ", idModel);
+      var idModel = "modal-addForm--edit" + this.id;
+      this.field = this.formDatas.fields[this.id];
       this.$bvModal.show(idModel);
-      this.fields = this.formDatas.fields[this.id];
     },
     deleteField() {
       var all = this.formDatas.fields;

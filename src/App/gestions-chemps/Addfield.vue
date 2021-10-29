@@ -116,6 +116,7 @@ export default {
       busy: false,
     };
   },
+
   computed: {
     ...mapGetters(["formDatas", "uid"]),
     nameButtonOk() {

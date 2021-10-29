@@ -1,5 +1,5 @@
 <template lang="html">
-  <div>
+  <div class="w-100">
     <loaderIcon :busy="busy"></loaderIcon>
     <div class="block-option" v-if="!busy">
       <!-- lists -->

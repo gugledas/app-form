@@ -13,34 +13,6 @@
         </b-form-input>
       </b-input-group>
     </b-form-group>
-    <b-row>
-      <b-col sm="12">
-        <b-form-group
-          label="Cacher le label"
-          label-cols="6"
-          label-cols-md="6"
-          label-cols-sm="3"
-        >
-          <b-form-checkbox
-            size="lg"
-            v-model="field.label_hidden"
-          ></b-form-checkbox>
-        </b-form-group>
-      </b-col>
-      <b-col sm="12">
-        <b-form-group
-          label="Afficher le champs dans les resultats"
-          label-cols="6"
-          label-cols-md="6"
-          label-cols-sm="3"
-        >
-          <b-form-checkbox
-            size="lg"
-            v-model="field.display_field"
-          ></b-form-checkbox>
-        </b-form-group>
-      </b-col>
-    </b-row>
   </div>
 </template>
 
@@ -73,16 +45,17 @@ export default {
   },
   methods: {
     input() {
-      if (
-        this.readonly &&
-        (this.field.label.length <= 32 || this.field.name.length <= 32)
-      ) {
-        this.field.name = snakeCase(this.field.label);
+      if (!this.field.override) {
+        if (
+          this.readonly &&
+          (this.field.label.length <= 32 || this.field.name.length <= 32)
+        ) {
+          this.field.name = snakeCase(this.field.label);
+        }
       }
     },
     toogleReadOnly() {
-      if (this.readonly) this.readonly = false;
-      else this.readonly = true;
+      if (!this.field.override) this.readonly = !this.readonly;
     },
   },
 };

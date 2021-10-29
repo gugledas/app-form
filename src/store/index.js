@@ -5,8 +5,8 @@ import { drupalUtilities, users } from "drupal-vuejs";
 import config from "../App/config/config.js";
 
 Vue.use(Vuex);
-drupalUtilities.TestDomain = "http://lesroisdelareno.habeuk.com";
-users.TestDomain = "http://lesroisdelareno.habeuk.com";
+drupalUtilities.TestDomain = "http://v2lesroisdelareno.kksa";
+users.TestDomain = "http://v2lesroisdelareno.kksa";
 export default new Vuex.Store({
   state: {
     /* contient les information de la page d'afficha des formulaires */
@@ -72,7 +72,7 @@ export default new Vuex.Store({
      */
     userlogin: {
       name: {
-        value: "dfr",
+        value: "",
         ref: "",
       },
       prenom: {
@@ -419,7 +419,6 @@ export default new Vuex.Store({
               "/appformmanager/getforms-steps/" + pagination
             )
             .then((rep) => {
-              //console.log("response : ", rep);
               if (rep.data && rep.data[0] && rep.data[0].id) {
                 //si cest le premier passage, on met en place le formulaire avec quelques champs.
                 if (!pagination) {
@@ -436,7 +435,6 @@ export default new Vuex.Store({
                   };
                   commit("SET_CURRRENT_FORM", result);
                 } else {
-                  //console.log("Autre requet : ", rep.data);
                   rep.data.forEach((step) => {
                     state.form.forms.push(step.step);
                   });
@@ -450,7 +448,7 @@ export default new Vuex.Store({
       };
       return loadProgressiveDate();
     },
-    loadStepsDatas0({ commit, state }, payload) {
+    loadStepsDatas00({ commit, state }, payload) {
       commit("SET_CURRRENT_FORM", {});
       const nbreItems = 10;
       const loadProgressiveDate = (pagination = 0) => {
@@ -579,7 +577,7 @@ export default new Vuex.Store({
     /**
      * Enregistre les données et cree le compte utilisateur.
      */
-    async saveDatasUser({ commit, state, getters }, status = 0) {
+    async saveDatasUser({ state, getters }, status = 0) {
       var self = this,
         datas = [],
         url = null,
@@ -635,7 +633,6 @@ export default new Vuex.Store({
           }, 7000);
       };
       //On valide les données utilisateur,
-      console.log("saveDatasUser : ", commit, state);
       if (!getters.uid) {
         var statusName = {},
           statusEmail = {},
@@ -657,7 +654,7 @@ export default new Vuex.Store({
               field_telephone: [{ value: state.userlogin.telephone.value }],
             };
 
-            url = "/fr/user/register?_format=json";
+            url = "/user/register?_format=json";
             msg = msgCreate([
               config.messages.devisRappel,
               config.messages.devisCreateUser,
@@ -743,7 +740,7 @@ export default new Vuex.Store({
       }
       // Si l'utilisateur est connecté.
       else {
-        utilities.saveDatas(state, getters, getters.uid, status).then(() => {
+        utilities.saveDatas(state, getters.uid, status).then(() => {
           if (status) displayMsg(msgCreate([config.messages.devisSave]));
           else displayMsg(msgCreate([config.messages.devisRappel]));
         });
@@ -754,7 +751,7 @@ export default new Vuex.Store({
         uid = getters.uid;
       }
       utilities.saveDatas(state, uid).then((response) => {
-        //console.log("Données stocké du store", response);
+        // console.log("Données stocké du store", response);
         if (state.idSoumission === null) {
           commit("SET_ID_SOUMISSION", response.data[0].result);
         }
@@ -764,6 +761,9 @@ export default new Vuex.Store({
       return users.getCurrentUser().then((resp) => {
         commit("SET_USER", resp);
       });
+    },
+    setCurrentUser({ commit }, user) {
+      commit("SET_USER", user);
     },
     setCachesUser({ commit }, user) {
       commit("SET_CACHEUSER", user);

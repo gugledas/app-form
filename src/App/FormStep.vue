@@ -55,12 +55,11 @@
         :isOpen="modalFormFieldIsOpen"
         ref="formField"
         :nouveau="true"
-        id-modal="form-step"
+        :id-modal="'form-step'"
       ></add-form-field>
       <StepConfiguration ref="StepConfiguration"></StepConfiguration>
       <cloneCurrentStepe />
     </div>
-    <pre> formDatas : {{ formDatas }} </pre>
   </div>
 </template>
 

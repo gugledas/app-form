@@ -130,9 +130,6 @@
         </b-card-body>
       </b-collapse>
     </b-card>
-    <pre>
-      {{ formDatas.states }}
-    </pre>
   </div>
 </template>
 <script>

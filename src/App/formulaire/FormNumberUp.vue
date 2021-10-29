@@ -6,13 +6,13 @@
           <b-input-group>
             <b-form-input
               id="label-up"
-              v-model="fields.label"
+              v-model="field.label"
               @input="input"
               required
             ></b-form-input>
             <b-form-input
               required
-              v-model="fields.name"
+              v-model="field.name"
               :readonly="readonly"
               @dblclick="toogleReadOnly"
             ></b-form-input>
@@ -21,19 +21,19 @@
       </b-col>
       <b-col sm="12">
         <b-form-group label="Valeur par defaut">
-          <b-form-input v-model="fields.value" type="number"></b-form-input>
+          <b-form-input v-model="field.value" type="number"></b-form-input>
         </b-form-group>
       </b-col>
       <b-col sm="6">
         <b-form-group label=" suffixe">
           <b-input-group>
             <!-- <b-form-input v-model="prefixe" id="prefixe"></b-form-input> -->
-            <b-form-input v-model="fields.suffixe" id="suffixe"></b-form-input>
+            <b-form-input v-model="field.suffixe" id="suffixe"></b-form-input>
           </b-input-group>
         </b-form-group>
       </b-col>
     </b-row>
-    <ValidationFields :field="fields"></ValidationFields>
+    <ValidationFields :field="field"></ValidationFields>
   </div>
 </template>
 
@@ -43,7 +43,7 @@ import ValidationFields from "../EditsFields/ValidationFields";
 export default {
   name: "FormMarkup",
   props: {
-    fields: {
+    field: {
       type: Object,
       required: true,
       validator: function (val) {
@@ -68,9 +68,7 @@ export default {
       suffixe: "",
     };
   },
-  mounted() {
-    //
-  },
+
   watch: {
     //
   },
@@ -78,12 +76,12 @@ export default {
   methods: {
     inputValue() {
       if (this.value.length) {
-        return (this.fields.value = Number(this.value));
+        return (this.field.value = Number(this.value));
       }
     },
     input() {
-      if (this.readonly && this.fields.name.length <= 32) {
-        this.fields.name = snakeCase(this.fields.label);
+      if (this.readonly && this.field.name.length <= 32) {
+        this.field.name = snakeCase(this.field.label);
       }
     },
     toogleReadOnly() {

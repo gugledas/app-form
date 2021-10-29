@@ -2,59 +2,59 @@
   <div>
     <hr />
     <!-- if is type Checkbox -->
-    <form-checkbox v-if="type == 'checkbox'" :fields="fields"></form-checkbox>
+    <form-checkbox v-if="type == 'checkbox'" :field="field"></form-checkbox>
     <!-- if is type input -->
 
     <InputText
-      :field="fields"
+      :field="field"
       v-if="type == 'text' || type == 'number'"
     ></InputText>
-    <InputFiles :field="fields" v-if="type == 'file'"></InputFiles>
-    <inputRecap :field="fields" v-if="type == 'recapitulatif'"></inputRecap>
-    <inputUserLogin :field="fields" v-if="type == 'userlogin'"></inputUserLogin>
+    <InputFiles :field="field" v-if="type == 'file'"></InputFiles>
+    <inputRecap :field="field" v-if="type == 'recapitulatif'"></inputRecap>
+    <inputUserLogin :field="field" v-if="type == 'userlogin'"></inputUserLogin>
     <inputAideFinanciere
-      :field="fields"
+      :field="field"
       v-if="type == 'input-aide-financiere'"
     ></inputAideFinanciere>
 
     <!-- if is type select -->
-    <form-select v-if="type == 'select'" :fields="fields"></form-select>
+    <form-select v-if="type == 'select'" :field="field"></form-select>
 
     <!-- if is type checbox with description -->
     <form-radio-desc
       v-if="type == 'radiodesc'"
-      :fields="fields"
+      :field="field"
     ></form-radio-desc>
 
     <!-- if is type radios -->
 
-    <form-radio v-if="type == 'radio'" :fields="fields"></form-radio>
+    <form-radio v-if="type == 'radio'" :field="field"></form-radio>
 
     <!-- if is type codepostal -->
 
     <form-autocomplete
       v-if="type == 'codepostal'"
-      :fields="fields"
+      :field="field"
     ></form-autocomplete>
     <!-- if is type increment -->
 
-    <form-spinner v-if="type == 'increment'" :fields="fields"></form-spinner>
+    <form-spinner v-if="type == 'increment'" :field="field"></form-spinner>
 
     <!-- if is type markup title && markup Image -->
 
     <form-markup
       v-if="type == 'markuptitle' || type == 'markupimage'"
-      :fields="fields"
+      :field="field"
     ></form-markup>
 
     <!-- if is type checbox images -->
 
-    <form-check-img v-if="type == 'checkboximg'" :fields="fields">
+    <form-check-img v-if="type == 'checkboximg'" :field="field">
     </form-check-img>
 
     <!-- if is  Number label up  and Number label Inline-->
 
-    <form-number-up v-if="type == 'numberup'" :fields="fields"></form-number-up>
+    <form-number-up v-if="type == 'numberup'" :field="field"></form-number-up>
   </div>
 </template>
 
@@ -88,76 +88,15 @@ export default {
       type: String,
       default: null,
     },
-    genre: {
-      type: String,
-      default: "",
-    },
-    fields: {
+    field: {
       type: Object,
       default: function () {
         return Utilities.field();
       },
     },
   },
-  data: () => {
-    return {};
-  },
-  watch: {
-    type() {
-      this.fields.type = this.type;
-    },
-  },
   computed: {
     ...mapGetters(["formDatas"]),
-    optionsToPush() {
-      var base = this.type;
-      if (base == "checkbox") {
-        return this.inputOptions;
-      } else return {};
-    },
-  },
-  methods: {
-    deleteOption(index) {
-      var all = this.fields.options;
-      console.log("i", all, index);
-
-      for (var i = all.length - 1; i >= 0; i--) {
-        if (i === index) {
-          all.splice(i, 1);
-          console.log("iii");
-        }
-      }
-    },
-    //logic for fields options
-    onPush(event) {
-      event.preventDefault();
-      this.pushOptions(event);
-    },
-    pushOptions(event) {
-      var info = {};
-      for (let i in this.optionsToPush) {
-        info[i] = this.optionsToPush[i];
-      }
-      console.log("object", info);
-      this.fields.options.push(info);
-      this.onReset(event);
-    },
-    onReset(event) {
-      event.preventDefault;
-      for (let i in this.optionsToPush) {
-        this.optionsToPush[i] = "";
-        console.log("iss", this.optionsToPush[i]);
-      }
-      // Reset our form values
-      // this.optionsToPush.label = "";
-      // this.optionsToPush.value = null;
-
-      // Trick to reset/clear native browser form validation state
-      this.show = false;
-      this.$nextTick(() => {
-        this.show = true;
-      });
-    },
   },
 };
 </script>

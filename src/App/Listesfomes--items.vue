@@ -146,6 +146,10 @@ export default {
         },
       ],
       busy: false,
+      /**
+       * -- permet d'eviter l'envoit de plusiurs requette.
+       */
+      devisCount: [],
     };
   },
   components: {
@@ -182,33 +186,45 @@ export default {
       }
       return url;
     },
+    /**
+     * compte le nombre de devis.
+     */
     getStatisqueByNumber(form) {
+      if (this.devisCount.includes(form.id)) {
+        return;
+      } else {
+        this.devisCount.push(form.id);
+      }
       if (!this.$store.getters.uid) return;
-      var sql =
-        "select count(*) as nombre, status from `appformmanager_datas` where appformmanager_forms = (select id from `appformmanager_fomrs` where id=" +
-        form.id +
-        ") group by status";
-      if (!this.$store.state.mode)
-        sql =
-          "select count(*) as nombre, status from `appformmanager_datas` where uid=" +
-          this.$store.getters.uid +
-          " and appformmanager_forms = (select id from `appformmanager_fomrs` where id=" +
-          form.id +
-          ") group by status";
-      config.bPost("/query-ajax/select", sql, {}, false).then((resp) => {
-        if (resp.data.length) {
-          //console.log("resp.data ", resp.data);
-          resp.data.forEach((item) => {
-            if (item.status === "0") {
-              this.$set(form, "onWaitNumber", item.nombre);
-            } else if (item.status === "1") {
-              this.$set(form, "onSave", item.nombre);
-            } else if (item.status === "2") {
-              this.$set(form, "onCancel", item.nombre);
-            }
-          });
-        }
+      var payload = {
+        filters: {
+          AND: [],
+          OR: [],
+        },
+      };
+      payload.filters.AND.push({
+        column: "appformmanager_forms",
+        value: form.id,
       });
+      config
+        .bPost("/appformmanager/count-devis", payload, {}, false)
+        .then((resp) => {
+          if (resp.data.length) {
+            //console.log("resp.data ", resp.data);
+            resp.data.forEach((item) => {
+              // this.$set(form, "onWaitNumber", 0);
+              // this.$set(form, "onSave", 0);
+              // this.$set(form, "onCancel", 0);
+              if (item.status === "0") {
+                this.$set(form, "onWaitNumber", item.nombre);
+              } else if (item.status === "1") {
+                this.$set(form, "onSave", item.nombre);
+              } else if (item.status === "2") {
+                this.$set(form, "onCancel", item.nombre);
+              }
+            });
+          }
+        });
     },
     voirForm(id) {
       this.$router.push({ path: `/estimation-devis/${id}` });

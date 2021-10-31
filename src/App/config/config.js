@@ -6,7 +6,7 @@ Vue.use(BVToastPlugin);
 
 export default {
   ...AjaxToastBootStrap,
-  TestDomain: "http://v2lesroisdelareno.kksa", //"http://lesroisdelareno.habeuk.com",
+  //TestDomain: "http://v2lesroisdelareno.kksa", //"http://lesroisdelareno.habeuk.com",
   typeSelection: ["radio", "select", "checkbox"],
   /**
    * Permet de recuperer les données en BD.

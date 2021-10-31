@@ -5,8 +5,8 @@ import { drupalUtilities, users } from "drupal-vuejs";
 import config from "../App/config/config.js";
 
 Vue.use(Vuex);
-drupalUtilities.TestDomain = "http://v2lesroisdelareno.kksa";
-users.TestDomain = "http://v2lesroisdelareno.kksa";
+//drupalUtilities.TestDomain = "http://v2lesroisdelareno.kksa";
+//users.TestDomain = "http://v2lesroisdelareno.kksa";
 export default new Vuex.Store({
   state: {
     /* contient les information de la page d'afficha des formulaires */

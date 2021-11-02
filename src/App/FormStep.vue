@@ -55,6 +55,8 @@
         :isOpen="modalFormFieldIsOpen"
         :nouveau="true"
         :id-modal="'form-step'"
+        :field="field"
+        @update_current_field="update_current_field"
       ></add-form-field>
       <StepConfiguration ref="StepConfiguration"></StepConfiguration>
       <cloneCurrentStepe />
@@ -64,7 +66,7 @@
 
 <script>
 import { mapGetters, mapState } from "vuex";
-
+import Utilities from "./Utilities.js";
 import forms from "./input/forms.vue";
 
 export default {
@@ -89,6 +91,7 @@ export default {
         { isActive: false, description: "3 côté" },
         { isActive: false, description: "4 côté" },
       ],
+      field: Utilities.field(),
     };
   },
   watch: {
@@ -132,6 +135,10 @@ export default {
           this.imageCheck[i].isActive = false;
         }
       }
+    },
+    update_current_field(field) {
+      console.log("updaye field ! ", field);
+      this.field = JSON.parse(field);
     },
   },
 };

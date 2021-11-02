@@ -128,10 +128,6 @@
           >delete</b-button
         >
       </b-form>
-
-      <b-card class="mt-3" header="Form Data Result">
-        <pre class="m-0">{{ fields }}</pre>
-      </b-card>
     </b-col>
   </b-row>
 </template>

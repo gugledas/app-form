@@ -123,6 +123,7 @@ export default {
       OptionDynamicsField: [],
       dynamicfield: false,
       typeFormId: "",
+      DynamicFields: [],
     };
   },
   watch: {
@@ -213,17 +214,27 @@ export default {
       }
       config.getData(data).then((resp) => {
         var results = [];
+        this.DynamicFields = [];
         resp.data.forEach((item) => {
           var jsonfield = JSON.parse(item.jsonfield);
+          this.DynamicFields.push(jsonfield);
           results.push({ value: item.machine_name, text: jsonfield.label });
         });
         this.OptionDynamicsField = results;
       });
     },
     selectDynamicLabel(val) {
-      this.OptionDynamicsField.forEach((option) => {
-        if (option.value == val) this.field.label = option.text;
-      });
+      // this.OptionDynamicsField.forEach((option) => {
+      //   if (option.value == val) this.field.label = option.text;
+      // });
+      //on selectionne le champs et on demande sa MAJ.
+      for (const i in this.DynamicFields) {
+        const f = this.DynamicFields[i];
+        if (f.name == val) {
+          this.$emit("update_current_field", JSON.stringify(f));
+          break;
+        }
+      }
     },
   },
 };

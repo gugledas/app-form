@@ -144,11 +144,6 @@
                       v-if="field.status === undefined || field.status"
                       class="mb-2"
                     ></type-displays>
-                    <div v-else>
-                      <pre class="d-none">
-                        {{ field.name }}
-                      </pre>
-                    </div>
                   </b-col>
                 </b-row>
               </b-card-body>

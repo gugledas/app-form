@@ -56,9 +56,11 @@
     </b-row>
     <getStatusValidation :validation-observer="v"></getStatusValidation>
     <add-form-field
+      class="bg-info"
       :fields="{}"
       :nouveau="false"
       :id-modal="'edit'"
+      @update_current_field="update_current_field"
     ></add-form-field>
   </ValidationObserver>
 </template>
@@ -105,6 +107,9 @@ export default {
     },
     SaveByUser(status) {
       this.$store.dispatch("saveDatasUser", status);
+    },
+    update_current_field(field) {
+      console.log("updaye field ! ", field);
     },
   },
 };

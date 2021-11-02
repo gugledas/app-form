@@ -14,9 +14,6 @@
         {{ item }}
       </li>
     </ul>
-    <pre class="d-none">
-      {{ field }}
-    </pre>
   </div>
 </template>
 

@@ -80,7 +80,6 @@ export default {
   computed: {
     ...mapState({
       loaders: (state) => state.StoreGestionChamps.loaders,
-      filtre: (state) => state.StoreGestionChamps.filtre,
       fields: (state) => state.StoreGestionChamps.fields,
     }),
     fieldsRender() {

@@ -1,6 +1,6 @@
 <template>
   <div :firstValue="firstValue">
-    <pre>filtre {{ filtre }} </pre>
+    <pre> filtre {{ filtre }} </pre>
     <b-form class="mb-5">
       <b-row>
         <b-col md="4">
@@ -72,9 +72,10 @@ export default {
   computed: {
     ...mapState({
       filtre: (state) => state.StoreGestionChamps.filtre,
+      fields: (state) => state.StoreGestionChamps.fields,
     }),
     firstValue() {
-      alert("");
+      alert("firstValue");
       if (this.listForms.length > 0) {
         let val = localStorage.getItem("gestionfields.defaultformid");
         if (!val) this.listForms[0].value;
@@ -100,7 +101,9 @@ export default {
     /**
      * --
      */
-    SelectionForm() {
+    SelectionForm(val) {
+      localStorage.setItem("gestionfields.defaultformid", val);
+      console.log("SelectionForm val", val);
       this.$store.dispatch("GetFields");
     },
   },

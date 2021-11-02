@@ -2,7 +2,6 @@
   <b-modal
     size="lg"
     :id="'modal-addForm--' + idModal"
-    ref="addForm"
     title="Ajouter un champs dans le gestionnaire de champs"
     hide-footer
     @ok="handleOk"
@@ -35,6 +34,7 @@
             label="Accosier à un formulaire"
             label-for="type-input"
             invalid-feedback="type is required"
+            description="Cela permet de grouper ce champs avec le formulaire selectionné"
           >
             <b-form-select
               v-model="field.formid"
@@ -48,7 +48,7 @@
       <!-- !-->
       <input-option-form
         :type="field.type"
-        :fields="field"
+        :field="field"
         class="content-config-field"
       ></input-option-form>
 
@@ -65,7 +65,6 @@
         </div>
       </b-row>
     </form>
-    <pre> {{ field }} </pre>
   </b-modal>
 </template>
 

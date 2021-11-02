@@ -19,7 +19,6 @@
               ev_manage_images_img($event, slotProps.input_options)
             "
           ></manageImages>
-          <pre>input_options ::{{ slotProps.input_options }}</pre>
         </div>
       </template>
     </ManageOptionTable>

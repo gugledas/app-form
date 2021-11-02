@@ -22,7 +22,7 @@
           <b-form-group label="label">
             <b-form-input
               v-model="row.item.text"
-              placeholder="Enter label"
+              placeholder="Entrer le label"
               required
               @input="automaticValue(row)"
             ></b-form-input>

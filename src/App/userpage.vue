@@ -5,7 +5,7 @@
       <loaderIcon :busy="isComplete"></loaderIcon>
       <b-row align-h="center">
         <transition name="fade">
-          <b-col class="" cols="12" lg="10" v-if="formDatas && formDatas.info">
+          <b-col class="" cols="12" lg="12" v-if="formDatas && formDatas.info">
             <pages :level="stepsIndex"></pages>
           </b-col>
         </transition>

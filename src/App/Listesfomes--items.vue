@@ -197,10 +197,13 @@ export default {
       }
       if (!this.$store.getters.uid) return;
       var payload = {
+        beginSql:
+          " select count(*) as nombre, status from `appformmanager_datas` ",
         filters: {
           AND: [],
           OR: [],
         },
+        endSql: " group by status ",
       };
       payload.filters.AND.push({
         column: "appformmanager_forms",

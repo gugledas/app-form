@@ -1,13 +1,6 @@
 <template>
   <div>
-    <div class="d-flex justify-content-center p-5" v-if="isBusy">
-      <b-icon
-        icon="circle-fill"
-        animation="throb"
-        font-scale="4"
-        variant="primary"
-      ></b-icon>
-    </div>
+    <loader-icon :busy="isBusy"></loader-icon>
     <div v-if="!isBusy" class="titre-project-resume">
       <b-col cols="12" md="5" lg="3" class="notif">
         <span class="notif-alert notif-at">{{
@@ -139,6 +132,7 @@ import config from "../../config/config";
 
 import { users } from "drupal-vuejs";
 import block from "../affichage/bloc.vue";
+import LoaderIcon from "../../components/loaderIcon.vue";
 export default {
   name: "listBlocks",
   props: {
@@ -170,6 +164,7 @@ export default {
   components: {
     block,
     typeDisplays: () => import("../affichage/typeDisplays.vue"),
+    LoaderIcon,
   },
   data() {
     return {
@@ -245,18 +240,17 @@ export default {
         this.traitementFormItemsDisplay.push(row);
       }
     },
-
-    showResult(id) {
-      console.log("id", id);
-    },
-    formTraiter(id) {
+    /**
+     * -
+     */
+    formTraiter(item) {
       var status = "";
-      if (id.status == "0") {
+      if (item.status == "0") {
         status = "1";
       } else status = "0";
       this.$bvModal
-        .msgBoxConfirm("Confirmez-vous l'action ?", {
-          title: "Alerte",
+        .msgBoxConfirm(" Confirmez-vous l'action ? ", {
+          title: " Alerte ",
           size: "sm",
           buttonSize: "sm",
           okVariant: "success",
@@ -268,19 +262,14 @@ export default {
         })
         .then((value) => {
           if (value) {
-            console.log("Refus : ", id);
-            config.deleteFormTraitement(id.id, status).then(() => {
-              window.location.reload();
+            config.deleteFormTraitement(item.id, status).then(() => {
+              item.status = status;
             });
           }
         });
-      /**
-       *  .catch((err) => {
-       *    console.log("refus : ", err);
-       *  });
-       */
     },
     /**
+     * -
      */
     getUser(uid, item = {}) {
       if (this.CachesUser["uid" + uid]) {
@@ -292,6 +281,9 @@ export default {
         });
       }
     },
+    /**
+     * -
+     */
     getInfoUser(item) {
       var user = item.user;
       var idloop = item.idloop;

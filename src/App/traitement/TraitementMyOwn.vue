@@ -1,37 +1,32 @@
 <template>
-  <div>
-    <b-container fluid="lg">
-      <div :checkUid="checkUid">
-        <title-bar
-          :conf="{ col: true, text: 'Mes Devis' }"
-          :id="id"
-          :showDevis="false"
-        ></title-bar>
-      </div>
-
-      <div class="appfom-container">
-        <b-row align-h="center">
-          <b-col class="" cols="12">
-            <listBlocks
-              :liste_fields_check="ListeFieldsCheck"
-              :liste_fields_display="ListeFieldsDisplay"
-              :totalRows="totalRows"
-              :isBusy="isBusy"
-              :perPage="perPage"
-              @ev-change-pagination="ChangePagination"
-            ></listBlocks>
-          </b-col>
-        </b-row>
-      </div>
-    </b-container>
-  </div>
+  <b-container fluid="md">
+    <div>
+      <title-bar
+        :conf="{ col: true, text: 'Mes Devis : ' + titreDevis }"
+        :id="id"
+        :showDevis="false"
+      ></title-bar>
+    </div>
+    <div class="appfom-container">
+      <b-row align-h="center">
+        <b-col class="" cols="12">
+          <listBlocks
+            :liste_fields_check="ListeFieldsCheck"
+            :liste_fields_display="ListeFieldsDisplay"
+            :totalRows="totalRows"
+            :isBusy="isBusy"
+            :perPage="perPage"
+            @ev-change-pagination="ChangePagination"
+          ></listBlocks>
+        </b-col>
+      </b-row>
+    </div>
+  </b-container>
 </template>
 
 <script>
-//import axios from "axios";
-import config from "../config/config.js";
-//import utilities from "./Utilities";
 import TitleBar from "../components/TitleBar.vue";
+import config from "../config/config.js";
 import { mapState, mapGetters } from "vuex";
 import listBlocks from "./blocks/listBlocks.vue";
 
@@ -44,7 +39,11 @@ export default {
     },
   },
   data: () => {
-    return { totalRows: 0, isBusy: false, perPage: 20 };
+    return {
+      totalRows: 0,
+      isBusy: false,
+      perPage: 8,
+    };
   },
   watch: {
     stepsId() {
@@ -52,11 +51,12 @@ export default {
     },
   },
   mounted() {
-    //
+    this.loadDatas();
+    this.getTotalRows();
   },
   computed: {
-    ...mapState(["traitementId"]),
-    ...mapGetters(["traitementFormItems", "form", "uid"]),
+    ...mapState(["traitementId", "form", "traitementItems"]),
+    ...mapGetters(["traitementFormItems"]),
     ListeFieldsDisplay() {
       const fieldsDisplay = [
         {
@@ -67,6 +67,13 @@ export default {
           },
         },
         {
+          label: "Que souhaitez vous faire",
+          key: "action",
+          stickyColumn: true,
+          thStyle: { minWidth: "170px" },
+          tdClass: ["bg-light"],
+        },
+        {
           label: "Status",
           key: "status",
           thStyle: { minWidth: "140px" },
@@ -74,11 +81,15 @@ export default {
         {
           label: "Prix",
           key: "price",
+          thStyle: { minWidth: "120px" },
+          formatter: (value) => {
+            return value + " €";
+          },
         },
         {
-          label: "Que souhaitez vous faire",
-          key: "action",
-          stickyColumn: true,
+          label: "Utilisateur",
+          key: "uid",
+          thStyle: { minWidth: "220px" },
         },
       ];
       for (const i in this.form.forms) {
@@ -88,7 +99,11 @@ export default {
           const field = form.fields[f];
           // console.log(field);
           if (field.display_field) {
-            fieldsDisplay.push({ label: field.label, key: field.name });
+            fieldsDisplay.push({
+              label: field.label,
+              key: field.name,
+              thStyle: { minWidth: "220px" },
+            });
           }
         }
       }
@@ -101,13 +116,10 @@ export default {
       }
       return lists;
     },
-    checkUid() {
-      if (this.uid) {
-        this.loadDatas();
-        this.getTotalRows();
-        return true;
-      }
-      return false;
+    titreDevis() {
+      if (this.traitementItems.length) {
+        return this.traitementItems[0].name;
+      } else return "";
     },
   },
   methods: {
@@ -123,9 +135,8 @@ export default {
         }
       }
     },
+
     saveToLocal() {
-      //var self = this;
-      //var datas = this.form;
       config.prepareDatasToSave(this.form).then((val) => {
         config.saveForm(val).then(() => {
           //
@@ -135,59 +146,75 @@ export default {
     resetValue() {
       this.$store.getters.formDatas.selected = "";
       this.$store.getters.formDatas.value = [];
-      console.log("prev");
-    },
-    resetModal() {
-      //   this.formDatas.info.title = "";
-      //   this.titleState = null;
-      //   this.headerTitle = "";
-      //   this.headerState = null;
     },
     handleOk(bvModalEvt) {
-      // Prevent modal from closing
       bvModalEvt.preventDefault();
-      // Trigger submit handler
       this.handleSubmit();
     },
     handleSubmit(event) {
       event.preventDefault();
-      // Exit when the form isn't valid
-      this.demo = true;
       this.$nextTick(() => {
         this.$bvModal.hide("modal-prevent-closing");
       });
     },
+    getTotalRows() {
+      var payload = {
+        beginSql: " select count(*) as nombres from `appformmanager_datas` ",
+        filters: {
+          AND: [],
+          OR: [],
+        },
+      };
+      payload.filters.AND.push({
+        column: "appformmanager_forms",
+        value: this.id,
+      });
+      config
+        .bPost("/appformmanager/count-devis-own", payload, {}, false)
+        .then((resp) => {
+          if (resp.data[0] && resp.data[0].nombres) {
+            this.totalRows = parseInt(resp.data[0].nombres);
+          }
+        });
+    },
     loadDatas(pagination = 0) {
       this.isBusy = true;
-      var pag = null;
-      if (pagination) pag = (pagination - 1) * this.perPage;
-      this.$store
-        .dispatch("loadTraitementDatas", {
-          id: this.id,
-          pagination: pag,
-          uid: this.uid,
-        })
-        .then(() => {
+      var payload = {
+        filters: {
+          AND: [],
+          OR: [],
+        },
+      };
+      payload.filters.AND.push({
+        column: "appformmanager_forms",
+        value: this.id,
+        preffix: "dv",
+      });
+      payload.filters.AND.push({
+        column: "order",
+        value: 0,
+        preffix: "st",
+      });
+      config
+        .bPost(
+          "/appformmanager/getdevis-own/" + pagination + "/" + this.perPage,
+          payload,
+          {},
+          false
+        )
+        .then((resp) => {
+          this.$store.state.traitementItems = resp.data;
           this.$store.dispatch("setTraitId", this.id);
           this.$store.dispatch("setFormId", this.id);
+          this.isBusy = false;
+        })
+        .catch((error) => {
+          console.log("error", error);
           this.isBusy = false;
         });
     },
     ChangePagination(val) {
-      this.loadDatas(val);
-    },
-    getTotalRows() {
-      var datas =
-        "select count(*) as nombres from `appformmanager_datas` where `appformmanager_forms` = " +
-        this.id +
-        " and `uid` = " +
-        this.uid;
-      config.getData(datas).then((resp) => {
-        if (resp.data[0] && resp.data[0].nombres) {
-          this.totalRows = parseInt(resp.data[0].nombres);
-        }
-        console.log("resp[0].nombres : ", resp.data[0]);
-      });
+      this.loadDatas(val - 1);
     },
   },
 };

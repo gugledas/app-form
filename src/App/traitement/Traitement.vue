@@ -42,7 +42,7 @@ export default {
     return {
       totalRows: 0,
       isBusy: false,
-      perPage: 20,
+      perPage: 8,
     };
   },
   watch: {
@@ -137,69 +137,84 @@ export default {
     },
 
     saveToLocal() {
-      //var self = this;
-      //var datas = this.form;
       config.prepareDatasToSave(this.form).then((val) => {
         config.saveForm(val).then(() => {
           //
         });
       });
     },
-
     resetValue() {
       this.$store.getters.formDatas.selected = "";
       this.$store.getters.formDatas.value = [];
-      console.log("prev");
-    },
-    resetModal() {
-      //   this.formDatas.info.title = "";
-      //   this.titleState = null;
-      //   this.headerTitle = "";
-      //   this.headerState = null;
     },
     handleOk(bvModalEvt) {
-      // Prevent modal from closing
       bvModalEvt.preventDefault();
-      // Trigger submit handler
       this.handleSubmit();
     },
     handleSubmit(event) {
       event.preventDefault();
-      // Exit when the form isn't valid
-      this.demo = true;
-
       this.$nextTick(() => {
         this.$bvModal.hide("modal-prevent-closing");
       });
     },
     getTotalRows() {
-      var datas =
-        "select count(*) as nombres from `appformmanager_datas` where `appformmanager_forms` = " +
-        this.id;
-      config.getData(datas).then((resp) => {
-        if (resp.data[0] && resp.data[0].nombres) {
-          this.totalRows = parseInt(resp.data[0].nombres);
-        }
-        console.log("resp[0].nombres : ", resp.data[0]);
+      var payload = {
+        beginSql: " select count(*) as nombres from `appformmanager_datas` ",
+        filters: {
+          AND: [],
+          OR: [],
+        },
+      };
+      payload.filters.AND.push({
+        column: "appformmanager_forms",
+        value: this.id,
       });
+      config
+        .bPost("/appformmanager/count-devis", payload, {}, false)
+        .then((resp) => {
+          if (resp.data[0] && resp.data[0].nombres) {
+            this.totalRows = parseInt(resp.data[0].nombres);
+          }
+        });
     },
     loadDatas(pagination = 0) {
       this.isBusy = true;
-      var pag = null;
-      if (pagination) pag = (pagination - 1) * this.perPage;
-      this.$store
-        .dispatch("loadTraitementDatas", {
-          formId: this.id,
-          pagination: pag,
-        })
-        .then(() => {
+      var payload = {
+        filters: {
+          AND: [],
+          OR: [],
+        },
+      };
+      payload.filters.AND.push({
+        column: "appformmanager_forms",
+        value: this.id,
+        preffix: "dv",
+      });
+      payload.filters.AND.push({
+        column: "order",
+        value: 0,
+        preffix: "st",
+      });
+      config
+        .bPost(
+          "/appformmanager/getdevis/" + pagination + "/" + this.perPage,
+          payload,
+          {},
+          false
+        )
+        .then((resp) => {
+          this.$store.state.traitementItems = resp.data;
           this.$store.dispatch("setTraitId", this.id);
           this.$store.dispatch("setFormId", this.id);
+          this.isBusy = false;
+        })
+        .catch((error) => {
+          console.log("error", error);
           this.isBusy = false;
         });
     },
     ChangePagination(val) {
-      this.loadDatas(val);
+      this.loadDatas(val - 1);
     },
   },
 };

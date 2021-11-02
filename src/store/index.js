@@ -5,8 +5,8 @@ import { drupalUtilities, users } from "drupal-vuejs";
 import config from "../App/config/config.js";
 
 Vue.use(Vuex);
-//drupalUtilities.TestDomain = "http://v2lesroisdelareno.kksa";
-//users.TestDomain = "http://v2lesroisdelareno.kksa";
+drupalUtilities.TestDomain = "http://v2lesroisdelareno.kksa";
+users.TestDomain = "http://v2lesroisdelareno.kksa";
 export default new Vuex.Store({
   state: {
     /* contient les information de la page d'afficha des formulaires */
@@ -506,22 +506,22 @@ export default new Vuex.Store({
     /**
      * Recupere les formulaires soumis en BD.
      */
-    loadTraitementDatas({ commit }, payload) {
-      commit("SET_TRAITEMENT_ITEMS", []);
-      return new Promise((resolv, reject) => {
-        var url = "/appformmanager/getdevis/0";
-        config
-          .getData(payload, false, url)
-          .then((reponse) => {
-            console.log("get traitement Items: ", reponse);
-            commit("SET_TRAITEMENT_ITEMS", reponse.data);
-            resolv(reponse.data);
-          })
-          .catch((error) => {
-            reject(error);
-          });
-      });
-    },
+    // loadTraitementDatas({ commit }, payload) {
+    //   commit("SET_TRAITEMENT_ITEMS", []);
+    //   return new Promise((resolv, reject) => {
+    //     var url = "/appformmanager/getdevis/0";
+    //     config
+    //       .getData(payload, false, url)
+    //       .then((reponse) => {
+    //         console.log("get traitement Items: ", reponse);
+    //         commit("SET_TRAITEMENT_ITEMS", reponse.data);
+    //         resolv(reponse.data);
+    //       })
+    //       .catch((error) => {
+    //         reject(error);
+    //       });
+    //   });
+    // },
 
     /**
      * charge de maniere progressive les etapes d'un devis.
@@ -544,38 +544,37 @@ export default new Vuex.Store({
     /**
      * Recupere les formulaires soumis en BD.
      */
-    loadTraitementDatas00({ commit }, payload) {
-      commit("SET_TRAITEMENT_ITEMS", []);
-      return new Promise((resolv, reject) => {
-        var uid = payload.uid ? payload.uid : null;
-        var id = payload.id ? payload.id : null;
-        var pagination = payload.pagination ? payload.pagination : 0;
-        //console.log("loadTraitementDatas uid : ", uid, " id : ", id);
-        var sqlrequest =
-          " select dv.price, dv.status, dv.domaineid, dv.created, dv.uid, st.step from `appformmanager_datas`";
-        sqlrequest +=
-          " inner join appformmanager_datas_steps as st ON st.datasid = dv.id ";
-        sqlrequest += " where dv.appformmanager_forms= " + id;
-        sqlrequest += " and st.order=0 ";
-        if (uid) {
-          sqlrequest += " AND dv.`uid` = " + uid;
-        }
-        if (pagination)
-          sqlrequest += " order by id DESC limit 20 OFFSET " + pagination;
-        else sqlrequest += " order by id DESC limit 20";
-        config
-          .getData(sqlrequest)
-          .then((reponse) => {
-            //console.log("get traitement Items: ", reponse);
-            //commit("SET_TRAITEMENT_ITEMS", reponse.data);
-            resolv(reponse.data);
-          })
-          .catch((error) => {
-            //console.log("get error ", error);
-            reject(error);
-          });
-      });
-    },
+    // loadTraitementDatas00({ commit }, payload) {
+    //   commit("SET_TRAITEMENT_ITEMS", []);
+    //   return new Promise((resolv, reject) => {
+    //     var uid = payload.uid ? payload.uid : null;
+    //     var id = payload.id ? payload.id : null;
+    //     var pagination = payload.pagination ? payload.pagination : 0;
+    //     var sqlrequest =
+    //       " select dv.price, dv.status, dv.domaineid, dv.created, dv.uid, st.step from `appformmanager_datas`";
+    //     sqlrequest +=
+    //       " inner join appformmanager_datas_steps as st ON st.datasid = dv.id ";
+    //     sqlrequest += " where dv.appformmanager_forms= " + id;
+    //     sqlrequest += " and st.order=0 ";
+    //     if (uid) {
+    //       sqlrequest += " AND dv.`uid` = " + uid;
+    //     }
+    //     if (pagination)
+    //       sqlrequest += " order by id DESC limit 20 OFFSET " + pagination;
+    //     else sqlrequest += " order by id DESC limit 20";
+    //     config
+    //       .getData(sqlrequest)
+    //       .then((reponse) => {
+    //         //console.log("get traitement Items: ", reponse);
+    //         //commit("SET_TRAITEMENT_ITEMS", reponse.data);
+    //         resolv(reponse.data);
+    //       })
+    //       .catch((error) => {
+    //         //console.log("get error ", error);
+    //         reject(error);
+    //       });
+    //   });
+    // },
     /**
      * Permet de modifier la structure du formulaire.
      */

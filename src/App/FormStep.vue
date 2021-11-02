@@ -53,7 +53,6 @@
     <div v-if="mode">
       <add-form-field
         :isOpen="modalFormFieldIsOpen"
-        ref="formField"
         :nouveau="true"
         :id-modal="'form-step'"
       ></add-form-field>
@@ -92,9 +91,6 @@ export default {
       ],
     };
   },
-  mounted() {
-    //
-  },
   watch: {
     fields() {
       console.log("changement");
@@ -103,7 +99,6 @@ export default {
   computed: {
     ...mapState(["mode", "stepsIndex", "stepsIndexs", "form"]),
     ...mapGetters(["formDatas"]),
-
     taille() {
       if (this.fields.options.length) {
         return true;
@@ -123,8 +118,8 @@ export default {
       //this.$store.dispatch("deleteStepsInAllSteps");
     },
     addFormField() {
-      //remove this line
-      this.$refs.formField.openAddFormFieldPopUp();
+      var idModel = "modal-addForm--form-step";
+      this.$bvModal.show(idModel);
     },
     configSteps() {
       this.$refs.StepConfiguration.openPopUp();

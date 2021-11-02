@@ -112,6 +112,7 @@ export default {
 
 <style lang="scss">
 @use "../scss/variables.scss" as *;
+@use "@stephane888/wbu-atomique/scss/defaut/model/custom_bp.scss" as *;
 .custom-control-input:checked ~ .custom-control-label::before {
   background: $primary_color;
 }
@@ -122,12 +123,14 @@ export default {
 }
 
 .help-container {
-  margin-bottom: 0;
-  position: absolute;
-  // left: calc(260px + 50%);
-  right: 15px;
-  top: 15%;
-  max-width: 163px;
+  margin-bottom: 2rem;
+  @include media-min(MD) {
+    position: absolute;
+    left: auto;
+    right: 0;
+    top: 15%;
+    max-width: 163px;
+  }
   background-color: rgba(126, 149, 191, 0.3);
   padding: 10px;
   .help-block {
@@ -183,10 +186,14 @@ export default {
     display: flex;
     padding-top: 20px;
     margin-bottom: 2rem;
-    justify-content: center;
+    justify-content: left;
+    @include media-min(DD) {
+      justify-content: center;
+    }
     .block-container {
-      max-width: 500px;
-
+      @include media-min(MD) {
+        max-width: 500px;
+      }
       .page-label {
         margin: 0 0 30px;
         font-size: 0.9em;

@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-row align-h="center">
-      <b-col class="" cols="12" lg="10" v-if="formDatas && formDatas.info">
+      <b-col class="" cols="12" lg="12" v-if="formDatas && formDatas.info">
         <div>
           <title-bar
             :conf="{ col: true, text: 'Configuration du formulaire' }"

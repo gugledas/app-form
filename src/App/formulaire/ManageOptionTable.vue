@@ -16,7 +16,7 @@
                   <b-form-input
                     v-model="inputOptions.text"
                     id="option-label"
-                    placeholder="Enter label"
+                    placeholder="Entrer le label"
                     required
                     @input="automaticValue"
                   ></b-form-input>
@@ -30,10 +30,10 @@
                   ></b-form-input>
                 </b-input-group>
               </b-form-group>
-              <b-form-group label="Cout €">
+              <b-form-group label="Coût €">
                 <b-form-input
                   v-model="inputOptions.cout"
-                  placeholder="Enter label"
+                  placeholder="Entrer le coût"
                   type="number"
                 ></b-form-input>
               </b-form-group>
@@ -41,7 +41,7 @@
               <b-form-group label="Description" v-if="desc">
                 <b-form-input
                   v-model="inputOptions.description"
-                  placeholder="Enter label"
+                  placeholder="Entrer la description"
                   type="text"
                 ></b-form-input>
               </b-form-group>

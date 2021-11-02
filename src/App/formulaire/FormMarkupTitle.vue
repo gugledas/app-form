@@ -64,7 +64,7 @@
           <b-form-input
             v-model="inputOptions.label"
             id="option-label"
-            placeholder="Enter label"
+            placeholder="Entrer le label"
             required
           ></b-form-input>
         </b-form-group>
@@ -102,7 +102,7 @@
           <b-form-input
             v-model="item.label"
             :id="`option-label${i}`"
-            placeholder="Enter label"
+            placeholder="Entrer le label"
             required
           ></b-form-input>
         </b-form-group>
@@ -115,7 +115,7 @@
           <b-form-input
             v-model="item.value"
             :id="`option-value${i}`"
-            placeholder="Enter value of option"
+            placeholder="Enter la valeur de l'option"
             required
           ></b-form-input>
         </b-form-group>

@@ -137,6 +137,7 @@ export default {
    */
   prepareFieldToSave(field, uid) {
     return new Promise((resolv) => {
+      var results = [];
       var table1 = {
         table: "appformmanager_fields",
         fields: {
@@ -154,8 +155,31 @@ export default {
             value: field.id,
           },
         ];
+      } else {
+        // s'il nya pas de id, soit le champs est nouveau soit il provient du model par default
+        /**
+         * il faut vider les colonnes de appformmanager_steps_fields.defaultjson
+         */
+        results.push({
+          table: "appformmanager_steps_fields",
+          fields: {
+            defaultjson: null,
+          },
+          action: "update",
+          where: [
+            {
+              column: "formid",
+              value: field.formid,
+            },
+            {
+              column: "machine_name",
+              value: field.name,
+            },
+          ],
+        });
       }
-      resolv([table1]);
+      results.push(table1);
+      resolv(results);
     });
   },
   /**

@@ -39,7 +39,7 @@
             <b-form-select
               v-model="field.formid"
               :options="listForms"
-              :disabled="defaultFormid"
+              :disabled="defaultFormid !== '' ? true : false"
               id="type-input-2"
               required
             ></b-form-select>
@@ -151,20 +151,17 @@ export default {
           .saveForm(datas)
           .then((resp) => {
             console.log("resp : ", resp);
-            //on recupere cette ligne dans la table.
-            if (resp.data) {
-              resp.data.forEach((item) => {
-                this.$store
-                  .dispatch("GetFields", { id: item.result })
-                  .then(() => {
-                    this.busy = false;
-                    this.$emit("set_default_field");
-                    this.$nextTick(() => {
-                      this.$bvModal.hide("modal-addForm--" + this.idModal);
-                    });
-                  });
-              });
-            }
+            resp.data.forEach((r) => {
+              if (r.table == "appformmanager_fields") {
+                this.$store.state.StoreGestionChamps.fields.push({
+                  ...this.field,
+                  id: r.result,
+                });
+              }
+            });
+            this.$bvModal.hide("modal-addForm--" + this.idModal);
+            this.busy = false;
+            this.$emit("set_default_field");
           })
           .catch(() => {
             this.busy = false;

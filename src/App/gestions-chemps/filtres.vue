@@ -27,10 +27,12 @@
           >
             + Ajouter un champs
           </b-button>
-          <b-button variant="outline-info" class="mt-3 mr-3">
+          <b-button variant="outline-info" class="mt-3 mr-3 d-none">
             + Exporter
           </b-button>
-          <b-button variant="outline-info" class="mt-3"> + Importer </b-button>
+          <b-button variant="outline-info" class="mt-3 d-none">
+            + Importer
+          </b-button>
         </b-col>
       </b-row>
     </b-form>
@@ -66,9 +68,6 @@ export default {
       field: Utilities.field(),
     };
   },
-  mounted() {
-    //on selectionne le premier elment
-  },
   computed: {
     ...mapState({
       filtre: (state) => state.StoreGestionChamps.filtre,
@@ -97,13 +96,14 @@ export default {
      */
     set_default_field() {
       this.field = Utilities.field();
+      this.field.formid = this.filtre.formid;
     },
     /**
      * --
      */
     SelectionForm(val) {
       localStorage.setItem("gestionfields.defaultformid", val);
-      console.log("SelectionForm val", val);
+      this.field.formid = this.filtre.formid;
       this.$store.dispatch("GetFields");
     },
   },

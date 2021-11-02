@@ -41,7 +41,8 @@ export default {
       state.fields = [];
       var datas = " select * from `appformmanager_fields` as f ";
       if (state.filtre.formid) {
-        datas += " where f.formid='" + state.filtre.formid + "'";
+        datas +=
+          " where f.formid='" + state.filtre.formid + "' order by f.id DESC ";
         return config.getData(datas).then((r) => {
           console.log("GetFields : ", r);
           commit("SET_FIELDS", r.data);
@@ -57,7 +58,8 @@ export default {
       if (state.filtre.formid !== "") {
         datas +=
           " where f.defaultjson is not null and f.formid=" +
-          state.filtre.formid;
+          state.filtre.formid +
+          "  order by f.stepid ASC  ";
         return config.getData(datas).then((r) => {
           r.data.forEach((item) => {
             //test

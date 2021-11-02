@@ -11,7 +11,7 @@
       <b-icon icon="pencil-square" aria-hidden="true"></b-icon>
     </b-button>
     <b-button
-      class="border-0"
+      class="border-0 d-none"
       size="md"
       variant="outline-secondary"
       @click="$emit('cloner-field', row)"

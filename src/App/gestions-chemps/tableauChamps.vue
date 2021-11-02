@@ -30,10 +30,10 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
 import buttonAction from "./tableauChampsAction.vue";
-
+//import moduleA from "./testStore.js";
 import radio from "./renders/lists.vue";
+import { mapState } from "vuex";
 
 export default {
   name: "tableauChamps",
@@ -77,11 +77,12 @@ export default {
       ],
     };
   },
-  mounted() {
-    this.$store.dispatch("GetFields");
-  },
   computed: {
-    ...mapState(["fields", "filtre", "loaders"]),
+    ...mapState({
+      loaders: (state) => state.StoreGestionChamps.loaders,
+      filtre: (state) => state.StoreGestionChamps.filtre,
+      fields: (state) => state.StoreGestionChamps.fields,
+    }),
     fieldsRender() {
       var results = [];
       this.fields.forEach((item) => {

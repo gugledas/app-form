@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div :firstValue="firstValue">
+    <pre>filtre {{ filtre }} </pre>
     <b-form class="mb-5">
       <b-row>
         <b-col md="4">
@@ -9,7 +10,7 @@
             invalid-feedback="type is required"
           >
             <b-form-select
-              v-model="$store.state.filtre.formid"
+              v-model="filtre.formid"
               @change="SelectionForm"
               :options="listForms"
             ></b-form-select>
@@ -35,7 +36,7 @@
     </b-form>
     <AddForm
       :listForms="listForms"
-      :defaultFormid="$store.state.filtre.formid"
+      :defaultFormid="filtre.formid"
       :field="field"
       idModal="filter"
       @set_default_field="set_default_field"
@@ -44,7 +45,7 @@
 </template>
 
 <script>
-//import config from "../config/config.js";
+import { mapState } from "vuex";
 import AddForm from "./Addfield.vue";
 import Utilities from "../Utilities.js";
 
@@ -65,6 +66,27 @@ export default {
       field: Utilities.field(),
     };
   },
+  mounted() {
+    //on selectionne le premier elment
+  },
+  computed: {
+    ...mapState({
+      filtre: (state) => state.StoreGestionChamps.filtre,
+    }),
+    firstValue() {
+      alert("");
+      if (this.listForms.length > 0) {
+        let val = localStorage.getItem("gestionfields.defaultformid");
+        if (!val) this.listForms[0].value;
+        this.$store.dispatch("SetFiltre", {
+          key: "formid",
+          value: val,
+        });
+        return this.listForms[0].value;
+      }
+      return null;
+    },
+  },
   methods: {
     OpenModalAddField() {
       this.$bvModal.show("modal-addForm--filter");
@@ -78,8 +100,7 @@ export default {
     /**
      * --
      */
-    SelectionForm(val) {
-      this.$store.state.filtre.formid = val;
+    SelectionForm() {
       this.$store.dispatch("GetFields");
     },
   },

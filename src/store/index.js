@@ -110,22 +110,6 @@ export default new Vuex.Store({
       description: "",
       name: "",
     },
-    /**
-     * Contient la liste des champs.
-     */
-    fields: [],
-    /**
-     * Permet de filtrer les champs reçu.
-     */
-    filtre: {
-      formid: "",
-    },
-    /**
-     * - permet d'afficher un loader, si necessaire.
-     */
-    loaders: {
-      GestionField: false,
-    },
   },
   getters: {
     /**
@@ -272,11 +256,6 @@ export default new Vuex.Store({
     },
     SET_CACHEUSER(state, user) {
       state.CachesUser["uid" + user.uid] = user.user;
-    },
-    SET_FIELDS(state, fields) {
-      fields.forEach((item) => {
-        state.fields.push(item);
-      });
     },
   },
   actions: {
@@ -792,26 +771,6 @@ export default new Vuex.Store({
     },
     setCachesUser({ commit }, user) {
       commit("SET_CACHEUSER", user);
-    },
-    /**
-     * Recupere les champs.
-     * @param {*} param0
-     */
-    GetFields({ commit, state }, payload = "") {
-      state.loaders.GestionField = true;
-      var datas = " select * from `appformmanager_fields` as f ";
-      if (payload.id) {
-        datas += " where f.id='" + payload.id + "'";
-      } else {
-        state.fields = [];
-        if (state.filtre.formid.length > 0) {
-          datas += " where f.formid='" + state.filtre.formid + "'";
-        }
-      }
-      return config.getData(datas).then((reponse) => {
-        commit("SET_FIELDS", reponse.data);
-        state.loaders.GestionField = false;
-      });
     },
   },
   modules: {},

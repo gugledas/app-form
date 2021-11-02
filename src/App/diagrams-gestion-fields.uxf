@@ -1,0 +1,15 @@
+<diagram program="umletino" version="14.4.0-SNAPSHOT"><zoom_level>10</zoom_level><help_text>Ce diagramme permet de comprendre globalment le fonctionnement de l'interface de gestion des fichiers. Ce derniers comprends :
+- L'interaction entre les fichiers.
+
+LOGIQUE:
+1 On charge le filtre et ses elements.
+2 On selectionne le premier element de la liste ( champs groupe de formulaire ).
+3 une foix ces champs chargé, on complete la liste avec les champs par defaut.
+</help_text><element><id>UMLUseCase</id><coordinates><x>40</x><y>60</y><w>150</w><h>60</h></coordinates><panel_attributes>GestionFields.vue
+// Affichage global de la page de configuration des formulaires.</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>180</x><y>80</y><w>130</w><h>30</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;110;10</additional_attributes></element><element><id>UMLNote</id><coordinates><x>10</x><y>10</y><w>1060</w><h>530</h></coordinates><panel_attributes>Logique de gestion des champs
+layer=-2
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLUseCase</id><coordinates><x>290</x><y>70</y><w>90</w><h>50</h></coordinates><panel_attributes>filtres.vue
+// Affichage global de la page de configuration des formulaires.</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLUseCase</id><coordinates><x>170</x><y>180</y><w>250</w><h>50</h></coordinates><panel_attributes>tableauChamps.vue
+// Gerer l'affichage du tableau.</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>120</x><y>110</y><w>100</w><h>100</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;72;77</additional_attributes></element><element><id>UMLUseCase</id><coordinates><x>20</x><y>320</y><w>200</w><h>50</h></coordinates><panel_attributes>tableauChampsAction.vue
+// Gerer l'affichage des buttons au niveau de chaque colonne #actions.</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>130</x><y>210</y><w>70</w><h>130</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes><additional_attributes>50;10;10;110</additional_attributes></element><element><id>UMLUseCase</id><coordinates><x>140</x><y>390</y><w>200</w><h>40</h></coordinates><panel_attributes>lists.vue
+// Gerer l'affichage des buttons au niveau de chaque colonne valeurs.</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>230</x><y>220</y><w>30</w><h>190</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;170</additional_attributes></element></diagram>

@@ -20,12 +20,10 @@ export default {
       GestionFieldFiltre: false,
     },
   }),
-  getters: {},
   mutations: {
     SET_FIELDS(state, fields) {
       fields.forEach((item) => {
         state.fields.push(item);
-        console.log("SET_FIELDS : ", item);
       });
     },
     SET_FILTRE(state, filtre) {
@@ -37,8 +35,9 @@ export default {
      * Recupere les champs
      * @param {*} param0
      */
-    GetFields({ commit, state }) {
+    GetFields({ commit, state, dispatch }) {
       state.loaders.GestionField = true;
+      state.loaders.GestionFieldFiltre = true;
       state.fields = [];
       var datas = " select * from `appformmanager_fields` as f ";
       if (state.filtre.formid) {
@@ -47,21 +46,25 @@ export default {
           console.log("GetFields : ", r);
           commit("SET_FIELDS", r.data);
           state.loaders.GestionField = false;
-          //dispatch("GetFieldsDefault");
+          dispatch("GetFieldsDefault");
         });
       }
     },
     GetFieldsDefault({ state }) {
-      state.loaders.GestionFieldFiltre = true;
       var datas =
         " select f.defaultjson from `appformmanager_steps_fields` as f ";
-      state.fields = [];
+
       if (state.filtre.formid !== "") {
         datas +=
           " where f.defaultjson is not null and f.formid=" +
           state.filtre.formid;
-        return config.getData(datas).then((reponse) => {
-          console.log(" GetFieldsDefault : ", reponse);
+        return config.getData(datas).then((r) => {
+          r.data.forEach((item) => {
+            state.fields.push({
+              jsonfield: item.defaultjson,
+            });
+          });
+
           state.loaders.GestionFieldFiltre = false;
         });
       }

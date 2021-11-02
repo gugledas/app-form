@@ -11,8 +11,9 @@
           >
             <b-form-select
               v-model="filtre.formid"
-              @change="SelectionForm"
+              @input="SelectionForm"
               :options="listForms"
+              :disabled="loaders.GestionFieldFiltre"
             ></b-form-select>
           </b-form-group>
         </b-col>
@@ -72,10 +73,10 @@ export default {
   computed: {
     ...mapState({
       filtre: (state) => state.StoreGestionChamps.filtre,
-      fields: (state) => state.StoreGestionChamps.fields,
+      loaders: (state) => state.StoreGestionChamps.loaders,
     }),
     firstValue() {
-      alert("firstValue");
+      //alert("firstValue");
       if (this.listForms.length > 0) {
         let val = localStorage.getItem("gestionfields.defaultformid");
         if (!val) this.listForms[0].value;

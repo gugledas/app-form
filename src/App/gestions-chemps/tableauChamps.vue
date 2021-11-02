@@ -26,6 +26,7 @@
         ></component>
       </template>
     </b-table>
+    <pre> fieldsRender {{ fieldsRender }} </pre>
   </div>
 </template>
 
@@ -83,11 +84,7 @@ export default {
       fields: (state) => state.StoreGestionChamps.fields,
     }),
     fieldsRender() {
-      var results = [];
-      this.fields.forEach((item) => {
-        results.push({ ...JSON.parse(item.jsonfield), id: item.id });
-      });
-      return results;
+      return this.fields;
     },
   },
 

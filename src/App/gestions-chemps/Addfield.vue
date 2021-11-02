@@ -39,6 +39,7 @@
             <b-form-select
               v-model="field.formid"
               :options="listForms"
+              :disabled="defaultFormid"
               id="type-input-2"
               required
             ></b-form-select>

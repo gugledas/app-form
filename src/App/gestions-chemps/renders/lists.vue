@@ -8,7 +8,7 @@
       >
         <div class="d-flex">
           <span class="item">{{ option.text }}</span>
-          <span class="item">{{ option.cout }} €</span>
+          <span class="item" v-if="option.cout">{{ option.cout }} €</span>
         </div>
       </b-list-group-item>
     </b-list-group>

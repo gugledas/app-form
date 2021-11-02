@@ -23,7 +23,7 @@ export default {
   mutations: {
     SET_FIELDS(state, fields) {
       fields.forEach((item) => {
-        state.fields.push(item);
+        state.fields.push({ ...JSON.parse(item.jsonfield), id: item.id });
       });
     },
     SET_FILTRE(state, filtre) {
@@ -60,9 +60,12 @@ export default {
           state.filtre.formid;
         return config.getData(datas).then((r) => {
           r.data.forEach((item) => {
-            state.fields.push({
-              jsonfield: item.defaultjson,
-            });
+            //test
+            if (state.fields.length < 50)
+              state.fields.push({
+                ...JSON.parse(item.defaultjson),
+                formid: state.filtre.formid,
+              });
           });
 
           state.loaders.GestionFieldFiltre = false;

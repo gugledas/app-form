@@ -1,6 +1,5 @@
 <template>
   <div :firstValue="firstValue">
-    <pre> filtre {{ filtre }} </pre>
     <b-form class="mb-5">
       <b-row>
         <b-col md="4">

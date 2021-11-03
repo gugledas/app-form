@@ -43,12 +43,18 @@ export default {
       if (state.filtre.formid) {
         datas +=
           " where f.formid='" + state.filtre.formid + "' order by f.id DESC ";
-        return config.getData(datas).then((r) => {
-          console.log("GetFields : ", r);
-          commit("SET_FIELDS", r.data);
-          state.loaders.GestionField = false;
-          dispatch("GetFieldsDefault");
-        });
+        return config
+          .getData(datas)
+          .then((r) => {
+            console.log("GetFields : ", r);
+            commit("SET_FIELDS", r.data);
+            state.loaders.GestionField = false;
+            dispatch("GetFieldsDefault");
+          })
+          .catch(() => {
+            state.loaders.GestionField = false;
+            state.loaders.GestionFieldFiltre = false;
+          });
       }
     },
     GetFieldsDefault({ state }) {
@@ -60,18 +66,20 @@ export default {
           " where f.defaultjson is not null and f.formid=" +
           state.filtre.formid +
           "  order by f.stepid ASC  ";
-        return config.getData(datas).then((r) => {
-          r.data.forEach((item) => {
-            //test
-            if (state.fields.length < 50)
+        return config
+          .getData(datas)
+          .then((r) => {
+            r.data.forEach((item) => {
               state.fields.push({
                 ...JSON.parse(item.defaultjson),
                 formid: state.filtre.formid,
               });
+            });
+            state.loaders.GestionFieldFiltre = false;
+          })
+          .catch(() => {
+            state.loaders.GestionFieldFiltre = false;
           });
-
-          state.loaders.GestionFieldFiltre = false;
-        });
       }
     },
     SetFiltre({ commit }, filtre) {

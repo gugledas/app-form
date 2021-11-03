@@ -146,7 +146,7 @@ import NavLine from "./NavLine.vue";
 import { mapState, mapGetters } from "vuex";
 
 import FormStep from "./FormStep.vue";
-import reOrderStepes from "./ConfigsForms/reOrderStepes.vue";
+import reOrderStepes from "./OrgnisationEtapes/reOrderStepes.vue";
 import loaderIcon from "./components/loaderIcon.vue";
 export default {
   components: {

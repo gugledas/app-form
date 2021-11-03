@@ -19,7 +19,7 @@ const routes = [
   },
   {
     path: "/gestion-fields",
-    name: "Gestion des formulaires",
+    name: "Gestion des Champs",
     props: true,
     component: () => import("../App/GestionFields.vue"),
   },

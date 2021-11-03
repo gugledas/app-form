@@ -134,15 +134,9 @@
 </template>
 <script>
 import { validationRessource as Validation } from "../config/validation.js";
-import { mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
 export default {
   name: "ValidationFields",
-  props: {
-    //
-  },
-  components: {
-    //
-  },
   data() {
     return {
       options: [
@@ -169,19 +163,16 @@ export default {
       form_validation_options: [],
     };
   },
-  mounted() {
-    //
-  },
   watch: {
     selected() {
       this.formDatas.require = this.selected.join("|");
     },
   },
   computed: {
-    ...mapGetters(["formDatas", "form"]),
+    ...mapGetters(["formDatas"]),
+    ...mapState(["form"]),
     listeDesEtapes() {
       const etapes = [];
-
       Validation.listesEtapes(this.form, this.formDatas, etapes);
       return etapes;
     },
@@ -199,6 +190,7 @@ export default {
       this.formDatas.states.splice(i, 1);
     },
     listeDesChamps(condition) {
+      alert("");
       const fields = [];
       if (condition.state_name && condition.state_name !== "") {
         var form = Validation.getFormStateByName(

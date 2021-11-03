@@ -1,134 +1,63 @@
 ((typeof self !== 'undefined' ? self : this)["webpackJsonpappForm"] = (typeof self !== 'undefined' ? self : this)["webpackJsonpappForm"] || []).push([[31],{
 
-/***/ "6174":
+/***/ "./node_modules/cache-loader/dist/cjs.js?!./node_modules/babel-loader/lib/index.js!./node_modules/cache-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./src/App/formulaire/FormMarkup.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/formulaire/FormMarkup.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-// ESM COMPAT FLAG
-__webpack_require__.r(__webpack_exports__);
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var core_js_modules_es_function_name_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/es.function.name.js */ \"./node_modules/core-js/modules/es.function.name.js\");\n/* harmony import */ var core_js_modules_es_function_name_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_function_name_js__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var core_js_modules_es_number_constructor_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! core-js/modules/es.number.constructor.js */ \"./node_modules/core-js/modules/es.number.constructor.js\");\n/* harmony import */ var core_js_modules_es_number_constructor_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_number_constructor_js__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var snake_case__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! snake-case */ \"./node_modules/snake-case/dist.es2015/index.js\");\n/* harmony import */ var _EditsFields_ValidationFields_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../EditsFields/ValidationFields.vue */ \"./src/App/EditsFields/ValidationFields.vue\");\n/* harmony import */ var _EditsFields_manage_images_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../EditsFields/manage-images.vue */ \"./src/App/EditsFields/manage-images.vue\");\n\n\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n//\n\n\n\n/* harmony default export */ __webpack_exports__[\"default\"] = ({\n  name: \"FormMarkup\",\n  props: {\n    title: {\n      type: Boolean,\n      default: true\n    },\n    field: {\n      type: Object,\n      required: true,\n      validator: function validator(val) {\n        return val.label === undefined || val.value === undefined || val.name === undefined || val.require === undefined ? false : true;\n      }\n    }\n  },\n  components: {\n    ValidationFields: _EditsFields_ValidationFields_vue__WEBPACK_IMPORTED_MODULE_3__[\"default\"],\n    manageImages: _EditsFields_manage_images_vue__WEBPACK_IMPORTED_MODULE_4__[\"default\"]\n  },\n  data: function data() {\n    return {\n      readonly: true,\n      value: \"\"\n    };\n  },\n  mounted: function mounted() {//\n  },\n  watch: {//\n  },\n  computed: {},\n  methods: {\n    ev_manage_images_img: function ev_manage_images_img(data) {\n      if (data.url) {\n        this.field.imgUrl = data.url;\n      }\n    },\n    inputValue: function inputValue() {\n      if (this.value.length) {\n        return this.field.value = Number(this.value);\n      }\n    },\n    input: function input() {\n      if (this.readonly && this.field.name.length <= 32) {\n        this.field.name = Object(snake_case__WEBPACK_IMPORTED_MODULE_2__[\"snakeCase\"])(this.field.label);\n      }\n    },\n    toogleReadOnly: function toogleReadOnly() {\n      if (this.readonly) this.readonly = false;else this.readonly = true;\n    }\n  }\n});\n\n//# sourceURL=webpack://appForm/./src/App/formulaire/FormMarkup.vue?./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"38d0f794-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/formulaire/FormSpinner.vue?vue&type=template&id=7b40ef1a&scoped=true&lang=html&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('b-row',{staticClass:"mb-3"},[_c('b-col',{attrs:{"sm":"12"}},[_c('compositeHeaderField',{attrs:{"field":_vm.field}})],1),_c('b-col',{attrs:{"sm":"12"}},[_c('b-form-group',{attrs:{"label":"Valeur par defaut"}},[_c('b-form-input',{attrs:{"type":"number"},on:{"input":_vm.inputValue},model:{value:(_vm.value),callback:function ($$v) {_vm.value=$$v},expression:"value"}})],1)],1)],1),_c('ValidationFields',{attrs:{"field":_vm.field}})],1)}
-var staticRenderFns = []
+/***/ }),
 
+/***/ "./node_modules/cache-loader/dist/cjs.js?{\"cacheDirectory\":\"node_modules/.cache/vue-loader\",\"cacheIdentifier\":\"605637a5-vue-loader-template\"}!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/cache-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./src/App/formulaire/FormMarkup.vue?vue&type=template&id=0c97afe4&scoped=true&lang=html&":
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"605637a5-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/formulaire/FormMarkup.vue?vue&type=template&id=0c97afe4&scoped=true&lang=html& ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-// CONCATENATED MODULE: ./src/App/formulaire/FormSpinner.vue?vue&type=template&id=7b40ef1a&scoped=true&lang=html&
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"render\", function() { return render; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"staticRenderFns\", function() { return staticRenderFns; });\nvar render = function() {\n  var _vm = this\n  var _h = _vm.$createElement\n  var _c = _vm._self._c || _h\n  return _c(\n    \"div\",\n    [\n      _c(\n        \"b-row\",\n        { staticClass: \"mb-3\" },\n        [\n          _c(\n            \"b-col\",\n            { attrs: { sm: \"12\" } },\n            [\n              _c(\n                \"b-form-group\",\n                {\n                  attrs: {\n                    label: \"Label\",\n                    \"invalid-feedback\": \"Name is required\"\n                  }\n                },\n                [\n                  _c(\n                    \"b-input-group\",\n                    [\n                      _c(\"b-form-input\", {\n                        attrs: { required: \"\" },\n                        on: { input: _vm.input },\n                        model: {\n                          value: _vm.field.label,\n                          callback: function($$v) {\n                            _vm.$set(_vm.field, \"label\", $$v)\n                          },\n                          expression: \"field.label\"\n                        }\n                      }),\n                      _c(\"b-form-input\", {\n                        attrs: { required: \"\", readonly: _vm.readonly },\n                        on: { dblclick: _vm.toogleReadOnly },\n                        model: {\n                          value: _vm.field.name,\n                          callback: function($$v) {\n                            _vm.$set(_vm.field, \"name\", $$v)\n                          },\n                          expression: \"field.name\"\n                        }\n                      })\n                    ],\n                    1\n                  )\n                ],\n                1\n              )\n            ],\n            1\n          ),\n          _vm.field.type == \"markupimage\"\n            ? _c(\n                \"b-col\",\n                { attrs: { sm: \"12\" } },\n                [\n                  _c(\n                    \"b-form-group\",\n                    { attrs: { label: \"Url de l'image\" } },\n                    [\n                      _c(\"b-form-input\", {\n                        attrs: { id: \"image-url\" },\n                        model: {\n                          value: _vm.field.imgUrl,\n                          callback: function($$v) {\n                            _vm.$set(_vm.field, \"imgUrl\", $$v)\n                          },\n                          expression: \"field.imgUrl\"\n                        }\n                      })\n                    ],\n                    1\n                  ),\n                  _c(\"manageImages\", {\n                    on: {\n                      ev_manage_images_img: function($event) {\n                        return _vm.ev_manage_images_img($event)\n                      }\n                    }\n                  })\n                ],\n                1\n              )\n            : _vm._e()\n        ],\n        1\n      ),\n      _c(\"ValidationFields\", { attrs: { field: _vm.field } })\n    ],\n    1\n  )\n}\nvar staticRenderFns = []\nrender._withStripped = true\n\n\n\n//# sourceURL=webpack://appForm/./src/App/formulaire/FormMarkup.vue?./node_modules/cache-loader/dist/cjs.js?%7B%22cacheDirectory%22:%22node_modules/.cache/vue-loader%22,%22cacheIdentifier%22:%22605637a5-vue-loader-template%22%7D!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options");
 
-// EXTERNAL MODULE: ./node_modules/core-js/modules/es.function.name.js
-var es_function_name = __webpack_require__("b0c0");
+/***/ }),
 
-// EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.iterator.js
-var es_array_iterator = __webpack_require__("e260");
+/***/ "./src/App/formulaire/FormMarkup.vue":
+/*!*******************************************!*\
+  !*** ./src/App/formulaire/FormMarkup.vue ***!
+  \*******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-// EXTERNAL MODULE: ./node_modules/core-js/modules/es.object.to-string.js
-var es_object_to_string = __webpack_require__("d3b7");
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _FormMarkup_vue_vue_type_template_id_0c97afe4_scoped_true_lang_html___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./FormMarkup.vue?vue&type=template&id=0c97afe4&scoped=true&lang=html& */ \"./src/App/formulaire/FormMarkup.vue?vue&type=template&id=0c97afe4&scoped=true&lang=html&\");\n/* harmony import */ var _FormMarkup_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./FormMarkup.vue?vue&type=script&lang=js& */ \"./src/App/formulaire/FormMarkup.vue?vue&type=script&lang=js&\");\n/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ \"./node_modules/vue-loader/lib/runtime/componentNormalizer.js\");\n\n\n\n\n\n/* normalize component */\n\nvar component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__[\"default\"])(\n  _FormMarkup_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[\"default\"],\n  _FormMarkup_vue_vue_type_template_id_0c97afe4_scoped_true_lang_html___WEBPACK_IMPORTED_MODULE_0__[\"render\"],\n  _FormMarkup_vue_vue_type_template_id_0c97afe4_scoped_true_lang_html___WEBPACK_IMPORTED_MODULE_0__[\"staticRenderFns\"],\n  false,\n  null,\n  \"0c97afe4\",\n  null\n  \n)\n\n/* hot reload */\nif (false) { var api; }\ncomponent.options.__file = \"src/App/formulaire/FormMarkup.vue\"\n/* harmony default export */ __webpack_exports__[\"default\"] = (component.exports);\n\n//# sourceURL=webpack://appForm/./src/App/formulaire/FormMarkup.vue?");
 
-// EXTERNAL MODULE: ./node_modules/core-js/modules/es.promise.js
-var es_promise = __webpack_require__("e6cf");
+/***/ }),
 
-// EXTERNAL MODULE: ./node_modules/core-js/modules/es.string.iterator.js
-var es_string_iterator = __webpack_require__("3ca3");
+/***/ "./src/App/formulaire/FormMarkup.vue?vue&type=script&lang=js&":
+/*!********************************************************************!*\
+  !*** ./src/App/formulaire/FormMarkup.vue?vue&type=script&lang=js& ***!
+  \********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-// EXTERNAL MODULE: ./node_modules/core-js/modules/web.dom-collections.iterator.js
-var web_dom_collections_iterator = __webpack_require__("ddb0");
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _node_modules_cache_loader_dist_cjs_js_ref_12_0_node_modules_babel_loader_lib_index_js_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FormMarkup_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/cache-loader/dist/cjs.js??ref--12-0!../../../node_modules/babel-loader/lib!../../../node_modules/cache-loader/dist/cjs.js??ref--0-0!../../../node_modules/vue-loader/lib??vue-loader-options!./FormMarkup.vue?vue&type=script&lang=js& */ \"./node_modules/cache-loader/dist/cjs.js?!./node_modules/babel-loader/lib/index.js!./node_modules/cache-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./src/App/formulaire/FormMarkup.vue?vue&type=script&lang=js&\");\n/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__[\"default\"] = (_node_modules_cache_loader_dist_cjs_js_ref_12_0_node_modules_babel_loader_lib_index_js_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FormMarkup_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__[\"default\"]); \n\n//# sourceURL=webpack://appForm/./src/App/formulaire/FormMarkup.vue?");
 
-// EXTERNAL MODULE: ./node_modules/core-js/modules/es.number.constructor.js
-var es_number_constructor = __webpack_require__("a9e3");
+/***/ }),
 
-// EXTERNAL MODULE: ./src/App/EditsFields/ValidationFields.vue + 10 modules
-var ValidationFields = __webpack_require__("0931");
+/***/ "./src/App/formulaire/FormMarkup.vue?vue&type=template&id=0c97afe4&scoped=true&lang=html&":
+/*!************************************************************************************************!*\
+  !*** ./src/App/formulaire/FormMarkup.vue?vue&type=template&id=0c97afe4&scoped=true&lang=html& ***!
+  \************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/formulaire/FormSpinner.vue?vue&type=script&lang=js&
-
-
-
-
-
-
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ var FormSpinnervue_type_script_lang_js_ = ({
-  name: "InputText",
-  props: {
-    field: {
-      type: Object,
-      required: true,
-      validator: function validator(val) {
-        return val.label === undefined || val.value === undefined || val.name === undefined || val.require === undefined ? false : true;
-      }
-    }
-  },
-  components: {
-    ValidationFields: ValidationFields["a" /* default */],
-    compositeHeaderField: function compositeHeaderField() {
-      return Promise.resolve(/* import() */).then(__webpack_require__.bind(null, "d3ee"));
-    }
-  },
-  data: function data() {
-    return {
-      value: ""
-    };
-  },
-  mounted: function mounted() {//
-  },
-  watch: {//
-  },
-  computed: {},
-  methods: {
-    inputValue: function inputValue() {
-      if (this.value.length) {
-        return this.field.value = Number(this.value);
-      }
-    }
-  }
-});
-// CONCATENATED MODULE: ./src/App/formulaire/FormSpinner.vue?vue&type=script&lang=js&
- /* harmony default export */ var formulaire_FormSpinnervue_type_script_lang_js_ = (FormSpinnervue_type_script_lang_js_); 
-// EXTERNAL MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
-var componentNormalizer = __webpack_require__("2877");
-
-// CONCATENATED MODULE: ./src/App/formulaire/FormSpinner.vue
-
-
-
-
-
-/* normalize component */
-
-var component = Object(componentNormalizer["a" /* default */])(
-  formulaire_FormSpinnervue_type_script_lang_js_,
-  render,
-  staticRenderFns,
-  false,
-  null,
-  "7b40ef1a",
-  null
-  
-)
-
-/* harmony default export */ var FormSpinner = __webpack_exports__["default"] = (component.exports);
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _node_modules_cache_loader_dist_cjs_js_cacheDirectory_node_modules_cache_vue_loader_cacheIdentifier_605637a5_vue_loader_template_node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FormMarkup_vue_vue_type_template_id_0c97afe4_scoped_true_lang_html___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/cache-loader/dist/cjs.js?{\"cacheDirectory\":\"node_modules/.cache/vue-loader\",\"cacheIdentifier\":\"605637a5-vue-loader-template\"}!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/cache-loader/dist/cjs.js??ref--0-0!../../../node_modules/vue-loader/lib??vue-loader-options!./FormMarkup.vue?vue&type=template&id=0c97afe4&scoped=true&lang=html& */ \"./node_modules/cache-loader/dist/cjs.js?{\\\"cacheDirectory\\\":\\\"node_modules/.cache/vue-loader\\\",\\\"cacheIdentifier\\\":\\\"605637a5-vue-loader-template\\\"}!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/cache-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./src/App/formulaire/FormMarkup.vue?vue&type=template&id=0c97afe4&scoped=true&lang=html&\");\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"render\", function() { return _node_modules_cache_loader_dist_cjs_js_cacheDirectory_node_modules_cache_vue_loader_cacheIdentifier_605637a5_vue_loader_template_node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FormMarkup_vue_vue_type_template_id_0c97afe4_scoped_true_lang_html___WEBPACK_IMPORTED_MODULE_0__[\"render\"]; });\n\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"staticRenderFns\", function() { return _node_modules_cache_loader_dist_cjs_js_cacheDirectory_node_modules_cache_vue_loader_cacheIdentifier_605637a5_vue_loader_template_node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FormMarkup_vue_vue_type_template_id_0c97afe4_scoped_true_lang_html___WEBPACK_IMPORTED_MODULE_0__[\"staticRenderFns\"]; });\n\n\n\n//# sourceURL=webpack://appForm/./src/App/formulaire/FormMarkup.vue?");
 
 /***/ })
 
 }]);
-//# sourceMappingURL=appForm.umd.31.js.map

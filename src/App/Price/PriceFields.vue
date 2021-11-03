@@ -152,7 +152,7 @@ import {
   validationRessource as Validation,
   ValidationInstance,
 } from "../config/validation.js";
-import { mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
 export default {
   name: "PriceFields",
   props: {
@@ -176,7 +176,8 @@ export default {
     //
   },
   computed: {
-    ...mapGetters(["formDatas", "form"]),
+    ...mapGetters(["formDatas"]),
+    ...mapState(["form"]),
     listeDesEtapes() {
       const etapes = [];
       Validation.listesEtapes(this.form, this.formDatas, etapes);

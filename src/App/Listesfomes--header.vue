@@ -1,6 +1,11 @@
 <template lang="html">
   <div class="block-header">
     <div class="config">
+      <b-dropdown id="dropdown-1" text="Dashbord" class="m-md-2" right>
+        <b-dropdown-item>
+          <router-link to="/gestion-fields"> Gestion des Champs </router-link>
+        </b-dropdown-item>
+      </b-dropdown>
       <b-button
         class="config-btn"
         @click="settingform"

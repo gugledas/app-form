@@ -75,7 +75,7 @@ export default {
     }),
     firstValue() {
       //alert("firstValue");
-      if (this.listForms.length > 0) {
+      if (this.listForms[0] > 0) {
         let val = localStorage.getItem("gestionfields.defaultformid");
         if (!val) this.listForms[0].value;
         this.$store.dispatch("SetFiltre", {

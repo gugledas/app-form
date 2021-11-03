@@ -7,9 +7,8 @@ export default {
     name: String,
     value: String,
   },
-  render(createElement, context) {
+  render(createElement) {
     var self = this;
-    console.log("context : ", context);
     const input = createElement("b-form-input", {
       props: {
         type: "text",
@@ -17,7 +16,6 @@ export default {
       on: {
         input: function (e) {
           self.$emit("ev_select_project", e);
-          console.log(" Vue instance : ", self.$emit);
         },
       },
     });
@@ -27,9 +25,6 @@ export default {
         on: {
           click: function () {
             self.$emit("click_h2", "kk888");
-          },
-          ev_select_project: function () {
-            alert("ev_select_project");
           },
         },
       },

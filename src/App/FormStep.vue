@@ -94,11 +94,7 @@ export default {
       field: Utilities.field(),
     };
   },
-  watch: {
-    fields() {
-      console.log("changement");
-    },
-  },
+
   computed: {
     ...mapState(["mode", "stepsIndex", "stepsIndexs", "form"]),
     ...mapGetters(["formDatas"]),
@@ -137,7 +133,6 @@ export default {
       }
     },
     update_current_field(field) {
-      console.log("updaye field ! ", field);
       this.field = JSON.parse(field);
     },
   },

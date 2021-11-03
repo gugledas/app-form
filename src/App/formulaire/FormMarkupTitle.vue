@@ -154,12 +154,10 @@ export default {
   methods: {
     deleteOption(index) {
       var all = this.fields.options;
-      console.log("i", all, index);
 
       for (var i = all.length - 1; i >= 0; i--) {
         if (i === index) {
           all.splice(i, 1);
-          console.log("iii");
         }
       }
     },
@@ -173,7 +171,6 @@ export default {
       for (let i in this.inputOptions) {
         info[i] = this.inputOptions[i];
       }
-      console.log("object", info);
       this.fields.options.push(info);
       this.onReset(event);
       this.inputOptions = {

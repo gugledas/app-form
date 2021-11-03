@@ -94,10 +94,8 @@ export default {
       ];
       for (const i in this.form.forms) {
         const form = this.form.forms[i];
-        // console.log("etate : ", form.info.name, "\n\n");
         for (const f in form.fields) {
           const field = form.fields[f];
-          // console.log(field);
           if (field.display_field) {
             fieldsDisplay.push({
               label: field.label,
@@ -123,15 +121,13 @@ export default {
     },
   },
   methods: {
-    deleteSteps(datas) {
+    deleteSteps() {
       var all = this.$store.state.allStepsDatas;
       var r = all.indexOf(this.formDatas);
       this.$emit("index-to-delete", r);
-      console.log("de", datas);
       for (var i = all.length - 1; i >= 0; i--) {
         if (i === r) {
           all.splice(i, 1);
-          console.log("iiippp");
         }
       }
     },
@@ -208,8 +204,7 @@ export default {
           this.$store.dispatch("setFormId", this.id);
           this.isBusy = false;
         })
-        .catch((error) => {
-          console.log("error", error);
+        .catch(() => {
           this.isBusy = false;
         });
     },

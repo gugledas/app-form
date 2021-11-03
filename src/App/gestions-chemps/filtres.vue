@@ -74,7 +74,6 @@ export default {
       loaders: (state) => state.StoreGestionChamps.loaders,
     }),
     firstValue() {
-      //alert("firstValue");
       if (this.listForms[0] > 0) {
         let val = localStorage.getItem("gestionfields.defaultformid");
         if (!val) this.listForms[0].value;

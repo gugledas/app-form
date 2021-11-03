@@ -180,7 +180,6 @@ export default new Vuex.Store({
     },
     SET_ITEMS(state, payload) {
       state.items = payload;
-      console.log("payload : ", payload);
     },
     SET_CURRRENT_FORM(state, payload) {
       state.form = payload;
@@ -213,18 +212,15 @@ export default new Vuex.Store({
       state.stepsIndex = i;
     },
     SET_FORM_DATAS_VALIDATE(state, value) {
-      //console.log(" MAJ de SET_FORM_DATAS_VALIDATE ");
       state.formDatasValidate = value;
     },
     SET_STEPS_INDEXS(state, value) {
       state.stepsIndexs = value;
     },
     ADD_STEPS_INDEXS(state, value) {
-      console.log("state.stepsIndexs : ", state.stepsIndexs, "\n :: ", value);
       state.stepsIndexs.push(value);
     },
     REMOVE_STEPS_INDEXS(state) {
-      console.log("remove stepIndex in array ");
       if (state.stepsIndexs.length) state.stepsIndexs.splice(-1, 1);
     },
     /**
@@ -316,7 +312,6 @@ export default new Vuex.Store({
         state.form.forms
       );
       if (price > 0) {
-        console.log("Retranche prix : ", price);
         commit("REMOVE_PRIX_STEPS", price);
       }
       //remove price states aide
@@ -325,14 +320,8 @@ export default new Vuex.Store({
         state.form.forms,
         "aide_financiere"
       );
-      console.log(
-        "back stape ",
-        getters.formDatas.info.name,
-        "\n priceAide - ",
-        priceAide
-      );
+
       if (priceAide > 0) {
-        console.log("Retranche l'aide financiere : ", priceAide);
         commit("REMOVE_PRIX_AIDE_STEPS", priceAide);
       }
     },
@@ -361,7 +350,7 @@ export default new Vuex.Store({
     loadFormsDatas({ commit }) {
       commit("SET_ITEMS", []);
       var datas =
-        "select f.id,f.name,f.description,f.img,f.forms from `appformmanager_fomrs` as f ";
+        "select f.id,f.name,f.description,f.img from `appformmanager_fomrs` as f ";
       return config.getData(datas).then((reponse) => {
         commit("SET_ITEMS", reponse.data);
       });
@@ -412,107 +401,24 @@ export default new Vuex.Store({
       };
       return loadProgressiveDate();
     },
-    loadStepsDatas00({ commit, state }, payload) {
-      commit("SET_CURRRENT_FORM", {});
-      const nbreItems = 10;
-      const loadProgressiveDate = (pagination = 0) => {
-        return new Promise((resolv) => {
-          var datas =
-            " select f.id,f.name,f.description,f.img,f.forms, st.step from `appformmanager_fomrs` as f ";
-          datas +=
-            " left join appformmanager_fomrs_steps as st ON st.formid = f.id ";
-          datas += " where f.id='" + payload.formId + "'";
-          datas +=
-            " order by st.order ASC limit " +
-            nbreItems +
-            " OFFSET " +
-            pagination;
-          config.getData(datas).then((rep) => {
-            if (rep.data[0] && rep.data[0].id) {
-              // Ce bloc est à supprimer.
-              rep.data[0].forms = JSON.parse(rep.data[0].forms);
-              if (
-                rep.data[0] &&
-                rep.data[0].forms &&
-                rep.data[0].forms.length > 0
-              ) {
-                alert("not clen");
-                commit("SET_CURRRENT_FORM", rep.data[0]);
-                resolv("null");
-                return false;
-              }
-              //si cest le premier passage, on met en place le formulaire avec quelques champs.
-              if (!pagination) {
-                var steps = [];
-                rep.data.forEach((step) => {
-                  steps.push(JSON.parse(step.step));
-                });
-                var result = {
-                  id: rep.data[0].id,
-                  name: rep.data[0].name,
-                  description: rep.data[0].description,
-                  img: rep.data[0].img,
-                  forms: steps,
-                };
-                commit("SET_CURRRENT_FORM", result);
-              } else {
-                console.log("Autre requet : ", rep.data);
-                rep.data.forEach((step) => {
-                  state.form.forms.push(JSON.parse(step.step));
-                });
-              }
-              // Si le resultat est egal au nombre d'element il est possible que des données existe encore.
-              if (nbreItems === rep.data.length) {
-                pagination += nbreItems;
-                resolv(loadProgressiveDate(pagination));
-              } else resolv(null);
-            } else resolv(null);
-          });
-        });
-      };
-      return loadProgressiveDate();
-    },
     /**
      * Recupere les paramètres de la page d'entrée.
      */
     loadPageInfo({ commit }) {
       var datas = "select * from `appformmanager_config`";
       config.getData(datas).then((reponse) => {
-        console.log("get pageInfo: ", reponse);
         commit("SET_PAGE_INFO", reponse.data);
       });
     },
     /**
-     * Recupere les formulaires soumis en BD.
-     */
-    // loadTraitementDatas({ commit }, payload) {
-    //   commit("SET_TRAITEMENT_ITEMS", []);
-    //   return new Promise((resolv, reject) => {
-    //     var url = "/appformmanager/getdevis/0";
-    //     config
-    //       .getData(payload, false, url)
-    //       .then((reponse) => {
-    //         console.log("get traitement Items: ", reponse);
-    //         commit("SET_TRAITEMENT_ITEMS", reponse.data);
-    //         resolv(reponse.data);
-    //       })
-    //       .catch((error) => {
-    //         reject(error);
-    //       });
-    //   });
-    // },
-
-    /**
      * charge de maniere progressive les etapes d'un devis.
      */
-    loadAllStepOfDevis({ state }, payload) {
+    loadAllStepOfDevis(payload) {
       return new Promise((resolv, reject) => {
         var url = "/appformmanager/getdevis-steps/0";
         config
           .getData(payload, false, url)
           .then((reponse) => {
-            console.log("all step of devis : ", reponse);
-            console.log("state.traitementItems : ", state.traitementItems);
             resolv(reponse.data);
           })
           .catch((error) => {
@@ -520,43 +426,7 @@ export default new Vuex.Store({
           });
       });
     },
-    /**
-     * Recupere les formulaires soumis en BD.
-     */
-    // loadTraitementDatas00({ commit }, payload) {
-    //   commit("SET_TRAITEMENT_ITEMS", []);
-    //   return new Promise((resolv, reject) => {
-    //     var uid = payload.uid ? payload.uid : null;
-    //     var id = payload.id ? payload.id : null;
-    //     var pagination = payload.pagination ? payload.pagination : 0;
-    //     var sqlrequest =
-    //       " select dv.price, dv.status, dv.domaineid, dv.created, dv.uid, st.step from `appformmanager_datas`";
-    //     sqlrequest +=
-    //       " inner join appformmanager_datas_steps as st ON st.datasid = dv.id ";
-    //     sqlrequest += " where dv.appformmanager_forms= " + id;
-    //     sqlrequest += " and st.order=0 ";
-    //     if (uid) {
-    //       sqlrequest += " AND dv.`uid` = " + uid;
-    //     }
-    //     if (pagination)
-    //       sqlrequest += " order by id DESC limit 20 OFFSET " + pagination;
-    //     else sqlrequest += " order by id DESC limit 20";
-    //     config
-    //       .getData(sqlrequest)
-    //       .then((reponse) => {
-    //         //console.log("get traitement Items: ", reponse);
-    //         //commit("SET_TRAITEMENT_ITEMS", reponse.data);
-    //         resolv(reponse.data);
-    //       })
-    //       .catch((error) => {
-    //         //console.log("get error ", error);
-    //         reject(error);
-    //       });
-    //   });
-    // },
-    /**
-     * Permet de modifier la structure du formulaire.
-     */
+
     setItems({ commit }, payload) {
       commit("SET_ITEMS", payload);
     },
@@ -684,7 +554,6 @@ export default new Vuex.Store({
                 resp.reponse.config.url !== resp.reponse.request.responseURL
               ) {
                 users.getCurrentUser().then((userData) => {
-                  console.log(" Utilisateur : ", userData);
                   if (userData.uid && userData.uid[0].value)
                     utilities
                       .saveDatas(state, userData.uid[0].value, status)
@@ -711,7 +580,6 @@ export default new Vuex.Store({
               ]);
               if (!url.includes("register"))
                 displayMsg(msg, "Erreur de connexion", false);
-              console.log("errors.response ", errors, "\n", errors.error);
               //On verifie s'il y'a eut redirection.
               if (
                 errors.response &&
@@ -755,7 +623,6 @@ export default new Vuex.Store({
         uid = getters.uid;
       }
       utilities.saveDatas(state, uid).then((response) => {
-        // console.log("Données stocké du store", response);
         if (state.idSoumission === null) {
           commit("SET_ID_SOUMISSION", response.data[0].result);
         }

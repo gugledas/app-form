@@ -4,7 +4,6 @@ const Utilities = {
    */
   settingForm: function (datas) {
     return new Promise((resolv) => {
-      //console.log("fdate : ", datas);
       var value = "";
 
       value = JSON.stringify(datas.value);

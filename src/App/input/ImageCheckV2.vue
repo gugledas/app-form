@@ -100,7 +100,6 @@ export default {
     },
     getImage(il) {
       var le = this.field.options;
-      console.log("le", il);
       for (var i = 0; i < le.length; i++) {
         if (i == il) {
           le[i].isActive = !le[i].isActive;

@@ -46,7 +46,6 @@ export default {
         return config
           .getData(datas)
           .then((r) => {
-            console.log("GetFields : ", r);
             commit("SET_FIELDS", r.data);
             state.loaders.GestionField = false;
             dispatch("GetFieldsDefault");

@@ -243,7 +243,6 @@ export default {
       this.field.states.push(Validation.conditions());
     },
     deleteState(i) {
-      //console.log("i : ", i);
       this.field.states.splice(i, 1);
     },
     listsOptionsCondition(condition) {

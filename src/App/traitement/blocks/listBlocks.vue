@@ -226,7 +226,6 @@ export default {
           const stape = rowData.datas[s];
           for (const f in stape.fields) {
             const field = stape.fields[f];
-            //console.log("field.name : ", field.name);
             if (this.liste_fields_check.includes(field.name)) {
               row[field.name] = field;
             }
@@ -339,7 +338,7 @@ export default {
       this.currentDataId = this.traitementFormItems[id].id;
       this.currentDevis = this.traitementFormItems[id];
       this.validSteps2 = this.traitementFormItems[id].datas;
-      console.log("id : ", this.currentDataId);
+
       if (!this.traitementFormItems[id]["all-steps-loaded"]) {
         this.$store
           .dispatch("loadAllStepOfDevis", {
@@ -352,25 +351,6 @@ export default {
           });
         this.traitementFormItems[id]["all-steps-loaded"] = true;
       }
-
-      // this.validSteps2.push(forms[0]);
-      // function execution(i) {
-      //   const loop = function (i) {
-      //     return new Promise((resolv) => {
-      //       Utilities.selectNextState(forms, i).then((rep) => {
-      //         resolv(rep);
-      //       });
-      //     });
-      //   };
-      //   loop(i).then((kk) => {
-      //     if (kk && kk < 250) {
-      //       self.validSteps2.push(forms[kk]);
-      //       // Console.log("kk : ", kk);
-      //       execution(kk);
-      //     }
-      //   });
-      // }
-      // execution(0);
     },
   },
 };

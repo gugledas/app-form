@@ -209,7 +209,6 @@ export default {
     currentSteps() {
       var local = localStorage.getItem("allo");
       var recap = JSON.parse(local);
-      //console.log("lo", recap);
       if (recap != null && recap.length) {
         return recap[this.stepsIndex];
       } else return this.formDatas;
@@ -217,7 +216,6 @@ export default {
     stepsDatas() {
       var so = this.datasBd;
       if (this.datasBd.length) {
-        console.log("object io", so[this.stepsId - 1]);
         return so[this.stepsId - 1];
       } else return "vide";
     },
@@ -232,30 +230,25 @@ export default {
     },
   },
   methods: {
-    deleteSteps(datas) {
+    deleteSteps() {
       var all = this.$store.state.allStepsDatas;
       var r = all.indexOf(this.formDatas);
       this.$emit("index-to-delete", r);
-      console.log("de", datas);
       for (var i = all.length - 1; i >= 0; i--) {
         if (i === r) {
           all.splice(i, 1);
-          console.log("iiippp");
         }
       }
     },
     datasBdOrLocalStorage() {
       var local = localStorage.getItem("allo");
       var recap = JSON.parse(local);
-      console.log("loaaaa", recap);
       if (this.stepsDatas != "vide") {
         this.datasBase = this.stepsDatas;
-        console.log("aaa", this.datasBase);
         var rep = JSON.parse(this.datasBase.forms);
         this.$store.state.allStepsDatas = rep;
         this.$store.state.formDatas = this.allStepsDatas[this.stepsIndex];
       } else if (recap != null && recap.length) {
-        console.log("appppaaa", recap);
         this.$store.state.allStepsDatas = recap;
         this.$store.state.formDatas = this.allStepsDatas[this.stepsIndex];
       } else if (this.stepsDatas == "vide") {
@@ -281,7 +274,6 @@ export default {
       var nameFile = window
         .prompt("Veuillez renseigner le nom du fichier", "test")
         .toLowerCase();
-      // Console.log("name", nameFile + ".json");
       const data = JSON.stringify(this.form);
       const blob = new Blob([data], { type: "text/plain" });
       const e = document.createEvent("MouseEvents"),

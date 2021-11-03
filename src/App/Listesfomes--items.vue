@@ -213,11 +213,7 @@ export default {
         .bPost("/appformmanager/count-devis", payload, {}, false)
         .then((resp) => {
           if (resp.data.length) {
-            //console.log("resp.data ", resp.data);
             resp.data.forEach((item) => {
-              // this.$set(form, "onWaitNumber", 0);
-              // this.$set(form, "onSave", 0);
-              // this.$set(form, "onCancel", 0);
               if (item.status === "0") {
                 this.$set(form, "onWaitNumber", item.nombre);
               } else if (item.status === "1") {
@@ -242,7 +238,6 @@ export default {
       this.$router.push({ path: `/traitement/${id}` });
     },
     deleteForm(id) {
-      console.log("object", id);
       config.modalConfirmDelete().then((value) => {
         if (value) {
           config.deleteForm(id).then(() => {

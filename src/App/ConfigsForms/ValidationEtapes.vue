@@ -186,11 +186,9 @@ export default {
       this.formDatas.states.push(Validation.conditions());
     },
     deleteState(i) {
-      //console.log("i : ", i);
       this.formDatas.states.splice(i, 1);
     },
     listeDesChamps(condition) {
-      alert("");
       const fields = [];
       if (condition.state_name && condition.state_name !== "") {
         var form = Validation.getFormStateByName(
@@ -198,7 +196,6 @@ export default {
           this.form.forms
         );
         if (form !== undefined) {
-          //console.log("form , ", form);
           for (const i in form.fields) {
             const field = form.fields[i];
             if (condition.name == field.name && field.options.length) {

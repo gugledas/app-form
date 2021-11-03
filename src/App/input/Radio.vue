@@ -78,7 +78,6 @@ export default {
           this.field,
           this.formDatasValidate
         );
-        //console.log("update status : ", status);
         if (status === undefined || status === null)
           status = this.field.status !== undefined ? this.field.status : false;
         this.setStatus(status);
@@ -118,7 +117,7 @@ export default {
      */
     getFieldValueByName(name) {
       const field = validation.getFieldByName(name, this.formDatas.fields);
-      //console.log("field getFieldValueByName : ", field);
+
       if (field && field.value) {
         return field.value;
       }

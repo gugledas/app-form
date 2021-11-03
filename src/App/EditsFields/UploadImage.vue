@@ -11,8 +11,6 @@ https://bezkoder.com/vue-axios-file-upload/
       accepted-file-types="image/jpeg, image/png"
       :server="server"
       v-bind:files="myFiles"
-      v-on:processfile="handleFileProcess"
-      @updatefiles="updatefiles"
     ></FilePond>
     <ul class="m-0 p-2 bg-light m-2">
       <b-row align-h="center" align-v="center" class="row mb-3" v-if="hasImg">
@@ -62,8 +60,6 @@ export default {
         url: config.BaseUrl() + "/filesmanager/files",
         process: {
           onload: (res) => {
-            // select the right value in the response here and return
-            //console.log("onload : ", JSON.parse(res));
             this.addImages(JSON.parse(res));
             return res;
           },
@@ -107,7 +103,6 @@ export default {
   },
   methods: {
     addImages(response) {
-      console.log("ime", response);
       this.field.img = response.url;
     },
     retriveFiles() {
@@ -128,30 +123,9 @@ export default {
     setEmptyValue() {
       this.field.img = "";
     },
-    handleFilePondInit: function () {
-      console.log("FilePond has initialized");
-      // FilePond instance methods are available on `this.$refs.pond`
-    },
+
     deleteFile() {
       this.field.img = "";
-    },
-    progressfiles(data) {
-      console.log("progressfiles : ", data);
-    },
-    handleFileProcess(error, file) {
-      console.log("handleFileProcess ", error, file);
-    },
-    handleFilesProcess(data) {
-      console.log("handleFilesProcess ", data);
-    },
-    updatefiles(data) {
-      console.log("updatefiles ", data);
-    },
-    load(data) {
-      console.log("load ", data);
-    },
-    processfileprogress(file) {
-      console.log("processfileprogress ", file);
     },
   },
 };

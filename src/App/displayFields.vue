@@ -207,7 +207,7 @@ export default {
     },
     getImage(il) {
       var le = this.formDatas.fields[this.id].options;
-      console.log("le", le);
+
       for (var i = 0; i < le.length; i++) {
         if (i == il) {
           le[i].isActive = !le[i].isActive;
@@ -227,7 +227,6 @@ export default {
       for (var i = all.length - 1; i >= 0; i--) {
         if (i === this.id) {
           all.splice(i, 1);
-          console.log("iiippp");
         }
       }
     },

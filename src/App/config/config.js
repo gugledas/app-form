@@ -219,7 +219,6 @@ export default {
       const datas = state.form;
       const id = state.idSoumission;
       const price = state.price;
-      // console.log("saveStepsDatas : ", datas);
       var result = [];
       if (datas != "") {
         // Edition de la table contents.
@@ -319,7 +318,6 @@ export default {
    */
   deleteFormTraitement(id, status, mode = false) {
     const result = [];
-    console.log("ress", id, status);
     var table1 = {
       table: "appformmanager_datas",
       fields: {

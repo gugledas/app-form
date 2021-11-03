@@ -207,7 +207,6 @@ export default {
       } else this.typeOptions = Utilities.typeOptions();
     },
     loadDynamicFields() {
-      console.log("loadDynamicFields");
       var data = " select * from appformmanager_fields ";
       if (this.typeFormId) {
         data += " where formid='" + this.typeFormId + "'";

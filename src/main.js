@@ -14,7 +14,6 @@ function loadstyle(src) {
     s.setAttribute("rel", "stylesheet");
     s.setAttribute("href", src);
     s.onload = function () {
-      console.log("Chargement du Style ok : ", src);
       resolv(true);
     };
     document.head.appendChild(s);

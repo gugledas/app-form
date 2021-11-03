@@ -25,7 +25,6 @@ async function calcul() {
     0,
     "aide_financiere"
   );
-  console.log("priceAide : ", priceAide);
 
   var price = 0;
   switch (mitoyen) {

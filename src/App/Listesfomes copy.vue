@@ -281,7 +281,6 @@ export default {
       this.$router.push({ path: `/traitement-my-own/${id}` });
     },
     deleteForm(id) {
-      console.log("object", id);
       config.modalConfirmDelete().then((value) => {
         if (value) {
           config.deleteForm(id).then(() => {
@@ -305,7 +304,6 @@ export default {
           ") group by status";
       config.bPost("/query-ajax/select", sql, {}, false).then((resp) => {
         if (resp.data.length) {
-          //console.log("resp.data ", resp.data);
           resp.data.forEach((item) => {
             if (item.status === "0") {
               this.$set(form, "onWaitNumber", item.nombre);

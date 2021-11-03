@@ -11,8 +11,6 @@ https://bezkoder.com/vue-axios-file-upload/
       accepted-file-types="image/jpeg, image/png"
       :server="server"
       v-bind:files="myFiles"
-      v-on:processfile="handleFileProcess"
-      @updatefiles="updatefiles"
     ></FilePond>
     <ul class="m-0 p-2 bg-light m-2">
       <li v-for="(file, i) in myFilesPreview" :key="i" class="row mb-3">
@@ -60,7 +58,7 @@ export default {
         process: {
           onload: (res) => {
             // select the right value in the response here and return
-            //console.log("onload : ", JSON.parse(res));
+
             this.addImages(JSON.parse(res));
             return res;
           },
@@ -114,30 +112,8 @@ export default {
     setEmptyValue() {
       this.field.value = [];
     },
-    handleFilePondInit: function () {
-      console.log("FilePond has initialized");
-      // FilePond instance methods are available on `this.$refs.pond`
-    },
     deleteFile(id) {
       this.field.value.splice(id, 1);
-    },
-    progressfiles(data) {
-      console.log("progressfiles : ", data);
-    },
-    handleFileProcess(error, file) {
-      console.log("handleFileProcess ", error, file);
-    },
-    handleFilesProcess(data) {
-      console.log("handleFilesProcess ", data);
-    },
-    updatefiles(data) {
-      console.log("updatefiles ", data);
-    },
-    load(data) {
-      console.log("load ", data);
-    },
-    processfileprogress(file) {
-      console.log("processfileprogress ", file);
     },
   },
 };

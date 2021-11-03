@@ -40,9 +40,7 @@ export default {
       //
     };
   },
-  mounted() {
-    console.log("img_url : ", this.img_url);
-  },
+
   watch: {
     //
   },
@@ -55,15 +53,11 @@ export default {
   },
   methods: {
     handleImages(files) {
-      console.log("re", files);
       for (const i in files) {
         config
           .postFile(config.BaseUrl() + this.url, files[i])
           .then((resolv) => {
             this.$emit("ev_manage_images_img", resolv);
-          })
-          .catch((error) => {
-            console.log("Error : ", error);
           });
       }
     },

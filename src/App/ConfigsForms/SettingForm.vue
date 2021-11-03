@@ -82,7 +82,6 @@ export default {
       this.$store.dispatch("loadPageInfo");
     },
     ev_manage_images_img(data, form) {
-      console.log("file", data);
       if (data.url) {
         form.img = data.url;
       }

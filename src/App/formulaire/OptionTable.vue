@@ -161,7 +161,6 @@ export default {
       for (var i = all.length - 1; i >= 0; i--) {
         if (i === index) {
           all.splice(i, 1);
-          console.log("iii");
         }
       }
     },

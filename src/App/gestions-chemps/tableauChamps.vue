@@ -55,10 +55,6 @@ export default {
           key: "label",
           sortable: false,
           label: "Etiquetes",
-          // formatter(value, key, item) {
-          //   console.log("formatter : ", value, "\n", key, "\n", item);
-          //   return item.field.label;
-          // },
         },
         {
           key: "value",

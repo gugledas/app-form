@@ -34,7 +34,6 @@ export default {
     };
   },
   mounted() {
-    console.log("chargement de gestion des champs.");
     this.$store.registerModule("StoreGestionChamps", MiniStore);
     this.$store.dispatch("loadFormsDatas").then(() => {
       this.$store.state.items.forEach((item) => {

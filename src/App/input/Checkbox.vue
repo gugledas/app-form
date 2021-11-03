@@ -94,7 +94,6 @@ export default {
           this.field,
           this.formDatasValidate
         );
-        //console.log("update status : ", status);
         if (status === undefined || status === null)
           status = this.field.status !== undefined ? this.field.status : false;
         this.setStatus(status);

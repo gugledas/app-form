@@ -195,6 +195,9 @@ export default {
     this.TryToLoginWithFacebook();
     loginfacebook.appId = 889256191665205;
     this.loadScript();
+    setTimeout(() => {
+      this.setRefs();
+    }, 800);
   },
   watch: {
     //
@@ -231,17 +234,13 @@ export default {
         "wbu-fb-status-change",
         () => {
           this.isBusy = true;
-          console.log("TryToLoginWithFacebook", this.isBusy);
           config
             .post("/login-rx-vuejs/facebook-check", loginfacebook.user)
             .then((resp) => {
-              console.log("TryToLoginWithFacebook resp : ", resp);
               if (
                 resp.reponse &&
                 resp.reponse.config.url !== resp.reponse.request.responseURL
               ) {
-                //window.location.assign(resp.reponse.request.responseURL);
-                console.log("user is connect : ", resp.reponse);
                 //on connecte l'utilisateur:
                 this.$store.dispatch("getCurrentUser").then(() => {
                   //save form
@@ -306,28 +305,18 @@ export default {
       }
     },
     select_tab(val) {
-      var self = this;
       this.current_tab = val;
       this.userlogin.tabIndex = val;
-      self.setRefs();
+      this.setRefs();
     },
     /* facebook login methods */
     getFacebookLoginStatus() {
       loginfacebook.getUserStatus();
     },
-    facebookStatusCallback(reponse) {
-      console.log("status", reponse);
-      console.log(
-        reponse.status == "connected"
-          ? "je suis connecté avec facebook"
-          : "Pas connecté avec facebook"
-      );
-    },
     initFacebookLogin() {
       loginfacebook.openPopup();
     },
     ev_logingoogle(user) {
-      console.log("user : ", user);
       this.$store.dispatch("setCurrentUser", user);
     },
   },

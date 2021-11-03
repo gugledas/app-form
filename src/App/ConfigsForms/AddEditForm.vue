@@ -74,7 +74,6 @@ export default {
   computed: {},
   methods: {
     ev_manage_images_img(data, form) {
-      console.log("file", data);
       if (data.url) {
         form.img = data.url;
       }

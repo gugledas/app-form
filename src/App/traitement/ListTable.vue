@@ -59,11 +59,7 @@
                   voir mon devis
                 </b-button>
 
-                <b-button
-                  variant="outline-success"
-                  @click="showResult(scope.item)"
-                  v-if="$store.state.mode"
-                >
+                <b-button variant="outline-success" v-if="$store.state.mode">
                   Editer
                 </b-button>
 
@@ -270,7 +266,6 @@ export default {
           const stape = rowData.datas[s];
           for (const f in stape.fields) {
             const field = stape.fields[f];
-            //console.log("field.name : ", field.name);
             if (this.liste_fields_check.includes(field.name)) {
               row[field.name] = field;
             }
@@ -301,16 +296,13 @@ export default {
         loop(i).then((kk) => {
           if (kk && kk < 200) {
             self.validSteps2.push(forms[kk]);
-            // Console.log("kk : ", kk);
             execution(kk);
           }
         });
       }
       execution(0);
     },
-    showResult(id) {
-      console.log("id", id);
-    },
+
     formTraiter(id) {
       var status = "";
       if (id.status == "0") {
@@ -330,17 +322,11 @@ export default {
         })
         .then((value) => {
           if (value) {
-            console.log("Refus : ", id);
             config.deleteFormTraitement(id.id, status).then(() => {
               window.location.reload();
             });
           }
         });
-      /**
-       *  .catch((err) => {
-       *    console.log("refus : ", err);
-       *  });
-       */
     },
     /**
      */

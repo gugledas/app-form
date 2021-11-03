@@ -75,7 +75,6 @@ export default {
     value() {
       this.$emit("label-up-value", this.value);
       this.$store.state.fields.value = this.options;
-      console.log("object", this.options);
     },
   },
   computed: {
@@ -89,7 +88,6 @@ export default {
           this.field,
           this.formDatasValidate
         );
-        //console.log("update status : ", status);
         if (status === undefined || status === null)
           status = this.field.status !== undefined ? this.field.status : false;
         this.setStatus(status);

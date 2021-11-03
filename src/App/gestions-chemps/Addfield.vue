@@ -150,7 +150,6 @@ export default {
         config
           .saveForm(datas)
           .then((resp) => {
-            console.log("resp : ", resp);
             resp.data.forEach((r) => {
               if (r.table == "appformmanager_fields") {
                 this.$store.state.StoreGestionChamps.fields.push({

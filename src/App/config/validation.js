@@ -59,7 +59,6 @@ const validationRessource = {
 
           // si le champs n'est pas definit on retourne false;
           if (formDatasValidate[state.name] === undefined) {
-            //console.log("Validation non forunit : ", formDatasValidate);
             return null;
           }
           if (field.name === state.name) {
@@ -75,14 +74,6 @@ const validationRessource = {
               )
                 return formDatasValidate[field.name].valid;
               else if (state.operator === "egal") {
-                /*
-                console.log(
-                  "Valeur requise : ",
-                  state.value,
-                  " :: Valeur du parent",
-                  field.value
-                );
-                /**/
                 if (field.value) {
                   if (
                     config.typeSelection.includes(field.type) &&
@@ -118,7 +109,6 @@ const validationRessource = {
    */
   listesEtapes(form, formDatas, etapes = []) {
     if (form && form.forms.length > 1) {
-      //console.log("listesEtapes ");
       for (const i in form.forms) {
         const currentForm = form.forms[i];
         if (currentForm.info.name !== "") {
@@ -160,7 +150,6 @@ class ValidationInstance {
         form.forms
       );
       if (currentForm !== undefined) {
-        //console.log("listeDesChamps ", currentForm);
         for (const i in currentForm.fields) {
           const field = currentForm.fields[i];
           if (condition.name == field.name && field.options.length) {

@@ -101,15 +101,12 @@ export default {
       return `${text}`;
     },
     asyncFind(search) {
-      //console.log("search : ", search);
       if (search.length > 2) {
         const terms = new termsTaxo("departements");
-        //console.log("find");
         this.isLoading = true;
         terms.getSearch(search).then(() => {
           this.options = terms.getOptions();
           this.isLoading = false;
-          //console.log("this.options : ", this.options);
         });
       }
     },

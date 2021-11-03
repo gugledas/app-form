@@ -2,38 +2,7 @@ import config from "../App/config/config.js";
 
 export default {
   forms: [],
-  /**
-   * Selectionne la prochaine etape valide.
-   * @param forms array etape du formualire;
-   * @param i indice de letape encours.
-   */
-  /*
-  selectNextStateOld(forms, i) {
-    var j = i + 1;
-    this.forms = forms;
-    return new Promise(resolv => {
-      for (const k in this.forms) {
-        let kk = parseInt(k);
-        if (kk >= j) {
-          const form = this.forms[k];
 
-          this.validateState(form.states).then(rep => {
-            console.log("selectNextState : ", kk, " response : ", rep);
-            if (rep) resolv(kk);
-          });
-        }
-        var ii = kk + 1;
-        if (this.forms.length === ii) {
-          console.log("selectNextState END : ", kk);
-          resolv(null);
-        }
-      }
-      if (!forms) {
-        resolv(null);
-      }
-    });
-  },
-  /**/
   /**
    * Selectionne l'indice de la prochaine etape valide.
    * @param forms array etape du formualire;
@@ -50,7 +19,6 @@ export default {
             resolv(null);
           }
           self.validateState(forms[j].states).then((rep) => {
-            //console.log("selectNextState : ", j, " response : ", rep);
             if (rep) {
               resolv(j);
             } else {
@@ -82,7 +50,6 @@ export default {
                 if (field.name === state.name) {
                   // action à verifier
                   if (state.operator === "egal") {
-                    //console.log("state :: ", state.value, "\n", field.value);
                     if (field.value) {
                       resolv(field.value.includes(state.value) ? true : false);
                     } else {
@@ -151,7 +118,6 @@ export default {
         ) {
           if (self) {
             const datas_logique = await eval(field.prix.datas_logique);
-            console.log(" Field.prix : ", datas_logique);
             price += parseInt(datas_logique);
           }
         }
@@ -228,7 +194,6 @@ export default {
             field.status
           ) {
             var typeDatas = typeof field.value;
-            //console.log("getPriceForField field : ", typeDatas);
             // Cas des champs type selection.
             if (config.typeSelection.includes(field.type)) {
               for (const fp in field.options) {
@@ -265,11 +230,6 @@ export default {
       execution().then((priceField) => {
         if (!isNaN(priceField)) {
           priceFinal += priceField;
-        } else {
-          console.log(
-            "%c error du processus de calcul : " + field.name,
-            "background: #222; color: #F00; font-size:15px;"
-          );
         }
         resolvParent(priceFinal);
       });

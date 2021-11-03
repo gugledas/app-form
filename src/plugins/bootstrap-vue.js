@@ -9,8 +9,3 @@ import "./bootstrap.scss";
 
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
-/*
-Vue.use(BVToastPlugin);
-const vm = new Vue();
-console.log("log Vue :  ", vm, "\n $bvToast : ", vm.$bvToast);
-*/

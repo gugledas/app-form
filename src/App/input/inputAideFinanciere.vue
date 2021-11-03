@@ -101,7 +101,7 @@ export default {
     },
     fieldSrcImage() {
       return (
-        conf.baseURl +
+        conf.BaseUrl() +
         "/themes/custom/lesroisdelareno/images/aquathermo-avis.jpg"
       );
     },

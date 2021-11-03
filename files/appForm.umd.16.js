@@ -25,12 +25,12 @@
 // ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"38d0f794-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/EditsFields/UploadImage.vue?vue&type=template&id=4086669a&lang=html&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('FilePond',{ref:"pond",attrs:{"name":"file__upload","label-idle":"Ajouter une image ici...","allow-multiple":false,"accepted-file-types":"image/jpeg, image/png","server":_vm.server,"files":_vm.myFiles},on:{"processfile":_vm.handleFileProcess,"updatefiles":_vm.updatefiles}}),_c('ul',{staticClass:"m-0 p-2 bg-light m-2"},[(_vm.hasImg)?_c('b-row',{staticClass:"row mb-3",attrs:{"align-h":"center","align-v":"center"}},[_c('b-col',{attrs:{"sm":"10"}},[_c('img',{attrs:{"src":_vm.baseURl + _vm.field.img,"width:":"40px","height":"40px"}})]),_c('b-col',{attrs:{"sm":"2"}},[_c('b-button',{attrs:{"size":"sm","variant":"outline-danger"},on:{"click":_vm.deleteFile}},[_c('b-icon',{attrs:{"icon":"trash"}})],1)],1)],1):_vm._e()],1)],1)}
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"38d0f794-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/EditsFields/UploadImage.vue?vue&type=template&id=31b421ba&lang=html&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('FilePond',{ref:"pond",attrs:{"name":"file__upload","label-idle":"Ajouter une image ici...","allow-multiple":false,"accepted-file-types":"image/jpeg, image/png","server":_vm.server,"files":_vm.myFiles}}),_c('ul',{staticClass:"m-0 p-2 bg-light m-2"},[(_vm.hasImg)?_c('b-row',{staticClass:"row mb-3",attrs:{"align-h":"center","align-v":"center"}},[_c('b-col',{attrs:{"sm":"10"}},[_c('img',{attrs:{"src":_vm.baseURl + _vm.field.img,"width:":"40px","height":"40px"}})]),_c('b-col',{attrs:{"sm":"2"}},[_c('b-button',{attrs:{"size":"sm","variant":"outline-danger"},on:{"click":_vm.deleteFile}},[_c('b-icon',{attrs:{"icon":"trash"}})],1)],1)],1):_vm._e()],1)],1)}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/App/EditsFields/UploadImage.vue?vue&type=template&id=4086669a&lang=html&
+// CONCATENATED MODULE: ./src/App/EditsFields/UploadImage.vue?vue&type=template&id=31b421ba&lang=html&
 
 // EXTERNAL MODULE: ./node_modules/vue-filepond/dist/vue-filepond.js
 var vue_filepond = __webpack_require__("1501");
@@ -43,8 +43,6 @@ var filepond_min = __webpack_require__("4ed3");
 var config = __webpack_require__("f158");
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/EditsFields/UploadImage.vue?vue&type=script&lang=js&
-//
-//
 //
 //
 //
@@ -106,8 +104,6 @@ var FilePond = vue_filepond_default()();
         url: config["a" /* default */].BaseUrl() + "/filesmanager/files",
         process: {
           onload: function onload(res) {
-            // select the right value in the response here and return
-            //console.log("onload : ", JSON.parse(res));
             _this.addImages(JSON.parse(res));
 
             return res;
@@ -154,7 +150,6 @@ var FilePond = vue_filepond_default()();
   },
   methods: {
     addImages: function addImages(response) {
-      console.log("ime", response);
       this.field.img = response.url;
     },
     retriveFiles: function retriveFiles() {
@@ -178,29 +173,8 @@ var FilePond = vue_filepond_default()();
     setEmptyValue: function setEmptyValue() {
       this.field.img = "";
     },
-    handleFilePondInit: function handleFilePondInit() {
-      console.log("FilePond has initialized"); // FilePond instance methods are available on `this.$refs.pond`
-    },
     deleteFile: function deleteFile() {
       this.field.img = "";
-    },
-    progressfiles: function progressfiles(data) {
-      console.log("progressfiles : ", data);
-    },
-    handleFileProcess: function handleFileProcess(error, file) {
-      console.log("handleFileProcess ", error, file);
-    },
-    handleFilesProcess: function handleFilesProcess(data) {
-      console.log("handleFilesProcess ", data);
-    },
-    updatefiles: function updatefiles(data) {
-      console.log("updatefiles ", data);
-    },
-    load: function load(data) {
-      console.log("load ", data);
-    },
-    processfileprogress: function processfileprogress(file) {
-      console.log("processfileprogress ", file);
     }
   }
 });

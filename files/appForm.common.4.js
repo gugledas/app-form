@@ -788,14 +788,14 @@ var double = {
 // ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"38d0f794-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/input/ImageCheckV2.vue?vue&type=template&id=9611a8d8&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"38d0f794-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App/input/ImageCheckV2.vue?vue&type=template&id=3752c39a&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:!_vm.validationField && _vm.mode ? 'mb-5' : ''},[(_vm.validationField)?_c('transition',{attrs:{"name":"fade"}},[_c('div',{staticClass:"row-content choice-section min-height"},[_c('b-col',{attrs:{"sm":"6 p-0"}},[_c('label',{staticClass:"label"},[_vm._v(_vm._s(_vm.field.label)+" ")])]),_c('ValidationProvider',{staticClass:"d-block",attrs:{"rules":_vm.field.require,"name":_vm.field.name},scopedSlots:_vm._u([{key:"default",fn:function(v){return [_c('b-row',{staticClass:"w-100"},_vm._l((_vm.field.options),function(img,i){return _c('b-col',{key:i,attrs:{"sm":"6"},on:{"click":function($event){return _vm.getImage(i)}}},[_c('div',{staticClass:"choice-button"},[_c('div',{staticClass:"choice-button__img",class:img.isActive
                     ? 'choice-button__img--active'
                     : 'choice-button__img--normal'},[_c('img',{attrs:{"srcset":_vm.baseUrl + img.img}})]),_c('div',{staticClass:"ChoiceButton_label mb-2"},[_c('span',[_vm._v(_vm._s(img.text))])]),_c('div',{staticClass:"ChoiceButton_label mb-2"},[_c('span',[_vm._v(_vm._s(img.description))])])])])}),1),_c('div',{staticClass:"text-danger"},_vm._l((v.errors),function(error,ii){return _c('small',{key:ii,staticClass:"d-block"},[_vm._v(" "+_vm._s(error)+" ")])}),0)]}}],null,false,2037392831)})],1)]):_vm._e()],1)}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/App/input/ImageCheckV2.vue?vue&type=template&id=9611a8d8&
+// CONCATENATED MODULE: ./src/App/input/ImageCheckV2.vue?vue&type=template&id=3752c39a&
 
 // EXTERNAL MODULE: ./node_modules/@vue/babel-preset-app/node_modules/@babel/runtime/helpers/esm/objectSpread2.js + 1 modules
 var objectSpread2 = __webpack_require__("f3f3");
@@ -914,7 +914,6 @@ var config = __webpack_require__("f158");
     },
     getImage: function getImage(il) {
       var le = this.field.options;
-      console.log("le", il);
 
       for (var i = 0; i < le.length; i++) {
         if (i == il) {

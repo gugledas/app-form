@@ -1,7 +1,13 @@
 <template lang="html">
   <div class="block-header">
     <div class="config">
-      <b-dropdown id="dropdown-1" text="Dashbord" class="m-md-2" right>
+      <b-dropdown
+        id="dropdown-1-dashbord"
+        text="Dashbord"
+        class="m-md-2"
+        right
+        v-if="$store.state.mode"
+      >
         <b-dropdown-item>
           <router-link to="/gestion-fields"> Gestion des Champs </router-link>
         </b-dropdown-item>

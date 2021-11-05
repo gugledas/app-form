@@ -40,6 +40,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import AddForm from "./Addfield.vue";
 import config from "../config/config.js";
 export default {
@@ -54,6 +55,10 @@ export default {
   },
   components: { AddForm },
   computed: {
+    ...mapState({
+      loaders: (state) => state.StoreGestionChamps.loaders,
+      fields: (state) => state.StoreGestionChamps.fields,
+    }),
     field() {
       if (this.row) {
         return this.row.item;
@@ -71,10 +76,10 @@ export default {
      */
     deleteField() {
       config.modalConfirmDelete().then(() => {
-        this.$store.state.loaders.GestionField = true;
+        this.loaders.GestionField = true;
         config.deleteField(this.row.item).then(() => {
-          this.$store.state.fields.splice(this.row.index, 1);
-          this.$store.state.loaders.GestionField = false;
+          this.fields.splice(this.row.index, 1);
+          this.loaders.GestionField = false;
         });
       });
     },

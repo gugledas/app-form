@@ -138,6 +138,8 @@ export default {
   prepareFieldToSave(field, uid) {
     return new Promise((resolv) => {
       var results = [];
+      //remove unnecessary files
+      delete field.stepes;
       var table1 = {
         table: "appformmanager_fields",
         fields: {

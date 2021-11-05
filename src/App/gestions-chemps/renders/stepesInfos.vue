@@ -1,13 +1,15 @@
 <template>
   <b-list-group class="list-small">
     <b-list-group-item
-      v-for="(option, i) in field.options"
+      v-for="(stepe, i) in stepes"
       :key="i"
       class="item-vertical"
     >
       <div class="d-flex">
-        <span class="item">{{ option.text }}</span>
-        <span class="item" v-if="option.cout">{{ option.cout }} €</span>
+        <span class="item" v-if="stepe.step">
+          {{ stepe.step.title }}
+        </span>
+        <span class="item">{{ stepe.stepid }}</span>
       </div>
     </b-list-group-item>
   </b-list-group>
@@ -15,11 +17,10 @@
 
 <script>
 export default {
-  name: "radio",
+  name: "stepesInfos",
   props: {
-    field: {
-      type: Object,
-      required: true,
+    stepes: {
+      type: Array,
     },
   },
 };

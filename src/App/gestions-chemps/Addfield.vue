@@ -66,6 +66,7 @@
         </div>
       </b-row>
     </form>
+    <pre> field : {{ field }} </pre>
   </b-modal>
 </template>
 
@@ -150,14 +151,23 @@ export default {
         config
           .saveForm(datas)
           .then((resp) => {
-            resp.data.forEach((r) => {
-              if (r.table == "appformmanager_fields") {
-                this.$store.state.StoreGestionChamps.fields.push({
-                  ...this.field,
-                  id: r.result,
-                });
+            console.log("resp : ", resp, " \n datas : ", datas);
+            datas.forEach((tb) => {
+              if (tb.table == "appformmanager_fields") {
+                if (!tb.where) {
+                  resp.data.forEach((r) => {
+                    if (r.table == "appformmanager_fields") {
+                      this.$store.state.StoreGestionChamps.fields.push({
+                        ...this.field,
+                        id: r.result,
+                        stepes: [],
+                      });
+                    }
+                  });
+                }
               }
             });
+
             this.$bvModal.hide("modal-addForm--" + this.idModal);
             this.busy = false;
             this.$emit("set_default_field");

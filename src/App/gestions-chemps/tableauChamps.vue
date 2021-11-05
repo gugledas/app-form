@@ -1,36 +1,39 @@
 <template>
-  <div>
-    <b-table
-      hover
-      small
-      caption-top
-      responsive
-      bordered
-      :busy="loaders.GestionField"
-      :items="fieldsRender"
-      :fields="fieldsName"
-    >
-      <template #table-busy>
-        <loaderIcon :busy="loaders.GestionField"></loaderIcon>
-      </template>
-      <template #cell(actions)="row">
-        <buttonAction :row="row" :listForms="listForms"></buttonAction>
-      </template>
-      <template #cell(formid)="row">
-        {{ getStringValue(row.value) }}
-      </template>
-      <template #cell(value)="row">
-        <component
-          :field="row.item"
-          :is="templateRender(row.item.type)"
-        ></component>
-      </template>
-    </b-table>
-  </div>
+  <b-table
+    hover
+    small
+    caption-top
+    responsive
+    bordered
+    :busy="loaders.GestionField"
+    :items="fieldsRender"
+    :fields="fieldsName"
+    class="tableau-gestion-fields"
+  >
+    <template #table-busy>
+      <loaderIcon :busy="loaders.GestionField"></loaderIcon>
+    </template>
+    <template #cell(actions)="row">
+      <buttonAction :row="row" :listForms="listForms"></buttonAction>
+    </template>
+    <template #cell(formid)="row">
+      {{ getStringValue(row.value) }}
+    </template>
+    <template #cell(value)="row">
+      <component
+        :field="row.item"
+        :is="templateRender(row.item.type)"
+      ></component>
+    </template>
+    <template #cell(stepes)="row">
+      <stepesInfosVue :stepes="row.value"></stepesInfosVue>
+    </template>
+  </b-table>
 </template>
 
 <script>
 import buttonAction from "./tableauChampsAction.vue";
+import stepesInfosVue from "./renders/stepesInfos.vue";
 //import moduleA from "./testStore.js";
 import radio from "./renders/lists.vue";
 import { mapState } from "vuex";
@@ -43,13 +46,19 @@ export default {
       required: true,
     },
   },
-  components: { buttonAction, radio },
+  components: { buttonAction, radio, stepesInfosVue },
   data() {
     return {
       fieldsName: [
         {
           key: "formid",
-          label: "Group de champs",
+          label: "Formulaire",
+          class: ["td-formid"],
+        },
+        {
+          key: "stepes",
+          label: "etapes + identifiant",
+          class: ["td-stepes"],
         },
         {
           key: "label",
@@ -62,13 +71,13 @@ export default {
           sortable: true,
         },
         {
-          key: "type",
-          label: "Type",
-        },
-        {
           key: "actions",
           label: "#Actions",
-          class: ["position-relative"],
+          class: ["position-relative", "td-actions"],
+        },
+        {
+          key: "type",
+          label: "Type",
         },
       ],
     };
@@ -116,3 +125,21 @@ export default {
   },
 };
 </script>
+<style lang="scss">
+.tableau-gestion-fields {
+  table {
+    thead th {
+      min-width: 200px;
+    }
+    .td-formid {
+      min-width: 120px;
+    }
+    .td-stepes {
+      min-width: 400px;
+    }
+    .td-actions {
+      min-width: 100px;
+    }
+  }
+}
+</style>

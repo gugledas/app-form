@@ -8,8 +8,11 @@
     border-bottom: 1px solid #ebebeb;
     margin-left: 0.8rem;
     margin-right: 0.8rem;
-
     background: transparent;
+    &:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+    }
     .item {
       width: calc(100% - 90px);
       padding-right: 0.5rem;

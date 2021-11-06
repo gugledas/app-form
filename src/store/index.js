@@ -410,22 +410,6 @@ export default new Vuex.Store({
         commit("SET_PAGE_INFO", reponse.data);
       });
     },
-    /**
-     * charge de maniere progressive les etapes d'un devis.
-     */
-    loadAllStepOfDevis(payload) {
-      return new Promise((resolv, reject) => {
-        var url = "/appformmanager/getdevis-steps/0";
-        config
-          .getData(payload, false, url)
-          .then((reponse) => {
-            resolv(reponse.data);
-          })
-          .catch((error) => {
-            reject(error);
-          });
-      });
-    },
 
     setItems({ commit }, payload) {
       commit("SET_ITEMS", payload);

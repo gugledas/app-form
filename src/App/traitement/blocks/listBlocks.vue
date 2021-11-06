@@ -3,21 +3,21 @@
     <loader-icon :busy="isBusy"></loader-icon>
     <div v-if="!isBusy" class="titre-project-resume">
       <b-col cols="12" md="5" lg="3" class="notif">
-        <span class="notif-alert notif-at">{{
-          nombreStatus.rappel.length
-        }}</span>
-        <span>projet en attente de rappel</span></b-col
-      >
+        <span class="notif-alert notif-at">
+          {{ nombreStatus.rappel.length }}
+        </span>
+        <span> Projet en attente de rappel </span>
+      </b-col>
       <b-col cols="12" md="5" lg="3" class="notif">
         <span class="notif-alert notif-sa">{{ nombreStatus.save.length }}</span>
-        <span>projet sauvegardé,</span></b-col
-      >
+        <span> Projet sauvegardé </span>
+      </b-col>
       <b-col cols="12" md="5" lg="3" class="notif" v-if="$store.state.mode">
-        <span class="notif-ab notif-alert">{{
-          nombreStatus.loose.length
-        }}</span>
-        <span>projet abandonné</span></b-col
-      >
+        <span class="notif-ab notif-alert">
+          {{ nombreStatus.loose.length }}
+        </span>
+        <span> Projet abandonné </span>
+      </b-col>
     </div>
     <b-row :trigger_perfom="trigger_perfom" class="list-block" v-if="!isBusy">
       <b-col v-for="(item, i) in traitementFormItemsDisplay" :key="i" md="12">
@@ -42,7 +42,7 @@
       size="sm"
       class="pt-5 pb-5 mt-5 mb-0"
       @change="changePagination"
-      v-if="totalRows > 20"
+      v-if="totalRows > perPage"
     ></b-pagination>
 
     <!-- -->
@@ -266,7 +266,9 @@ export default {
      * -
      */
     getUser(uid, item = {}) {
-      if (this.CachesUser["uid" + uid]) {
+      if (uid == "0" || uid == 0) {
+        item.user = {};
+      } else if (this.CachesUser["uid" + uid]) {
         item.user = this.CachesUser["uid" + uid];
       } else {
         users.getUser(uid).then((rep) => {
@@ -338,19 +340,32 @@ export default {
       this.currentDataId = this.traitementFormItems[id].id;
       this.currentDevis = this.traitementFormItems[id];
       this.validSteps2 = this.traitementFormItems[id].datas;
-
       if (!this.traitementFormItems[id]["all-steps-loaded"]) {
-        this.$store
-          .dispatch("loadAllStepOfDevis", {
-            DevisId: this.currentDataId,
-          })
-          .then((steps) => {
-            steps.forEach((row) => {
-              this.traitementFormItems[id].datas.push(row.step);
-            });
+        this.loadAllStepOfDevis({
+          DevisId: this.currentDataId,
+        }).then((steps) => {
+          steps.forEach((row) => {
+            this.traitementFormItems[id].datas.push(row.step);
           });
+        });
         this.traitementFormItems[id]["all-steps-loaded"] = true;
       }
+    },
+    /**
+     * charge de maniere progressive les etapes d'un devis.
+     */
+    loadAllStepOfDevis(payload) {
+      return new Promise((resolv, reject) => {
+        var url = "/appformmanager/getdevis-steps/0";
+        config
+          .getData(payload, false, url)
+          .then((reponse) => {
+            resolv(reponse.data);
+          })
+          .catch((error) => {
+            reject(error);
+          });
+      });
     },
   },
 };

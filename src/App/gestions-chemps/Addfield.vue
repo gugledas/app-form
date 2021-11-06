@@ -151,7 +151,6 @@ export default {
         config
           .saveForm(datas)
           .then((resp) => {
-            console.log("resp : ", resp, " \n datas : ", datas);
             datas.forEach((tb) => {
               if (tb.table == "appformmanager_fields") {
                 if (!tb.where) {

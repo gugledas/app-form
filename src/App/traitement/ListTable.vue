@@ -85,7 +85,7 @@
       <template #table-busy>
         <div class="text-center text-danger my-2">
           <b-spinner class="align-middle"></b-spinner>
-          <strong>chargements des devis...</strong>
+          <strong> chargements des devis... </strong>
         </div>
       </template>
     </b-table>
@@ -107,7 +107,7 @@
       v-model="showModal"
       ref="modal"
       size="lg"
-      :title="'Résultat du formulaire ...'"
+      :title="'Résultat du formulaire'"
       scrollable
       class="super-hover"
       cancelTitle="Quitter"
@@ -331,9 +331,11 @@ export default {
     /**
      */
     getUser(uid, item = {}) {
-      if (this.CachesUser["uid" + uid]) {
+      if (uid == "0" || uid == 0) {
+        item.user = {};
+      } else if (this.CachesUser["uid" + uid]) {
         item.user = this.CachesUser["uid" + uid];
-      } else {
+      } else if (uid && uid > 0) {
         users.getUser(uid).then((rep) => {
           item.user = rep;
           this.$store.dispatch("setCachesUser", { uid: uid, user: rep });

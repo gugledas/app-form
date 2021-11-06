@@ -130,7 +130,7 @@ export default {
     },
     getValideStepe() {
       this.$emit("get-valide-stepe", this.dataId);
-      this.$emit("get-info-user", this.item);
+      //this.$emit("get-info-user", this.item);
     },
     formTraiter() {
       this.$emit("form-traiter", this.item);

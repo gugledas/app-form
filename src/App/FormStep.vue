@@ -68,6 +68,7 @@
 import { mapGetters, mapState } from "vuex";
 import Utilities from "./Utilities.js";
 import forms from "./input/forms.vue";
+import config from "./config/config";
 
 export default {
   components: {
@@ -106,15 +107,54 @@ export default {
   },
   methods: {
     deleteSteps() {
-      var all = this.$store.getters.form.forms;
-      var r = all.indexOf(this.formDatas);
-      for (var i = all.length - 1; i >= 0; i--) {
-        if (i === r) {
-          all.splice(i, 1);
-          this.$store.state.stepsIndex = this.form.forms.length - 1;
+      var stapes = this.$store.state.form.forms;
+      var delStep = () => {
+        for (var i = stapes.length - 1; i >= 0; i--) {
+          if (i === r) {
+            stapes.splice(i, 1);
+            // si cest le dernier element, on remet à zero.
+            if (stapes.length < this.$store.state.stepsIndex) {
+              this.$store.state.stepsIndex = 0;
+            }
+          }
         }
-      }
-      //this.$store.dispatch("deleteStepsInAllSteps");
+      };
+      var r = stapes.indexOf(this.formDatas);
+      var key_step = this.formDatas.info.name;
+      this.StepHasChildren(key_step).then((r) => {
+        if (r) {
+          config
+            .modalConfirmDelete(
+              "Cette etape contient des etapes enfant, souhaitez vous vraiment la supprimer ?"
+            )
+            .then(() => {
+              delStep();
+            });
+        } else {
+          delStep();
+        }
+      });
+    },
+    /**
+     * pemet de s'assurrer que l'etape ne contient pas d'etape enfant.
+     */
+    StepHasChildren(key_step) {
+      return new Promise((resolv) => {
+        var stepes = this.$store.state.form.forms;
+        for (const i in stepes) {
+          const step = stepes[i];
+          if (step.states && step.states.length)
+            step.states.forEach((item) => {
+              if (key_step == item.state_name) {
+                resolv(true);
+              }
+            });
+          var ii = parseInt(i) + 1;
+          if (stepes.length == ii) {
+            resolv(false);
+          }
+        }
+      });
     },
     addFormField() {
       var idModel = "modal-addForm--form-step";

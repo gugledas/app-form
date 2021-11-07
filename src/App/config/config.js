@@ -36,8 +36,6 @@ export default {
    */
   prepareDatasToSave(datas) {
     return new Promise((resolv) => {
-      var forms = "";
-      forms = JSON.stringify([]);
       var result = [];
       /**
        * On prepare la suppression des anciennes etapes.
@@ -74,7 +72,6 @@ export default {
         var table1 = {
           table: "appformmanager_fomrs",
           fields: {
-            forms: forms,
             description: datas.description,
             name: datas.name,
             img: datas.img,

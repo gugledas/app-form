@@ -49,7 +49,7 @@
     </div>
     <!-- center container -->
     <forms></forms>
-    <pre> price : {{ $store.state.price }} </pre>
+
     <!-- editions/configs -->
     <div v-if="mode">
       <add-form-field

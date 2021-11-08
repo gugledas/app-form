@@ -15,16 +15,22 @@ export default {
     return new Promise((resolvParent) => {
       const loop = function (j) {
         return new Promise((resolv) => {
+          console.log("etape en cours : ", j, " : ", forms[j].info);
           if (!forms[j]) {
             resolv(null);
           }
-          self.validateState(forms[j].states).then((rep) => {
-            if (rep) {
-              resolv(j);
-            } else {
-              resolv(loop(j + 1));
-            }
-          });
+          if (forms[j].states && forms[j].states.length > 0)
+            self.validateState(forms[j].states).then((rep) => {
+              console.log(" Status final de validation : ", rep);
+              if (rep) {
+                resolv(j);
+              } else {
+                let ii = j + 1;
+                console.log(" Passage à letape suivante ", ii);
+                resolv(loop(ii));
+              }
+            });
+          else resolv(j);
         });
       };
       loop(k).then((r) => {
@@ -32,11 +38,17 @@ export default {
       });
     });
   },
-
-  validateState(states) {
+  /**
+   * Validation des conditions.
+   * @param {*} states
+   * @returns
+   */
+  validateStateNone(states) {
     return new Promise((resolv) => {
       if (!states || states.length === 0) resolv(true);
+      // On parcourt toutes les etapes.
       for (const k in this.forms) {
+        // On recupere la premiere etape et on verifie si on doit l'afficher ou pas.
         const form = this.forms[k];
         for (const s in states) {
           const state = states[s];
@@ -48,10 +60,21 @@ export default {
                 const field = form.fields[f];
                 // Identification du champs.
                 if (field.name === state.name) {
-                  // action à verifier
+                  // Action à verifier
                   if (state.operator === "egal") {
                     if (field.value) {
-                      resolv(field.value.includes(state.value) ? true : false);
+                      console.log(
+                        field.name + " : valeur : " + field.value,
+                        " \n condition à valider : ",
+                        state.value
+                      );
+                      let staValidation = field.value.includes(state.value);
+                      console.log(
+                        " Condition de validation : ",
+                        staValidation,
+                        "\n "
+                      );
+                      resolv(staValidation);
                     } else {
                       resolv(false);
                     }
@@ -68,6 +91,101 @@ export default {
           resolv(true);
         }
       }
+    });
+  },
+  /**
+   * Validation des conditions.
+   * @param {*} states
+   * @returns
+   */
+  validateState(states) {
+    return new Promise((resolvPrent) => {
+      if (!states || states.length === 0) resolvPrent(true);
+      const loopSteps = (key) => {
+        return new Promise((resolv) => {
+          console.log("loopSteps : ", key, " : ", states[key]);
+          const state = states[key];
+          if (!state) resolv(false);
+          if (state.action === "visible") {
+            //on parcourt chaque etape dans le but de recherche si ce cette etape corrospont à celui definit dans states.
+            const loopFomrs = (k) => {
+              return new Promise((resolvForms) => {
+                const form = this.forms[k];
+                if (form.info.name === state.state_name) {
+                  console.log("check 1");
+                  // si dans l'etape, il nya pas de champs, on renvoit false;
+                  if (!form.fields || form.fields.length === 0)
+                    resolvForms(true);
+                  // Recherche du champs.
+                  for (const f in form.fields) {
+                    const field = form.fields[f];
+                    // Identification du champs.
+                    if (field.name === state.name) {
+                      console.log("check 2");
+                      // Action à verifier
+                      if (state.operator === "egal") {
+                        if (field.value) {
+                          console.log(
+                            field.name + " : valeur : " + field.value,
+                            " \n condition à valider : ",
+                            state.value
+                          );
+                          let staValidation = field.value.includes(state.value);
+                          console.log(
+                            " Condition de validation : ",
+                            staValidation,
+                            "\n KEY : ",
+                            key
+                          );
+                          // on renvoit le status.
+                          resolvForms(staValidation);
+                        } else {
+                          console.log("field.value false");
+                          resolvForms(false);
+                        }
+                      } else {
+                        resolvForms(false);
+                        break;
+                      }
+                      // si on a un champs qui correspond, on ne verifie plus les autres champs.
+                      break;
+                    } else {
+                      // si on a parcourut tous les champs sans trouvé d'elment correspondant, on renvoit false.
+                      var ff = parseInt(f) + 1;
+                      if (ff >= form.fields.length) {
+                        resolvForms(false);
+                      }
+                    }
+                  }
+                }
+                // si ces pas le bonne on passe à l'etape suivnte
+                else {
+                  if (this.forms.length > k + 1) {
+                    resolvForms(loopFomrs(k + 1));
+                  }
+                  // si cest la derniere on renvoit null
+                  else {
+                    resolvForms(false);
+                  }
+                }
+              });
+            };
+            loopFomrs(0).then((StatusForm) => {
+              // si cette condition est validé, on passe à la condition suivante.(sauf s'il nya pas d'etape suivante.)
+              if (StatusForm) {
+                if (states[key + 1]) {
+                  resolv(loopSteps(key + 1));
+                } else resolv(StatusForm);
+              }
+              // Si l'etape n'est pas validé, pas besoin de regarder la suite.
+              else resolv(StatusForm);
+            });
+          } else resolv(false);
+        });
+      };
+      loopSteps(0).then((status) => {
+        resolvPrent(status);
+      });
     });
   },
   getFieldInForms(state_name, field_name) {

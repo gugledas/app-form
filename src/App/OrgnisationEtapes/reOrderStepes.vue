@@ -33,7 +33,10 @@
               {{ i }} : {{ formview.info.title }}
               <div v-if="formview.states && formview.states.length > 0">
                 <div v-for="(state, y) in formview.states" :key="y">
-                  <small> {{ getNameStep(state.state_name) }} </small>
+                  <small :class="StepExit(state.name) ? '' : 'text-danger'">
+                    {{ getNameStep(state.state_name) }} :
+                    <i> {{ state.value }} </i>
+                  </small>
                 </div>
               </div>
             </div>
@@ -92,6 +95,22 @@ export default {
         if (this.form.forms[i].info.name === stape_name)
           return this.form.forms[i].info.title;
       }
+    },
+    /**
+     * Verifie si l'etape existe.
+     */
+    StepExit(key_step) {
+      return new Promise((resolv) => {
+        var stepes = this.$store.state.form.forms;
+        for (const i in stepes) {
+          const step = stepes[i];
+          if (step.info && step.info.name == key_step) resolv(true);
+          var ii = parseInt(i) + 1;
+          if (stepes.length == ii) {
+            resolv(false);
+          }
+        }
+      });
     },
   },
 };

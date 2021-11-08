@@ -102,7 +102,10 @@ export default {
     },
     asyncFind(search) {
       if (search.length > 2) {
-        const terms = new termsTaxo("departements");
+        let vocabulary = this.field.vocabulary
+          ? this.field.vocabulary
+          : "departements";
+        const terms = new termsTaxo(vocabulary);
         this.isLoading = true;
         terms.getSearch(search).then(() => {
           this.options = terms.getOptions();

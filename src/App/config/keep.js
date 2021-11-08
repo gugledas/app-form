@@ -1,7 +1,11 @@
 const field = {};
-//
+// isolation
 //-------------------------------------------------------
-//
+// calcul de l'aide finnacire via le champs select.
+/**
+ * @deprecated
+ * @returns
+ */
 async function calcul() {
   const L = self.getFieldInForms(
     "les_dimensions_de_vos_combles",

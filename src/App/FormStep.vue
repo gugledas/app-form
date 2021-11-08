@@ -49,6 +49,7 @@
     </div>
     <!-- center container -->
     <forms></forms>
+    <pre> price : {{ $store.state.price }} </pre>
     <!-- editions/configs -->
     <div v-if="mode">
       <add-form-field
@@ -136,7 +137,7 @@ export default {
       });
     },
     /**
-     * pemet de s'assurrer que l'etape ne contient pas d'etape enfant.
+     * Determine si l'etape contient une etape enfant
      */
     StepHasChildren(key_step) {
       return new Promise((resolv) => {

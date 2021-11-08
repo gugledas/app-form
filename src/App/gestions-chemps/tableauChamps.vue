@@ -64,11 +64,13 @@ export default {
           key: "label",
           sortable: false,
           label: "Etiquetes",
+          class: ["td-label"],
         },
         {
           key: "value",
           label: "Prix",
           sortable: true,
+          class: ["td-value"],
         },
         {
           key: "actions",
@@ -131,14 +133,24 @@ export default {
     thead th {
       min-width: 200px;
     }
+    td {
+      word-break: break-word;
+    }
     .td-formid {
       min-width: 120px;
     }
     .td-stepes {
-      min-width: 400px;
+      min-width: 250px;
+    }
+    .td-label {
+      min-width: 250px;
+      font-size: 14px;
     }
     .td-actions {
       min-width: 100px;
+    }
+    .td-value {
+      min-width: 370px;
     }
   }
 }

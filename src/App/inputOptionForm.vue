@@ -31,7 +31,6 @@
     <form-radio v-if="type == 'radio'" :field="field"></form-radio>
 
     <!-- if is type codepostal -->
-
     <form-autocomplete
       v-if="type == 'codepostal'"
       :field="field"

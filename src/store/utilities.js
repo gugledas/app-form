@@ -96,10 +96,16 @@ export default {
       const field = formDatas.fields[i];
       if (field.prix) {
         if (
-          field.prix.complex_logique === undefined ||
-          !field.prix.complex_logique
+          (field.prix.complex_logique === undefined ||
+            !field.prix.complex_logique) &&
+          type_cout == field.prix.action
         ) {
-          price += await this.getPriceForField(field, false, 0, type_cout);
+          var priceCurrentField = await this.getPriceForField(
+            field,
+            false,
+            0,
+            type_cout
+          );
           // si cest un champs composé.
           if (field.prix && field.prix.components.length) {
             var price2 = await this.getPriceFieldInState(
@@ -109,7 +115,7 @@ export default {
               type_cout
             );
             if (price2) {
-              price += price2 * price;
+              price += price2 * priceCurrentField;
             }
           }
         } else if (
@@ -126,7 +132,7 @@ export default {
     return price;
   },
   /**
-   * Il faut s'assurer au prealable que field.prix.components est definit.
+   * Permet de recuperer les prix associer à un champs, parcourt les differents champs definit dans field.prix.components
    */
   async getPriceFieldInState(
     forms,
@@ -135,49 +141,41 @@ export default {
     type_cout = "prix_utilisables"
   ) {
     return new Promise((resolvParent) => {
-      //on parcout les options de prix.
-      const getFieldInState = () => {
-        return new Promise((resolv) => {
-          for (const c in field.prix.components) {
-            const component = field.prix.components[c];
-            for (const s in forms) {
-              const form = forms[s];
-              // on verifie que cest la bonne etape.
-              if (form.info.name == component.state_name) {
-                // On parcourt les champs;
-                for (const f in form.fields) {
-                  const fieldState = form.fields[f];
-                  // On s'assure que c'est le champs qui a ete selectionné par l'utilisateur.
-                  if (fieldState.name == component.name) {
-                    resolv(fieldState);
-                    break;
-                  }
-                }
+      const AllPromise = [];
+      for (const c in field.prix.components) {
+        const component = field.prix.components[c];
+        for (const s in forms) {
+          const form = forms[s];
+          // on verifie que cest la bonne etape.
+          if (form.info.name == component.state_name) {
+            // On parcourt les champs;
+            for (const f in form.fields) {
+              const fieldState = form.fields[f];
+              // On s'assure que c'est le champs qui a ete selectionné par l'utilisateur.
+              if (fieldState.name == component.name) {
+                AllPromise.push(
+                  this.getPriceForField(fieldState, true, 0, type_cout)
+                );
                 break;
               }
             }
-            var j = parseInt(c) + 1;
-            if (j === field.prix.components.length) {
-              resolv(false);
-            }
+            break;
           }
+        }
+      }
+      Promise.all(AllPromise).then((values) => {
+        let price = 1;
+        values.forEach((p) => {
+          price = price * p;
         });
-      };
-      getFieldInState().then((fieldState) => {
-        if (fieldState)
-          this.getPriceForField(fieldState, true, 0, type_cout).then(
-            (priceField) => {
-              priceFinal += priceField;
-              resolvParent(priceFinal);
-            }
-          );
-        else resolvParent(priceFinal);
+        priceFinal += price;
+        resolvParent(priceFinal);
       });
-      //
     });
   },
   /**
    * Retorune toujours un entier.
+   * on doit s'assurer en amont que le type de champs soit valide.( i.e type_cout == field.prix.action )
    */
   getPriceForField(
     field,
@@ -187,7 +185,7 @@ export default {
   ) {
     return new Promise((resolvParent) => {
       const execution = (price = 0) => {
-        return new Promise((resolv) => {
+        return new Promise((resolv, reject) => {
           if (
             field.prix &&
             (field.prix.action === type_cout || use) &&
@@ -202,13 +200,14 @@ export default {
                     field.value.includes(field.options[fp].value) &&
                     field.options[fp].cout
                   ) {
-                    price += parseInt(field.options[fp].cout);
+                    price += parseFloat(field.options[fp].cout);
                   }
                 } else if (field.options[fp].value === field.value) {
-                  price += parseInt(field.options[fp].cout);
+                  price += parseFloat(field.options[fp].cout);
                   break;
                 }
               }
+              resolv(price);
             } // Cas des champs text et number.
             else if (
               field.prix.cout &&
@@ -216,14 +215,32 @@ export default {
               field.value !== ""
             ) {
               if (!isNaN(field.value)) {
-                price += parseInt(field.prix.cout) * parseInt(field.value);
+                price += parseFloat(field.prix.cout) * parseFloat(field.value);
               } else {
-                price += parseInt(field.prix.cout);
+                price += parseFloat(field.prix.cout);
               }
+              resolv(price);
+            } else {
+              reject(
+                "Erreur dans le champs : " +
+                  field.name +
+                  " Cas de figure non pris en compte, (type : " +
+                  field.type +
+                  ")"
+              );
             }
-            resolv(price);
-          } else {
-            resolv(price);
+          }
+          // Si le champs ne respecte pas les regles. on emet une erreur.
+          else {
+            reject(
+              "Erreur dans le champs : " +
+                field.name +
+                " (" +
+                type_cout +
+                " est different de " +
+                field.prix.action +
+                ")"
+            );
           }
         });
       };

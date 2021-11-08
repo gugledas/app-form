@@ -8,7 +8,7 @@ export default {
   ...AjaxToastBootStrap,
   TestDomain: "http://v2lesroisdelareno.kksa", //"http://lesroisdelareno.habeuk.com",
 
-  typeSelection: ["radio", "select", "checkbox"],
+  typeSelection: ["radio", "select", "checkbox", "radiodesc", "checkboximg"],
   /**
    * Permet de recuperer les données en BD.
    * @param {*} datas

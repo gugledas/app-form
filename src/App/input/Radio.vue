@@ -17,8 +17,8 @@
                 <label
                   class="m-0 d-block w-100"
                   :for="`input-radio-a${field.name}${i}`"
+                  v-html="formatTemplateString(item.text)"
                 >
-                  {{ formatTemplateString(item.text) }}
                 </label>
               </b-col>
               <b-col class="input-list__input">
@@ -38,6 +38,7 @@
             </small>
           </div>
         </ValidationProvider>
+        <pre class="d-none"> field : {{ field }} </pre>
       </b-row>
     </transition>
   </div>
@@ -126,4 +127,17 @@ export default {
 };
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.p-bleu {
+  color: rgb(0, 153, 255);
+}
+.p-jaune {
+  color: #e5cd00;
+}
+.p-bleu {
+  color: rgb(148, 3, 184);
+}
+.p-rose {
+  color: rgb(218, 3, 207);
+}
+</style>

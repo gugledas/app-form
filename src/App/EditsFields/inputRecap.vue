@@ -24,6 +24,22 @@ https://ckeditor.com/docs/ckeditor5/latest/builds/guides/integration/frameworks/
             type="number"
           ></b-form-input>
         </b-form-group>
+        <b-form-group label="Logique de calcul complexe">
+          <b-form-checkbox
+            size="lg"
+            v-model="field.complex_logique"
+          ></b-form-checkbox>
+        </b-form-group>
+        <b-form-group
+          label="Logique calcul complexe"
+          v-if="field.complex_logique"
+        >
+          <b-form-textarea
+            v-model="field.preproccess_value"
+            placeholder=""
+            rows="10"
+          ></b-form-textarea>
+        </b-form-group>
       </b-col>
     </b-row>
   </div>
@@ -39,14 +55,6 @@ export default {
     field: {
       type: Object,
       required: true,
-      validator: function (val) {
-        return val.label === undefined ||
-          val.value === undefined ||
-          val.name === undefined ||
-          val.require === undefined
-          ? false
-          : true;
-      },
     },
   },
   components: {

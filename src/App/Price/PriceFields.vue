@@ -57,7 +57,7 @@
         <div class="mb-3">
           <!-- -->
           <b-form-group
-            label="Logique complexe"
+            label="Logique calcul complexe"
             label-size="sm"
             label-cols="4"
             v-if="field.prix.complex_logique"

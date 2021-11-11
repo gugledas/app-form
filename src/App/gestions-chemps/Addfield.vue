@@ -66,7 +66,6 @@
         </div>
       </b-row>
     </form>
-    <pre> field : {{ field }} </pre>
   </b-modal>
 </template>
 

@@ -1,16 +1,30 @@
 <template lang="html">
   <div :class="!validationField && mode ? 'mb-5' : ''">
     <transition v-if="validationField" name="fade">
-      <div class="row-content choice-section min-height">
+      <div
+        class="row-content choice-section min-height"
+        :displayPreproccessValue="displayPreproccessValue"
+      >
         <b-row class="row-content__row">
-          <b-col sm="12" class="mb-3">
+          <b-col sm="12" class="mb-3" v-if="!field.complex_logique">
             <label class="label d-flex align-items-center">
               <span class="price-info label">{{ field.label }} :</span>
               <span class="price-info price">{{ priceEstimation }}</span>
               <span class="price-info currency">€</span>
             </label>
           </b-col>
-          <b-col sm="12" v-html="field.value" class="text-description"> </b-col>
+          <b-col sm="12" v-if="field.complex_logique" class="text-description">
+            <div>
+              <label class="label d-flex align-items-center">
+                <span class="price-info label">{{ field.label }} :</span>
+              </label>
+              <div
+                class="px-2 d-block text-left"
+                v-html="displayComplexLogique"
+              ></div>
+            </div>
+          </b-col>
+          <b-col sm="12" v-html="field.value" class="text-description"></b-col>
         </b-row>
       </div>
     </transition>
@@ -19,8 +33,7 @@
 
 <script>
 import { mapState } from "vuex";
-//import { ValidationProvider } from "vee-validate";
-//import { validationRessource as Validation } from "../config/validation.js";
+import utility from "../../store/utilities.js";
 import "../EditsFields/vee-validate-custom.js";
 export default {
   name: "recapitulatif",
@@ -35,7 +48,7 @@ export default {
   },
   data() {
     return {
-      //
+      displayComplexLogique: "",
     };
   },
   mounted() {
@@ -45,7 +58,7 @@ export default {
     //
   },
   computed: {
-    ...mapState(["price", "mode"]),
+    ...mapState(["price", "mode", "form"]),
     validationField() {
       this.setStatus(true);
       this.setPrice();
@@ -64,6 +77,9 @@ export default {
       }
       return price;
     },
+    displayPreproccessValue() {
+      return this.preproccess_value();
+    },
   },
   methods: {
     setStatus(status) {
@@ -74,11 +90,22 @@ export default {
         cout: this.price,
       };
     },
+    getFieldInForms(state_name, field_name) {
+      utility.forms = this.form.forms;
+      return utility.getFieldInForms(state_name, field_name);
+    },
+    async preproccess_value() {
+      var self = this;
+      if (self && self.field.preproccess_value) {
+        this.displayComplexLogique = await eval(self.field.preproccess_value);
+        return 1;
+      } else return 0;
+    },
   },
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .price-info {
   margin-right: 1rem;
   &.price {
@@ -88,6 +115,19 @@ export default {
 }
 .text-description {
   font-size: 80%;
+}
+.list-price {
+  list-style: none;
+  li {
+    display: flex;
+    margin-bottom: 1rem;
+    justify-content: space-between;
+  }
+  .price {
+    width: 150px;
+    font-weight: 600;
+    text-align: right;
+  }
 }
 </style>
 

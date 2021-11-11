@@ -32,14 +32,6 @@ export default {
     field: {
       type: Object,
       required: true,
-      validator: function (val) {
-        return val.label === undefined ||
-          val.value === undefined ||
-          val.name === undefined ||
-          val.require === undefined
-          ? false
-          : true;
-      },
     },
   },
   components: {

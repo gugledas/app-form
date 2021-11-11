@@ -13,7 +13,14 @@
             class="border py-3 px-4"
             :checkFormDatasValidate="checkFormDatasValidate"
           >
-            <div class="d-flex align-items-center justify-content-between">
+            <div
+              class="
+                d-flex
+                align-items-center
+                justify-content-between
+                flex-wrap
+              "
+            >
               <img :src="fieldSrcImage" style="max-width: 50px" />
               <div>
                 {{ field.label }}
@@ -50,14 +57,6 @@ export default {
     field: {
       type: Object,
       required: true,
-      validator: function (val) {
-        return val.label === undefined ||
-          val.value === undefined ||
-          val.name === undefined ||
-          val.require === undefined
-          ? false
-          : true;
-      },
     },
   },
   components: {

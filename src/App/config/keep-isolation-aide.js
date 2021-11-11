@@ -1,57 +1,4 @@
-// Pour plus d'info voir le fichier src/store/utilities.js
 const field = {};
-
-async function budgetIsolationPlangeVide() {
-  const SurfacePlangerSousSol = self.getFieldInForms(
-    "quelle_est_la_surface_de_plancher_sur_sous_sol_ou_garage_isoler",
-    "surface_au_sol_isoler_sous_sol"
-  );
-  var PriseSurfaceSousSol = 0;
-  if (SurfacePlangerSousSol.value > 0)
-    PriseSurfaceSousSol = await self.getPriceForField(
-      SurfacePlangerSousSol,
-      true,
-      0,
-      "prix_referentiels"
-    );
-
-  const SurfacePlangerVide = self.getFieldInForms(
-    "de_plancher_sur_vide_sanitaire_isoler",
-    "surface_au_sol_isoler_planger_vide"
-  );
-  var PriseSurfacePlangerVide = 0;
-  if (SurfacePlangerVide.value > 0)
-    PriseSurfacePlangerVide = await self.getPriceForField(
-      SurfacePlangerVide,
-      true,
-      0,
-      "prix_referentiels"
-    );
-
-  const CoutCoef_finition = await self.getPriceForField(
-    field,
-    true,
-    0,
-    "prix_referentiels"
-  );
-
-  const coef_isolant_biosource = self.getFieldInForms(
-    "isolant_biosourc_vide_sanitaire",
-    "isolant_biossourc_planger_vid"
-  );
-  const CoutCoef_isolant_biosource = await self.getPriceForField(
-    coef_isolant_biosource,
-    true,
-    0,
-    "prix_referentiels"
-  );
-  return (
-    PriseSurfaceSousSol * CoutCoef_finition +
-    PriseSurfacePlangerVide * CoutCoef_finition * CoutCoef_isolant_biosource
-  );
-}
-budgetIsolationPlangeVide();
-
 // Isolation
 // ||-------------------------------------------------------
 // Calcul de l'aide finnacire via le champs nombre de personne.
@@ -106,7 +53,7 @@ async function aideFinnaceIsolation() {
       ).value;
       priceTotal += SurfaceComble * priceParNiveau[field_niveau_revenu.value];
     } // Cas de : combles_perdus
-    else if (choixTravaux.includes("combles_perdus")) {
+    if (choixTravaux.includes("combles_perdus")) {
       priceParNiveau = {
         niveau1: 22,
         niveau2: 22,
@@ -120,7 +67,7 @@ async function aideFinnaceIsolation() {
       ).value;
       priceTotal += SurfaceComble * priceParNiveau[field_niveau_revenu.value];
     } //
-    else if (choixTravaux.includes("toit_terrasse")) {
+    if (choixTravaux.includes("toit_terrasse")) {
       priceParNiveau = {
         niveau1: 22,
         niveau2: 22,
@@ -134,7 +81,7 @@ async function aideFinnaceIsolation() {
       ).value;
       priceTotal += SurfaceComble * priceParNiveau[field_niveau_revenu.value];
     } //
-    else if (choixTravaux.includes("mur")) {
+    if (choixTravaux.includes("mur")) {
       // on determine mur exterieur ou pas.
       const murType = self.getFieldInForms(
         "comment_souhaitez_vous_isoler_vos_murs",
@@ -145,7 +92,6 @@ async function aideFinnaceIsolation() {
         murInterieur = murType == "par_l_int_rieur" ? true : false;
       }
       if (murInterieur) {
-        console.log("mur interieur");
         // Recuperation de la surface
         const SurfaceComble = self.getFieldInForms(
           "connaissez_vous_la_surface_de_mur_isoler",
@@ -157,6 +103,12 @@ async function aideFinnaceIsolation() {
           niveau3: 33,
           niveau4: 25,
         };
+        console.log(
+          "mur interieur : ",
+          SurfaceComble,
+          "\n Niveau : ",
+          field_niveau_revenu.value
+        );
         priceTotal += SurfaceComble * priceParNiveau[field_niveau_revenu.value];
       } else {
         // Recuperation de la surface
@@ -197,7 +149,7 @@ async function aideFinnaceIsolation() {
         }
       }
     } //
-    else if (choixTravaux.includes("plancher_de_vide_sanitaire_sous_sol")) {
+    if (choixTravaux.includes("plancher_de_vide_sanitaire_sous_sol")) {
       priceParNiveau = {
         niveau1: 22,
         niveau2: 22,

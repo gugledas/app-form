@@ -112,7 +112,7 @@ export default {
               return new Promise((resolvForms) => {
                 const form = this.forms[k];
                 if (form.info.name === state.state_name) {
-                  console.log("check 1");
+                  //console.log("check 1");
                   // si dans l'etape, il nya pas de champs, on renvoit false;
                   if (!form.fields || form.fields.length === 0)
                     resolvForms(true);
@@ -121,29 +121,38 @@ export default {
                     const field = form.fields[f];
                     // Identification du champs.
                     if (field.name === state.name) {
-                      console.log("check 2");
+                      //console.log("check 2");
                       // Action à verifier
                       if (state.operator === "egal") {
                         if (field.value) {
-                          console.log(
-                            field.name + " : valeur : " + field.value,
-                            " \n condition à valider : ",
-                            state.value
-                          );
                           let staValidation = field.value.includes(state.value);
-                          console.log(
-                            " Condition de validation : ",
-                            staValidation,
-                            "\n KEY : ",
-                            key
-                          );
                           // on renvoit le status.
                           resolvForms(staValidation);
                         } else {
-                          console.log("field.value false");
                           resolvForms(false);
                         }
-                      } else {
+                      } //superieur à;
+                      else if (state.operator === ">") {
+                        if (field.value) {
+                          let staValidation =
+                            field.value > state.value ? true : false;
+                          // on renvoit le status.
+                          resolvForms(staValidation);
+                        } else {
+                          resolvForms(false);
+                        }
+                      } else if (state.operator === "<") {
+                        if (field.value) {
+                          let staValidation =
+                            field.value < state.value ? true : false;
+                          // on renvoit le status.
+                          resolvForms(staValidation);
+                        } else {
+                          resolvForms(false);
+                        }
+                      }
+                      //
+                      else {
                         resolvForms(false);
                         break;
                       }

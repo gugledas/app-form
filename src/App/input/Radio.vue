@@ -38,7 +38,6 @@
             </small>
           </div>
         </ValidationProvider>
-        <pre class="d-none"> field : {{ field }} </pre>
       </b-row>
     </transition>
   </div>

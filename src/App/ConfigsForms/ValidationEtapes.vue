@@ -89,13 +89,16 @@
                   label-size="sm"
                   label-cols="4"
                   v-if="
-                    condition.operator == 'egal' &&
+                    (condition.operator == 'egal' ||
+                      condition.operator == '>' ||
+                      condition.operator == '<') &&
                     (!condition.options || condition.options.length === 0)
                   "
                 >
                   <b-form-input
                     required
                     v-model="condition.value"
+                    size="sm"
                   ></b-form-input>
                 </b-form-group>
                 <b-form-group

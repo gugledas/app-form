@@ -24,7 +24,7 @@
         <block
           :item="item"
           :form="form"
-          :traitementFormItems="traitementFormItems"
+          :traitementFormItems="traitementFormItemsDisplay"
           :data-id="i"
           @get-valide-stepe="getValideStepe"
           @form-traiter="formTraiter"
@@ -51,13 +51,13 @@
       v-model="showModal"
       ref="modal"
       size="lg"
-      :title="'Résultat du formulaire ...'"
+      :title="'Résultat du formulaire'"
       scrollable
       class="super-hover"
       cancelTitle="Quitter"
       okTitle="Me rappeler"
     >
-      <b-row align-h="center" v-if="traitementFormItems.length">
+      <b-row align-h="center" v-if="traitementFormItemsDisplay.length">
         <b-col sm="12" class="mb-4" v-for="(steps, i) in validSteps2" :key="i">
           <b-card no-body class="mb-1" v-if="steps !== undefined">
             <b-card-header header-tag="header" class="p-1" role="tab">
@@ -81,7 +81,6 @@
                     <type-displays
                       :field="field"
                       :currentDevis="currentDevis"
-                      v-if="field.status === undefined || field.status"
                       class="mb-2"
                     ></type-displays>
                   </b-col>
@@ -218,6 +217,7 @@ export default {
           created: rowData.created,
           price: rowData.price,
           uid: rowData.uid,
+          datas: rowData.datas,
           user: {}, //pour gerer les informations provenant de la connexions.
           idloop: i, // permet de retrouver aisement, le devis dans le current table (traitementFormItems);
         };
@@ -233,6 +233,10 @@ export default {
         }
         this.traitementFormItemsDisplay.push(row);
       }
+      console.log(
+        "traitementFormItemsDisplay : ",
+        this.traitementFormItemsDisplay
+      );
     },
     /**
      * -
@@ -337,18 +341,18 @@ export default {
       //var self = this;
       this.showModal = !this.showModal;
       this.validSteps2 = [];
-      this.currentDataId = this.traitementFormItems[id].id;
-      this.currentDevis = this.traitementFormItems[id];
-      this.validSteps2 = this.traitementFormItems[id].datas;
-      if (!this.traitementFormItems[id]["all-steps-loaded"]) {
+      this.currentDataId = this.traitementFormItemsDisplay[id].id;
+      this.currentDevis = this.traitementFormItemsDisplay[id];
+      this.validSteps2 = this.traitementFormItemsDisplay[id].datas;
+      if (!this.traitementFormItemsDisplay[id]["all-steps-loaded"]) {
         this.loadAllStepOfDevis({
           DevisId: this.currentDataId,
         }).then((steps) => {
           steps.forEach((row) => {
-            this.traitementFormItems[id].datas.push(row.step);
+            this.traitementFormItemsDisplay[id].datas.push(row.step);
           });
         });
-        this.traitementFormItems[id]["all-steps-loaded"] = true;
+        this.traitementFormItemsDisplay[id]["all-steps-loaded"] = true;
       }
     },
     /**
@@ -360,6 +364,7 @@ export default {
         config
           .getData(payload, false, url)
           .then((reponse) => {
+            console.log("DEvis : ", reponse);
             resolv(reponse.data);
           })
           .catch((error) => {

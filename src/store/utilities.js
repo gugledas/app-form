@@ -327,10 +327,10 @@ export default {
                     field.value.includes(field.options[fp].value) &&
                     field.options[fp].cout
                   ) {
-                    price += parseFloat(field.options[fp].cout);
+                    price += parseFloat(field.options[fp].cout).toFixed(2);
                   }
                 } else if (field.options[fp].value === field.value) {
-                  price += parseFloat(field.options[fp].cout);
+                  price += parseFloat(field.options[fp].cout).toFixed(2);
                   break;
                 }
               }
@@ -342,9 +342,11 @@ export default {
               field.value !== ""
             ) {
               if (!isNaN(field.value)) {
-                price += parseFloat(field.prix.cout) * parseFloat(field.value);
+                price +=
+                  parseFloat(field.prix.cout).toFixed(2) *
+                  parseFloat(field.value).toFixed(2);
               } else {
-                price += parseFloat(field.prix.cout);
+                price += parseFloat(field.prix.cout).toFixed(2);
               }
               resolv(price);
             } else {

@@ -25,7 +25,7 @@ async function aideFinnaceVentilation() {
   var priceTotal = 0;
   var value = "";
   if (choixventilation.value) {
-    value = "simple_flux";
+    value = "double_flux";
     // Prix en function du niveau
     var priceParNiveau = {};
     if (choixventilation.value.includes(value)) {
@@ -38,7 +38,7 @@ async function aideFinnaceVentilation() {
       priceTotal += priceParNiveau[field_niveau_revenu.value];
     }
     //
-    value = "double_flux";
+    value = "simple_flux";
     if (choixventilation.value.includes(value)) {
       priceParNiveau = {
         niveau1: 342,
@@ -54,8 +54,7 @@ async function aideFinnaceVentilation() {
 }
 aideFinnaceVentilation();
 
-async function BudgetChauffage() {
-  console.log("init BudgetChauffage");
+async function BudgetVentilation() {
   //Recuperation le choix de base
   var choixventilation = self.getFieldInForms(
     "type_de_ventillation_souhait",
@@ -71,16 +70,15 @@ async function BudgetChauffage() {
   };
   var priceTotal = "<div><ul class='list-price'>";
   var value = "";
-  console.log(choixventilation);
   if (choixventilation.value) {
-    value = "simple_flux";
+    value = "double_flux";
     if (choixventilation.value.includes(value)) {
       priceTotal += "<li class=''>";
       priceTotal += getLabelOption(value);
       priceTotal += "<span class='price'> 3000-4000 € </span>";
       priceTotal += "</li>";
     }
-    value = "double_flux";
+    value = "simple_flux";
     if (choixventilation.value.includes(value)) {
       priceTotal += "<li>";
       priceTotal += getLabelOption(value);
@@ -89,6 +87,7 @@ async function BudgetChauffage() {
     }
     priceTotal += "</div></ul>";
     return priceTotal;
-  } else return 0;
+  }
+  return priceTotal;
 }
-BudgetChauffage();
+BudgetVentilation();

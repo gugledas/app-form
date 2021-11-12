@@ -18,10 +18,7 @@
               <label class="label d-flex align-items-center">
                 <span class="price-info label">{{ field.label }} :</span>
               </label>
-              <div
-                class="px-2 d-block text-left"
-                v-html="displayComplexLogique"
-              ></div>
+              <div class="px-2 d-block text-left" v-html="field.montant"></div>
             </div>
           </b-col>
           <b-col sm="12" v-html="field.value" class="text-description"></b-col>
@@ -43,20 +40,7 @@ export default {
       require: true,
     },
   },
-  components: {
-    //
-  },
-  data() {
-    return {
-      displayComplexLogique: "",
-    };
-  },
-  mounted() {
-    //
-  },
-  watch: {
-    //
-  },
+
   computed: {
     ...mapState(["price", "mode", "form"]),
     validationField() {
@@ -97,7 +81,11 @@ export default {
     async preproccess_value() {
       var self = this;
       if (self && self.field.preproccess_value) {
-        this.displayComplexLogique = await eval(self.field.preproccess_value);
+        this.$set(
+          this.field,
+          "montant",
+          await eval(self.field.preproccess_value)
+        );
         return 1;
       } else return 0;
     },

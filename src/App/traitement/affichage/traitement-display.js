@@ -4,6 +4,7 @@ import select from "./select.vue";
 import recapitulatif from "./recapitulatif.vue";
 import userlogin from "./userlogin.vue";
 import file from "./file.vue";
+import aideFinanciere from "./aide-financiere.vue";
 
 export default {
   getTemplatesFiles(type) {
@@ -29,6 +30,9 @@ export default {
         break;
       case "file":
         template = file;
+        break;
+      case "input-aide-financiere":
+        template = aideFinanciere;
         break;
     }
     return template;

@@ -51,6 +51,7 @@ import { ValidationProvider } from "vee-validate";
 import { validationRessource as Validation } from "../config/validation.js";
 import "../EditsFields/vee-validate-custom.js";
 import conf from "../config/config.js";
+
 export default {
   name: "inputAideFinanciere",
   props: {
@@ -75,7 +76,7 @@ export default {
   },
   computed: {
     ...mapGetters(["formDatas"]),
-    ...mapState(["formDatasValidate", "mode", "priceAide"]),
+    ...mapState(["formDatasValidate", "mode", "priceAide", "form"]),
     checkFormDatasValidate() {
       if (this.formDatasValidate) {
         this.preproccess_value();
@@ -109,6 +110,7 @@ export default {
     setStatus(status) {
       this.$set(this.field, "status", status);
     },
+
     async preproccess_value() {
       var self = this;
       if (self) {

@@ -1,7 +1,7 @@
 <template>
   <div class="simple-champ" :class="field.type">
     <div class="label-title">{{ field.label }}</div>
-    <div class="label-title flex-wrap" v-if="field.value">
+    <div class="label-title flex-wrap">
       <component
         :is="getTemplatesFiles()"
         :field="field"

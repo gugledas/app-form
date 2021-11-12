@@ -1,13 +1,17 @@
 <template lang="html">
   <div
-    class="d-flex justify-content-center text-center"
-    data-render="recapitulatif"
+    class="d-flex flex-column justify-content-center text-center"
+    data-render="default-render"
   >
-    <div class="label-field" v-if="diplayLabel">{{ field.label }}</div>
-    <strong class="field-content" v-if="!field.complex_logique">
-      {{ priceEstimation }} €
-    </strong>
-    <div v-if="!field.complex_logique" v-html="field.montant"></div>
+    <div v-if="diplayLabel">
+      <div class="icon">
+        <b-icon icon="cloud-download" font-scale="1.7"></b-icon>
+      </div>
+    </div>
+    <div class="label-field" v-if="diplayLabel">
+      {{ field.label }}
+    </div>
+    <div class="field-content">{{ field.value }} €</div>
   </div>
 </template>
 
@@ -15,7 +19,7 @@
 //
 //import magentoSynchroListSites from "./ListSites.vue";
 export default {
-  name: "recapitulatif",
+  name: "defaultRender.vue",
   props: {
     field: {
       type: Object,
@@ -41,19 +45,7 @@ export default {
     //
   },
   computed: {
-    priceEstimation() {
-      const price = this.field.prix.cout;
-      if (price > 0) {
-        if (this.field.percent) {
-          var percent = parseInt(this.field.percent);
-          if (percent > 0) {
-            percent = (price * percent) / 100 + price;
-            return price + " - " + percent;
-          }
-        }
-      }
-      return price;
-    },
+    //
   },
   methods: {
     //

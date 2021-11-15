@@ -1,4 +1,5 @@
 const field = {};
+const formDatas = {};
 
 // Isolation
 // ||-------------------------------------------------------
@@ -11,10 +12,7 @@ async function aideFinnaceVentilation() {
   );
   // Recuperation de l'indice de tranche de revenu.
   const get_field_niveau_revenu = (niveau) => {
-    return self.getFieldInForms(
-      "tranche_de_revenus",
-      "niveau_revenu_" + niveau
-    );
+    return self.getFieldInForms(formDatas.info.name, "niveau_revenu_" + niveau);
   };
   var field_niveau_revenu = null;
   if (field.value >= 1 && field.value <= 5) {

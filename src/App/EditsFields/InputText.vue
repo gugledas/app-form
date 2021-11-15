@@ -19,6 +19,7 @@
       </b-col>
     </b-row>
     <ValidationFields :field="field"></ValidationFields>
+    <pre> field : {{ field }} </pre>
   </div>
 </template>
 

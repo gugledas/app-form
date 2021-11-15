@@ -7,7 +7,7 @@
     <strong class="field-content" v-if="!field.complex_logique">
       {{ priceEstimation }} €
     </strong>
-    <div v-if="!field.complex_logique" v-html="field.montant"></div>
+    <div v-if="field.complex_logique" v-html="field.montant"></div>
   </div>
 </template>
 

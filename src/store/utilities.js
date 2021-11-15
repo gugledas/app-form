@@ -1,7 +1,9 @@
 import config from "../App/config/config.js";
+import { termsTaxo } from "drupal-vuejs";
 
 export default {
   forms: [],
+  formDatas: {},
 
   /**
    * Selectionne l'indice de la prochaine etape valide.
@@ -15,18 +17,16 @@ export default {
     return new Promise((resolvParent) => {
       const loop = function (j) {
         return new Promise((resolv) => {
-          console.log("etape en cours : ", j, " : ", forms[j].info);
           if (!forms[j]) {
             resolv(null);
           }
           if (forms[j].states && forms[j].states.length > 0)
             self.validateState(forms[j].states).then((rep) => {
-              console.log(" Status final de validation : ", rep);
               if (rep) {
                 resolv(j);
               } else {
                 let ii = j + 1;
-                console.log(" Passage à letape suivante ", ii);
+
                 resolv(loop(ii));
               }
             });
@@ -38,61 +38,7 @@ export default {
       });
     });
   },
-  /**
-   * Validation des conditions.
-   * @param {*} states
-   * @returns
-   */
-  validateStateNone(states) {
-    return new Promise((resolv) => {
-      if (!states || states.length === 0) resolv(true);
-      // On parcourt toutes les etapes.
-      for (const k in this.forms) {
-        // On recupere la premiere etape et on verifie si on doit l'afficher ou pas.
-        const form = this.forms[k];
-        for (const s in states) {
-          const state = states[s];
-          if (state.action === "visible") {
-            // Identification de l'etape;
-            if (form.info.name === state.state_name) {
-              // Recherche du champs.
-              for (const f in form.fields) {
-                const field = form.fields[f];
-                // Identification du champs.
-                if (field.name === state.name) {
-                  // Action à verifier
-                  if (state.operator === "egal") {
-                    if (field.value) {
-                      console.log(
-                        field.name + " : valeur : " + field.value,
-                        " \n condition à valider : ",
-                        state.value
-                      );
-                      let staValidation = field.value.includes(state.value);
-                      console.log(
-                        " Condition de validation : ",
-                        staValidation,
-                        "\n "
-                      );
-                      resolv(staValidation);
-                    } else {
-                      resolv(false);
-                    }
-                  }
-                }
-              }
-            }
-          } else {
-            resolv(true);
-          }
-        }
-        var ii = parseInt(k) + 1;
-        if (this.forms.length === ii) {
-          resolv(true);
-        }
-      }
-    });
-  },
+
   /**
    * Validation des conditions.
    * @param {*} states
@@ -103,7 +49,6 @@ export default {
       if (!states || states.length === 0) resolvPrent(true);
       const loopSteps = (key) => {
         return new Promise((resolv) => {
-          console.log("loopSteps : ", key, " : ", states[key]);
           const state = states[key];
           if (!state) resolv(false);
           if (state.action === "visible") {
@@ -112,7 +57,6 @@ export default {
               return new Promise((resolvForms) => {
                 const form = this.forms[k];
                 if (form.info.name === state.state_name) {
-                  //console.log("check 1");
                   // si dans l'etape, il nya pas de champs, on renvoit false;
                   if (!form.fields || form.fields.length === 0)
                     resolvForms(true);
@@ -121,7 +65,6 @@ export default {
                     const field = form.fields[f];
                     // Identification du champs.
                     if (field.name === state.name) {
-                      //console.log("check 2");
                       // Action à verifier
                       if (state.operator === "egal") {
                         if (field.value) {
@@ -147,6 +90,50 @@ export default {
                             field.value < state.value ? true : false;
                           // on renvoit le status.
                           resolvForms(staValidation);
+                        } else {
+                          resolvForms(false);
+                        }
+                      }
+                      // Permet de verifier si l'id selectionner par l'utilisateur appartient à un parent bien definit.
+                      else if (state.operator === "taxo_term_parent") {
+                        if (field.value && field.value.value) {
+                          console.log("field : ", field);
+                          const terms = new termsTaxo("departement_de_france");
+                          terms
+                            .getValueByTid(field.value.value)
+                            .then((resp) => {
+                              if (
+                                resp.data &&
+                                resp.data[0] &&
+                                resp.data[0].relationships.parent
+                              ) {
+                                const parent =
+                                  resp.data[0].relationships.parent.data[0];
+
+                                console.log(
+                                  " Parent : ",
+                                  parent,
+                                  "\n State : ",
+                                  state
+                                );
+                                if (state.term_condition == "=") {
+                                  if (parent.id === state.value) {
+                                    resolvForms(true);
+                                  } else {
+                                    resolvForms(false);
+                                  }
+                                } else {
+                                  if (parent.id !== state.value) {
+                                    resolvForms(true);
+                                  } else {
+                                    resolvForms(false);
+                                  }
+                                }
+                              } else resolvForms(false);
+                            })
+                            .catch(() => {
+                              resolvForms(false);
+                            });
                         } else {
                           resolvForms(false);
                         }
@@ -218,10 +205,11 @@ export default {
     var self = this;
     var price = 0;
     this.forms = forms;
+    this.formDatas = formDatas;
     //on parcout les champs de l'etape, afin de determiner le cout associé à chaque champs.
     for (const i in formDatas.fields) {
       const field = formDatas.fields[i];
-      if (field.prix) {
+      if (field.prix && field.status) {
         if (
           (field.prix.complex_logique === undefined ||
             !field.prix.complex_logique) &&
@@ -279,7 +267,7 @@ export default {
             for (const f in form.fields) {
               const fieldState = form.fields[f];
               // On s'assure que c'est le champs qui a ete selectionné par l'utilisateur.
-              if (fieldState.name == component.name) {
+              if (fieldState.status && fieldState.name == component.name) {
                 AllPromise.push(
                   this.getPriceForField(fieldState, true, 0, type_cout)
                 );
@@ -306,18 +294,24 @@ export default {
    */
   getPriceForField(
     field,
-    use = false,
+    use = true,
     priceFinal = 0,
     type_cout = "prix_utilisables"
   ) {
+    console.log(
+      "use : ",
+      use,
+      " type_cout : ",
+      type_cout,
+      "\n field ",
+      field,
+      "\n field.name ",
+      field.name
+    );
     return new Promise((resolvParent) => {
       const execution = (price = 0) => {
         return new Promise((resolv, reject) => {
-          if (
-            field.prix &&
-            (field.prix.action === type_cout || use) &&
-            field.status
-          ) {
+          if (field.prix) {
             var typeDatas = typeof field.value;
             // Cas des champs type selection.
             if (config.typeSelection.includes(field.type)) {
@@ -355,21 +349,15 @@ export default {
                   field.name +
                   " Cas de figure non pris en compte, (type : " +
                   field.type +
-                  ")"
+                  "\n cout :" +
+                  field.prix.cout +
+                  " )"
               );
             }
           }
           // Si le champs ne respecte pas les regles. on emet une erreur.
           else {
-            reject(
-              "Erreur dans le champs : " +
-                field.name +
-                " (" +
-                type_cout +
-                " est different de " +
-                field.prix.action +
-                ")"
-            );
+            reject(field);
           }
         });
       };

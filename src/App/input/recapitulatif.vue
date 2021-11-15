@@ -55,11 +55,11 @@ export default {
           var percent = parseInt(this.field.percent);
           if (percent > 0) {
             percent = (price * percent) / 100 + price;
-            return price + " - " + percent;
+            return price.toFixed(2) + " - " + percent.toFixed(2);
           }
         }
       }
-      return price;
+      return price.toFixed(2);
     },
     displayPreproccessValue() {
       return this.preproccess_value();

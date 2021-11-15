@@ -101,6 +101,7 @@
                     size="sm"
                   ></b-form-input>
                 </b-form-group>
+                <!-- -->
                 <b-form-group
                   label="valeur"
                   label-for="input-lazy"
@@ -118,6 +119,37 @@
                     size="sm"
                   ></b-form-select>
                 </b-form-group>
+                <!--  -->
+                <b-form-group
+                  label="Id du terme parent"
+                  label-for="input-lazy"
+                  label-size="sm"
+                  label-cols="4"
+                  v-if="condition.operator == 'taxo_term_parent'"
+                  description="L'uid provenant de la table taxonomy_term_data"
+                >
+                  <b-form-input
+                    required
+                    v-model="condition.value"
+                    size="sm"
+                  ></b-form-input>
+                </b-form-group>
+                <!--  -->
+                <b-form-group
+                  label="doit etre "
+                  label-for="input-lazy"
+                  label-size="sm"
+                  label-cols="4"
+                  v-if="condition.operator == 'taxo_term_parent'"
+                >
+                  <b-form-select
+                    required
+                    v-model="condition.term_condition"
+                    size="sm"
+                    :options="options_terms"
+                  ></b-form-select>
+                </b-form-group>
+                <!--  -->
               </div>
               <div class="svg-content">
                 <b-button
@@ -164,6 +196,10 @@ export default {
       listsOperators: Validation.listsOperators(),
       optionsAction: Validation.Action("Cette etape"),
       form_validation_options: [],
+      options_terms: [
+        { text: "egal", value: "=" },
+        { text: "different", value: "<>" },
+      ],
     };
   },
   watch: {

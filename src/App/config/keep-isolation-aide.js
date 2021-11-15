@@ -1,4 +1,5 @@
 const field = {};
+const formDatas = {};
 // Isolation
 // ||-------------------------------------------------------
 // Calcul de l'aide finnacire via le champs nombre de personne.
@@ -11,26 +12,13 @@ async function aideFinnaceIsolation() {
 
   // Recuperation de l'indice de tranche de revenu.
   const get_field_niveau_revenu = (niveau) => {
-    return self.getFieldInForms(
-      "tranche_de_revenus",
-      "niveau_revenu_" + niveau
-    );
+    return self.getFieldInForms(formDatas.info.name, "niveau_revenu_" + niveau);
   };
   var field_niveau_revenu = null;
   if (field.value >= 1 && field.value <= 5) {
     field_niveau_revenu = await get_field_niveau_revenu(field.value);
   } else {
     field_niveau_revenu = await get_field_niveau_revenu(6);
-  }
-  // Recupere l'id de la localisation.
-  const idLocalisation = self.getFieldInForms(
-    "les_dimensions_de_vos_combles",
-    "surface_de_vos_combles"
-  ).value;
-  console.log("after idLocalisation : ", idLocalisation, "\n : ");
-  // nous sommes dans l'ile de france.[37072 -- 37111]
-  if (idLocalisation >= 37072 && idLocalisation <= 37111) {
-    //
   }
 
   if (choixTravaux) {
@@ -69,10 +57,10 @@ async function aideFinnaceIsolation() {
     } //
     if (choixTravaux.includes("toit_terrasse")) {
       priceParNiveau = {
-        niveau1: 22,
-        niveau2: 22,
-        niveau3: 11,
-        niveau4: 11,
+        niveau1: 96,
+        niveau2: 71,
+        niveau3: 51,
+        niveau4: 26,
       };
       // Recuperation de la surface
       const SurfaceComble = self.getFieldInForms(

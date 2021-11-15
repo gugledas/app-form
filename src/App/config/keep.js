@@ -1264,7 +1264,7 @@ async function PriseElectSalon() {
     "quelle_type_d_installation_d_sirez_vous"
   );
   const price_T_I = await self.getPriceForField(T_I, true, 0);
-  //
+
   const price_N = await self.getPriceForField(field, true, 0);
 
   price = price_N + price_T_I * field.value;

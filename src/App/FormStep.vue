@@ -45,6 +45,16 @@
         >
           <b-icon icon="clipboard-plus"></b-icon>
         </b-button>
+
+        <b-button
+          variant="outline-secondary"
+          v-b-modal.export-import-stepe
+          size="md"
+          v-b-tooltip.hover.v-secondary
+          title="Exporter/importer"
+        >
+          <b-icon icon="clipboard-minus"></b-icon>
+        </b-button>
       </b-button-group>
     </div>
     <!-- center container -->
@@ -61,6 +71,7 @@
       ></add-form-field>
       <StepConfiguration ref="StepConfiguration"></StepConfiguration>
       <cloneCurrentStepe />
+      <import-export></import-export>
     </div>
   </div>
 </template>
@@ -75,6 +86,7 @@ export default {
   components: {
     StepConfiguration: () => import("./ConfigsForms/StepConfiguration.vue"),
     cloneCurrentStepe: () => import("./ConfigsForms/cloneCurrentStepe.vue"),
+    "import-export": () => import("./ConfigsForms/import-export.vue"),
     forms,
   },
   data: () => {

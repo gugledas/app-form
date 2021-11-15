@@ -227,7 +227,7 @@ export default {
             datas: JSON.stringify([]),
             appformmanager_forms: datas.id,
             uid: uid,
-            price: price,
+            price: price.toFixed(2),
             status: status,
           },
           action: "update",

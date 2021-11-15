@@ -277,7 +277,6 @@ export default {
     },
     setRefs() {
       this.$nextTick(() => {
-        //alert("Dd");
         this.userlogin.name.ref = this.$refs.userlogin_name;
         this.userlogin.telephone.ref = this.$refs.userlogin_tel;
         this.userlogin.email.ref = this.$refs.userlogin_email;

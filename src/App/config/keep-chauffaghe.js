@@ -203,10 +203,10 @@ async function aideFinnaceChauffage() {
     value = "radiateurs_lectriques_performants_en";
     if (choixChauffage.value.includes(value)) {
       priceParNiveau = {
-        niveau1: 14364,
-        niveau2: 12364,
-        niveau3: 6727,
-        niveau4: 2727,
+        niveau1: 110,
+        niveau2: 110,
+        niveau3: 55,
+        niveau4: 55,
       };
       priceTotal += priceParNiveau[field_niveau_revenu.value];
     }

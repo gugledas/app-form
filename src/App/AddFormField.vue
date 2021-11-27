@@ -68,6 +68,10 @@
             ></b-form-select>
           </b-form-group>
           <compositeHeaderField :field="field"></compositeHeaderField>
+          <ValidationFields
+            :field="field"
+            :displayAccordion="displayAccordion"
+          ></ValidationFields>
         </div>
       </div>
 
@@ -88,8 +92,9 @@ import inputOptionForm from "./inputOptionForm.vue";
 import compositeHeaderField from "./EditsFields/compositeHeaderField.vue";
 import Utilities from "./Utilities.js";
 import config from "./config/config";
+import ValidationFields from "./EditsFields/ValidationFields";
 export default {
-  components: { inputOptionForm, compositeHeaderField },
+  components: { inputOptionForm, compositeHeaderField, ValidationFields },
   props: {
     nouveau: {
       type: Boolean,
@@ -124,6 +129,11 @@ export default {
       dynamicfield: false,
       typeFormId: "",
       DynamicFields: [],
+      displayAccordion: {
+        validation: false,
+        affichage: true,
+        price: true,
+      },
     };
   },
   watch: {

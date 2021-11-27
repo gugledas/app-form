@@ -40,18 +40,31 @@ async function BudgetFenetre() {
         const taille = etape.value[i];
         const subFieldName = "quantit_" + taille;
         const f = self.getFieldInForms(step, subFieldName);
-        if (
-          f &&
-          f.value &&
-          budgetParFenetre[taille] &&
-          budgetParFenetre[taille][TypeFenetre] &&
-          budgetParFenetre[taille][TypeFenetre][VoletFenetre]
-        ) {
-          const qty = parseInt(f.value);
-          const tranchePrice =
-            budgetParFenetre[taille][TypeFenetre][VoletFenetre];
-          prices[taille] =
-            tranchePrice.min * qty + " - " + tranchePrice.max * qty;
+        if (f && f.value && budgetParFenetre[taille]) {
+          if (
+            budgetParFenetre[taille][TypeFenetre] &&
+            budgetParFenetre[taille][TypeFenetre][VoletFenetre]
+          ) {
+            const qty = parseInt(f.value);
+            const tranchePrice =
+              budgetParFenetre[taille][TypeFenetre][VoletFenetre];
+            prices[taille] =
+              tranchePrice.min * qty + " - " + tranchePrice.max * qty;
+          } else if (budgetParFenetre[taille][VoletFenetre]) {
+            const qty = parseInt(f.value);
+            const tranchePrice = budgetParFenetre[taille][VoletFenetre];
+            prices[taille] =
+              tranchePrice.min * qty + " - " + tranchePrice.max * qty;
+          } else {
+            console.log(
+              " erreur dans step 2 : ",
+              step,
+              "\n fileName : ",
+              fileName,
+              "\n budgetParFenetre : ",
+              budgetParFenetre
+            );
+          }
         } else {
           console.log(
             " erreur dans step : ",
@@ -530,16 +543,41 @@ async function BudgetFenetre() {
         "type_travaux_sur_fen_tre_et_toit",
         "plusieurs_choix_possible"
       ).value;
+      budgetParFenetre = {
+        petite: {
+          oui: { min: 1500, max: 1700 },
+          non: { min: 940, max: 1220 },
+        },
+        moyenne: {
+          oui: { min: 1700, max: 2000 },
+          non: { min: 1040, max: 1350 },
+        },
+        grande: {
+          oui: { min: 1900, max: 2200 },
+          non: { min: 1140, max: 1490 },
+        },
+      };
       if (
         type_travaux_sur_fen_tre_et_toit.includes(
           "remplacement_d_une_fen_tre_de_toit"
         )
       ) {
-        nombreFenetre["remplacement_d_une_fen_tre_de_toit"] =
-          NombreDefenetreAutotal(
-            "nombre_fen_tre_toit_remplacer",
-            "plusieurs_choix_possible"
-          );
+        nombreFenetre["remplacement_d_une_fen_tre_de_toit"] = {
+          label: "Remplacement fenetre de toit",
+          prices: NombreDefenetreAutotal(
+            {
+              nombre: {
+                step: "nombre_fen_tre_toit_remplacer",
+                field: "plusieurs_choix_possible",
+              },
+              volet: {
+                step: "volet_roulant_int_gr_baies_coulissantes",
+                field: "un_seul_choix_possibl",
+              },
+            },
+            budgetParFenetre
+          ),
+        };
         console.log(
           " nombreFenetre nombre_fen_tre_toit_remplacer : ",
           nombreFenetre
@@ -550,11 +588,37 @@ async function BudgetFenetre() {
           "cr_ation_d_une_fen_tre_de_toit"
         )
       ) {
-        nombreFenetre["cr_ation_d_une_fen_tre_de_toit"] =
-          NombreDefenetreAutotal(
-            "nombre_fen_tre_toit_cr_er",
-            "plusieurs_choix_possible"
-          );
+        budgetParFenetre = {
+          petite: {
+            oui: { min: 1700, max: 2000 },
+            non: { min: 1140, max: 1490 },
+          },
+          moyenne: {
+            oui: { min: 1900, max: 2200 },
+            non: { min: 1250, max: 1620 },
+          },
+          grande: {
+            oui: { min: 2100, max: 2500 },
+            non: { min: 1350, max: 1760 },
+          },
+        };
+
+        nombreFenetre["cr_ation_d_une_fen_tre_de_toit"] = {
+          label: "Creation fenetre de toit",
+          prices: NombreDefenetreAutotal(
+            {
+              nombre: {
+                step: "nombre_fen_tre_toit_cr_er",
+                field: "plusieurs_choix_possible",
+              },
+              volet: {
+                step: "volet_roulant_int_gr_baies_coulissantes",
+                field: "un_seul_choix_possibl",
+              },
+            },
+            budgetParFenetre
+          ),
+        };
         console.log(
           " nombreFenetre nombre_nombre_fen_tre_toit_cr_er : ",
           nombreFenetre

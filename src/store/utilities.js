@@ -222,15 +222,22 @@ export default {
             type_cout
           );
           // si cest un champs composé.
-          if (field.prix && field.prix.components.length) {
-            var price2 = await this.getPriceFieldInState(
-              forms,
-              field,
-              0,
-              type_cout
-            );
-            if (price2) {
-              price += price2 * priceCurrentField;
+          if (field.prix) {
+            // cas des champs donc la valeur du prix doit etre multiplier avec d'autre champs.
+            if (field.prix.components.length) {
+              var price2 = await this.getPriceFieldInState(
+                forms,
+                field,
+                0,
+                type_cout
+              );
+              if (price2) {
+                price += price2 * priceCurrentField;
+              }
+            }
+            // Cas simple.
+            else {
+              price += priceCurrentField;
             }
           }
         } else if (
@@ -298,16 +305,9 @@ export default {
     priceFinal = 0,
     type_cout = "prix_utilisables"
   ) {
-    console.log(
-      "use : ",
-      use,
-      " type_cout : ",
-      type_cout,
-      "\n field ",
-      field,
-      "\n field.name ",
-      field.name
-    );
+    if (use || type_cout) {
+      //
+    }
     return new Promise((resolvParent) => {
       const execution = (price = 0) => {
         return new Promise((resolv, reject) => {
@@ -321,10 +321,10 @@ export default {
                     field.value.includes(field.options[fp].value) &&
                     field.options[fp].cout
                   ) {
-                    price += parseFloat(field.options[fp].cout).toFixed(2);
+                    price += parseFloat(field.options[fp].cout);
                   }
                 } else if (field.options[fp].value === field.value) {
-                  price += parseFloat(field.options[fp].cout).toFixed(2);
+                  price += parseFloat(field.options[fp].cout);
                   break;
                 }
               }
@@ -336,11 +336,9 @@ export default {
               field.value !== ""
             ) {
               if (!isNaN(field.value)) {
-                price +=
-                  parseFloat(field.prix.cout).toFixed(2) *
-                  parseFloat(field.value).toFixed(2);
+                price += parseFloat(field.prix.cout) * parseFloat(field.value);
               } else {
-                price += parseFloat(field.prix.cout).toFixed(2);
+                price += parseFloat(field.prix.cout);
               }
               resolv(price);
             } else {
@@ -365,6 +363,11 @@ export default {
         if (!isNaN(priceField)) {
           priceFinal += priceField;
         }
+        if (priceFinal > 0) {
+          priceFinal = priceFinal.toFixed(2);
+          priceFinal = parseFloat(priceFinal);
+        }
+        console.log(" final price of field :: ", field.name, " : ", priceFinal);
         resolvParent(priceFinal);
       });
     });

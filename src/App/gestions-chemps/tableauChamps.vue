@@ -36,6 +36,7 @@ import buttonAction from "./tableauChampsAction.vue";
 import stepesInfosVue from "./renders/stepesInfos.vue";
 //import moduleA from "./testStore.js";
 import radio from "./renders/lists.vue";
+import defaultRenderPrice from "./renders/defaultRenderPrice.vue";
 import { mapState } from "vuex";
 
 export default {
@@ -110,7 +111,7 @@ export default {
      * --
      */
     templateRender(type) {
-      var template = "";
+      var template = defaultRenderPrice;
       switch (type) {
         case "radio":
           template = radio;
@@ -140,17 +141,17 @@ export default {
       min-width: 120px;
     }
     .td-stepes {
-      min-width: 250px;
+      min-width: 260px;
     }
     .td-label {
-      min-width: 250px;
+      min-width: 200px;
       font-size: 14px;
     }
     .td-actions {
       min-width: 100px;
     }
     .td-value {
-      min-width: 370px;
+      min-width: 250px;
     }
   }
 }

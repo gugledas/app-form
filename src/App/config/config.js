@@ -101,6 +101,7 @@ export default {
                 states: JSON.stringify(step.states),
               },
             });
+            // Enregistrement des champs.
             step.fields.forEach((field) => {
               const f = {
                 table: "appformmanager_steps_fields",
@@ -110,9 +111,27 @@ export default {
                   machine_name: field.name,
                 },
               };
-              if (field.override) {
-                if (field.override.label !== field.label) {
-                  f.fields.label = field.label;
+              // si ce champs existe, alors le champs provient du gestionnaire de champs.
+              if (field.formid) {
+                var fieldjson = {
+                  states: field.states,
+                };
+                // verification de la surcharge du prix
+                if (
+                  JSON.stringify(field.prix) !==
+                  JSON.stringify(field.default_prix)
+                ) {
+                  fieldjson.prix = field.prix;
+                }
+                // On enregistre les elements supplementaires tels que les conditions d'affichage, prix surcharger ...
+                f.fields.fieldjson = JSON.stringify(fieldjson);
+                // on supprime le données du champs
+                f.fields.defaultjson = null;
+                if (field.override) {
+                  //si le lable est surcharger
+                  if (field.override.label !== field.label) {
+                    f.fields.label = field.label;
+                  }
                 }
               } else {
                 f.fields.defaultjson = JSON.stringify(field);

@@ -1,4 +1,5 @@
 const field = {};
+const formDatas = {};
 // isolation
 //-------------------------------------------------------
 // calcul de l'aide finnacire via le champs select.
@@ -1226,8 +1227,8 @@ RevetPlfbureau();
 async function PriseElectCuisine() {
   var price = 0;
   const T_I = self.getFieldInForms(
-    "lectricit",
-    "quelle_type_d_installation_d_sirez_vous"
+    formDatas.info.name,
+    "quelle_type_d_installation_d_sirez_vous_electrique"
   );
   const price_T_I = await self.getPriceForField(T_I, true, 0);
   //
@@ -1240,153 +1241,3 @@ PriseElectCuisine();
 //
 //-------------------------------------------------------
 //
-async function PriseElectSDB() {
-  var price = 0;
-  const T_I = self.getFieldInForms(
-    "lectricit_salle_de_bain",
-    "quelle_type_d_installation_d_sirez_vous"
-  );
-  const price_T_I = await self.getPriceForField(T_I, true, 0);
-  //
-  const price_N = await self.getPriceForField(field, true, 0);
-
-  price = price_N + price_T_I * field.value;
-  return price;
-}
-PriseElectSDB();
-//
-//-------------------------------------------------------
-//
-async function PriseElectSalon() {
-  var price = 0;
-  const T_I = self.getFieldInForms(
-    "lectricit_sallon",
-    "quelle_type_d_installation_d_sirez_vous"
-  );
-  const price_T_I = await self.getPriceForField(T_I, true, 0);
-
-  const price_N = await self.getPriceForField(field, true, 0);
-
-  price = price_N + price_T_I * field.value;
-  return price;
-}
-PriseElectSalon();
-//
-//-------------------------------------------------------
-//
-async function PriseElectChambre() {
-  var price = 0;
-  const T_I = self.getFieldInForms(
-    "lectricit_chambre",
-    "quelle_type_d_installation_d_sirez_vous"
-  );
-  const price_T_I = await self.getPriceForField(T_I, true, 0);
-  //
-  const price_N = await self.getPriceForField(field, true, 0);
-
-  price = price_N + price_T_I * field.value;
-  return price;
-}
-PriseElectChambre();
-//
-//-------------------------------------------------------
-//
-async function PriseElectSM() {
-  var price = 0;
-  const T_I = self.getFieldInForms(
-    "lectricit_salle_manger",
-    "quelle_type_d_installation_d_sirez_vous"
-  );
-  const price_T_I = await self.getPriceForField(T_I, true, 0);
-  //
-  const price_N = await self.getPriceForField(field, true, 0);
-
-  price = price_N + price_T_I * field.value;
-  return price;
-}
-PriseElectSM();
-//
-//-------------------------------------------------------
-//
-async function PriseElectCouloir() {
-  var price = 0;
-  const T_I = self.getFieldInForms(
-    "lectricit_couloir",
-    "quelle_type_d_installation_d_sirez_vous"
-  );
-  const price_T_I = await self.getPriceForField(T_I, true, 0);
-  //
-  const price_N = await self.getPriceForField(field, true, 0);
-
-  price = price_N + price_T_I * field.value;
-  return price;
-}
-PriseElectCouloir();
-//
-//-------------------------------------------------------
-//
-async function PriseElectBuanderie() {
-  var price = 0;
-  const T_I = self.getFieldInForms(
-    "lectricit_buanderie",
-    "quelle_type_d_installation_d_sirez_vous"
-  );
-  const price_T_I = await self.getPriceForField(T_I, true, 0);
-  //
-  const price_N = await self.getPriceForField(field, true, 0);
-
-  price = price_N + price_T_I * field.value;
-  return price;
-}
-PriseElectBuanderie();
-//
-//-------------------------------------------------------
-//
-async function PriseElectToilette() {
-  var price = 0;
-  const T_I = self.getFieldInForms(
-    "lectricit_toilette",
-    "quelle_type_d_installation_d_sirez_vous"
-  );
-  const price_T_I = await self.getPriceForField(T_I, true, 0);
-  //
-  const price_N = await self.getPriceForField(field, true, 0);
-
-  price = price_N + price_T_I * field.value;
-  return price;
-}
-PriseElectToilette();
-//
-//-------------------------------------------------------
-//
-async function PriseElectDressing() {
-  var price = 0;
-  const T_I = self.getFieldInForms(
-    "lectricit_dressing",
-    "quelle_type_d_installation_d_sirez_vous"
-  );
-  const price_T_I = await self.getPriceForField(T_I, true, 0);
-  //
-  const price_N = await self.getPriceForField(field, true, 0);
-
-  price = price_N + price_T_I * field.value;
-  return price;
-}
-PriseElectDressing();
-//
-//-------------------------------------------------------
-//
-async function PriseElectBureau() {
-  var price = 0;
-  const T_I = self.getFieldInForms(
-    "lectricit_bureau",
-    "quelle_type_d_installation_d_sirez_vous"
-  );
-  const price_T_I = await self.getPriceForField(T_I, true, 0);
-  //
-  const price_N = await self.getPriceForField(field, true, 0);
-
-  price = price_N + price_T_I * field.value;
-  return price;
-}
-PriseElectBureau();

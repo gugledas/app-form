@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="accordion" role="tablist">
     <!-- Field validation -->
-    <b-card no-body class="mb-1">
+    <b-card no-body class="mb-1" v-if="displayAccordion.validation">
       <b-card-header header-tag="header" class="p-1" role="tab">
         <b-button block v-b-toggle.accordion-1 variant="info">
           Validation
@@ -23,7 +23,7 @@
       </b-collapse>
     </b-card>
     <!-- Field  -->
-    <b-card no-body class="mb-1">
+    <b-card no-body class="mb-1" v-if="displayAccordion.affichage">
       <b-card-header header-tag="header" class="p-1" role="tab">
         <b-button block v-b-toggle.accordion-2 variant="info">
           Condition d'affichage
@@ -137,7 +137,7 @@
       </b-collapse>
     </b-card>
     <!-- price -->
-    <b-card no-body class="mb-1">
+    <b-card no-body class="mb-1" v-if="displayAccordion.price">
       <b-card-header header-tag="header" class="p-1" role="tab">
         <b-button block v-b-toggle.accordion-3 variant="info">
           Mecanisme de calcul du prix
@@ -159,6 +159,16 @@ import config from "../config/config.js";
 export default {
   name: "ValidationFields",
   props: {
+    displayAccordion: {
+      type: Object,
+      default: function () {
+        return {
+          validation: true,
+          affichage: true,
+          price: true,
+        };
+      },
+    },
     field: {
       type: Object,
       required: true,

@@ -184,6 +184,12 @@ export default {
       });
     });
   },
+  /**
+   *
+   * @param {*} state_name
+   * @param {*} field_name
+   * @returns
+   */
   getFieldInForms(state_name, field_name) {
     for (const i in this.forms) {
       const form = this.forms[i];
@@ -221,7 +227,7 @@ export default {
             0,
             type_cout
           );
-          // si cest un champs composé.
+          // Si cest un champs composé.
           if (field.prix) {
             // cas des champs donc la valeur du prix doit etre multiplier avec d'autre champs.
             if (field.prix.components.length) {
@@ -372,7 +378,7 @@ export default {
       });
     });
   },
-
+  //
   saveDatas(state, uid = 0, status = 2) {
     return new Promise((resolv) => {
       config.saveStepsDatas(state, uid, status).then((val) => {
@@ -384,6 +390,7 @@ export default {
       });
     });
   },
+  //
   deleteForm(id) {
     config.deleteForm(id);
   },

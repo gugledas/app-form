@@ -20,9 +20,14 @@ async function aideFinnaceIsolation() {
   } else {
     field_niveau_revenu = await get_field_niveau_revenu(6);
   }
+  // Recupation du mode de chauffage.
+  const ModeChauffage = self.getFieldInForms(
+    "votre_mode_de_chauffage_principal",
+    "un_seul_choix_possible"
+  );
 
   if (choixTravaux) {
-    console.log("choixTravaux : ", choixTravaux);
+    // console.log("choixTravaux : ", choixTravaux);
     var priceTotal = 0;
     //prix en function du niveau
     var priceParNiveau = {};
@@ -85,18 +90,28 @@ async function aideFinnaceIsolation() {
           "connaissez_vous_la_surface_de_mur_isoler",
           "surface_mur_isoler"
         ).value;
-        priceParNiveau = {
-          niveau1: 62,
-          niveau2: 38,
-          niveau3: 33,
-          niveau4: 25,
-        };
-        console.log(
-          "mur interieur : ",
-          SurfaceComble,
-          "\n Niveau : ",
-          field_niveau_revenu.value
-        );
+        if (ModeChauffage.value == "lectrique")
+          priceParNiveau = {
+            niveau1: 47,
+            niveau2: 33,
+            niveau3: 25,
+            niveau4: 18,
+          };
+        else
+          priceParNiveau = {
+            niveau1: 62,
+            niveau2: 38,
+            niveau3: 33,
+            niveau4: 25,
+          };
+        // console.log(
+        //   "mur interieur : ",
+        //   SurfaceComble,
+        //   "\n Niveau : ",
+        //   field_niveau_revenu.value,
+        //   "\n ModeChauffage : ",
+        //   ModeChauffage
+        // );
         priceTotal += SurfaceComble * priceParNiveau[field_niveau_revenu.value];
       } else {
         // Recuperation de la surface
@@ -107,34 +122,66 @@ async function aideFinnaceIsolation() {
         // Si la surface à isoler est > 100 m2
         if (SurfaceComble > 100) {
           // on effectue le calcul avec les 100m2
-          priceParNiveau = {
-            niveau1: 112,
-            niveau2: 78,
-            niveau3: 58,
-            niveau4: 33,
-          };
+          if (ModeChauffage.value == "lectrique")
+            priceParNiveau = {
+              niveau1: 98,
+              niveau2: 65,
+              niveau3: 50,
+              niveau4: 25,
+            };
+          else
+            priceParNiveau = {
+              niveau1: 112,
+              niveau2: 78,
+              niveau3: 58,
+              niveau4: 33,
+            };
           priceTotal += 100 * priceParNiveau[field_niveau_revenu.value];
-          // on modifie les valeurs eton effectue le calcul avec le reste de mettre carre.
-          priceParNiveau = {
-            niveau1: 37,
-            niveau2: 18,
-            niveau3: 18,
-            niveau4: 18,
-          };
+          // on modifie les valeurs et on effectue le calcul avec le reste de mettre carre.
+          if (ModeChauffage.value == "lectrique")
+            priceParNiveau = {
+              niveau1: 22,
+              niveau2: 13,
+              niveau3: 13,
+              niveau4: 13,
+            };
+          else
+            priceParNiveau = {
+              niveau1: 37,
+              niveau2: 18,
+              niveau3: 18,
+              niveau4: 18,
+            };
           priceTotal +=
             (SurfaceComble - 100) * priceParNiveau[field_niveau_revenu.value];
         }
         // Si la surface  à isoler est <= 100 m2
         else {
-          priceParNiveau = {
-            niveau1: 112,
-            niveau2: 78,
-            niveau3: 58,
-            niveau4: 33,
-          };
+          if (ModeChauffage.value == "lectrique")
+            priceParNiveau = {
+              niveau1: 98,
+              niveau2: 65,
+              niveau3: 50,
+              niveau4: 25,
+            };
+          else
+            priceParNiveau = {
+              niveau1: 112,
+              niveau2: 78,
+              niveau3: 58,
+              niveau4: 33,
+            };
           priceTotal +=
             SurfaceComble * priceParNiveau[field_niveau_revenu.value];
         }
+        console.log(
+          "mur interieur : ",
+          SurfaceComble,
+          "\n Niveau : ",
+          field_niveau_revenu.value,
+          "\n ModeChauffage : ",
+          ModeChauffage
+        );
       }
     } //
     if (choixTravaux.includes("plancher_de_vide_sanitaire_sous_sol")) {
